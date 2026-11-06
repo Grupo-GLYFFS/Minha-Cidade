@@ -1,0 +1,24 @@
+/* Seções empilhadas: 24 px entre elas no celular e 32 px no computador */
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.duasColunas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .pagina {
+    gap: 32px;
+  }
+
+  /* Pedidos um pouco mais largos que o bairro */
+  .duasColunas {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+}

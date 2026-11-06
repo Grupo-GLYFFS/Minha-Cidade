@@ -1,0 +1,41 @@
+/* Celular: tudo empilhado, botão na largura toda */
+.cartao {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+/* Valor, prazo e votos em uma linha que quebra quando falta espaço */
+.dados {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  color: var(--cor-texto-suave);
+  font-size: 13px;
+}
+
+.botao {
+  width: 100%;
+}
+
+/* Computador: texto à esquerda e botão à direita, no meio da altura */
+@media (min-width: $mantine-breakpoint-md) {
+  .cartao {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .dados {
+    gap: 8px 16px;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+  .botao {
+    width: auto;
+  }
+}

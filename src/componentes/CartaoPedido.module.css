@@ -1,0 +1,4 @@
+/* Linha que separa o rodapé do cartão (última mudança e link) */
+.rodape {
+  border-top: 1px solid var(--cor-borda);
+}

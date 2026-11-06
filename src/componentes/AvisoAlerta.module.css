@@ -1,0 +1,10 @@
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: var(--pad);
+  border-radius: 16px;
+  background: #fff4d9;
+  border: 1px solid #f2d27a;
+  color: #634300;
+}

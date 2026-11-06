@@ -1,0 +1,26 @@
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Bolinha na cor do texto, antes do rótulo */
+.etiqueta::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .etiqueta {
+    font-size: 13px;
+  }
+}
