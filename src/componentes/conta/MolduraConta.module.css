@@ -8,9 +8,9 @@
   width: 100%;
   max-width: 440px;
   /* Vermelho de erro mais escuro, com contraste de pelo menos 4,5:1 no fundo branco */
-  --mantine-color-error: #a11a1a;
+  --mantine-color-error: var(--cor-erro);
   /* Mesmo vermelho escuro no título dos avisos de erro (fundo vermelho claro) */
-  --mantine-color-red-light-color: #a11a1a;
+  --mantine-color-red-light-color: var(--cor-erro);
 }
 
 .cartao[data-largura='larga'] {

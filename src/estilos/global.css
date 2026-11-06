@@ -2,33 +2,72 @@
 
 :root {
   --cor-fundo: #f4f6fa;
+  --cor-superficie: #fff;
   --cor-borda: #e4e8ef;
+  /* Borda dos campos e caixas de busca, um pouco mais escura que a dos cartões */
+  --cor-borda-campo: #c4cbd8;
+  /* Borda de cartões clicáveis quando o mouse passa por cima */
+  --cor-borda-destaque: #b9c8f5;
+  --espessura-borda: 1px;
   --cor-texto-suave: #525d73;
   --cor-foco: #f5a300;
   --cor-link: #0047d1;
+  --cor-sobre-primaria: #fff;
   --cor-azul-suave: #edf2ff;
   --cor-cinza-suave: #f1f3f7;
+  --cor-erro: #a11a1a;
+  --cor-contador: #c42b2b;
+  --cor-sucesso-fundo: #ddf5e6;
+  --cor-sucesso-borda: #a9e2be;
+  --cor-sucesso-texto: #126336;
+  --cor-aviso-fundo: #fff4d9;
+  --cor-aviso-fundo-claro: #fff9e8;
+  --cor-aviso-icone: #ffe9a8;
+  --cor-aviso-borda: #f2d27a;
+  --cor-aviso-texto: #634300;
+  --cor-roxo-fundo: #efe6ff;
+  --cor-roxo-texto: #5527b0;
   --sombra: 0 1px 2px rgba(16, 24, 40, 0.05), 0 6px 16px rgba(16, 24, 40, 0.06);
+  --sombra-destaque: 0 1px 2px rgba(16, 24, 40, 0.06), 0 10px 24px rgba(16, 24, 40, 0.1);
+  --foco-contorno: 3px solid var(--cor-foco);
+  --foco-sombra: none;
   --pad: 16px;
   --altura-abas: 89px; /* 16 + 56 + 16 + 1 de borda */
+}
+
+/* Texto "dimmed" do Mantine mais escuro que o padrão dele, para ter contraste de 4,5:1 */
+html:root[data-mantine-color-scheme] {
+  --mantine-color-dimmed: var(--cor-texto-suave);
 }
 
 body {
   background: var(--cor-fundo);
 }
 
+/* Tamanho da letra: muda a letra da raiz; o Mantine e os nossos CSS usam rem e acompanham */
+html[data-letra='pequena'] {
+  font-size: 87.5%;
+}
+html[data-letra='grande'] {
+  font-size: 112.5%;
+}
+html[data-letra='muito-grande'] {
+  font-size: 125%;
+}
+
 /* Foco do teclado em amarelo, visível sobre qualquer cor */
 :focus-visible {
-  outline: 3px solid var(--cor-foco);
+  outline: var(--foco-contorno);
   outline-offset: 2px;
 }
 
-/* Ícones Material Symbols (carregados como fonte no index.html) */
+/* Ícones Material Symbols (carregados como fonte no index.html).
+   Tamanhos em rem para crescerem junto com a letra. */
 .icone {
   font-family: 'Material Symbols Rounded';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;
+  font-size: rem(24px);
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -46,16 +85,16 @@ body {
 }
 
 .icone-18 {
-  font-size: 18px;
+  font-size: rem(18px);
 }
 .icone-20 {
-  font-size: 20px;
+  font-size: rem(20px);
 }
 .icone-24 {
-  font-size: 24px;
+  font-size: rem(24px);
 }
 .icone-28 {
-  font-size: 28px;
+  font-size: rem(28px);
 }
 
 .icone-preenchido {
@@ -74,12 +113,187 @@ body {
   z-index: 1000;
   padding: 8px 16px;
   border-radius: 12px;
-  background: #0052ef;
-  color: #fff;
+  background: var(--mantine-color-azul-6);
+  color: var(--cor-sobre-primaria);
   font-weight: 700;
   text-decoration: none;
 }
 
 .pular-conteudo:focus {
   top: 8px;
+}
+
+/* ---------- Reduzir animações ---------- */
+
+/* Desliga transições e animações do app e do Mantine (inclusive as que vêm no style da tag) */
+html[data-animacoes='reduzidas'] *,
+html[data-animacoes='reduzidas'] *::before,
+html[data-animacoes='reduzidas'] *::after {
+  transition: none !important;
+  animation: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* ---------- Alto contraste ---------- */
+
+/* Branco e preto, azul mais escuro (contraste de 7:1 ou mais), bordas de 2 px e sem sombras.
+   O seletor com "html" vence as variáveis que o Mantine coloca no :root. */
+html:root[data-contraste='alto'] {
+  --cor-fundo: #fff;
+  --cor-superficie: #fff;
+  --cor-borda: #000;
+  --cor-borda-campo: #000;
+  --cor-borda-destaque: #0038b8;
+  --espessura-borda: 2px;
+  --cor-texto-suave: #262626;
+  --cor-link: #0038b8;
+  --cor-azul-suave: #e3ecff;
+  --cor-cinza-suave: #f0f0f0;
+  --cor-erro: #b00000;
+  --cor-contador: #b00000;
+  --cor-sucesso-fundo: #fff;
+  --cor-sucesso-borda: #0b5a2a;
+  --cor-sucesso-texto: #0b5a2a;
+  --cor-aviso-fundo: #ffe45c;
+  --cor-aviso-fundo-claro: #ffe45c;
+  --cor-aviso-icone: #fff;
+  --cor-aviso-borda: #000;
+  --cor-aviso-texto: #000;
+  --cor-roxo-fundo: #efe6ff;
+  --cor-roxo-texto: #3e1691;
+  --sombra: none;
+  --sombra-destaque: none;
+  --foco-contorno: 4px solid #000;
+  --foco-sombra: 0 0 0 8px #ffd400;
+
+  /* Cores gerais do Mantine */
+  --mantine-color-body: #fff;
+  --mantine-color-text: #000;
+  --mantine-color-bright: #000;
+  --mantine-color-dimmed: #262626;
+  --mantine-color-placeholder: #545454;
+  --mantine-color-anchor: #0038b8;
+  --mantine-color-error: #b00000;
+  --mantine-color-default-border: #000;
+  --mantine-color-default-hover: #f0f0f0;
+  --mantine-color-disabled-color: #545454;
+  --mantine-color-disabled-border: #545454;
+
+  /* Azul principal: tons usados em botões, bordas de destaque e textos azuis */
+  --mantine-color-azul-0: #e3ecff;
+  --mantine-color-azul-1: #0038b8;
+  --mantine-color-azul-2: #0038b8;
+  --mantine-color-azul-3: #0038b8;
+  --mantine-color-azul-4: #0038b8;
+  --mantine-color-azul-5: #0038b8;
+  --mantine-color-azul-6: #0038b8;
+  --mantine-color-azul-7: #002f9a;
+  --mantine-color-azul-8: #00287f;
+  --mantine-color-azul-9: #001f66;
+  --mantine-color-azul-filled: #0038b8;
+  --mantine-color-azul-filled-hover: #002a8c;
+  --mantine-color-azul-light: #e3ecff;
+  --mantine-color-azul-light-hover: #c7d7ff;
+  --mantine-color-azul-light-color: #0038b8;
+  --mantine-color-azul-outline: #0038b8;
+  --mantine-color-azul-text: #0038b8;
+  --mantine-primary-color-filled: #0038b8;
+  --mantine-primary-color-filled-hover: #002a8c;
+  --mantine-primary-color-light: #e3ecff;
+  --mantine-primary-color-light-hover: #c7d7ff;
+  --mantine-primary-color-light-color: #0038b8;
+
+  /* Vermelho (erros e contador de alertas) e verde (avisos de sucesso) mais escuros */
+  --mantine-color-red-6: #b00000;
+  --mantine-color-red-8: #8a0000;
+  --mantine-color-red-9: #8a0000;
+  --mantine-color-red-filled: #b00000;
+  --mantine-color-red-filled-hover: #8a0000;
+  --mantine-color-red-light: #fde4e4;
+  --mantine-color-red-light-color: #8a0000;
+  --mantine-color-green-filled: #0b5a2a;
+  --mantine-color-green-light: #e6f6ec;
+  --mantine-color-green-light-color: #0b5a2a;
+}
+
+/* Foco: contorno preto grosso com um halo amarelo em volta.
+   O :where deixa a regra fraca, então os lugares que tiram o contorno de propósito continuam valendo */
+:where(html[data-contraste='alto']) :focus-visible {
+  outline-offset: 2px;
+  box-shadow: var(--foco-sombra);
+}
+
+html[data-contraste='alto'] .mantine-focus-auto:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+  box-shadow: var(--foco-sombra);
+}
+
+/* Links sublinhados e em negrito (o !important vence o peso que vem na prop fw da tela) */
+html[data-contraste='alto'] .mantine-Anchor-root,
+html[data-contraste='alto'] p a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 700 !important;
+}
+
+/* Bordas de 2 px em campos, botões, seleções e caixas do Mantine */
+html[data-contraste='alto'] .mantine-Input-input,
+html[data-contraste='alto'] .mantine-Button-root[data-variant='default'],
+html[data-contraste='alto'] .mantine-ActionIcon-root[data-variant='default'],
+html[data-contraste='alto'] .mantine-Chip-label,
+html[data-contraste='alto'] .mantine-Checkbox-input,
+html[data-contraste='alto'] .mantine-Radio-radio,
+html[data-contraste='alto'] .mantine-Paper-root[data-with-border] {
+  border-width: 2px;
+  border-color: #000;
+}
+
+/* Botões "light" (fundo claro) ganham borda na cor do texto; os "outline" ficam com 2 px */
+html[data-contraste='alto'] .mantine-Button-root[data-variant='light'] {
+  border: 2px solid currentColor;
+}
+
+html[data-contraste='alto'] .mantine-Button-root[data-variant='outline'] {
+  border-width: 2px;
+}
+
+/* Trilho da chave liga/desliga com borda preta, ligada ou desligada */
+html[data-contraste='alto'] .mantine-Switch-track {
+  border: 2px solid #000;
+}
+
+/* Caixas que flutuam ou avisam: borda preta no lugar da sombra */
+html[data-contraste='alto'] .mantine-Modal-content,
+html[data-contraste='alto'] .mantine-Drawer-content,
+html[data-contraste='alto'] .mantine-Menu-dropdown,
+html[data-contraste='alto'] .mantine-Popover-dropdown,
+html[data-contraste='alto'] .mantine-Combobox-dropdown {
+  border: 2px solid #000;
+  box-shadow: none;
+}
+
+html[data-contraste='alto'] .mantine-Alert-root {
+  border: 2px solid currentColor;
+}
+
+/* Seleção em segmentos (ex.: tamanho da letra): borda preta e opção escolhida em azul cheio */
+html[data-contraste='alto'] .mantine-SegmentedControl-root {
+  border: 2px solid #000;
+  background: #fff;
+}
+
+html[data-contraste='alto'] .mantine-SegmentedControl-indicator {
+  background: #0038b8;
+  box-shadow: none;
+}
+
+html[data-contraste='alto'] .mantine-SegmentedControl-label[data-active],
+html[data-contraste='alto'] .mantine-SegmentedControl-label[data-active]:hover {
+  color: #fff;
+}
+
+/* Perguntas frequentes: cada pergunta numa caixa com borda */
+html[data-contraste='alto'] .mantine-Accordion-item {
+  border-color: #000;
 }

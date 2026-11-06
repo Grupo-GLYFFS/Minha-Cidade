@@ -4,7 +4,7 @@
   gap: 12px;
   padding: var(--pad);
   border-radius: 16px;
-  background: #fff4d9;
-  border: 1px solid #f2d27a;
-  color: #634300;
+  background: var(--cor-aviso-fundo);
+  border: var(--espessura-borda) solid var(--cor-aviso-borda);
+  color: var(--cor-aviso-texto);
 }

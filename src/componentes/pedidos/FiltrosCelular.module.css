@@ -5,8 +5,8 @@
   padding: 0 4px;
   border-radius: 999px;
   background: var(--mantine-color-azul-6);
-  color: #fff;
-  font-size: 12px;
+  color: var(--cor-sobre-primaria);
+  font-size: rem(12px);
   font-weight: 700;
   line-height: 22px;
   text-align: center;
@@ -20,6 +20,6 @@
 }
 
 .titulo {
-  font-size: 18px;
+  font-size: rem(18px);
   font-weight: 700;
 }

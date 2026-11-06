@@ -22,7 +22,7 @@
 }
 
 .campo :global(.icone) {
-  color: #126336;
+  color: var(--cor-sucesso-texto);
 }
 
 .opcional {

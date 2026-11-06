@@ -1,0 +1,6 @@
+/* Abas com 48 px de altura e texto em negrito */
+.aba {
+  min-height: 48px;
+  font-size: rem(15px);
+  font-weight: 600;
+}

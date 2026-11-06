@@ -14,7 +14,7 @@
 }
 
 .linha dt {
-  font-size: 12px;
+  font-size: rem(12px);
   color: var(--cor-texto-suave);
 }
 

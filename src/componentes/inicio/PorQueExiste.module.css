@@ -22,7 +22,7 @@
 
 .numeroGrande {
   margin: 0;
-  font-size: 48px;
+  font-size: rem(48px);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.03em;
@@ -49,7 +49,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  color: #fff;
+  color: var(--cor-sobre-primaria);
   font-weight: 800;
 }
 
@@ -64,7 +64,7 @@
 .links .botao {
   flex: 1 1 auto;
   padding-inline: 12px;
-  font-size: 14px;
+  font-size: rem(14px);
 }
 
 /* Computador: texto, ODS e links à esquerda; os dados da pesquisa à direita */
@@ -85,7 +85,7 @@
   }
 
   .numeroGrande {
-    font-size: 56px;
+    font-size: rem(56px);
   }
 
   .ods {
@@ -101,6 +101,6 @@
   .links .botao {
     flex: none;
     padding-inline: 24px;
-    font-size: 15px;
+    font-size: rem(15px);
   }
 }

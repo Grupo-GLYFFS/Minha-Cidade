@@ -12,7 +12,7 @@
 }
 
 .etapa[data-estado='recusada'] .estado {
-  color: #a11a1a;
+  color: var(--cor-erro);
 }
 
 /* Etapas que ainda não aconteceram ficam mais apagadas */

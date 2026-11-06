@@ -1,0 +1,37 @@
+.rodape {
+  border-top: 1px solid var(--cor-borda);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Respostas em uma caixa cinza: raio 12 dentro do cartão (20 − 8 de recuo visual) */
+.respostas {
+  margin: 8px 0 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--cor-cinza-suave);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resposta {
+  display: flex;
+  flex-direction: column;
+}
+
+.rotulo {
+  font-size: rem(13px);
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+.valor {
+  margin: 0;
+  font-size: rem(14px);
+  overflow-wrap: anywhere;
+}

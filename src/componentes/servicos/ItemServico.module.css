@@ -5,8 +5,8 @@
   align-items: flex-start;
   gap: 12px;
   padding: var(--pad);
-  background: #fff;
-  border: 1px solid var(--cor-borda);
+  background: var(--cor-superficie);
+  border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: 20px;
   box-shadow: var(--sombra);
   color: var(--mantine-color-text);
@@ -14,7 +14,7 @@
 }
 
 .item:hover {
-  border-color: #b9c8f5;
+  border-color: var(--cor-borda-destaque);
 }
 
 .icone {

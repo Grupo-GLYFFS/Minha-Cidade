@@ -14,7 +14,7 @@
   flex-wrap: wrap;
   gap: 4px 12px;
   color: var(--cor-texto-suave);
-  font-size: 13px;
+  font-size: rem(13px);
 }
 
 .botao {
@@ -32,7 +32,7 @@
   .dados {
     gap: 8px 16px;
     margin-top: 8px;
-    font-size: 14px;
+    font-size: rem(14px);
   }
 
   .botao {

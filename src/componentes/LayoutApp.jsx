@@ -3,15 +3,16 @@ import { Box, Container } from '@mantine/core';
 import CabecalhoDesktop from './CabecalhoDesktop';
 import BarraAbas from './BarraAbas';
 import Rodape from './Rodape';
+import { useAlertas } from '../contexto/useAlertas';
 import classes from './LayoutApp.module.css';
-
-// TODO: ler a quantidade de alertas novos dos dados quando a tela de Alertas existir
-const ALERTAS_NOVOS = 3;
 
 // Moldura que se repete em todas as telas.
 // No computador: cabeçalho em cima e rodapé embaixo. No celular: só a barra de abas.
 // A página atual aparece no lugar do <Outlet />.
+// O sino e a aba Alertas mostram quantos alertas a pessoa ainda não leu (visitante: nenhum).
 export default function LayoutApp() {
+  const { naoLidos } = useAlertas();
+
   return (
     <div className={classes.app}>
       <a className="pular-conteudo" href="#conteudo">
@@ -19,7 +20,7 @@ export default function LayoutApp() {
       </a>
 
       <Box visibleFrom="md">
-        <CabecalhoDesktop alertasNovos={ALERTAS_NOVOS} />
+        <CabecalhoDesktop alertasNovos={naoLidos} />
       </Box>
 
       <main id="conteudo" className={classes.conteudo}>
@@ -33,7 +34,7 @@ export default function LayoutApp() {
       </Box>
 
       <Box hiddenFrom="md">
-        <BarraAbas alertasNovos={ALERTAS_NOVOS} />
+        <BarraAbas alertasNovos={naoLidos} />
       </Box>
     </div>
   );

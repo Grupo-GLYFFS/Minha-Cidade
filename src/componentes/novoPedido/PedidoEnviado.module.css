@@ -6,13 +6,14 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #ddf5e6;
-  color: #126336;
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso-texto);
 }
 
 /* O título recebe foco pelo código, não pelo Tab: sem contorno de foco */
 .titulo:focus {
   outline: none;
+  box-shadow: none;
 }
 
 /* Caixa do protocolo: raio de dentro = 20 - 16 = 4, arredondado para o mínimo de 8 */
@@ -56,7 +57,7 @@
   border-radius: 50%;
   background: var(--cor-azul-suave);
   color: var(--mantine-color-azul-8);
-  font-size: 14px;
+  font-size: rem(14px);
   font-weight: 800;
   flex: none;
 }

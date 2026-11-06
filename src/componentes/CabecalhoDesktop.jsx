@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ActionIcon, Container, Group, Indicator, Text, TextInput } from '@mantine/core';
+import { ActionIcon, Container, Group, Indicator, TextInput } from '@mantine/core';
 import Icone from './Icone';
 import MenuConta from './MenuConta';
+import BarraAcessibilidade from './BarraAcessibilidade';
 import { useSessao } from '../contexto/useSessao';
 import { caminhoComVoltar } from '../logica/sessao';
 import { montarCaminhoBusca } from '../logica/busca';
+import { pluralizar } from '../logica/formatos';
 import { MENU_COMPUTADOR, estaAtivo } from '../dados/navegacao';
 import classes from './CabecalhoDesktop.module.css';
 
@@ -16,6 +18,9 @@ export default function CabecalhoDesktop({ alertasNovos = 0 }) {
   const { pathname } = useLocation();
   const { logado } = useSessao();
   const novos = logado ? alertasNovos : 0;
+  // Nome do sino para o leitor de tela: diz quantos alertas são novos (ou que é preciso entrar)
+  let rotuloSino = 'Entrar para ver os alertas';
+  if (logado) rotuloSino = novos > 0 ? `Alertas, ${pluralizar(novos, 'novo', 'novos')}` : 'Alertas';
   const [texto, setTexto] = useState('');
   const navigate = useNavigate();
 
@@ -27,47 +32,11 @@ export default function CabecalhoDesktop({ alertasNovos = 0 }) {
 
   return (
     <header>
-      {/* Barra fina com a cidade e os controles de acessibilidade */}
-      <div className={classes.util}>
-        <Container size={1200} px="xl">
-          <Group justify="space-between" h={40}>
-            <Text size="sm" c="dimmed">
-              São Paulo, SP
-            </Text>
-            <Group gap="sm" role="group" aria-label="Acessibilidade">
-              <Text size="sm" c="dimmed">
-                Acessibilidade
-              </Text>
-              {/* TODO: ligar os botões ao tamanho da letra e ao alto contraste */}
-              <button
-                type="button"
-                className={classes.a11y}
-                aria-label="Diminuir o tamanho da letra"
-              >
-                A−
-              </button>
-              <button type="button" className={classes.a11y} aria-label="Tamanho padrão da letra">
-                A
-              </button>
-              <button
-                type="button"
-                className={classes.a11y}
-                aria-label="Aumentar o tamanho da letra"
-              >
-                A+
-              </button>
-              <button type="button" className={classes.a11y} aria-pressed="false">
-                <Icone nome="contrast" tamanho={18} />
-                Alto contraste
-              </button>
-            </Group>
-          </Group>
-        </Container>
-      </div>
+      <BarraAcessibilidade />
 
       <div className={classes.topo}>
         <Container size={1200} px="xl">
-          <Group h={72} gap="lg" wrap="nowrap">
+          <Group mih={72} gap="lg" wrap="nowrap" className={classes.linha}>
             <Link to="/">
               <img
                 className={classes.logo}
@@ -95,7 +64,7 @@ export default function CabecalhoDesktop({ alertasNovos = 0 }) {
               </ul>
             </nav>
 
-            <Group gap="sm" wrap="nowrap">
+            <Group gap="sm" wrap="nowrap" className={classes.acoes}>
               <form role="search" action="/busca" onSubmit={buscar}>
                 <TextInput
                   name="q"
@@ -115,7 +84,7 @@ export default function CabecalhoDesktop({ alertasNovos = 0 }) {
                   to={logado ? '/alertas' : caminhoComVoltar('/entrar', '/alertas')}
                   variant="default"
                   size={44}
-                  aria-label={logado ? `Alertas, ${novos} novos` : 'Entrar para ver os alertas'}
+                  aria-label={rotuloSino}
                 >
                   <Icone nome="notifications" />
                 </ActionIcon>

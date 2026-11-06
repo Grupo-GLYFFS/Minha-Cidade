@@ -16,7 +16,7 @@ export const ABAS_CELULAR = [
     rotulo: 'Perfil',
     caminho: '/perfil',
     icone: 'person',
-    ativoEm: ['/perfil', '/como-funciona', '/impacto', '/equipe'],
+    ativoEm: ['/perfil', '/como-funciona', '/impacto', '/equipe', '/ajuda', '/privacidade'],
   },
 ];
 

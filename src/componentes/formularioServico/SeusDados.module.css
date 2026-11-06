@@ -27,7 +27,7 @@
 }
 
 .rotulo {
-  font-size: 12px;
+  font-size: rem(12px);
   font-weight: 600;
   color: var(--cor-texto-suave);
 }

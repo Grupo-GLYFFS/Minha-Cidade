@@ -6,7 +6,10 @@ import { gerarHashSenha } from '../logica/senha';
 import {
   ERRO_EMAIL_EM_USO,
   ERRO_ENTRAR,
+  aplicarAjustesDemonstracao,
+  aplicarDadosNaConta,
   buscarContaPorEmail,
+  limparDadosPessoais,
   montarConta,
   montarUsuario,
   normalizarEmail,
@@ -15,19 +18,28 @@ import {
 // Nomes com que cada dado fica guardado no navegador
 const CHAVE_CONTAS = 'contas';
 const CHAVE_SESSAO = 'sessao';
+// Mudanças feitas em "Meus dados" na conta de demonstração (a Maria fica no código)
+const CHAVE_AJUSTES_DEMO = 'conta-demo-ajustes';
 
 // Guarda quem está usando o app: as contas criadas neste aparelho e a pessoa logada.
-// A conta de demonstração (Maria) sempre existe. O id de quem está logado fica salvo,
+// A conta de demonstração (Maria) sempre existe; o que ela muda em "Meus dados" fica salvo à parte
+// e é aplicado por cima dos dados de exemplo. O id de quem está logado fica salvo,
 // então recarregar a página mantém a pessoa dentro da conta.
 // Recebe as telas do app (children), que leem os dados com useSessao().
 export default function SessaoProvider({ children }) {
   const [contas, setContas] = useState(() => lerDado(CHAVE_CONTAS, []));
   const [idLogado, setIdLogado] = useState(() => lerDado(CHAVE_SESSAO, null));
+  const [ajustesDemo, setAjustesDemo] = useState(() => lerDado(CHAVE_AJUSTES_DEMO, null));
 
   // Salva as contas sempre que mudam (só depois da primeira conta, para não criar a chave à toa)
   useEffect(() => {
     if (contas.length > 0) salvarDado(CHAVE_CONTAS, contas);
   }, [contas]);
+
+  // Salva as mudanças da conta de demonstração (só depois da primeira mudança)
+  useEffect(() => {
+    if (ajustesDemo) salvarDado(CHAVE_AJUSTES_DEMO, ajustesDemo);
+  }, [ajustesDemo]);
 
   // Salva quem está logado; ao sair, apaga o dado
   useEffect(() => {
@@ -37,10 +49,10 @@ export default function SessaoProvider({ children }) {
 
   // Pessoa logada no formato usado pelas telas, ou null para visitante
   const usuario = useMemo(() => {
-    if (idLogado === USUARIO.id) return USUARIO;
+    if (idLogado === USUARIO.id) return aplicarAjustesDemonstracao(USUARIO, ajustesDemo);
     const conta = contas.find((item) => item.id === idLogado);
     return conta ? montarUsuario(conta) : null;
-  }, [idLogado, contas]);
+  }, [idLogado, contas, ajustesDemo]);
 
   // Diz se o e-mail já tem conta (inclui a de demonstração). Recebe o e-mail; devolve true ou false.
   const emailEmUso = useCallback(
@@ -91,6 +103,24 @@ export default function SessaoProvider({ children }) {
     [emailEmUso],
   );
 
+  // Troca nome, celular e endereço da pessoa logada (tela "Meus dados").
+  // Recebe os valores validados; devolve { ok: true } ou { ok: false } se ninguém estiver logado.
+  // Na conta de demonstração, guarda só as mudanças; nas outras, troca a conta salva.
+  const atualizarConta = useCallback(
+    (valores) => {
+      if (!idLogado) return { ok: false };
+      if (idLogado === USUARIO.id) {
+        setAjustesDemo(limparDadosPessoais(valores));
+        return { ok: true };
+      }
+      setContas((atual) =>
+        atual.map((conta) => (conta.id === idLogado ? aplicarDadosNaConta(conta, valores) : conta)),
+      );
+      return { ok: true };
+    },
+    [idLogado],
+  );
+
   // Sai da conta: a pessoa volta a ser visitante
   const sair = useCallback(() => setIdLogado(null), []);
 
@@ -102,9 +132,10 @@ export default function SessaoProvider({ children }) {
       entrarDemonstracao,
       criarConta,
       emailEmUso,
+      atualizarConta,
       sair,
     }),
-    [usuario, entrar, entrarDemonstracao, criarConta, emailEmUso, sair],
+    [usuario, entrar, entrarDemonstracao, criarConta, emailEmUso, atualizarConta, sair],
   );
 
   return <ContextoSessao.Provider value={valor}>{children}</ContextoSessao.Provider>;

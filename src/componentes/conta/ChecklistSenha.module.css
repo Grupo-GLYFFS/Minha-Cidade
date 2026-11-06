@@ -16,11 +16,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: rem(13px);
   color: var(--cor-texto-suave);
 }
 
 .item[data-feita] {
-  color: #126336;
+  color: var(--cor-sucesso-texto);
   font-weight: 600;
 }

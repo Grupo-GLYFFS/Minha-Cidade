@@ -1,0 +1,14 @@
+/* Chips com 44 px de altura (alvo de toque confortável); a classe dupla vence a do Mantine */
+.filtros .chip {
+  height: 44px;
+  line-height: 42px;
+  font-weight: 600;
+}
+
+/* Cada cartão com a própria altura: abrir "Ver respostas" não estica o vizinho */
+.lista {
+  align-items: start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

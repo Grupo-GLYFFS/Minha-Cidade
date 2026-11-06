@@ -34,3 +34,21 @@ export function apagarDado(chave) {
     // Acesso bloqueado: não há o que apagar
   }
 }
+
+// Apaga todos os dados do app salvos neste navegador (só as chaves com o prefixo do app).
+// Não recebe nada; devolve quantos dados foram apagados.
+export function apagarTudo() {
+  try {
+    // Junta as chaves antes de apagar, porque apagar muda a posição das outras
+    const chaves = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const chave = localStorage.key(i);
+      if (chave?.startsWith(PREFIXO)) chaves.push(chave);
+    }
+    chaves.forEach((chave) => localStorage.removeItem(chave));
+    return chaves.length;
+  } catch {
+    // Acesso bloqueado: não há o que apagar
+    return 0;
+  }
+}

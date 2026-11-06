@@ -7,8 +7,8 @@
   max-width: 720px;
   min-height: 60px;
   padding: 8px 8px 8px 16px;
-  background: #fff;
-  border: 1px solid #c4cbd8;
+  background: var(--cor-superficie);
+  border: var(--espessura-borda) solid var(--cor-borda-campo);
   border-radius: 16px;
   box-shadow: var(--sombra);
   color: var(--cor-texto-suave);
@@ -16,7 +16,8 @@
 
 /* O contorno de foco fica na caixa inteira, e não só no texto */
 .campo:has(input:focus-visible) {
-  outline: 3px solid var(--cor-foco);
+  outline: var(--foco-contorno);
+  box-shadow: var(--foco-sombra);
   outline-offset: 2px;
 }
 
@@ -30,9 +31,10 @@
   --input-placeholder-color: var(--cor-texto-suave);
   min-height: 44px;
   color: var(--mantine-color-text);
-  font-size: 16px;
+  font-size: rem(16px);
 }
 
 .entrada:focus-visible {
   outline: none;
+  box-shadow: none;
 }

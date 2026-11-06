@@ -1,0 +1,30 @@
+.controle {
+  margin-top: 12px;
+}
+
+/* Cada opção mostra um "A" maior que o anterior */
+.letra {
+  font-weight: 800;
+  line-height: 1;
+}
+
+.letra[data-tamanho='pequena'] {
+  font-size: rem(14px);
+}
+.letra[data-tamanho='padrao'] {
+  font-size: rem(17px);
+}
+.letra[data-tamanho='grande'] {
+  font-size: rem(20px);
+}
+.letra[data-tamanho='muito-grande'] {
+  font-size: rem(24px);
+}
+
+/* Caixa da prévia: dentro do cartão (raio 20, padding 16) usa o mínimo de 8 px */
+.previa {
+  margin-top: 16px;
+  padding: var(--pad);
+  border-radius: 8px;
+  background: var(--cor-cinza-suave);
+}

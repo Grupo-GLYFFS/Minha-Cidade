@@ -1,5 +1,5 @@
 .rodape {
-  background: #fff;
+  background: var(--cor-superficie);
   border-top: 1px solid var(--cor-borda);
 }
 
@@ -17,7 +17,7 @@
 
 .link {
   color: var(--cor-texto-suave);
-  font-size: 14px;
+  font-size: rem(14px);
   text-decoration: none;
 }
 
@@ -28,4 +28,12 @@
 
 .base {
   border-top: 1px solid var(--cor-borda);
+}
+
+/* Alto contraste: links sempre sublinhados e em negrito */
+:global(html[data-contraste='alto']) .link {
+  color: var(--mantine-color-text);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

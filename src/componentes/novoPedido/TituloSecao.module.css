@@ -7,7 +7,7 @@
   border-radius: 50%;
   background: var(--cor-azul-suave);
   color: var(--mantine-color-azul-8);
-  font-size: 14px;
+  font-size: rem(14px);
   font-weight: 800;
   flex: none;
 }

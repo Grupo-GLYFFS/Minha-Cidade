@@ -1,6 +1,6 @@
 /* Vermelho de erro mais escuro, com contraste de pelo menos 4,5:1 no fundo branco */
 .formulario {
-  --mantine-color-error: #a11a1a;
+  --mantine-color-error: var(--cor-erro);
 }
 
 /* Campos e botões com 48 px de altura (alvo de toque confortável).
@@ -16,8 +16,8 @@
 /* Computador: o formulário fica dentro de um cartão branco */
 @media (min-width: $mantine-breakpoint-md) {
   .formulario {
-    background: #fff;
-    border: 1px solid var(--cor-borda);
+    background: var(--cor-superficie);
+    border: var(--espessura-borda) solid var(--cor-borda);
     border-radius: 20px;
     box-shadow: var(--sombra);
     padding: var(--pad);

@@ -1,0 +1,12 @@
+/* Botão de texto longo: quebra em duas linhas no celular em vez de passar da tela */
+.botao {
+  height: auto;
+  min-height: 48px;
+  max-width: 100%;
+  padding-block: 8px;
+}
+
+.botao :global(.mantine-Button-label) {
+  white-space: normal;
+  text-align: left;
+}

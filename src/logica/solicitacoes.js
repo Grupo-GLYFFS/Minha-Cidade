@@ -1,5 +1,6 @@
 import { HOJE, formatarDataCurta, momentoDeHoje } from './datas';
 import { mascararCpf } from './cpf';
+import { STATUS_SOLICITACAO } from '../dados/statusSolicitacao';
 
 // Solicitações de serviço (formulários online do catálogo), separadas dos pedidos de zeladoria.
 
@@ -98,4 +99,16 @@ export function proximosPassos(servico, limite = 3) {
   const ultimoEnvio = passos.findLastIndex((passo) => /\benvie\b/i.test(passo));
   if (ultimoEnvio === -1) return [];
   return passos.slice(ultimoEnvio + 1, ultimoEnvio + 1 + limite);
+}
+
+// Procura os dados de um status de solicitação (rótulo e cores).
+// Recebe o id (ex.: "recebida"); devolve o objeto do status ou o de "recebida" se não achar.
+export function buscarStatusSolicitacao(idStatus) {
+  return STATUS_SOLICITACAO.find((status) => status.id === idStatus) ?? STATUS_SOLICITACAO[0];
+}
+
+// Ordena as solicitações da mais recente para a mais antiga.
+// Recebe a lista; devolve uma nova lista (a original não muda).
+export function ordenarSolicitacoes(solicitacoes) {
+  return [...solicitacoes].sort((a, b) => b.criadoEm.localeCompare(a.criadoEm));
 }

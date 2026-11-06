@@ -21,11 +21,18 @@
   align-items: center;
   min-height: 44px;
   color: var(--cor-link);
-  font-size: 14px;
+  font-size: rem(14px);
   font-weight: 600;
   text-decoration: none;
 }
 
 .link:hover {
   text-decoration: underline;
+}
+
+/* Alto contraste: links sempre sublinhados e em negrito */
+:global(html[data-contraste='alto']) .link {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

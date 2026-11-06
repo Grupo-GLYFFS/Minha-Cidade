@@ -14,14 +14,14 @@
   gap: 12px;
   min-height: 48px;
   padding: 4px 12px 4px 4px;
-  border: 1px solid var(--cor-borda);
+  border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: 8px;
   color: var(--mantine-color-text);
   text-decoration: none;
 }
 
 .telefone:hover {
-  border-color: #b9c8f5;
+  border-color: var(--cor-borda-destaque);
   background: var(--cor-azul-suave);
 }
 
@@ -46,7 +46,7 @@
 
 .numero {
   flex: none;
-  font-size: 18px;
+  font-size: rem(18px);
   font-weight: 800;
   color: var(--cor-link);
 }

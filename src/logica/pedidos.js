@@ -27,6 +27,34 @@ export function pedidosAbertosDaPessoa(pedidos, idPessoa) {
     .sort((a, b) => b.atualizadoEm.localeCompare(a.atualizadoEm));
 }
 
+// Separa todos os pedidos de uma pessoa: primeiro os em andamento, depois os encerrados;
+// em cada grupo, do mais recente para o mais antigo.
+// Recebe a lista de pedidos e o id da pessoa; devolve uma nova lista.
+export function pedidosDaPessoa(pedidos, idPessoa) {
+  return pedidos
+    .filter((pedido) => pedido.autorId === idPessoa)
+    .sort(
+      (a, b) =>
+        Number(estaAberto(b)) - Number(estaAberto(a)) ||
+        b.atualizadoEm.localeCompare(a.atualizadoEm),
+    );
+}
+
+// Filtros da lista "Meus pedidos": todos, só os em andamento ou só os encerrados
+export const SITUACOES_PEDIDO = [
+  { value: 'todos', label: 'Todos' },
+  { value: 'andamento', label: 'Em andamento' },
+  { value: 'encerrados', label: 'Encerrados' },
+];
+
+// Filtra os pedidos pela situação escolhida.
+// Recebe a lista e a situação ("todos", "andamento" ou "encerrados"); devolve uma nova lista.
+export function filtrarPorSituacao(pedidos, situacao) {
+  if (situacao === 'andamento') return pedidos.filter(estaAberto);
+  if (situacao === 'encerrados') return pedidos.filter((pedido) => !estaAberto(pedido));
+  return pedidos;
+}
+
 // Resume os pedidos em andamento de um bairro.
 // Recebe a lista de pedidos e o nome do bairro;
 // devolve { abertos, emExecucao } com a quantidade de cada um.

@@ -1,9 +1,9 @@
 /* Mesmas cores da faixa de alerta do app (texto escuro sobre amarelo, contraste alto) */
 .aviso {
-  background: #fff4d9;
-  border: 1px solid #f2d27a;
+  background: var(--cor-aviso-fundo);
+  border: var(--espessura-borda) solid var(--cor-aviso-borda);
 }
 
 .aviso .texto {
-  color: #634300;
+  color: var(--cor-aviso-texto);
 }

@@ -4,6 +4,7 @@ import { ABAS_CELULAR, ABA_ENTRAR, estaAtivo } from '../dados/navegacao';
 import { useSessao } from '../contexto/useSessao';
 import { useCaminhoConta } from '../contexto/useCaminhoConta';
 import { caminhoComVoltar } from '../logica/sessao';
+import { pluralizar } from '../logica/formatos';
 import classes from './BarraAbas.module.css';
 
 // Barra de abas presa embaixo da tela do celular.
@@ -32,7 +33,8 @@ export default function BarraAbas({ alertasNovos = 0 }) {
           const ehAlertas = aba.rotulo === 'Alertas';
 
           // Na aba Alertas, o leitor de tela também ouve quantos alertas são novos
-          const rotuloAcessivel = ehAlertas && novos > 0 ? `Alertas, ${novos} novos` : undefined;
+          const rotuloAcessivel =
+            ehAlertas && novos > 0 ? `Alertas, ${pluralizar(novos, 'novo', 'novos')}` : undefined;
 
           return (
             <li key={aba.rotulo}>

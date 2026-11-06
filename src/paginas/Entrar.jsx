@@ -3,6 +3,7 @@ import { Anchor, Button, Divider, Stack, Text } from '@mantine/core';
 import MolduraConta from '../componentes/conta/MolduraConta';
 import FormularioEntrar from '../componentes/conta/FormularioEntrar';
 import Icone from '../componentes/Icone';
+import LinksAjudaConta from '../componentes/conta/LinksAjudaConta';
 import { useSessao } from '../contexto/useSessao';
 import { useCaminhoConta } from '../contexto/useCaminhoConta';
 import { destinoSeguro } from '../logica/sessao';
@@ -10,6 +11,7 @@ import { destinoSeguro } from '../logica/sessao';
 // Tela "Entrar": e-mail e senha, ou a conta de demonstração da Maria.
 // O endereço pode trazer ?voltar=/caminho: depois de entrar, a pessoa volta para lá (ou para o Início).
 // Quem já está logado é levado direto ao destino.
+// Embaixo, links para Acessibilidade e ajuda: no celular, é por aqui que o visitante chega a eles.
 export default function Entrar() {
   const { logado, entrarDemonstracao } = useSessao();
   const [parametros] = useSearchParams();
@@ -50,6 +52,8 @@ export default function Entrar() {
             Criar conta
           </Anchor>
         </Text>
+
+        <LinksAjudaConta />
       </Stack>
     </MolduraConta>
   );

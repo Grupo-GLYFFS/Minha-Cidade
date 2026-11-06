@@ -47,24 +47,71 @@ export function buscarContaPorEmail(contas, email) {
   return contas.find((conta) => conta.email === procurado);
 }
 
-// Monta a conta nova a partir do formulário "Criar conta".
-// Recebe os valores já validados, o hash da senha e o id novo; devolve a conta para salvar.
-// A foto e o comprovante não entram: o protótipo só confere os arquivos, não guarda.
-export function montarConta(valores, hashSenha, id) {
+// Arruma os dados pessoais que a pessoa digita (no cadastro e em "Meus dados").
+// Recebe os valores já validados; devolve nome, celular e endereço limpos.
+// Também é o que fica salvo como mudança da conta de demonstração.
+export function limparDadosPessoais(valores) {
   const numero = valores.numero.trim();
   return {
-    id,
     nome: limparNome(valores.nome),
-    email: normalizarEmail(valores.email),
     celular: formatarCelular(valores.celular),
     cep: valores.cep,
     rua: valores.rua.trim(),
     // "s/n", "sn" e "S/N" ficam todos como "S/N"
     numero: /^s\/?n$/i.test(numero) ? 'S/N' : numero,
-    complemento: valores.complemento.trim(),
+    complemento: (valores.complemento ?? '').trim(),
     bairro: valores.bairro.trim(),
     regiao: valores.regiao,
+  };
+}
+
+// Monta a conta nova a partir do formulário "Criar conta".
+// Recebe os valores já validados, o hash da senha e o id novo; devolve a conta para salvar.
+// A foto e o comprovante não entram: o protótipo só confere os arquivos, não guarda.
+export function montarConta(valores, hashSenha, id) {
+  return {
+    id,
+    ...limparDadosPessoais(valores),
+    email: normalizarEmail(valores.email),
     hashSenha,
+  };
+}
+
+// Troca os dados pessoais de uma conta pelos novos (tela "Meus dados").
+// Recebe a conta e os valores validados; devolve uma conta nova com o mesmo id, e-mail e senha.
+export function aplicarDadosNaConta(conta, valores) {
+  return { ...conta, ...limparDadosPessoais(valores) };
+}
+
+// Monta a pessoa da conta de demonstração com as mudanças feitas em "Meus dados".
+// A Maria fica no código (não no navegador); as mudanças dela ficam salvas à parte.
+// Recebe a Maria original e as mudanças (ou null); devolve a pessoa no formato das telas.
+// Se o bairro mudou, a UBS e a coleta passam a ser as do bairro novo (ou null se o app não conhece).
+export function aplicarAjustesDemonstracao(demonstracao, ajustes) {
+  if (!ajustes) return demonstracao;
+  const juntos = { ...demonstracao, ...ajustes };
+  const mesmoBairro = normalizarTexto(juntos.bairro) === normalizarTexto(demonstracao.bairro);
+  return {
+    ...juntos,
+    primeiroNome: primeiroNome(juntos.nome),
+    iniciais: iniciaisDoNome(juntos.nome),
+    ...(mesmoBairro ? {} : servicosDoBairro(juntos.bairro)),
+  };
+}
+
+// Preenche o formulário "Meus dados" com a pessoa logada.
+// Recebe a pessoa; devolve os valores iniciais do formulário (campos vazios viram "").
+export function valoresMeusDados(usuario) {
+  return {
+    nome: usuario.nome ?? '',
+    celular: usuario.celular ?? '',
+    cep: usuario.cep ?? '',
+    cidadeDoCep: '',
+    rua: usuario.rua ?? '',
+    numero: usuario.numero ?? '',
+    complemento: usuario.complemento ?? '',
+    bairro: usuario.bairro ?? '',
+    regiao: usuario.regiao ?? '',
   };
 }
 

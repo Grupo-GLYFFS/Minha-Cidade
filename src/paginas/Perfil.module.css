@@ -1,0 +1,47 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Celular: tudo empilhado */
+.grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+
+.opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* No celular, o botão ocupa a largura toda (alvo grande); no computador, só o tamanho do texto */
+.sair {
+  width: 100%;
+}
+
+/* Computador: cartão à esquerda (acompanha a rolagem) e lista à direita */
+@media (min-width: $mantine-breakpoint-md) {
+  .pagina {
+    gap: 32px;
+  }
+
+  .grade {
+    grid-template-columns: 360px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    max-width: 1040px;
+  }
+
+  .lateral {
+    position: sticky;
+    top: 24px;
+  }
+
+  .sair {
+    width: auto;
+    align-self: flex-start;
+  }
+}

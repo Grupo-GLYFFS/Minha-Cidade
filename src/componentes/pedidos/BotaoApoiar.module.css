@@ -11,10 +11,10 @@
   z-index: 1;
   flex: none;
   cursor: default;
-  background: #ddf5e6;
-  color: #126336;
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso-texto);
 }
 
 .apoiado:hover {
-  background: #ddf5e6;
+  background: var(--cor-sucesso-fundo);
 }

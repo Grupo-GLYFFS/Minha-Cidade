@@ -58,7 +58,7 @@ export default function PorQueExiste() {
             {/* A barra é só visual: a porcentagem já está escrita ao lado do rótulo */}
             <Progress
               value={item.porcentagem}
-              color={item.destaque ? '#C42B2B' : 'azul'}
+              color={item.destaque ? 'var(--cor-contador)' : 'azul'}
               size={12}
               radius="xl"
               aria-hidden="true"

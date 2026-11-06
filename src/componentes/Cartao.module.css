@@ -1,5 +1,5 @@
 .cartao {
-  background: #fff;
-  border: 1px solid var(--cor-borda);
+  background: var(--cor-superficie);
+  border: var(--espessura-borda) solid var(--cor-borda);
   box-shadow: var(--sombra);
 }
