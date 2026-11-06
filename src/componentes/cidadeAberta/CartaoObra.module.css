@@ -1,0 +1,44 @@
+.cartao {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tipo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cor-texto-suave);
+  font-size: rem(13px);
+  font-weight: 600;
+}
+
+.trilho {
+  background: var(--cor-cinza-suave);
+  box-shadow: inset 0 0 0 var(--espessura-borda) var(--cor-borda);
+}
+
+/* Por que a obra está atrasada ou parada (raio 8: 20 do cartão − 16 de padding, mínimo 8) */
+.motivo {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  background: var(--cor-cinza-suave);
+  font-size: rem(14px);
+  line-height: 1.45;
+}
+
+.detalhes {
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--cor-texto-suave);
+  font-size: rem(13px);
+}
+
+.detalhes > div {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  padding-top: 12px;
+}

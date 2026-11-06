@@ -1,0 +1,43 @@
+/* Blocos empilhados: 24 px entre eles no celular e 32 px no computador */
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--cor-texto-suave);
+}
+
+/* Celular: cartões e, depois deles, o resumo (que gruda embaixo da tela enquanto rola).
+   Computador: cartões à esquerda e o resumo na coluna da direita, grudado no topo */
+.grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .pagina {
+    gap: 32px;
+  }
+
+  .grade {
+    grid-template-columns: minmax(0, 1fr) rem(320px);
+    gap: 32px;
+    align-items: start;
+  }
+
+  .opcoes {
+    gap: 16px;
+  }
+}

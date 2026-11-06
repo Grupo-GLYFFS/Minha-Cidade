@@ -1,0 +1,23 @@
+/* Abas com 48 px de altura e texto em negrito */
+.aba {
+  min-height: 48px;
+  font-size: rem(15px);
+  font-weight: 600;
+}
+
+/* Celular: um cartão por linha. Computador: dois lado a lado */
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}

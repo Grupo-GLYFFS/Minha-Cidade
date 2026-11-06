@@ -13,6 +13,7 @@ import { PROJETOS } from '../dados/projetos';
 import { servicosMaisUsados } from '../logica/servicos';
 import { alertaDefesaCivilAtivo } from '../logica/alertas';
 import { pedidosAbertosDaPessoa } from '../logica/pedidos';
+import { projetosEmVotacao } from '../logica/votacao';
 import { usePedidos } from '../contexto/usePedidos';
 import { useSessao } from '../contexto/useSessao';
 import classes from './Inicio.module.css';
@@ -27,7 +28,8 @@ export default function Inicio() {
   const { usuario } = useSessao();
   const { pedidos } = usePedidos();
   const alerta = alertaDefesaCivilAtivo(ALERTAS, usuario?.regiao);
-  const projetoAberto = PROJETOS.find((projeto) => projeto.status === 'votacao-aberta');
+  // Votação que encerra primeiro, para a pessoa não perder o prazo
+  const projetoAberto = projetosEmVotacao(PROJETOS)[0];
   const meusPedidos = usuario ? pedidosAbertosDaPessoa(pedidos, usuario.id) : [];
   const nuncaAbriu = usuario ? !pedidos.some((pedido) => pedido.autorId === usuario.id) : false;
 

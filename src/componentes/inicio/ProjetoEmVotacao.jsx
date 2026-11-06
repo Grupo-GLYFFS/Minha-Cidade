@@ -6,33 +6,34 @@ import Icone from '../Icone';
 import { STATUS_PROJETO } from '../../dados/statusProjeto';
 import { useSessao } from '../../contexto/useSessao';
 import { useCaminhoConta } from '../../contexto/useCaminhoConta';
-import { diasAte } from '../../logica/datas';
-import { formatarNumero, formatarValorCurto, pluralizar } from '../../logica/formatos';
+import { useVotos } from '../../contexto/useVotos';
+import { formatarValorCurto, pluralizar } from '../../logica/formatos';
+import { buscarOpcaoVoto, textoPrazoVotacao } from '../../logica/votacao';
 import classes from './ProjetoEmVotacao.module.css';
 
 // Cartão "Participe": um projeto da prefeitura com votação aberta e o botão para votar.
 // Recebe o projeto (título, resumo, valor, data de encerramento e votos).
-// Votar precisa de conta: o visitante vê "Entrar para votar" e volta para cá depois de entrar.
+// Votar precisa de conta: o visitante vê "Entrar para votar" e, depois de entrar,
+// vai direto para a página do projeto. Quem já votou vê o próprio voto e o link do resultado.
 export default function ProjetoEmVotacao({ projeto }) {
   const { logado } = useSessao();
-  const { entrar } = useCaminhoConta();
+  const caminhoProjeto = `/cidade-aberta/projetos/${projeto.id}`;
+  const { entrar } = useCaminhoConta(caminhoProjeto);
+  const { votoDe, resultado } = useVotos();
   const status = STATUS_PROJETO.find((item) => item.id === projeto.status);
-  const diasRestantes = diasAte(projeto.encerraEm);
+  const voto = buscarOpcaoVoto(votoDe(projeto.id));
+  const { total } = resultado(projeto);
 
   const dados = [
     { icone: 'payments', texto: formatarValorCurto(projeto.valor) },
-    {
-      icone: 'schedule',
-      texto:
-        diasRestantes > 0
-          ? `Encerra em ${pluralizar(diasRestantes, 'dia', 'dias')}`
-          : 'Encerra hoje',
-    },
-    {
-      icone: 'how_to_vote',
-      texto: `${formatarNumero(projeto.votos)} ${projeto.votos === 1 ? 'voto' : 'votos'}`,
-    },
+    { icone: 'schedule', texto: textoPrazoVotacao(projeto.fimVotacao) },
+    { icone: 'how_to_vote', texto: pluralizar(total, 'voto', 'votos') },
   ];
+
+  // Texto e destino do botão em cada caso: visitante, já votou ou ainda não votou
+  let rotuloBotao = 'Ver prós e contras e votar';
+  if (!logado) rotuloBotao = 'Entrar para votar';
+  else if (voto) rotuloBotao = `Você votou: ${voto.rotulo} · Ver resultado`;
 
   return (
     <Cartao component="section" aria-labelledby="participe-titulo" className={classes.cartao}>
@@ -62,12 +63,14 @@ export default function ProjetoEmVotacao({ projeto }) {
 
       <Button
         component={Link}
-        to={logado ? `/cidade-aberta/projetos/${projeto.id}` : entrar}
+        to={logado ? caminhoProjeto : entrar}
         h={{ base: 48, md: 44 }}
         px="lg"
+        variant={voto ? 'light' : 'filled'}
+        leftSection={voto ? <Icone nome="check_circle" tamanho={20} preenchido /> : undefined}
         className={classes.botao}
       >
-        {logado ? 'Ver prós e contras e votar' : 'Entrar para votar'}
+        {rotuloBotao}
       </Button>
     </Cartao>
   );

@@ -4,6 +4,7 @@ import { lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
 import { usePedidos } from './usePedidos';
 import { useSolicitacoes } from './useSolicitacoes';
+import { useVotos } from './useVotos';
 import { ALERTAS } from '../dados/alertas';
 import { PROJETOS } from '../dados/projetos';
 import { montarAlertas } from '../logica/alertas';
@@ -13,13 +14,14 @@ import { HOJE } from '../logica/datas';
 const CHAVE_LIDOS = 'alertas-lidos';
 
 // Guarda os alertas da pessoa logada: Defesa Civil, mudanças nos pedidos, solicitações
-// de serviço e votações abertas. Os ids já lidos ficam salvos por pessoa.
-// Precisa estar dentro dos providers de sessão, pedidos e solicitações.
+// de serviço e votações abertas em que a pessoa ainda não votou. Os ids já lidos ficam salvos
+// por pessoa. Precisa estar dentro dos providers de sessão, pedidos, solicitações e votos.
 // Recebe as telas do app (children), que leem os dados com useAlertas().
 export default function AlertasProvider({ children }) {
   const { usuario } = useSessao();
   const { pedidos } = usePedidos();
   const { solicitacoes } = useSolicitacoes();
+  const { votosDaPessoa } = useVotos();
   const idPessoa = usuario?.id ?? null;
   const [lidosPorPessoa, setLidosPorPessoa] = useState(() => lerDado(CHAVE_LIDOS, {}));
 
@@ -36,11 +38,12 @@ export default function AlertasProvider({ children }) {
         pedidos,
         solicitacoes,
         projetos: PROJETOS,
+        votos: votosDaPessoa,
         alertasCidade: ALERTAS,
         lidos: idPessoa ? (lidosPorPessoa[idPessoa] ?? []) : [],
         hoje: HOJE,
       }),
-    [usuario, pedidos, solicitacoes, lidosPorPessoa, idPessoa],
+    [usuario, pedidos, solicitacoes, votosDaPessoa, lidosPorPessoa, idPessoa],
   );
 
   const naoLidos = alertas.filter((alerta) => !alerta.lido).length;

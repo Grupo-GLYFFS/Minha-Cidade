@@ -3,23 +3,30 @@ import Cartao from '../Cartao';
 import Icone from '../Icone';
 import SecaoCabecalho from '../SecaoCabecalho';
 import TextoResponsivo from '../TextoResponsivo';
+import { buscarBairro, textoProximaColeta } from '../../logica/bairros';
 import { proximoDiaDaLista } from '../../logica/datas';
 import { pluralizar } from '../../logica/formatos';
 import { resumirPedidosDoBairro } from '../../logica/pedidos';
+import { contarObrasDoBairro } from '../../logica/obras';
+import { OBRAS } from '../../dados/obras';
 import classes from './ResumoBairro.module.css';
 
 // Texto quando o app ainda não tem a coleta ou a UBS do bairro (sem inventar dados)
 const SEM_DADO = 'Consulte em Meu Bairro';
 
-// Resumo do bairro da pessoa: próxima coleta, coleta seletiva, UBS e pedidos abertos.
+// Resumo do bairro da pessoa: próxima coleta, coleta seletiva, UBS, pedidos abertos e obras.
 // Recebe a pessoa usando o app e a lista de todos os pedidos (para contar os do bairro).
-// Bairro que o app não conhece (coleta e UBS null) mostra "Consulte em Meu Bairro".
+// As obras vêm de Obras da Cidade (as do bairro que ainda não terminaram).
+// A coleta e a UBS vêm dos mesmos dados e contas da página Meu Bairro, para as duas concordarem.
+// Bairro que o app não conhece mostra "Consulte em Meu Bairro".
 export default function ResumoBairro({ usuario, pedidos }) {
-  const { coleta } = usuario;
-  const proximaColeta = coleta
-    ? `${proximoDiaDaLista(coleta.comum.dias)}, a partir das ${coleta.comum.horario}`
-    : SEM_DADO;
-  const { abertos, emExecucao } = resumirPedidosDoBairro(pedidos, usuario.bairro);
+  const dados = buscarBairro(usuario.bairro);
+  // Nome do bairro como está nos dados, para contar os pedidos e obras do mesmo jeito que Meu Bairro
+  const bairro = dados?.bairro ?? usuario.bairro;
+  const coleta = dados?.coleta;
+  const proximaColeta = coleta ? textoProximaColeta(coleta) : SEM_DADO;
+  const { abertos } = resumirPedidosDoBairro(pedidos, bairro);
+  const obras = contarObrasDoBairro(OBRAS, bairro);
   const totalPedidos = pluralizar(abertos, 'pedido', 'pedidos');
 
   // Cada linha da lista: ícone, rótulo e valor (versão longa e, se precisar, curta para o celular)
@@ -33,15 +40,15 @@ export default function ResumoBairro({ usuario, pedidos }) {
     {
       icone: 'recycling',
       rotulo: 'Coleta seletiva',
-      valor: coleta ? proximoDiaDaLista(coleta.seletiva.dias) : SEM_DADO,
+      valor: coleta ? proximoDiaDaLista(coleta.seletiva) : SEM_DADO,
     },
-    { icone: 'local_hospital', rotulo: 'Sua UBS', valor: usuario.ubs ?? SEM_DADO },
+    { icone: 'local_hospital', rotulo: 'Sua UBS', valor: dados?.ubs.nome ?? SEM_DADO },
     {
       icone: 'campaign',
-      rotulo: 'Pedidos abertos no bairro',
+      rotulo: 'Pedidos abertos e obras no bairro',
       rotuloCurto: 'No bairro',
-      valor: `${totalPedidos} · ${pluralizar(emExecucao, 'obra em andamento', 'obras em andamento')}`,
-      valorCurto: `${totalPedidos} · ${pluralizar(emExecucao, 'obra', 'obras')}`,
+      valor: `${totalPedidos} · ${pluralizar(obras, 'obra em andamento', 'obras em andamento')}`,
+      valorCurto: `${totalPedidos} · ${pluralizar(obras, 'obra', 'obras')}`,
     },
   ];
 
@@ -56,7 +63,7 @@ export default function ResumoBairro({ usuario, pedidos }) {
       />
       <Cartao>
         <Title order={3} fz={{ base: 16, md: 17 }} fw={700} mb={4}>
-          {usuario.bairro}
+          {bairro}
         </Title>
         <ul className={classes.lista}>
           {itens.map((item) => (

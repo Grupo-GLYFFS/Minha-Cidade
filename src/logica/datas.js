@@ -120,3 +120,9 @@ export function formatarDataCurta(data) {
   const [ano, mes, dia] = data.slice(0, 10).split('-').map(Number);
   return `${dia}/${mes}/${ano}`;
 }
+
+// Escreve só o mês (abreviado) e o ano. Recebe "2027-03-31"; devolve "mar/2027".
+export function formatarMesAno(data) {
+  const [ano, mes] = data.slice(0, 7).split('-').map(Number);
+  return `${NOMES_MESES[mes - 1].slice(0, 3)}/${ano}`;
+}

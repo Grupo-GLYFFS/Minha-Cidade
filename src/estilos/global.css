@@ -16,6 +16,7 @@
   --cor-azul-suave: #edf2ff;
   --cor-cinza-suave: #f1f3f7;
   --cor-erro: #a11a1a;
+  --cor-erro-fundo: #fde4e4;
   --cor-contador: #c42b2b;
   --cor-sucesso-fundo: #ddf5e6;
   --cor-sucesso-borda: #a9e2be;
@@ -150,6 +151,7 @@ html:root[data-contraste='alto'] {
   --cor-azul-suave: #e3ecff;
   --cor-cinza-suave: #f0f0f0;
   --cor-erro: #b00000;
+  --cor-erro-fundo: #fff;
   --cor-contador: #b00000;
   --cor-sucesso-fundo: #fff;
   --cor-sucesso-borda: #0b5a2a;

@@ -1,0 +1,38 @@
+/* Celular: região em cima e situações embaixo. Computador: tudo numa linha */
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.regiao {
+  width: 100%;
+}
+
+/* Rótulo do grupo de situações, no mesmo estilo do rótulo dos campos do Mantine */
+.rotulo {
+  display: block;
+  margin-bottom: 4px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+}
+
+/* Chips com 44 px de altura (alvo de toque confortável); a classe dupla vence a do Mantine */
+.filtros .chip {
+  height: 44px;
+  line-height: 42px;
+  font-weight: 600;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .filtros {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 24px;
+  }
+
+  .regiao {
+    width: 240px;
+    flex: none;
+  }
+}

@@ -1,0 +1,30 @@
+/* Celular: sobre, os dois lados e a votação, um embaixo do outro */
+.grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+
+/* Computador: sobre à esquerda e votação à direita; os dois lados embaixo, na largura toda */
+@media (min-width: $mantine-breakpoint-md) {
+  .grade {
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .sobre {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .votacao {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .lados {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+  }
+}

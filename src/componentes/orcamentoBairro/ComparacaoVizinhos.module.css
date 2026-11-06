@@ -1,0 +1,43 @@
+/* Celular: uma melhoria por linha. Computador: duas colunas */
+.lista {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.item {
+  padding-top: 16px;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+/* Rótulo curto à esquerda de cada barra */
+.barras {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.rotuloBarra {
+  font-size: rem(12px);
+  color: var(--cor-texto-suave);
+}
+
+.trilho {
+  background: var(--cor-cinza-suave);
+  box-shadow: inset 0 0 0 var(--espessura-borda) var(--cor-borda);
+}
+
+.barraVizinhos {
+  background: var(--cor-texto-suave);
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 32px;
+  }
+}

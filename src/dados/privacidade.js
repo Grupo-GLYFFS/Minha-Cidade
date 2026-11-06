@@ -11,6 +11,11 @@ export const DADOS_GUARDADOS = [
     icone: 'description',
     texto: 'Os serviços que você pediu pelo app e as respostas do formulário.',
   },
+  { icone: 'how_to_vote', texto: 'Seus votos nos grandes projetos da Cidade Aberta.' },
+  {
+    icone: 'tune',
+    texto: 'Sua divisão do Orçamento do Bairro (Prefeito por 5 minutos) e a data do envio.',
+  },
   { icone: 'notifications', texto: 'Quais alertas você já leu.' },
   {
     icone: 'accessibility_new',

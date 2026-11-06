@@ -12,6 +12,11 @@ import Pedidos from './paginas/Pedidos';
 import NovoPedido from './paginas/NovoPedido';
 import DetalhePedido from './paginas/DetalhePedido';
 import CidadeAberta from './paginas/CidadeAberta';
+import ProjetosCidade from './paginas/ProjetosCidade';
+import ProjetoCidade from './paginas/ProjetoCidade';
+import ObrasCidade from './paginas/ObrasCidade';
+import OrcamentoCidade from './paginas/OrcamentoCidade';
+import OrcamentoBairro from './paginas/OrcamentoBairro';
 import MeuBairro from './paginas/MeuBairro';
 import Alertas from './paginas/Alertas';
 import Perfil from './paginas/Perfil';
@@ -44,6 +49,11 @@ export default function App() {
         <Route path="/pedidos" element={<Pedidos />} />
         <Route path="/pedidos/:id" element={<DetalhePedido />} />
         <Route path="/cidade-aberta" element={<CidadeAberta />} />
+        <Route path="/cidade-aberta/projetos" element={<ProjetosCidade />} />
+        <Route path="/cidade-aberta/projetos/:id" element={<ProjetoCidade />} />
+        <Route path="/cidade-aberta/obras" element={<ObrasCidade />} />
+        <Route path="/cidade-aberta/orcamento" element={<OrcamentoCidade />} />
+        <Route path="/cidade-aberta/orcamento-do-bairro" element={<OrcamentoBairro />} />
         <Route path="/meu-bairro" element={<MeuBairro />} />
         <Route path="/como-funciona" element={<ComoFunciona />} />
         <Route path="/impacto" element={<Impacto />} />

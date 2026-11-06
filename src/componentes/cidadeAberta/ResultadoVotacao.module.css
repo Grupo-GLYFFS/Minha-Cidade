@@ -1,0 +1,46 @@
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Cada opção com 8 px em volta, que saem para fora do alinhamento (margem negativa),
+   para o fundo da opção escolhida não desalinhar o texto */
+.item {
+  padding: 8px;
+  margin: 0 -8px;
+  border-radius: 8px;
+}
+
+/* Opção que a pessoa escolheu: fundo azul claro */
+.item[data-seu-voto] {
+  background: var(--cor-azul-suave);
+}
+
+.rotulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: rem(15px);
+}
+
+.numeros {
+  color: var(--cor-texto-suave);
+  font-size: rem(14px);
+  white-space: nowrap;
+}
+
+.trilho {
+  background: var(--cor-cinza-suave);
+  box-shadow: inset 0 0 0 var(--espessura-borda) var(--cor-borda);
+}
+
+:global(html[data-contraste='alto']) .item[data-seu-voto] {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

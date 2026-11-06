@@ -5,3 +5,20 @@ export const STATUS_PROJETO = [
   { id: 'em-estudo', rotulo: 'Em estudo', corFundo: '#EEF0F4', corTexto: '#3B4351' },
   { id: 'encerrada', rotulo: 'Votação encerrada', corFundo: '#DDF5E6', corTexto: '#126336' },
 ];
+
+// O que aconteceu com o projeto depois que a votação acabou.
+// "texto" vem antes da data (ex.: "Encaminhado à Câmara Municipal em 31/10/2026").
+export const SITUACOES_PROJETO = [
+  {
+    id: 'encaminhado-camara',
+    rotulo: 'Encaminhado à Câmara',
+    texto: 'Encaminhado à Câmara Municipal em',
+    icone: 'send',
+  },
+  {
+    id: 'aprovado-camara',
+    rotulo: 'Aprovado pela Câmara',
+    texto: 'Aprovado pela Câmara Municipal em',
+    icone: 'gavel',
+  },
+];

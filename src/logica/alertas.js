@@ -1,4 +1,5 @@
-import { HOJE, diasAte } from './datas';
+import { HOJE } from './datas';
+import { projetosEmVotacao, textoPrazoVotacao } from './votacao';
 
 // Procura o alerta da Defesa Civil que vale hoje para a região da pessoa.
 // Recebe a lista de alertas e a região (ex.: "Zona Sul"). Sem região (visitante),
@@ -11,6 +12,17 @@ export function alertaDefesaCivilAtivo(alertas, regiao) {
       alerta.ativo &&
       // Alerta sem região vale para a cidade toda
       (!regiao || alerta.regiao === '' || alerta.regiao === regiao),
+  );
+}
+
+// Separa todos os alertas da Defesa Civil que valem hoje para uma região
+// (os da região e os da cidade toda). Recebe a lista de alertas e a região; devolve uma nova lista.
+export function alertasDefesaCivilDaRegiao(alertas, regiao) {
+  return alertas.filter(
+    (alerta) =>
+      alerta.tipo === 'defesa-civil' &&
+      alerta.ativo &&
+      (alerta.regiao === '' || alerta.regiao === regiao),
   );
 }
 
@@ -28,15 +40,6 @@ const AVISOS_STATUS = {
 // Põe a primeira letra em maiúscula. Recebe "chuva forte..."; devolve "Chuva forte...".
 function comMaiuscula(texto) {
   return texto.charAt(0).toUpperCase() + texto.slice(1);
-}
-
-// Escreve quanto falta para a votação acabar. Recebe a data final e hoje;
-// devolve "encerra hoje", "encerra amanhã" ou "encerra em N dias".
-function textoEncerramento(encerraEm, hoje) {
-  const dias = diasAte(encerraEm, hoje);
-  if (dias === 0) return 'encerra hoje';
-  if (dias === 1) return 'encerra amanhã';
-  return `encerra em ${dias} dias`;
 }
 
 // Monta o aviso do status atual de um pedido da pessoa.
@@ -61,17 +64,19 @@ function avisoDoPedido(pedido) {
 }
 
 // Junta todos os avisos da pessoa em uma lista só, do mais importante e recente para o mais antigo.
-// Recebe { usuario, pedidos, solicitacoes, projetos, alertasCidade, lidos, hoje }:
+// Recebe { usuario, pedidos, solicitacoes, projetos, votos, alertasCidade, lidos, hoje }:
 // - alertas da Defesa Civil ativos na região da pessoa (ou na cidade toda): marcados como importantes;
 // - um aviso para o status atual de cada pedido da pessoa (menos "enviada" e "avaliada");
 // - um aviso para cada solicitação de serviço recebida;
-// - um aviso para cada votação aberta que ainda não acabou.
+// - um aviso para cada votação aberta em que a pessoa ainda não votou
+//   (votos = { idProjeto: opcao } da pessoa; votar tira o aviso da lista).
 // Devolve [{ id, tipo, titulo, texto, data, link, icone, importante, lido }].
 export function montarAlertas({
   usuario,
   pedidos = [],
   solicitacoes = [],
   projetos = [],
+  votos = {},
   alertasCidade = [],
   lidos = [],
   hoje = HOJE,
@@ -111,15 +116,15 @@ export function montarAlertas({
     icone: 'inbox',
   }));
 
-  const votacoes = projetos
-    .filter((projeto) => projeto.status === 'votacao-aberta' && projeto.encerraEm >= hoje)
+  const votacoes = projetosEmVotacao(projetos, hoje)
+    .filter((projeto) => !votos[projeto.id])
     .map((projeto) => ({
       id: `votacao-${projeto.id}`,
       tipo: 'votacao',
       titulo: `Votação aberta: ${projeto.titulo}`,
-      texto: `A votação ${textoEncerramento(projeto.encerraEm, hoje)}. Dê sua opinião antes de o projeto ir para a Câmara.`,
-      data: projeto.abertoEm,
-      link: '/cidade-aberta',
+      texto: `${textoPrazoVotacao(projeto.fimVotacao, hoje)}. Dê sua opinião antes de o projeto ir para a Câmara.`,
+      data: projeto.inicioVotacao,
+      link: `/cidade-aberta/projetos/${projeto.id}`,
       icone: 'how_to_vote',
     }));
 

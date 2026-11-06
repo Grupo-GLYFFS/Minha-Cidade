@@ -1,5 +1,3 @@
-import { SERVICOS_BAIRROS } from '../dados/servicosBairros';
-import { normalizarTexto } from './enderecos';
 import { formatarCelular } from './celular';
 import { CIDADE_ATENDIDA } from './buscarCep';
 
@@ -31,14 +29,6 @@ export function iniciaisDoNome(nome = '') {
   const partes = limparNome(nome).split(' ');
   const ultima = partes.length > 1 ? partes[partes.length - 1] : '';
   return `${partes[0].charAt(0)}${ultima.charAt(0)}`.toUpperCase();
-}
-
-// Procura a UBS e a coleta de um bairro conhecido.
-// Recebe o nome do bairro; devolve { ubs, coleta } ou { ubs: null, coleta: null } se não conhecer.
-export function servicosDoBairro(bairro) {
-  const procurado = normalizarTexto(bairro);
-  const achado = SERVICOS_BAIRROS.find((item) => normalizarTexto(item.bairro) === procurado);
-  return { ubs: achado?.ubs ?? null, coleta: achado?.coleta ?? null };
 }
 
 // Procura uma conta pelo e-mail. Recebe a lista de contas e o e-mail; devolve a conta ou undefined.
@@ -86,16 +76,14 @@ export function aplicarDadosNaConta(conta, valores) {
 // Monta a pessoa da conta de demonstração com as mudanças feitas em "Meus dados".
 // A Maria fica no código (não no navegador); as mudanças dela ficam salvas à parte.
 // Recebe a Maria original e as mudanças (ou null); devolve a pessoa no formato das telas.
-// Se o bairro mudou, a UBS e a coleta passam a ser as do bairro novo (ou null se o app não conhece).
+// A coleta, a UBS e os outros serviços do bairro vêm de buscarBairro() (logica/bairros.js).
 export function aplicarAjustesDemonstracao(demonstracao, ajustes) {
   if (!ajustes) return demonstracao;
   const juntos = { ...demonstracao, ...ajustes };
-  const mesmoBairro = normalizarTexto(juntos.bairro) === normalizarTexto(demonstracao.bairro);
   return {
     ...juntos,
     primeiroNome: primeiroNome(juntos.nome),
     iniciais: iniciaisDoNome(juntos.nome),
-    ...(mesmoBairro ? {} : servicosDoBairro(juntos.bairro)),
   };
 }
 
@@ -117,7 +105,7 @@ export function valoresMeusDados(usuario) {
 
 // Transforma a conta salva na pessoa usada pelas telas (mesmo formato da conta de demonstração).
 // Recebe a conta; devolve a pessoa sem o hash da senha, com primeiro nome, iniciais,
-// cidade e a UBS e a coleta do bairro (null quando o app não conhece o bairro).
+// e cidade. Os serviços do bairro vêm de buscarBairro() (logica/bairros.js).
 export function montarUsuario(conta) {
   const { hashSenha: _hash, ...dados } = conta;
   return {
@@ -126,6 +114,5 @@ export function montarUsuario(conta) {
     iniciais: iniciaisDoNome(conta.nome),
     cidade: CIDADE_ATENDIDA,
     estado: 'SP',
-    ...servicosDoBairro(conta.bairro),
   };
 }

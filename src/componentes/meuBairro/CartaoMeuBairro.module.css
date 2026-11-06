@@ -1,0 +1,63 @@
+/* Estilos comuns dos cartões de Meu Bairro */
+.cartao {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Informação principal do cartão num bloco cinza (raio 8: 20 do cartão − 16 de padding) */
+.destaque {
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--cor-cinza-suave);
+  border: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.lista {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  color: var(--cor-texto-suave);
+}
+
+.item:first-child {
+  border-top: 0;
+}
+
+.item > span {
+  min-width: 0;
+  color: var(--mantine-color-text);
+}
+
+/* Links do pé do cartão, um embaixo do outro, com 44 px de altura para o toque */
+.links {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  display: flex;
+  flex-direction: column;
+}
+
+.links > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  font-size: rem(15px);
+}
+
+/* Link "Como chegar" com o ícone de nova aba, alto o bastante para o toque */
+.linkExterno {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+}

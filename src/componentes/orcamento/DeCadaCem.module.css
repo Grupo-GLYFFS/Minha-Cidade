@@ -1,0 +1,80 @@
+.lista {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Valor grande à esquerda, nome e barra à direita; linhas separadas por uma borda fina */
+.linha {
+  display: grid;
+  grid-template-columns: rem(76px) minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.linha:first-child {
+  border-top: 0;
+}
+
+.valor {
+  font-size: rem(26px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cor-link);
+  white-space: nowrap;
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: rem(15px);
+  line-height: 1.3;
+}
+
+.icone {
+  flex: none;
+  display: inline-flex;
+  color: var(--cor-texto-suave);
+}
+
+.trilho {
+  background: var(--cor-cinza-suave);
+  box-shadow: inset 0 0 0 var(--espessura-borda) var(--cor-borda);
+}
+
+.barra {
+  background: var(--mantine-color-azul-6);
+}
+
+.soma {
+  padding-top: 12px;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .linha {
+    grid-template-columns: rem(92px) minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .valor {
+    font-size: rem(32px);
+  }
+
+  .nome {
+    font-size: rem(16px);
+  }
+}

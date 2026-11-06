@@ -1,6 +1,7 @@
 import { STATUS_PEDIDO } from '../dados/statusPedido';
 import { CATEGORIAS_PEDIDO } from '../dados/categoriasPedido';
 import { HOJE, diasEntre, tempoRelativo } from './datas';
+import { calcularPrioridade } from './prioridade';
 
 // Procura os dados de um status (rótulo, cores, se está aberto).
 // Recebe o id do status (ex.: "em-analise"); devolve o objeto do status ou undefined.
@@ -56,14 +57,21 @@ export function filtrarPorSituacao(pedidos, situacao) {
 }
 
 // Resume os pedidos em andamento de um bairro.
-// Recebe a lista de pedidos e o nome do bairro;
-// devolve { abertos, emExecucao } com a quantidade de cada um.
+// Recebe a lista de pedidos e o nome do bairro; devolve { abertos } com a quantidade.
+// (As obras do bairro vêm de Obras da Cidade, não dos pedidos.)
 export function resumirPedidosDoBairro(pedidos, bairro) {
-  const abertos = pedidos.filter((pedido) => pedido.bairro === bairro && estaAberto(pedido));
   return {
-    abertos: abertos.length,
-    emExecucao: abertos.filter((pedido) => pedido.status === 'em-execucao').length,
+    abertos: pedidos.filter((pedido) => pedido.bairro === bairro && estaAberto(pedido)).length,
   };
+}
+
+// Escolhe os pedidos em andamento de um bairro, dos mais prioritários para os menos.
+// Recebe a lista de pedidos, o nome do bairro e quantos devolver; devolve uma nova lista.
+export function pedidosPrioritariosDoBairro(pedidos, bairro, quantidade = 3) {
+  return pedidos
+    .filter((pedido) => pedido.bairro === bairro && estaAberto(pedido))
+    .sort((a, b) => calcularPrioridade(b) - calcularPrioridade(a))
+    .slice(0, quantidade);
 }
 
 // Escreve quando o pedido mudou pela última vez.

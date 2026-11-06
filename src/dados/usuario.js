@@ -16,12 +16,6 @@ export const USUARIO = {
   regiao: 'Zona Sul',
   cidade: 'São Paulo',
   estado: 'SP',
-  ubs: 'UBS Vila Mariana',
-  // Dias da semana em que o caminhão passa: 0 = domingo, 1 = segunda ... 6 = sábado
-  coleta: {
-    comum: { dias: [1, 3, 5], horario: '19h' },
-    seletiva: { dias: [4], horario: '8h' },
-  },
 };
 
 // Senha pública da conta de demonstração (só serve para apresentar o protótipo)
