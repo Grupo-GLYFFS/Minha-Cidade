@@ -1,0 +1,4 @@
+/* Asterisco de campo obrigatório, na mesma cor de erro dos outros campos */
+.asterisco {
+  color: var(--mantine-color-error);
+}

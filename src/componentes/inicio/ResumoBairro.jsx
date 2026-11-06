@@ -8,11 +8,17 @@ import { pluralizar } from '../../logica/formatos';
 import { resumirPedidosDoBairro } from '../../logica/pedidos';
 import classes from './ResumoBairro.module.css';
 
+// Texto quando o app ainda não tem a coleta ou a UBS do bairro (sem inventar dados)
+const SEM_DADO = 'Consulte em Meu Bairro';
+
 // Resumo do bairro da pessoa: próxima coleta, coleta seletiva, UBS e pedidos abertos.
 // Recebe a pessoa usando o app e a lista de todos os pedidos (para contar os do bairro).
+// Bairro que o app não conhece (coleta e UBS null) mostra "Consulte em Meu Bairro".
 export default function ResumoBairro({ usuario, pedidos }) {
-  const { comum, seletiva } = usuario.coleta;
-  const proximaColeta = `${proximoDiaDaLista(comum.dias)}, a partir das ${comum.horario}`;
+  const { coleta } = usuario;
+  const proximaColeta = coleta
+    ? `${proximoDiaDaLista(coleta.comum.dias)}, a partir das ${coleta.comum.horario}`
+    : SEM_DADO;
   const { abertos, emExecucao } = resumirPedidosDoBairro(pedidos, usuario.bairro);
   const totalPedidos = pluralizar(abertos, 'pedido', 'pedidos');
 
@@ -21,11 +27,15 @@ export default function ResumoBairro({ usuario, pedidos }) {
     {
       icone: 'delete',
       rotulo: 'Próxima coleta',
-      valor: `${proximaColeta} (lixo comum)`,
+      valor: coleta ? `${proximaColeta} (lixo comum)` : SEM_DADO,
       valorCurto: proximaColeta,
     },
-    { icone: 'recycling', rotulo: 'Coleta seletiva', valor: proximoDiaDaLista(seletiva.dias) },
-    { icone: 'local_hospital', rotulo: 'Sua UBS', valor: usuario.ubs },
+    {
+      icone: 'recycling',
+      rotulo: 'Coleta seletiva',
+      valor: coleta ? proximoDiaDaLista(coleta.seletiva.dias) : SEM_DADO,
+    },
+    { icone: 'local_hospital', rotulo: 'Sua UBS', valor: usuario.ubs ?? SEM_DADO },
     {
       icone: 'campaign',
       rotulo: 'Pedidos abertos no bairro',

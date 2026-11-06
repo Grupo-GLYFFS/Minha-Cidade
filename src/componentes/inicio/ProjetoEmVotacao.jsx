@@ -4,13 +4,18 @@ import Cartao from '../Cartao';
 import Etiqueta from '../Etiqueta';
 import Icone from '../Icone';
 import { STATUS_PROJETO } from '../../dados/statusProjeto';
+import { useSessao } from '../../contexto/useSessao';
+import { useCaminhoConta } from '../../contexto/useCaminhoConta';
 import { diasAte } from '../../logica/datas';
 import { formatarNumero, formatarValorCurto, pluralizar } from '../../logica/formatos';
 import classes from './ProjetoEmVotacao.module.css';
 
 // Cartão "Participe": um projeto da prefeitura com votação aberta e o botão para votar.
 // Recebe o projeto (título, resumo, valor, data de encerramento e votos).
+// Votar precisa de conta: o visitante vê "Entrar para votar" e volta para cá depois de entrar.
 export default function ProjetoEmVotacao({ projeto }) {
+  const { logado } = useSessao();
+  const { entrar } = useCaminhoConta();
   const status = STATUS_PROJETO.find((item) => item.id === projeto.status);
   const diasRestantes = diasAte(projeto.encerraEm);
 
@@ -57,12 +62,12 @@ export default function ProjetoEmVotacao({ projeto }) {
 
       <Button
         component={Link}
-        to={`/cidade-aberta/projetos/${projeto.id}`}
+        to={logado ? `/cidade-aberta/projetos/${projeto.id}` : entrar}
         h={{ base: 48, md: 44 }}
         px="lg"
         className={classes.botao}
       >
-        Ver prós e contras e votar
+        {logado ? 'Ver prós e contras e votar' : 'Entrar para votar'}
       </Button>
     </Cartao>
   );

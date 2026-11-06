@@ -78,3 +78,9 @@
   border-radius: 12px;
   background: #fff;
 }
+
+/* Itens do menu da conta com 44 px de altura (alvo de toque confortável) */
+.itemMenu {
+  min-height: 44px;
+  font-weight: 600;
+}

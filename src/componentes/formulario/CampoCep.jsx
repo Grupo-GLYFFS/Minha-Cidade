@@ -3,7 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { Group, Loader, Text, TextInput } from '@mantine/core';
 import Icone from '../Icone';
 import { buscarCep } from '../../logica/buscarCep';
-import { formatarCep, limparCep } from '../../logica/enderecos';
+import { formatarCep, limparCep, regiaoDoBairro } from '../../logica/enderecos';
 
 // Avisos quando a busca não preenche o endereço (não impedem o envio: dá para digitar à mão)
 const AVISOS_BUSCA = {
@@ -12,9 +12,10 @@ const AVISOS_BUSCA = {
 };
 
 // Campo de CEP com máscara 00000-000. Quando os 8 números são digitados, busca o endereço
-// no ViaCEP e preenche rua e bairro (a pessoa ainda pode mudar).
-// Recebe aoAcharBairro(bairro), chamada para descobrir a região depois da busca.
-export default function CampoCep({ aoAcharBairro }) {
+// no ViaCEP e preenche rua, bairro e (se o app conhece o bairro) a região; a pessoa ainda pode mudar.
+// Usado no "Abrir pedido" e no "Criar conta": lê e grava pelo formulário compartilhado
+// (campos "cep", "cidadeDoCep", "rua", "bairro" e "regiao").
+export default function CampoCep() {
   const { control, setValue, trigger } = useFormContext();
   const [buscando, setBuscando] = useState(false);
   const [aviso, setAviso] = useState(null);
@@ -44,7 +45,8 @@ export default function CampoCep({ aoAcharBairro }) {
     if (resultado.rua) setValue('rua', resultado.rua, opcoes);
     if (resultado.bairro) {
       setValue('bairro', resultado.bairro, opcoes);
-      aoAcharBairro(resultado.bairro);
+      const regiao = regiaoDoBairro(resultado.bairro);
+      if (regiao) setValue('regiao', regiao, { shouldValidate: true });
     }
     setEncontrado(
       `Endereço encontrado: ${resultado.rua || 'rua não informada'}, ${resultado.bairro}.`,

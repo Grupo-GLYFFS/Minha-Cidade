@@ -1,22 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
-import {
-  ActionIcon,
-  Avatar,
-  Container,
-  Group,
-  Indicator,
-  Text,
-  TextInput,
-  UnstyledButton,
-} from '@mantine/core';
+import { ActionIcon, Container, Group, Indicator, Text, TextInput } from '@mantine/core';
 import Icone from './Icone';
+import MenuConta from './MenuConta';
+import { useSessao } from '../contexto/useSessao';
+import { caminhoComVoltar } from '../logica/sessao';
 import { MENU_COMPUTADOR, estaAtivo } from '../dados/navegacao';
 import classes from './CabecalhoDesktop.module.css';
 
-// Cabeçalho do computador: barra de acessibilidade, logo, menu, busca, alertas e perfil.
+// Cabeçalho do computador: barra de acessibilidade, logo, menu, busca, alertas e conta.
 // Recebe quantos alertas novos existem, para mostrar o contador no sino.
+// Para o visitante, o sino leva a "Entrar" (os alertas são da pessoa) e não mostra contador.
 export default function CabecalhoDesktop({ alertasNovos = 0 }) {
   const { pathname } = useLocation();
+  const { logado } = useSessao();
+  const novos = logado ? alertasNovos : 0;
 
   return (
     <header>
@@ -99,29 +96,19 @@ export default function CabecalhoDesktop({ alertasNovos = 0 }) {
                 />
               </form>
 
-              <Indicator label={alertasNovos} size={18} color="red" disabled={alertasNovos === 0}>
+              <Indicator label={novos} size={18} color="red" disabled={novos === 0}>
                 <ActionIcon
                   component={Link}
-                  to="/alertas"
+                  to={logado ? '/alertas' : caminhoComVoltar('/entrar', '/alertas')}
                   variant="default"
                   size={44}
-                  aria-label={`Alertas, ${alertasNovos} novos`}
+                  aria-label={logado ? `Alertas, ${novos} novos` : 'Entrar para ver os alertas'}
                 >
                   <Icone nome="notifications" />
                 </ActionIcon>
               </Indicator>
 
-              <UnstyledButton
-                component={Link}
-                to="/perfil"
-                className={classes.perfil}
-                aria-label="Perfil: Maria Souza"
-              >
-                <Avatar color="azul" variant="filled" radius="sm" size={34}>
-                  MS
-                </Avatar>
-                <Text fw={600}>Maria</Text>
-              </UnstyledButton>
+              <MenuConta />
             </Group>
           </Group>
         </Container>

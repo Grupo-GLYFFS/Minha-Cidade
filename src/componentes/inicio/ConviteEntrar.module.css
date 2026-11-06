@@ -1,0 +1,38 @@
+/* Celular: ícone e texto em cima, botões lado a lado embaixo.
+   Computador: tudo numa linha, botões à direita */
+.cartao {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px 16px;
+}
+
+/* Círculo azul claro com o ícone de pessoa */
+.icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cor-azul-suave);
+  color: var(--mantine-color-azul-8);
+}
+
+.botoes {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .cartao {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .botoes {
+    grid-column: auto;
+    display: flex;
+  }
+}

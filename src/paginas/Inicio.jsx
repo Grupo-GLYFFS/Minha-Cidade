@@ -1,41 +1,52 @@
 import { Text } from '@mantine/core';
 import SaudacaoBusca from '../componentes/inicio/SaudacaoBusca';
+import AvisoSessao from '../componentes/inicio/AvisoSessao';
+import ConviteEntrar from '../componentes/inicio/ConviteEntrar';
 import AvisoAlerta from '../componentes/AvisoAlerta';
 import AtalhosServicos from '../componentes/inicio/AtalhosServicos';
 import MeusPedidos from '../componentes/inicio/MeusPedidos';
 import ResumoBairro from '../componentes/inicio/ResumoBairro';
 import ProjetoEmVotacao from '../componentes/inicio/ProjetoEmVotacao';
 import PorQueExiste from '../componentes/inicio/PorQueExiste';
-import { USUARIO } from '../dados/usuario';
 import { ALERTAS } from '../dados/alertas';
 import { PROJETOS } from '../dados/projetos';
 import { SERVICOS_MAIS_USADOS } from '../dados/servicos';
 import { alertaDefesaCivilAtivo } from '../logica/alertas';
 import { pedidosAbertosDaPessoa } from '../logica/pedidos';
 import { usePedidos } from '../contexto/usePedidos';
+import { useSessao } from '../contexto/useSessao';
 import classes from './Inicio.module.css';
 
 // Página inicial: busca, alerta da Defesa Civil, atalhos, pedidos da pessoa,
 // resumo do bairro, votação aberta e "Por que o Minha Prefeitura existe".
+// Para o visitante: "Olá!" e o convite para entrar, sem "Meus pedidos" nem "Meu Bairro".
 export default function Inicio() {
-  const alerta = alertaDefesaCivilAtivo(ALERTAS, USUARIO.regiao);
+  const { usuario } = useSessao();
   const { pedidos } = usePedidos();
-  const meusPedidos = pedidosAbertosDaPessoa(pedidos, USUARIO.id);
+  const alerta = alertaDefesaCivilAtivo(ALERTAS, usuario?.regiao);
   const projetoAberto = PROJETOS.find((projeto) => projeto.status === 'votacao-aberta');
+  const meusPedidos = usuario ? pedidosAbertosDaPessoa(pedidos, usuario.id) : [];
+  const nuncaAbriu = usuario ? !pedidos.some((pedido) => pedido.autorId === usuario.id) : false;
 
   return (
     <div className={classes.pagina}>
-      <SaudacaoBusca usuario={USUARIO} />
+      <AvisoSessao />
+
+      <SaudacaoBusca usuario={usuario} />
+
+      {!usuario && <ConviteEntrar />}
 
       {alerta && <AvisoAlerta alerta={alerta} />}
 
       <AtalhosServicos servicos={SERVICOS_MAIS_USADOS} />
 
       {/* No computador, pedidos e bairro ficam lado a lado */}
-      <div className={classes.duasColunas}>
-        <MeusPedidos pedidos={meusPedidos} />
-        <ResumoBairro usuario={USUARIO} pedidos={pedidos} />
-      </div>
+      {usuario && (
+        <div className={classes.duasColunas}>
+          <MeusPedidos pedidos={meusPedidos} nuncaAbriu={nuncaAbriu} />
+          <ResumoBairro usuario={usuario} pedidos={pedidos} />
+        </div>
+      )}
 
       {projetoAberto && <ProjetoEmVotacao projeto={projetoAberto} />}
 

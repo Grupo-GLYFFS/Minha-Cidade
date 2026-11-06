@@ -1,15 +1,20 @@
-import { mixed, object, string } from 'yup';
+import { object, string } from 'yup';
 import { CATEGORIAS_PEDIDO } from '../dados/categoriasPedido';
 import { GRAVIDADES } from '../dados/gravidades';
-import { REGIOES } from '../dados/regioes';
-import { CIDADE_ATENDIDA } from './buscarCep';
+import {
+  FORMATO_NUMERO,
+  LIMITE_ARQUIVO_MB,
+  regraArquivo,
+  regraCep,
+  regraRegiao,
+} from './regrasFormulario';
 
 // Limites dos campos (usados nas regras e nos textos de ajuda da tela)
 export const TITULO_MIN = 10;
 export const TITULO_MAX = 80;
 export const DESCRICAO_MIN = 20;
 export const DESCRICAO_MAX = 500;
-export const LIMITE_FOTO_MB = 5;
+export const LIMITE_FOTO_MB = LIMITE_ARQUIVO_MB;
 
 // Ordem dos campos na tela: o primeiro com erro recebe o foco ao tentar enviar
 export const ORDEM_CAMPOS = [
@@ -55,11 +60,6 @@ export const VALORES_INICIAIS = {
   foto: null,
 };
 
-// Escreve o tamanho de um arquivo em MB. Recebe bytes; devolve, por exemplo, "7,2 MB".
-function emMegabytes(bytes) {
-  return `${(bytes / 1024 / 1024).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} MB`;
-}
-
 // Regras de cada campo do formulário "Abrir pedido".
 // Toda mensagem diz o que fazer para corrigir.
 export const esquemaNovoPedido = object({
@@ -95,18 +95,11 @@ export const esquemaNovoPedido = object({
       'Escolha quão grave é o problema, de 1 (leve) a 5 (muito grave).',
     ),
 
-  cep: string()
-    .required('Digite o CEP do local, ex.: 04015-001.')
-    .matches(/^\d{5}-\d{3}$/, 'Digite os 8 números do CEP, ex.: 04015-001.')
-    // Bloqueia CEP de outra cidade (a cidade vem da busca no ViaCEP)
-    .test(
-      'cidade-atendida',
+  cep: regraCep({
+    vazio: 'Digite o CEP do local, ex.: 04015-001.',
+    foraDaCidade:
       'Este CEP não é da cidade de São Paulo. Confira os números ou use o CEP do local do problema.',
-      function cepDaCidade() {
-        const cidade = this.parent.cidadeDoCep;
-        return !cidade || cidade === CIDADE_ATENDIDA;
-      },
-    ),
+  }),
 
   cidadeDoCep: string(),
 
@@ -120,10 +113,7 @@ export const esquemaNovoPedido = object({
   numero: string()
     .trim()
     .required('Digite o número mais perto do problema ou s/n se não houver.')
-    .matches(
-      /^(\d{1,6}[a-zA-Z]?|s\/?n)$/i,
-      'Use só números (ex.: 120) ou s/n se o local não tiver número.',
-    ),
+    .matches(FORMATO_NUMERO, 'Use só números (ex.: 120) ou s/n se o local não tiver número.'),
 
   bairro: string()
     .trim()
@@ -132,25 +122,13 @@ export const esquemaNovoPedido = object({
     .max(60, 'Encurte o nome do bairro para até 60 caracteres.'),
 
   // Só é pedida quando o bairro está preenchido (se o app reconhece o bairro, ela vem sozinha)
-  regiao: string().when('bairro', {
-    is: (bairro) => Boolean(bairro?.trim()),
-    then: (regra) =>
-      regra.required('Escolha a região da cidade onde fica o bairro.').oneOf(
-        REGIOES.map((r) => r.nome),
-        'Escolha a região da cidade onde fica o bairro.',
-      ),
-  }),
+  regiao: regraRegiao(),
 
   // Foto opcional: se tiver, precisa ser imagem de até 5 MB
-  foto: mixed()
-    .nullable()
-    .test('tipo', 'Escolha um arquivo de imagem (JPG, PNG ou WEBP).', (arquivo) => {
-      return !arquivo || arquivo.type.startsWith('image/');
-    })
-    .test('tamanho', 'Foto grande demais.', function fotoPequena(arquivo) {
-      if (!arquivo || arquivo.size <= LIMITE_FOTO_MB * 1024 * 1024) return true;
-      return this.createError({
-        message: `Esta foto tem ${emMegabytes(arquivo.size)}. Escolha uma imagem de até ${LIMITE_FOTO_MB} MB.`,
-      });
-    }),
+  foto: regraArquivo({
+    aceito: (arquivo) => arquivo.type.startsWith('image/'),
+    mensagemTipo: 'Escolha um arquivo de imagem (JPG, PNG ou WEBP).',
+    nomeArquivo: 'Esta foto',
+    tipoPedido: 'uma imagem',
+  }),
 });

@@ -1,17 +1,40 @@
+import { Link } from 'react-router-dom';
 import { Button, Group, Text } from '@mantine/core';
 import Icone from '../Icone';
 import { usePedidos } from '../../contexto/usePedidos';
+import { useSessao } from '../../contexto/useSessao';
+import { useCaminhoConta } from '../../contexto/useCaminhoConta';
 import { MOTIVOS_SEM_APOIO } from '../../logica/apoios';
 import classes from './BotaoApoiar.module.css';
 
 // Botão para apoiar um pedido ("eu também tenho esse problema").
 // Depois do clique vira "Você apoiou". Em pedido da pessoa ou encerrado, mostra o motivo.
+// Para o visitante vira "Entrar para apoiar", que leva a "Entrar" e depois volta para esta página.
 // Recebe o pedido, o texto do botão e "completo" (true na página do pedido: botão largo,
 // motivo embaixo de um botão desativado; false no cartão: só o motivo, sem botão).
 export default function BotaoApoiar({ pedido, texto = 'Apoiar', completo = false }) {
   const { apoiar, explicarSemApoio } = usePedidos();
+  const { logado } = useSessao();
+  const { entrar } = useCaminhoConta();
   const motivo = explicarSemApoio(pedido);
   const tamanho = completo ? 'md' : 'sm';
+
+  // Pedido encerrado não recebe apoio de ninguém; nos outros, o visitante é convidado a entrar
+  if (!logado && motivo !== 'encerrado') {
+    return (
+      <Button
+        component={Link}
+        to={entrar}
+        size={tamanho}
+        fullWidth={completo}
+        variant={completo ? 'filled' : 'light'}
+        className={classes.acima}
+        leftSection={<Icone nome="login" tamanho={20} />}
+      >
+        Entrar para apoiar
+      </Button>
+    );
+  }
 
   if (motivo === 'ja-apoiou') {
     return (

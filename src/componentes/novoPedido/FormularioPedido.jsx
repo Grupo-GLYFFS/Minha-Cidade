@@ -3,11 +3,16 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Divider, Group, Stack, Text } from '@mantine/core';
 import Icone from '../Icone';
-import ResumoErros from './ResumoErros';
+import ResumoErros from '../formulario/ResumoErros';
 import SecaoProblema from './SecaoProblema';
 import SecaoEndereco from './SecaoEndereco';
 import SecaoFoto from './SecaoFoto';
-import { ORDEM_CAMPOS, VALORES_INICIAIS, esquemaNovoPedido } from '../../logica/esquemaNovoPedido';
+import {
+  NOMES_CAMPOS,
+  ORDEM_CAMPOS,
+  VALORES_INICIAIS,
+  esquemaNovoPedido,
+} from '../../logica/esquemaNovoPedido';
 import classes from './FormularioPedido.module.css';
 
 // Formulário "Abrir pedido", validado com as regras de esquemaNovoPedido.
@@ -47,7 +52,15 @@ export default function FormularioPedido({ aoEnviar, valoresIniciais = VALORES_I
         aria-label="Abrir pedido"
       >
         <Stack gap="lg">
-          {tentouEnviar && <ResumoErros erros={formState.errors} irParaCampo={irParaCampo} />}
+          {tentouEnviar && (
+            <ResumoErros
+              erros={formState.errors}
+              irParaCampo={irParaCampo}
+              ordemCampos={ORDEM_CAMPOS}
+              nomesCampos={NOMES_CAMPOS}
+              acao="enviar"
+            />
+          )}
 
           <Text fz="sm" c="var(--cor-texto-suave)">
             Todos os campos são obrigatórios, menos a foto. Eles estão marcados com *.

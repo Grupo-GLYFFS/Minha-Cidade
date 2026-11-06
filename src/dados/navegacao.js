@@ -20,6 +20,14 @@ export const ABAS_CELULAR = [
   },
 ];
 
+// Para o visitante, a aba Perfil vira "Entrar" (o caminho com o destino de volta é montado na tela)
+export const ABA_ENTRAR = {
+  rotulo: 'Entrar',
+  caminho: '/entrar',
+  icone: 'login',
+  ativoEm: ['/entrar', '/criar-conta'],
+};
+
 export const MENU_COMPUTADOR = [
   { rotulo: 'Início', caminho: '/', ativoEm: ['/'] },
   { rotulo: 'Serviços', caminho: '/servicos', ativoEm: ['/servicos', '/busca'] },

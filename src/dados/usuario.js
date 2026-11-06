@@ -1,11 +1,12 @@
-// Pessoa de exemplo que está usando o app (não existe login de verdade no protótipo).
-// Os outros dados (pedidos, votos) apontam para ela pelo "id".
+// Conta de demonstração: a Maria, dona dos pedidos de exemplo.
+// Ela sempre existe; dá para entrar com o botão "Entrar com conta de demonstração"
+// ou digitando o e-mail e a senha abaixo. Os outros dados (pedidos, votos) apontam para ela pelo "id".
 export const USUARIO = {
   id: 'u-001',
   nome: 'Maria Souza',
   primeiroNome: 'Maria',
   iniciais: 'MS',
-  email: 'maria.souza@exemplo.com.br',
+  email: 'maria@exemplo.com',
   celular: '(11) 91234-5678',
   bairro: 'Vila Mariana',
   regiao: 'Zona Sul',
@@ -18,3 +19,6 @@ export const USUARIO = {
     seletiva: { dias: [4], horario: '8h' },
   },
 };
+
+// Senha pública da conta de demonstração (só serve para apresentar o protótipo)
+export const SENHA_DEMONSTRACAO = 'demo1234';

@@ -1,0 +1,32 @@
+/* Cores com contraste alto: verde escuro sobre verde claro (conta criada)
+   e azul escuro sobre azul claro (saiu da conta) */
+.aviso[data-tipo='sucesso'] {
+  background: #ddf5e6;
+  border: 1px solid #a9e2be;
+  --cor-aviso: #126336;
+}
+
+.aviso[data-tipo='neutro'] {
+  background: var(--cor-azul-suave);
+  border: 1px solid var(--mantine-color-azul-1);
+  --cor-aviso: var(--mantine-color-azul-9);
+}
+
+.aviso .texto {
+  color: var(--cor-aviso);
+}
+
+/* O aviso recebe foco pelo código, não pelo Tab: sem contorno de foco */
+.aviso:focus {
+  outline: none;
+}
+
+/* Botão de fechar com 44 px (alvo de toque confortável) */
+.aviso :global(.mantine-Alert-closeButton) {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  margin: -12px -12px 0 0;
+  color: var(--cor-aviso);
+}

@@ -7,7 +7,7 @@ import classes from './SaudacaoBusca.module.css';
 
 // Topo da página inicial: "Olá, Maria", o bairro da pessoa e o campo de busca.
 // No computador o campo é de verdade; no celular é um link que abre a tela de Busca.
-// Recebe a pessoa usando o app.
+// Recebe a pessoa logada, ou null para o visitante (aí aparece só "Olá!", sem bairro).
 export default function SaudacaoBusca({ usuario }) {
   const [texto, setTexto] = useState('');
   const navigate = useNavigate();
@@ -21,14 +21,16 @@ export default function SaudacaoBusca({ usuario }) {
   return (
     <section aria-labelledby="ola-titulo">
       <Title order={1} id="ola-titulo" fz={{ base: 30, md: 32 }} lh={1.15} lts="-0.02em">
-        Olá, {usuario.primeiroNome}
+        {usuario ? `Olá, ${usuario.primeiroNome}` : 'Olá!'}
       </Title>
-      <Group gap={4} mt={4} c="var(--cor-texto-suave)">
-        <Icone nome="location_on" tamanho={18} />
-        <Text fz={{ base: 14, md: 15 }} fw={500} c="inherit">
-          {usuario.bairro}, {usuario.cidade}
-        </Text>
-      </Group>
+      {usuario && (
+        <Group gap={4} mt={4} c="var(--cor-texto-suave)">
+          <Icone nome="location_on" tamanho={18} />
+          <Text fz={{ base: 14, md: 15 }} fw={500} c="inherit">
+            {usuario.bairro}, {usuario.cidade}
+          </Text>
+        </Group>
+      )}
 
       <Box
         component="form"
