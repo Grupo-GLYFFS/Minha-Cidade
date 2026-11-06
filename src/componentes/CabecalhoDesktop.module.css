@@ -1,0 +1,80 @@
+.util {
+  background: #fff;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.a11y {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mantine-color-text);
+  background: transparent;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  min-width: 32px;
+  height: 30px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.topo {
+  background: #fff;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.logo {
+  display: block;
+  height: 44px;
+  width: auto;
+}
+
+.nav {
+  flex: 1;
+  min-width: 0;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 4px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.link:hover {
+  color: var(--mantine-color-text);
+  background: #f1f3f7;
+}
+
+.link[aria-current='page'] {
+  background: var(--mantine-color-azul-0);
+  color: var(--mantine-color-azul-7);
+}
+
+/* Botão do perfil: raio de fora 12, padding 4 → avatar com raio 8 */
+.perfil {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 4px 12px 4px 4px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 12px;
+  background: #fff;
+}

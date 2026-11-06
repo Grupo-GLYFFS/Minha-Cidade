@@ -1,0 +1,17 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.conteudo {
+  flex: 1;
+  /* No celular, deixa espaço para a barra de abas fixa embaixo */
+  padding-bottom: var(--altura-abas);
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .conteudo {
+    padding-bottom: 0;
+  }
+}

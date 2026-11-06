@@ -1,0 +1,81 @@
+/* Estilos gerais do app (o resto vem do tema do Mantine). */
+
+:root {
+  --cor-fundo: #f4f6fa;
+  --cor-borda: #e4e8ef;
+  --cor-texto-suave: #525d73;
+  --cor-foco: #f5a300;
+  --pad: 16px;
+  --altura-abas: 89px; /* 16 + 56 + 16 + 1 de borda */
+}
+
+body {
+  background: var(--cor-fundo);
+}
+
+/* Foco do teclado em amarelo, visível sobre qualquer cor */
+:focus-visible {
+  outline: 3px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+/* Ícones Material Symbols (carregados como fonte no index.html) */
+.icone {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  flex: none;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.icone-18 {
+  font-size: 18px;
+}
+.icone-20 {
+  font-size: 20px;
+}
+.icone-24 {
+  font-size: 24px;
+}
+.icone-28 {
+  font-size: 28px;
+}
+
+.icone-preenchido {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 600,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+/* Link "Pular para o conteúdo": só aparece quando recebe foco pelo teclado */
+.pular-conteudo {
+  position: absolute;
+  left: 16px;
+  top: -80px;
+  z-index: 1000;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: #0052ef;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pular-conteudo:focus {
+  top: 8px;
+}
