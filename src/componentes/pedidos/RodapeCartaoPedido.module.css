@@ -1,0 +1,40 @@
+/* Grade: linha fina em cima, dados à esquerda e botão à direita, sempre no pé do cartão */
+.rodape {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--cor-borda);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Os dados quebram linha por dentro; o botão nunca desce para a linha de baixo */
+.dados {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Computador, modo lista: sem linha, dados e botão lado a lado na coluna da direita */
+@media (min-width: $mantine-breakpoint-md) {
+  .rodape[data-layout='lista'] {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+    gap: 24px;
+    width: 400px;
+  }
+
+  /* Botão ou aviso com largura fixa, para tudo ficar alinhado de um cartão para o outro */
+  .rodape[data-layout='lista'] > :last-child {
+    width: 152px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .rodape[data-layout='lista'] .dados {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}

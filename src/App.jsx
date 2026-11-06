@@ -5,6 +5,8 @@ import Busca from './paginas/Busca';
 import Servicos from './paginas/Servicos';
 import Cidade from './paginas/Cidade';
 import Pedidos from './paginas/Pedidos';
+import NovoPedido from './paginas/NovoPedido';
+import DetalhePedido from './paginas/DetalhePedido';
 import CidadeAberta from './paginas/CidadeAberta';
 import MeuBairro from './paginas/MeuBairro';
 import Alertas from './paginas/Alertas';
@@ -24,6 +26,8 @@ export default function App() {
         <Route path="/servicos" element={<Servicos />} />
         <Route path="/cidade" element={<Cidade />} />
         <Route path="/pedidos" element={<Pedidos />} />
+        <Route path="/pedidos/novo" element={<NovoPedido />} />
+        <Route path="/pedidos/:id" element={<DetalhePedido />} />
         <Route path="/cidade-aberta" element={<CidadeAberta />} />
         <Route path="/meu-bairro" element={<MeuBairro />} />
         <Route path="/alertas" element={<Alertas />} />

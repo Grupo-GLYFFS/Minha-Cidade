@@ -1,0 +1,21 @@
+/* Três notas lado a lado */
+.notas {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+/* Dentro do cartão (raio 20, padding 16): 20 − 16 = 4, então usa o mínimo de 8 px */
+.nota {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border-radius: 8px;
+  background: var(--cor-cinza-suave);
+  text-align: center;
+}

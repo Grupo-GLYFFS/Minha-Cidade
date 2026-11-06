@@ -1,0 +1,26 @@
+.painel {
+  border-color: #f2d27a;
+}
+
+/* Círculo amarelo com o ícone de cópia */
+.icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff4d9;
+  color: #634300;
+  flex: none;
+}
+
+/* O título recebe foco pelo código, não pelo Tab: sem contorno de foco */
+.titulo:focus {
+  outline: none;
+}
+
+/* Botões com 48 px de altura (alvo de toque confortável) */
+.painel :global(.mantine-Button-root) {
+  --button-height-md: 48px;
+}

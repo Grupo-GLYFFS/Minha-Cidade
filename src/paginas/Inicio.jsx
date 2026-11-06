@@ -7,19 +7,20 @@ import ResumoBairro from '../componentes/inicio/ResumoBairro';
 import ProjetoEmVotacao from '../componentes/inicio/ProjetoEmVotacao';
 import PorQueExiste from '../componentes/inicio/PorQueExiste';
 import { USUARIO } from '../dados/usuario';
-import { PEDIDOS } from '../dados/pedidos';
 import { ALERTAS } from '../dados/alertas';
 import { PROJETOS } from '../dados/projetos';
 import { SERVICOS_MAIS_USADOS } from '../dados/servicos';
 import { alertaDefesaCivilAtivo } from '../logica/alertas';
 import { pedidosAbertosDaPessoa } from '../logica/pedidos';
+import { usePedidos } from '../contexto/usePedidos';
 import classes from './Inicio.module.css';
 
 // Página inicial: busca, alerta da Defesa Civil, atalhos, pedidos da pessoa,
 // resumo do bairro, votação aberta e "Por que o Minha Prefeitura existe".
 export default function Inicio() {
   const alerta = alertaDefesaCivilAtivo(ALERTAS, USUARIO.regiao);
-  const meusPedidos = pedidosAbertosDaPessoa(PEDIDOS, USUARIO.id);
+  const { pedidos } = usePedidos();
+  const meusPedidos = pedidosAbertosDaPessoa(pedidos, USUARIO.id);
   const projetoAberto = PROJETOS.find((projeto) => projeto.status === 'votacao-aberta');
 
   return (
@@ -33,7 +34,7 @@ export default function Inicio() {
       {/* No computador, pedidos e bairro ficam lado a lado */}
       <div className={classes.duasColunas}>
         <MeusPedidos pedidos={meusPedidos} />
-        <ResumoBairro usuario={USUARIO} pedidos={PEDIDOS} />
+        <ResumoBairro usuario={USUARIO} pedidos={pedidos} />
       </div>
 
       {projetoAberto && <ProjetoEmVotacao projeto={projetoAberto} />}

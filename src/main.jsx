@@ -5,15 +5,19 @@ import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import './estilos/global.css';
 import { tema } from './tema';
+import PedidosProvider from './contexto/PedidosProvider';
 import App from './App';
 
-// Ponto de partida do app: aplica o tema do Mantine, liga as rotas e mostra o App.
+// Ponto de partida do app: aplica o tema do Mantine, compartilha os pedidos,
+// liga as rotas e mostra o App.
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <MantineProvider theme={tema}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <PedidosProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PedidosProvider>
     </MantineProvider>
   </StrictMode>,
 );

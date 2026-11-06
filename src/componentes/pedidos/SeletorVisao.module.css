@@ -1,0 +1,11 @@
+/* Mesmo estilo do rótulo dos campos do Mantine, para alinhar com eles */
+.rotulo {
+  display: block;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.controle {
+  background: var(--cor-cinza-suave);
+}

@@ -64,3 +64,32 @@ export function proximoDiaDaLista(dias, hoje = HOJE) {
   }
   return '';
 }
+
+const NOMES_MESES = [
+  'janeiro',
+  'fevereiro',
+  'março',
+  'abril',
+  'maio',
+  'junho',
+  'julho',
+  'agosto',
+  'setembro',
+  'outubro',
+  'novembro',
+  'dezembro',
+];
+
+// Escreve uma data por extenso. Recebe um texto ISO; devolve, por exemplo, "4 de novembro de 2026".
+export function formatarDataExtenso(data) {
+  const [ano, mes, dia] = data.slice(0, 10).split('-').map(Number);
+  return `${dia} de ${NOMES_MESES[mes - 1]} de ${ano}`;
+}
+
+// Monta o momento atual usando a data fixa de "hoje" e a hora do relógio.
+// Recebe a data de hoje e um relógio (Date); devolve um texto ISO como "2026-11-06T14:05:00-03:00".
+export function momentoDeHoje(hoje = HOJE, relogio = new Date()) {
+  const doisDigitos = (numero) => String(numero).padStart(2, '0');
+  const hora = `${doisDigitos(relogio.getHours())}:${doisDigitos(relogio.getMinutes())}:${doisDigitos(relogio.getSeconds())}`;
+  return `${hoje}T${hora}-03:00`;
+}

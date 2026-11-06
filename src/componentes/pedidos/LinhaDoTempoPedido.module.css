@@ -1,0 +1,22 @@
+.tituloEtapa {
+  font-weight: 700;
+}
+
+.estado {
+  color: var(--cor-texto-suave);
+}
+
+/* Etapa atual em azul escuro, recusa em vermelho escuro: ambos com contraste de 4,5:1 ou mais */
+.etapa[data-estado='atual'] .estado {
+  color: var(--mantine-color-azul-7);
+}
+
+.etapa[data-estado='recusada'] .estado {
+  color: #a11a1a;
+}
+
+/* Etapas que ainda não aconteceram ficam mais apagadas */
+.etapa[data-estado='futura'] .tituloEtapa {
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}

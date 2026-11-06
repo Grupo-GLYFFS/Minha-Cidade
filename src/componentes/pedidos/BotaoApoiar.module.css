@@ -1,0 +1,20 @@
+/* Fica acima do link que cobre o cartão inteiro, para continuar clicável */
+.acima {
+  position: relative;
+  z-index: 1;
+  flex: none;
+}
+
+/* Já apoiado: verde, com o mesmo tamanho do botão "Apoiar" para não pular na tela */
+.apoiado {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  cursor: default;
+  background: #ddf5e6;
+  color: #126336;
+}
+
+.apoiado:hover {
+  background: #ddf5e6;
+}

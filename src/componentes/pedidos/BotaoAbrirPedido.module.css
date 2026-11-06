@@ -1,0 +1,10 @@
+.botao {
+  width: 100%;
+  flex: none;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .botao {
+    width: auto;
+  }
+}

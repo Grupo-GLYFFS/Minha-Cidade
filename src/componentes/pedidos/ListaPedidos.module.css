@@ -1,0 +1,30 @@
+/* Celular: um cartão por linha nas duas visões */
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+/* Computador: grade com 2 colunas (3 na tela larga); lista continua com 1 */
+@media (min-width: $mantine-breakpoint-md) {
+  .lista {
+    gap: 16px;
+  }
+
+  .lista[data-visao='grade'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lista[data-visao='lista'] {
+    gap: 12px;
+  }
+}
+
+@media (min-width: $mantine-breakpoint-lg) {
+  .lista[data-visao='grade'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

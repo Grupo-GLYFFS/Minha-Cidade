@@ -46,3 +46,17 @@ export function textoUltimaMudanca(pedido, hoje = HOJE) {
   const verbo = nuncaMudou ? 'Enviado' : 'Atualizado';
   return `${verbo} ${tempoRelativo(pedido.atualizadoEm, hoje)}`;
 }
+
+// Aplica as mudanças de status guardadas (ex.: um pedido novo que passou para "em análise").
+// Recebe a lista de pedidos e um objeto { idPedido: { status, atualizadoEm } };
+// devolve uma nova lista com os status trocados.
+export function aplicarMudancasStatus(pedidos, mudancas) {
+  return pedidos.map((pedido) =>
+    mudancas[pedido.id] ? { ...pedido, ...mudancas[pedido.id] } : pedido,
+  );
+}
+
+// Procura um pedido pelo id. Recebe a lista e o id; devolve o pedido ou undefined.
+export function buscarPedido(pedidos, idPedido) {
+  return pedidos.find((pedido) => pedido.id === idPedido);
+}
