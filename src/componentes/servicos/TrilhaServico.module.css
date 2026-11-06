@@ -1,0 +1,31 @@
+.trilha {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cor-texto-suave);
+}
+
+/* Alvo de toque de 44 px de altura */
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--cor-link);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

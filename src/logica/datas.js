@@ -93,3 +93,30 @@ export function momentoDeHoje(hoje = HOJE, relogio = new Date()) {
   const hora = `${doisDigitos(relogio.getHours())}:${doisDigitos(relogio.getMinutes())}:${doisDigitos(relogio.getSeconds())}`;
   return `${hoje}T${hora}-03:00`;
 }
+
+// Transforma um número de dias de volta em data ISO. Recebe o número; devolve "AAAA-MM-DD".
+function deDias(dias) {
+  return new Date(dias * UM_DIA_MS).toISOString().slice(0, 10);
+}
+
+// Calcula uma data a partir de um código relativo a hoje, usado nos campos de data dos serviços.
+// Recebe o código e a data de hoje. Códigos: "hoje"; "+30d" / "-365d" (dias);
+// "+1a" / "-15a" (anos). Também aceita uma data ISO pronta.
+// Devolve a data em texto ISO ("2026-12-06") ou null se o código não for reconhecido.
+export function resolverDataRelativa(codigo, hoje = HOJE) {
+  if (codigo === 'hoje') return hoje;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(codigo)) return codigo;
+  const partes = /^([+-])(\d+)([da])$/.exec(codigo ?? '');
+  if (!partes) return null;
+  const quantidade = Number(partes[2]) * (partes[1] === '-' ? -1 : 1);
+  if (partes[3] === 'd') return deDias(emDias(hoje) + quantidade);
+  // Anos: mesmo dia e mês, trocando só o ano (29/2 vira 1º/3 quando o ano não é bissexto)
+  const [ano, mes, dia] = hoje.split('-').map(Number);
+  return deDias(Date.UTC(ano + quantidade, mes - 1, dia) / UM_DIA_MS);
+}
+
+// Escreve uma data curta, sem zeros na frente. Recebe "2026-11-07"; devolve "7/11/2026".
+export function formatarDataCurta(data) {
+  const [ano, mes, dia] = data.slice(0, 10).split('-').map(Number);
+  return `${dia}/${mes}/${ano}`;
+}

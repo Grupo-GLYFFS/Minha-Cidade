@@ -1,0 +1,39 @@
+/* Caixa cinza dentro do cartão do formulário: raio 20 - 16 = 4, arredondado para o mínimo de 8 */
+.caixa {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--pad);
+  border-radius: 8px;
+  background: var(--cor-cinza-suave);
+}
+
+.lista {
+  margin: 8px 0 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+.item {
+  min-width: 0;
+}
+
+.rotulo {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+.valor {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}

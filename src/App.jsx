@@ -4,6 +4,9 @@ import RotaProtegida from './componentes/RotaProtegida';
 import Inicio from './paginas/Inicio';
 import Busca from './paginas/Busca';
 import Servicos from './paginas/Servicos';
+import CategoriaServicos from './paginas/CategoriaServicos';
+import Servico from './paginas/Servico';
+import SolicitarServico from './paginas/SolicitarServico';
 import Cidade from './paginas/Cidade';
 import Pedidos from './paginas/Pedidos';
 import NovoPedido from './paginas/NovoPedido';
@@ -28,6 +31,8 @@ export default function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/busca" element={<Busca />} />
         <Route path="/servicos" element={<Servicos />} />
+        <Route path="/servicos/categoria/:idCategoria" element={<CategoriaServicos />} />
+        <Route path="/servicos/:idServico" element={<Servico />} />
         <Route path="/cidade" element={<Cidade />} />
         <Route path="/pedidos" element={<Pedidos />} />
         <Route path="/pedidos/:id" element={<DetalhePedido />} />
@@ -40,6 +45,7 @@ export default function App() {
         <Route path="/criar-conta" element={<CriarConta />} />
         <Route element={<RotaProtegida />}>
           <Route path="/pedidos/novo" element={<NovoPedido />} />
+          <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
           <Route path="/alertas" element={<Alertas />} />
           <Route path="/perfil" element={<Perfil />} />
         </Route>

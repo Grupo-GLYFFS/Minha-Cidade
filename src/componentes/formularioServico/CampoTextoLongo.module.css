@@ -1,0 +1,14 @@
+/* Contador de caracteres, alinhado à direita embaixo do campo */
+.contador {
+  margin-top: 4px;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--cor-texto-suave);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Passou do limite: o contador fica vermelho e em negrito (não só a cor muda) */
+.contador[data-passou] {
+  color: var(--mantine-color-error);
+  font-weight: 700;
+}

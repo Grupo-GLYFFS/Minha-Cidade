@@ -7,18 +7,21 @@ import './estilos/global.css';
 import { tema } from './tema';
 import SessaoProvider from './contexto/SessaoProvider';
 import PedidosProvider from './contexto/PedidosProvider';
+import SolicitacoesProvider from './contexto/SolicitacoesProvider';
 import App from './App';
 
-// Ponto de partida do app: aplica o tema do Mantine, compartilha a sessão (quem está logado)
-// e os pedidos, liga as rotas e mostra o App.
+// Ponto de partida do app: aplica o tema do Mantine, compartilha a sessão (quem está logado),
+// os pedidos e as solicitações de serviço, liga as rotas e mostra o App.
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <MantineProvider theme={tema}>
       <SessaoProvider>
         <PedidosProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <SolicitacoesProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </SolicitacoesProvider>
         </PedidosProvider>
       </SessaoProvider>
     </MantineProvider>

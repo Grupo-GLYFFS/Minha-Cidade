@@ -1,9 +1,11 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ActionIcon, Container, Group, Indicator, Text, TextInput } from '@mantine/core';
 import Icone from './Icone';
 import MenuConta from './MenuConta';
 import { useSessao } from '../contexto/useSessao';
 import { caminhoComVoltar } from '../logica/sessao';
+import { montarCaminhoBusca } from '../logica/busca';
 import { MENU_COMPUTADOR, estaAtivo } from '../dados/navegacao';
 import classes from './CabecalhoDesktop.module.css';
 
@@ -14,6 +16,14 @@ export default function CabecalhoDesktop({ alertasNovos = 0 }) {
   const { pathname } = useLocation();
   const { logado } = useSessao();
   const novos = logado ? alertasNovos : 0;
+  const [texto, setTexto] = useState('');
+  const navigate = useNavigate();
+
+  // Vai para a página de busca sem recarregar o app
+  function buscar(evento) {
+    evento.preventDefault();
+    navigate(montarCaminhoBusca(texto));
+  }
 
   return (
     <header>
@@ -86,9 +96,12 @@ export default function CabecalhoDesktop({ alertasNovos = 0 }) {
             </nav>
 
             <Group gap="sm" wrap="nowrap">
-              <form role="search" action="/busca">
+              <form role="search" action="/busca" onSubmit={buscar}>
                 <TextInput
                   name="q"
+                  type="search"
+                  value={texto}
+                  onChange={(evento) => setTexto(evento.currentTarget.value)}
                   w={210}
                   placeholder="Buscar serviço"
                   aria-label="Buscar serviço"

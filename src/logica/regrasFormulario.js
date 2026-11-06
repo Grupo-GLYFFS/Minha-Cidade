@@ -66,3 +66,31 @@ export function regraArquivo({
       });
     });
 }
+
+// Regras do bloco de endereço (CEP, rua, número, bairro e região), usado nos formulários
+// dos serviços. Recebe o texto que completa as mensagens (ex.: "da entrega"); devolve um objeto
+// com uma regra do yup para cada campo do bloco.
+export function regrasEndereco(complemento = 'do endereço') {
+  return {
+    cep: regraCep({
+      vazio: `Digite o CEP ${complemento}, ex.: 04015-001.`,
+      foraDaCidade: 'Este CEP não é da cidade de São Paulo. Confira os números ou use outro CEP.',
+    }),
+    cidadeDoCep: string(),
+    rua: string()
+      .trim()
+      .required('Digite o nome da rua, ex.: Rua Joaquim Távora.')
+      .min(3, 'Digite o nome completo da rua, ex.: Rua Joaquim Távora.')
+      .max(120, 'Encurte o nome da rua para até 120 caracteres.'),
+    numero: string()
+      .trim()
+      .required('Digite o número do endereço ou s/n se não houver.')
+      .matches(FORMATO_NUMERO, 'Use só números (ex.: 120) ou s/n se o local não tiver número.'),
+    bairro: string()
+      .trim()
+      .required('Digite o bairro, ex.: Vila Mariana.')
+      .min(2, 'Digite o nome completo do bairro, ex.: Vila Mariana.')
+      .max(60, 'Encurte o nome do bairro para até 60 caracteres.'),
+    regiao: regraRegiao(),
+  };
+}

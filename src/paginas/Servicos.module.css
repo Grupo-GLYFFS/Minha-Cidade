@@ -1,0 +1,18 @@
+/* Seções empilhadas: 24 px entre elas no celular e 32 px no computador */
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.topo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .pagina {
+    gap: 32px;
+  }
+}

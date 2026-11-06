@@ -13,9 +13,13 @@ const AVISOS_BUSCA = {
 
 // Campo de CEP com máscara 00000-000. Quando os 8 números são digitados, busca o endereço
 // no ViaCEP e preenche rua, bairro e (se o app conhece o bairro) a região; a pessoa ainda pode mudar.
-// Usado no "Abrir pedido" e no "Criar conta": lê e grava pelo formulário compartilhado
+// Usado no "Abrir pedido", no "Criar conta" e nos formulários de serviço: lê e grava pelo formulário compartilhado
 // (campos "cep", "cidadeDoCep", "rua", "bairro" e "regiao").
-export default function CampoCep() {
+// Recebe, se quiser, outro rótulo (ex.: "CEP da entrega") e outra descrição.
+export default function CampoCep({
+  rotulo = 'CEP',
+  descricao = 'Rua e bairro são preenchidos sozinhos.',
+}) {
   const { control, setValue, trigger } = useFormContext();
   const [buscando, setBuscando] = useState(false);
   const [aviso, setAviso] = useState(null);
@@ -82,8 +86,8 @@ export default function CampoCep() {
             value={field.value}
             onChange={(evento) => aoDigitar(evento, field, fieldState)}
             onBlur={field.onBlur}
-            label="CEP"
-            description="Rua e bairro são preenchidos sozinhos."
+            label={rotulo}
+            description={descricao}
             placeholder="00000-000"
             required
             inputMode="numeric"

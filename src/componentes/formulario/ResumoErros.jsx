@@ -31,6 +31,7 @@ export default function ResumoErros({ erros, irParaCampo, ordemCampos, nomesCamp
               type="button"
               fz="sm"
               fw={600}
+              ta="left"
               c="inherit"
               underline="always"
               onClick={() => irParaCampo(nome)}

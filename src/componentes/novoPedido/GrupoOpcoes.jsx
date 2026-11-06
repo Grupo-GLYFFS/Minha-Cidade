@@ -7,7 +7,8 @@ import classes from './GrupoOpcoes.module.css';
 // Funciona pelo teclado como qualquer grupo de rádio: Tab entra, setas trocam a opção.
 // Recebe: legenda, descricao (ajuda opcional), opcoes [{ valor, rotulo, icone?, detalhe? }],
 // valor atual, aoMudar(valor), aoSair() (ao perder o foco), erro (mensagem ou undefined),
-// colunas no computador e "compacto" (número em cima e rótulo embaixo, para escalas).
+// colunas no computador, "compacto" (número em cima e rótulo embaixo, para escalas)
+// e obrigatorio (mostra o * e marca o grupo como obrigatório; padrão true).
 // A ref vai para a primeira opção, para o formulário conseguir dar foco quando há erro.
 export default function GrupoOpcoes({
   ref,
@@ -21,6 +22,7 @@ export default function GrupoOpcoes({
   erro,
   colunas = 3,
   compacto = false,
+  obrigatorio = true,
 }) {
   const id = useId();
   const idDescricao = descricao ? `${id}-descricao` : null;
@@ -30,10 +32,13 @@ export default function GrupoOpcoes({
   return (
     <fieldset className={classes.grupo} data-invalido={erro ? true : undefined}>
       <legend className={classes.legenda}>
-        {legenda}{' '}
-        <span className={classes.asterisco} aria-hidden="true">
-          *
-        </span>
+        {legenda}
+        {obrigatorio && (
+          <span className={classes.asterisco} aria-hidden="true">
+            {' '}
+            *
+          </span>
+        )}
       </legend>
       {descricao && (
         <Text id={idDescricao} className={classes.descricao}>
@@ -52,7 +57,7 @@ export default function GrupoOpcoes({
               checked={valor === opcao.valor}
               onChange={() => aoMudar(opcao.valor)}
               onBlur={aoSair}
-              required
+              required={obrigatorio}
               aria-invalid={erro ? true : undefined}
               aria-describedby={descritores}
               className={classes.radio}

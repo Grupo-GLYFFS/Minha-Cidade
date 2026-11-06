@@ -10,12 +10,15 @@ import ProjetoEmVotacao from '../componentes/inicio/ProjetoEmVotacao';
 import PorQueExiste from '../componentes/inicio/PorQueExiste';
 import { ALERTAS } from '../dados/alertas';
 import { PROJETOS } from '../dados/projetos';
-import { SERVICOS_MAIS_USADOS } from '../dados/servicos';
+import { servicosMaisUsados } from '../logica/servicos';
 import { alertaDefesaCivilAtivo } from '../logica/alertas';
 import { pedidosAbertosDaPessoa } from '../logica/pedidos';
 import { usePedidos } from '../contexto/usePedidos';
 import { useSessao } from '../contexto/useSessao';
 import classes from './Inicio.module.css';
+
+// Atalhos da seção "Serviços mais usados", lidos do catálogo
+const MAIS_USADOS = servicosMaisUsados();
 
 // Página inicial: busca, alerta da Defesa Civil, atalhos, pedidos da pessoa,
 // resumo do bairro, votação aberta e "Por que o Minha Prefeitura existe".
@@ -38,7 +41,7 @@ export default function Inicio() {
 
       {alerta && <AvisoAlerta alerta={alerta} />}
 
-      <AtalhosServicos servicos={SERVICOS_MAIS_USADOS} />
+      <AtalhosServicos servicos={MAIS_USADOS} />
 
       {/* No computador, pedidos e bairro ficam lado a lado */}
       {usuario && (

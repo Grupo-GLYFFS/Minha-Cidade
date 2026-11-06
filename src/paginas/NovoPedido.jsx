@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Anchor, Group, Stack } from '@mantine/core';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import Icone from '../componentes/Icone';
@@ -8,7 +8,7 @@ import AvisoDuplicado from '../componentes/novoPedido/AvisoDuplicado';
 import PedidoEnviado from '../componentes/novoPedido/PedidoEnviado';
 import { usePedidos } from '../contexto/usePedidos';
 import { buscarPedido } from '../logica/pedidos';
-import { prepararDadosDoFormulario } from '../logica/novoPedido';
+import { prepararDadosDoFormulario, valoresIniciaisComCategoria } from '../logica/novoPedido';
 import { buscarDuplicado } from '../logica/duplicados';
 
 // Novo pedido: formulário para a pessoa relatar um problema na rua ou no bairro.
@@ -16,6 +16,8 @@ import { buscarDuplicado } from '../logica/duplicados';
 // um igual aberto) e a confirmação de envio, com o protocolo.
 export default function NovoPedido() {
   const { pedidos, adicionarPedido } = usePedidos();
+  // Categoria já escolhida quando a pessoa vem de um serviço (?categoria=iluminacao)
+  const [parametros] = useSearchParams();
   // { tipo: 'formulario' | 'duplicado' | 'enviado', valores?, idPedido? }
   const [etapa, setEtapa] = useState({ tipo: 'formulario' });
 
@@ -72,7 +74,12 @@ export default function NovoPedido() {
           aoEditar={() => setEtapa({ tipo: 'formulario', valores: etapa.valores })}
         />
       ) : (
-        <FormularioPedido aoEnviar={enviar} valoresIniciais={etapa.valores} />
+        <FormularioPedido
+          aoEnviar={enviar}
+          valoresIniciais={
+            etapa.valores ?? valoresIniciaisComCategoria(parametros.get('categoria'))
+          }
+        />
       )}
     </Stack>
   );

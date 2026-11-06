@@ -1,0 +1,117 @@
+.ficha {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Prazo e custo lado a lado no computador, empilhados no celular */
+.fatos {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+/* Caixa dentro do cartão (raio 20, padding 16): 20 − 16 = 4, então usa o mínimo de 8 px.
+   O ícone dentro dela (padding 12) também fica com 8 px. */
+.fato {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--cor-cinza-suave);
+}
+
+.iconeFato {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--cor-link);
+}
+
+.rotuloFato {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cor-texto-suave);
+}
+
+.valorFato {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.secao {
+  padding-top: 24px;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.documentos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.documento,
+.comIcone {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.documento :global(.icone),
+.comIcone :global(.icone) {
+  margin-top: 2px;
+  color: var(--cor-texto-suave);
+}
+
+/* Passos numerados com um círculo azul; o número vem da própria lista (ol) */
+.passos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: passo;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.passo {
+  counter-increment: passo;
+  position: relative;
+  min-height: 28px;
+  padding-left: 40px;
+  line-height: 1.5;
+}
+
+.passo::before {
+  content: counter(passo);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--mantine-color-azul-6);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .fatos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

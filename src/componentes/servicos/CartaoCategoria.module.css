@@ -1,0 +1,49 @@
+/* Cartão padrão (raio 20, padding 16); o quadrado do ícone fica com o mínimo de 8 px */
+.cartao {
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: var(--pad);
+  background: #fff;
+  border: 1px solid var(--cor-borda);
+  border-radius: 20px;
+  box-shadow: var(--sombra);
+  color: var(--mantine-color-text);
+  text-decoration: none;
+}
+
+.cartao:hover {
+  border-color: #b9c8f5;
+}
+
+.icone {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--cor-azul-suave);
+  color: var(--cor-link);
+}
+
+.textos {
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* No computador, ícone em cima e textos embaixo, para os cartões ficarem da mesma altura */
+@media (min-width: $mantine-breakpoint-md) {
+  .cartao {
+    flex-direction: column;
+  }
+
+  .textos {
+    flex: 1;
+  }
+}

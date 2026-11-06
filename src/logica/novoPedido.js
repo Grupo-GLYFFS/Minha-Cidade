@@ -1,4 +1,14 @@
 import { HOJE, momentoDeHoje } from './datas';
+import { CATEGORIAS_PEDIDO } from '../dados/categoriasPedido';
+import { VALORES_INICIAIS } from './esquemaNovoPedido';
+
+// Valores iniciais do formulário, com a categoria já escolhida quando ela vem do endereço
+// (ex.: /pedidos/novo?categoria=iluminacao, vindo da página de um serviço).
+// Recebe o id da categoria (ou null); ids que não existem são ignorados.
+export function valoresIniciaisComCategoria(idCategoria) {
+  const existe = CATEGORIAS_PEDIDO.some((categoria) => categoria.id === idCategoria);
+  return existe ? { ...VALORES_INICIAIS, categoria: idCategoria } : VALORES_INICIAIS;
+}
 
 // Descobre o próximo número de protocolo, seguindo a sequência dos pedidos já existentes.
 // Recebe a lista de pedidos e a data de hoje; devolve um texto como "2026-005121".
