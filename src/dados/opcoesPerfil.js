@@ -77,6 +77,12 @@ export const GRUPOS_PERFIL = [
         icone: 'lock',
         caminho: '/privacidade',
       },
+      {
+        rotulo: 'Componentes (desenvolvimento)',
+        descricao: 'Cores, letras e peças do app, para revisar o visual',
+        icone: 'palette',
+        caminho: '/componentes',
+      },
     ],
   },
 ];

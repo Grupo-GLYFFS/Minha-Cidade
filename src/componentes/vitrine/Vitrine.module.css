@@ -1,0 +1,47 @@
+/* Caixa de 20 px de raio; o palco e a legenda ficam dentro, sem raio próprio (a caixa corta) */
+.vitrine {
+  margin: 0;
+  min-width: 0;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--cor-superficie);
+}
+
+/* Área do exemplo: rola para o lado se o componente for mais largo que a tela */
+.palco {
+  padding: var(--pad);
+  overflow-x: auto;
+  background: var(--cor-fundo);
+}
+
+.palco[data-fundo='branco'] {
+  background: var(--cor-superficie);
+}
+
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 12px var(--pad);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  font-size: rem(13px);
+  color: var(--cor-texto-suave);
+}
+
+.nome {
+  font-size: rem(14px);
+  font-weight: 700;
+  color: var(--mantine-color-text);
+}
+
+.arquivo {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: rem(12px);
+  overflow-wrap: anywhere;
+}
+
+.props {
+  flex-basis: 100%;
+}

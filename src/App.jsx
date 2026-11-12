@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import LayoutApp from './componentes/LayoutApp';
 import RotaProtegida from './componentes/RotaProtegida';
@@ -33,6 +34,9 @@ import PerguntasFrequentes from './paginas/PerguntasFrequentes';
 import Privacidade from './paginas/Privacidade';
 import NaoEncontrada from './paginas/NaoEncontrada';
 
+// Página de desenvolvimento: só é baixada quando alguém abre /componentes
+const Componentes = lazy(() => import('./paginas/Componentes'));
+
 // Lista de páginas do app. Todas usam o mesmo layout (cabeçalho/abas e rodapé).
 // As que ficam dentro de <RotaProtegida> precisam de conta: o visitante vai para "Entrar".
 // Acessibilidade e as páginas de ajuda ficam de fora: valem também para o visitante.
@@ -66,6 +70,15 @@ export default function App() {
         {/* A Ouvidoria já é um serviço do catálogo: o link do rodapé leva para a ficha dela */}
         <Route path="/ajuda/ouvidoria" element={<Navigate to="/servicos/ouvidoria" replace />} />
         <Route path="/privacidade" element={<Privacidade />} />
+        {/* Página de desenvolvimento: o design system ao vivo (fora do menu principal) */}
+        <Route
+          path="/componentes"
+          element={
+            <Suspense fallback={null}>
+              <Componentes />
+            </Suspense>
+          }
+        />
         <Route element={<RotaProtegida />}>
           <Route path="/pedidos/novo" element={<NovoPedido />} />
           <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />

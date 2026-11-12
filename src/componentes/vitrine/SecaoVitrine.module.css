@@ -1,0 +1,10 @@
+/* Separa uma seção da outra e deixa espaço no topo ao pular pela âncora */
+.secao {
+  scroll-margin-top: 24px;
+  padding-top: 32px;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.secao :where(h3) {
+  scroll-margin-top: 24px;
+}

@@ -1,0 +1,70 @@
+/* Coluna do computador: fica presa no topo e rola sozinha se for mais alta que a tela */
+.lateral {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  padding: var(--pad);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: 20px;
+  background: var(--cor-superficie);
+}
+
+.titulo {
+  margin: 0 0 8px;
+  font-size: rem(13px);
+  font-weight: 700;
+  color: var(--cor-texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lista,
+.sublista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sublista {
+  margin: 0 0 4px 12px;
+  padding-left: 8px;
+  border-left: var(--espessura-borda) solid var(--cor-borda);
+}
+
+/* Links com pelo menos 44 px de altura (alvo de toque) */
+.link,
+.sublink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 8px;
+  border-radius: 8px;
+  color: var(--mantine-color-text);
+  font-weight: 600;
+  font-size: rem(15px);
+  text-decoration: none;
+}
+
+.sublink {
+  font-weight: 500;
+  font-size: rem(14px);
+  color: var(--cor-texto-suave);
+}
+
+.link:hover,
+.sublink:hover {
+  background: var(--cor-azul-suave);
+  color: var(--cor-link);
+}
+
+.sanfona {
+  background: var(--cor-superficie);
+  border: var(--espessura-borda) solid var(--cor-borda);
+}
+
+:global(html[data-contraste='alto']) .link,
+:global(html[data-contraste='alto']) .sublink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

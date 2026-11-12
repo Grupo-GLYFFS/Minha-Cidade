@@ -16,7 +16,15 @@ export const ABAS_CELULAR = [
     rotulo: 'Perfil',
     caminho: '/perfil',
     icone: 'person',
-    ativoEm: ['/perfil', '/como-funciona', '/impacto', '/equipe', '/ajuda', '/privacidade'],
+    ativoEm: [
+      '/perfil',
+      '/como-funciona',
+      '/impacto',
+      '/equipe',
+      '/ajuda',
+      '/privacidade',
+      '/componentes',
+    ],
   },
 ];
 
@@ -58,6 +66,7 @@ export const LINKS_RODAPE = [
     links: [
       { rotulo: 'Recursos de acessibilidade', caminho: '/perfil/acessibilidade' },
       { rotulo: 'Privacidade dos dados', caminho: '/privacidade' },
+      { rotulo: 'Componentes (desenvolvimento)', caminho: '/componentes' },
     ],
   },
 ];

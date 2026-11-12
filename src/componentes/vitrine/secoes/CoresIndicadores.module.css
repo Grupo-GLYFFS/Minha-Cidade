@@ -1,0 +1,11 @@
+/* Quadrado do ODS como no Início: número branco em negrito */
+.ods {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 800;
+}
