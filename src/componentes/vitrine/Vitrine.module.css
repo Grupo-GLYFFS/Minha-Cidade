@@ -1,47 +1,173 @@
-/* Caixa de 20 px de raio; o palco e a legenda ficam dentro, sem raio próprio (a caixa corta) */
-.vitrine {
-  margin: 0;
-  min-width: 0;
-  border: var(--espessura-borda) solid var(--cor-borda);
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--cor-superficie);
-}
+/* Página /componentes: índice, seções separadas por 96 e exemplos com rótulo. */
 
-/* Área do exemplo: rola para o lado se o componente for mais largo que a tela */
-.palco {
-  padding: var(--pad);
-  overflow-x: auto;
-  background: var(--cor-fundo);
-}
-
-.palco[data-fundo='branco'] {
-  background: var(--cor-superficie);
-}
-
-.legenda {
+.indice {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
-  padding: 12px var(--pad);
-  border-top: var(--espessura-borda) solid var(--cor-borda);
-  font-size: rem(13px);
-  color: var(--cor-texto-suave);
+  gap: rem(8px);
+  margin: 0 0 rem(48px);
+  padding: 0;
+  list-style: none;
 }
 
-.nome {
-  font-size: rem(14px);
+.secao + .secao {
+  margin-top: rem(96px);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(24px);
   font-weight: 700;
-  color: var(--mantine-color-text);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 .arquivo {
-  font-family: var(--mantine-font-family-monospace);
-  font-size: rem(12px);
-  overflow-wrap: anywhere;
+  margin: rem(4px) 0 0;
+  font-family: ui-monospace, monospace;
+  font-size: rem(14px);
+  color: var(--cor-texto-2);
 }
 
-.props {
-  flex-basis: 100%;
+.exemplos {
+  display: flex;
+  flex-direction: column;
+  gap: rem(32px);
+  margin-top: rem(24px);
+}
+
+.rotulo {
+  margin: 0 0 rem(12px);
+  font-size: rem(14px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+}
+
+.exemplo > div > * + * {
+  margin-top: rem(12px);
+}
+
+.linha > * + * {
+  margin-top: 0;
+}
+
+.linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(12px);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Amostras de cor e de raio */
+.amostras {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(rem(150px), 1fr));
+  gap: rem(12px);
+}
+
+.amostra {
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  font-size: rem(13px);
+}
+
+.amostraCor {
+  height: rem(56px);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.amostraTexto {
+  padding: rem(8px) rem(10px);
+}
+
+.amostraTexto b {
+  display: block;
+  font-family: ui-monospace, monospace;
+  font-weight: 600;
+}
+
+/* Fundos das amostras (só variáveis, para o alto contraste valer aqui também) */
+.corAzul {
+  background: var(--cor-azul);
+}
+.corAzulEscuro {
+  background: var(--cor-azul-escuro);
+}
+.corFaixa {
+  background: var(--cor-faixa);
+}
+.corAzulTinta {
+  background: var(--cor-azul-tinta);
+}
+.corTexto {
+  background: var(--cor-texto);
+}
+.corTexto2 {
+  background: var(--cor-texto-2);
+}
+.corBorda {
+  background: var(--cor-borda);
+}
+.corLinha {
+  background: var(--cor-linha);
+}
+.corFundo {
+  background: var(--cor-fundo);
+}
+.corAviso {
+  background: var(--cor-aviso-fundo);
+}
+.corErro {
+  background: var(--cor-erro);
+}
+.corPerigo {
+  background: var(--cor-perigo);
+}
+
+.raio {
+  display: grid;
+  place-items: center;
+  width: rem(120px);
+  height: rem(72px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  background: var(--cor-faixa);
+  font-size: rem(13px);
+  font-weight: 700;
+}
+
+.raio20 {
+  border-radius: var(--raio-card);
+}
+.raio16 {
+  border-radius: var(--raio-icone);
+}
+.raio12 {
+  border-radius: var(--raio-controle);
+}
+.raio8 {
+  border-radius: var(--raio-topo);
+}
+.raio999 {
+  border-radius: var(--raio-selo);
+}
+
+/* Cabeçalhos de exemplo: a faixa sangra até as bordas da coluna */
+.cabecalhoExemplo {
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+}
+
+/* O primeiro "Para onde ir" do exemplo sem os 96 de cima */
+.semMargem > nav:first-child {
+  margin-top: 0;
 }

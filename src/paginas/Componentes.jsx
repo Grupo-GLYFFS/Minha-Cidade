@@ -1,44 +1,55 @@
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
-import BarraModos from '../componentes/vitrine/BarraModos';
-import IndiceVitrine from '../componentes/vitrine/IndiceVitrine';
-import SecaoPrincipios from '../componentes/vitrine/secoes/SecaoPrincipios';
-import SecaoCores from '../componentes/vitrine/secoes/SecaoCores';
-import SecaoTipografia from '../componentes/vitrine/secoes/SecaoTipografia';
-import SecaoEspacamento from '../componentes/vitrine/secoes/SecaoEspacamento';
-import SecaoIcones from '../componentes/vitrine/secoes/SecaoIcones';
-import SecaoBase from '../componentes/vitrine/secoes/SecaoBase';
-import SecaoApp from '../componentes/vitrine/secoes/SecaoApp';
-import SecaoTextos from '../componentes/vitrine/secoes/SecaoTextos';
-import classes from './Componentes.module.css';
+import Chip from '../componentes/Chip';
+import Pagina from '../componentes/Pagina';
+import VitrineBotoes from '../componentes/vitrine/VitrineBotoes';
+import VitrineCabecalhos from '../componentes/vitrine/VitrineCabecalhos';
+import VitrineCards from '../componentes/vitrine/VitrineCards';
+import VitrineEstados from '../componentes/vitrine/VitrineEstados';
+import VitrineListas from '../componentes/vitrine/VitrineListas';
+import VitrinePopups from '../componentes/vitrine/VitrinePopups';
+import VitrineTokens from '../componentes/vitrine/VitrineTokens';
+import classes from '../componentes/vitrine/Vitrine.module.css';
 
-// Página de desenvolvimento /componentes: o design system do app ao vivo.
-// Mostra os tokens (cores, letras, espaços, raios, ícones), as regras e todos os componentes
-// reutilizáveis com seus estados. A barra de modos troca letra, contraste e animações do app,
-// para conferir tudo em cada modo. Nada aqui muda os dados do app.
+// Atalhos do índice: [âncora, rótulo]
+const INDICE = [
+  ['tokens', 'Tokens'],
+  ['botoes', 'Botões'],
+  ['cabecalhos', 'Cabeçalhos'],
+  ['cards', 'Cards'],
+  ['listas', 'Listas'],
+  ['popups', 'Popups e formulários'],
+  ['estados', 'Estados'],
+];
+
+// Página de desenvolvimento /componentes: os componentes da base ao vivo, com as variantes.
+// É a referência para quem constrói as páginas (junto com src/componentes/LEIA-ME.md).
+// O topo e o rodapé da própria página também são os componentes Topo e Rodape.
 export default function Componentes() {
   return (
-    <div className={classes.pagina}>
-      <CabecalhoPagina
-        titulo="Componentes"
-        descricao="Tokens, regras e componentes do design system do Minha Prefeitura. Página de desenvolvimento."
-      />
-      <BarraModos />
-
-      <div className={classes.grade}>
-        <div>
-          <IndiceVitrine />
-        </div>
-        <div className={classes.conteudo}>
-          <SecaoPrincipios />
-          <SecaoCores />
-          <SecaoTipografia />
-          <SecaoEspacamento />
-          <SecaoIcones />
-          <SecaoBase />
-          <SecaoApp />
-          <SecaoTextos />
-        </div>
-      </div>
-    </div>
+    <Pagina
+      cabecalho={
+        <CabecalhoPagina
+          tipo="lista"
+          titulo="Componentes"
+          icone="widgets"
+          subtitulo="A base de design do Minha Prefeitura. Página de desenvolvimento."
+        />
+      }
+    >
+      <ul className={classes.indice}>
+        {INDICE.map(([ancora, rotulo]) => (
+          <li key={ancora}>
+            <Chip href={`#${ancora}`}>{rotulo}</Chip>
+          </li>
+        ))}
+      </ul>
+      <VitrineTokens />
+      <VitrineBotoes />
+      <VitrineCabecalhos />
+      <VitrineCards />
+      <VitrineListas />
+      <VitrinePopups />
+      <VitrineEstados />
+    </Pagina>
   );
 }
