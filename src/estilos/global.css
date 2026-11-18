@@ -1,48 +1,135 @@
-/* Estilos gerais do app (o resto vem do tema do Mantine). */
+/* Estilos gerais do app: tokens do design system (base de 18/11/2026), ícones,
+   tamanho da letra e alto contraste. O resto vem dos CSS Modules de cada componente.
+   Regra: cor só por variável (--cor-*). Assim o alto contraste troca tudo de uma vez. */
 
 :root {
-  --cor-fundo: #f4f6fa;
+  /* ---------- Cores ---------- */
+  /* Azul único do site (botão principal, links, ícones de destaque) */
+  --cor-azul: #0052ef;
+  /* Azul do hover e do texto dos botões secundários e links */
+  --cor-azul-escuro: #0047d1;
+  /* Faixa azul-clara: fundo do cabeçalho das páginas, item ativo do menu, toggle ligado */
+  --cor-faixa: #edf2ff;
+  /* Texto azul escuro sobre a faixa (selos, contagem ativa) */
+  --cor-azul-tinta: #002f8a;
+  /* Linha de baixo da faixa do cabeçalho */
+  --cor-azul-borda: #d6e0fa;
+  /* Borda do toggle ligado e do filtro ativo */
+  --cor-azul-borda-forte: #b9c9f5;
+  /* Texto principal e secundário (contraste de 7:1 ou mais) */
+  --cor-texto: #0f172a;
+  --cor-texto-2: #475467;
+  /* Texto de campo vazio (placeholder) */
+  --cor-texto-placeholder: #667085;
+  /* Uma só cor de borda para cards, campos e botões */
+  --cor-borda: #d0d5dd;
+  /* Borda no hover */
+  --cor-borda-forte: #b9c2d0;
+  /* Divisória fina entre linhas de uma lista */
+  --cor-linha: #e4e7ec;
+  /* Fundo do hover de itens de menu */
+  --cor-fundo: #f5f7fa;
+  /* Fundo do hover de cards */
+  --cor-fundo-card: #f8fafc;
+  /* Fundo da página e dos cards */
   --cor-superficie: #fff;
-  --cor-borda: #e4e8ef;
-  /* Borda dos campos e caixas de busca, um pouco mais escura que a dos cartões */
-  --cor-borda-campo: #c4cbd8;
-  /* Borda de cartões clicáveis quando o mouse passa por cima */
-  --cor-borda-destaque: #b9c8f5;
-  --espessura-borda: 1px;
-  --cor-texto-suave: #525d73;
-  --cor-foco: #f5a300;
-  --cor-link: #0047d1;
+  /* Texto sobre o azul (botão principal, faixa azul) */
   --cor-sobre-primaria: #fff;
-  --cor-azul-suave: #edf2ff;
-  --cor-cinza-suave: #f1f3f7;
-  --cor-erro: #a11a1a;
-  --cor-erro-fundo: #fde4e4;
+  /* Contador vermelho do sino */
   --cor-contador: #c42b2b;
-  --cor-sucesso-fundo: #ddf5e6;
+  /* Faixa amarela de alerta da Defesa Civil */
+  --cor-aviso-fundo: #ffe08a;
+  --cor-aviso-borda: #e0b43c;
+  --cor-aviso-texto: #3d2e00;
+  /* Erros de formulário */
+  --cor-erro: #b42318;
+  --cor-erro-fundo: #fef3f2;
+  --cor-erro-borda: #fda29b;
+  --cor-erro-tinta: #7a271a;
+  /* Botão de perigo */
+  --cor-perigo: #b42318;
+  --cor-perigo-hover: #912018;
+  /* Check verde da confirmação */
+  --cor-sucesso: #067647;
+
+  /* 5 cores de status (fundo / texto). Cor nunca é a única informação: o selo tem texto */
+  --cor-status-cinza-fundo: #f2f4f7;
+  --cor-status-cinza-texto: #344054;
+  --cor-status-azul-fundo: #edf2ff;
+  --cor-status-azul-texto: #002f8a;
+  --cor-status-ambar-fundo: #fff4e5;
+  --cor-status-ambar-texto: #93370d;
+  --cor-status-verde-fundo: #ecfdf3;
+  --cor-status-verde-texto: #067647;
+  --cor-status-vermelho-fundo: #fef3f2;
+  --cor-status-vermelho-texto: #b42318;
+  /* Bolinha do título de grupo quando não é status */
+  --cor-status-cinza-bolinha: #475467;
+
+  /* ---------- Raios ---------- */
+  --raio-card: 20px;
+  --raio-controle: 12px;
+  --raio-selo: 999px;
+  /* Quadrado do ícone de 64 do cabeçalho */
+  --raio-icone: 16px;
+  /* Botões A−, A, A+ e Alto contraste da barra de acessibilidade */
+  --raio-topo: 8px;
+
+  /* ---------- Medidas ---------- */
+  --altura-botao: 48px;
+  --altura-botao-compacto: 44px;
+  --altura-botao-topo: 32px;
+  --altura-campo: 44px;
+  /* Coluna de conteúdo de todas as páginas */
+  --largura-conteudo: 880px;
+  /* Largura do topo e do rodapé */
+  --largura-topo: 1088px;
+  /* Padding padrão (escala de 4 em 4) */
+  --pad: 16px;
+
+  /* ---------- Foco e bordas ---------- */
+  --espessura-borda: 1px;
+  --foco-contorno: 3px solid var(--cor-azul);
+  --foco-sombra: none;
+
+  /* ---------- Fonte ---------- */
+  --fonte: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --fonte-logo: 'Zalando Sans Expanded', 'Plus Jakarta Sans', sans-serif;
+
+  /* ---------- Nomes antigos ----------
+     Usados pelas telas feitas antes da base nova. Apontam para os tokens novos.
+     TODO: apagar quando todas as telas usarem os nomes novos */
+  --cor-texto-suave: var(--cor-texto-2);
+  --cor-link: var(--cor-azul-escuro);
+  --cor-azul-suave: var(--cor-faixa);
+  --cor-cinza-suave: var(--cor-status-cinza-fundo);
+  --cor-borda-campo: var(--cor-borda);
+  --cor-borda-destaque: var(--cor-azul-borda-forte);
+  --cor-foco: var(--cor-azul);
+  --cor-sucesso-fundo: var(--cor-status-verde-fundo);
   --cor-sucesso-borda: #a9e2be;
-  --cor-sucesso-texto: #126336;
-  --cor-aviso-fundo: #fff4d9;
+  --cor-sucesso-texto: var(--cor-status-verde-texto);
   --cor-aviso-fundo-claro: #fff9e8;
   --cor-aviso-icone: #ffe9a8;
-  --cor-aviso-borda: #f2d27a;
-  --cor-aviso-texto: #634300;
-  --cor-roxo-fundo: #efe6ff;
-  --cor-roxo-texto: #5527b0;
-  --sombra: 0 1px 2px rgba(16, 24, 40, 0.05), 0 6px 16px rgba(16, 24, 40, 0.06);
-  --sombra-destaque: 0 1px 2px rgba(16, 24, 40, 0.06), 0 10px 24px rgba(16, 24, 40, 0.1);
-  --foco-contorno: 3px solid var(--cor-foco);
-  --foco-sombra: none;
-  --pad: 16px;
-  --altura-abas: 89px; /* 16 + 56 + 16 + 1 de borda */
+  --cor-roxo-fundo: var(--cor-status-azul-fundo);
+  --cor-roxo-texto: var(--cor-status-azul-texto);
+  --sombra: none;
+  --sombra-destaque: none;
+  --altura-abas: 0px;
 }
 
-/* Texto "dimmed" do Mantine mais escuro que o padrão dele, para ter contraste de 4,5:1 */
+/* Texto "dimmed" do Mantine igual ao texto secundário */
 html:root[data-mantine-color-scheme] {
-  --mantine-color-dimmed: var(--cor-texto-suave);
+  --mantine-color-dimmed: var(--cor-texto-2);
+  --mantine-color-text: var(--cor-texto);
+  --mantine-color-body: var(--cor-superficie);
 }
 
 body {
-  background: var(--cor-fundo);
+  margin: 0;
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  font-family: var(--fonte);
 }
 
 /* Tamanho da letra: muda a letra da raiz; o Mantine e os nossos CSS usam rem e acompanham */
@@ -56,7 +143,7 @@ html[data-letra='muito-grande'] {
   font-size: 125%;
 }
 
-/* Foco do teclado em amarelo, visível sobre qualquer cor */
+/* Foco do teclado bem visível sobre qualquer cor */
 :focus-visible {
   outline: var(--foco-contorno);
   outline-offset: 2px;
@@ -91,11 +178,17 @@ html[data-letra='muito-grande'] {
 .icone-20 {
   font-size: rem(20px);
 }
+.icone-22 {
+  font-size: rem(22px);
+}
 .icone-24 {
   font-size: rem(24px);
 }
 .icone-28 {
   font-size: rem(28px);
+}
+.icone-32 {
+  font-size: rem(32px);
 }
 
 .icone-preenchido {
@@ -113,8 +206,8 @@ html[data-letra='muito-grande'] {
   top: -80px;
   z-index: 1000;
   padding: 8px 16px;
-  border-radius: 12px;
-  background: var(--mantine-color-azul-6);
+  border-radius: var(--raio-controle);
+  background: var(--cor-azul);
   color: var(--cor-sobre-primaria);
   font-weight: 700;
   text-decoration: none;
@@ -131,40 +224,54 @@ html[data-animacoes='reduzidas'] *,
 html[data-animacoes='reduzidas'] *::before,
 html[data-animacoes='reduzidas'] *::after {
   transition: none !important;
-  animation: none !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
   scroll-behavior: auto !important;
 }
 
 /* ---------- Alto contraste ---------- */
 
-/* Branco e preto, azul mais escuro (contraste de 7:1 ou mais), bordas de 2 px e sem sombras.
+/* Branco e preto, azul mais escuro (contraste de 7:1 ou mais), bordas pretas e sem sombras.
    O seletor com "html" vence as variáveis que o Mantine coloca no :root. */
 html:root[data-contraste='alto'] {
-  --cor-fundo: #fff;
-  --cor-superficie: #fff;
+  --cor-azul: #0038b8;
+  --cor-azul-escuro: #0038b8;
+  --cor-faixa: #e3ecff;
+  --cor-azul-tinta: #001f66;
+  --cor-azul-borda: #000;
+  --cor-azul-borda-forte: #000;
+  --cor-texto: #000;
+  --cor-texto-2: #262626;
+  --cor-texto-placeholder: #545454;
   --cor-borda: #000;
-  --cor-borda-campo: #000;
-  --cor-borda-destaque: #0038b8;
-  --espessura-borda: 2px;
-  --cor-texto-suave: #262626;
-  --cor-link: #0038b8;
-  --cor-azul-suave: #e3ecff;
-  --cor-cinza-suave: #f0f0f0;
-  --cor-erro: #b00000;
-  --cor-erro-fundo: #fff;
+  --cor-borda-forte: #000;
+  --cor-linha: #000;
+  --cor-fundo: #f0f0f0;
+  --cor-fundo-card: #f0f0f0;
+  --cor-superficie: #fff;
   --cor-contador: #b00000;
-  --cor-sucesso-fundo: #fff;
-  --cor-sucesso-borda: #0b5a2a;
-  --cor-sucesso-texto: #0b5a2a;
   --cor-aviso-fundo: #ffe45c;
-  --cor-aviso-fundo-claro: #ffe45c;
-  --cor-aviso-icone: #fff;
   --cor-aviso-borda: #000;
   --cor-aviso-texto: #000;
-  --cor-roxo-fundo: #efe6ff;
-  --cor-roxo-texto: #3e1691;
-  --sombra: none;
-  --sombra-destaque: none;
+  --cor-erro: #b00000;
+  --cor-erro-fundo: #fff;
+  --cor-erro-borda: #b00000;
+  --cor-erro-tinta: #000;
+  --cor-perigo: #b00000;
+  --cor-perigo-hover: #8a0000;
+  --cor-sucesso: #0b5a2a;
+  --cor-status-cinza-fundo: #fff;
+  --cor-status-cinza-texto: #000;
+  --cor-status-azul-fundo: #fff;
+  --cor-status-azul-texto: #001f66;
+  --cor-status-ambar-fundo: #fff;
+  --cor-status-ambar-texto: #5c2300;
+  --cor-status-verde-fundo: #fff;
+  --cor-status-verde-texto: #0b5a2a;
+  --cor-status-vermelho-fundo: #fff;
+  --cor-status-vermelho-texto: #8a0000;
+  --cor-status-cinza-bolinha: #000;
+  --espessura-borda: 2px;
   --foco-contorno: 4px solid #000;
   --foco-sombra: 0 0 0 8px #ffd400;
 
@@ -205,7 +312,7 @@ html:root[data-contraste='alto'] {
   --mantine-primary-color-light-hover: #c7d7ff;
   --mantine-primary-color-light-color: #0038b8;
 
-  /* Vermelho (erros e contador de alertas) e verde (avisos de sucesso) mais escuros */
+  /* Vermelho (erros e contador) e verde (sucesso) mais escuros */
   --mantine-color-red-6: #b00000;
   --mantine-color-red-8: #8a0000;
   --mantine-color-red-9: #8a0000;
