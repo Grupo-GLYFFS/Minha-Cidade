@@ -14,7 +14,7 @@ export function useSair() {
     // (ex.: Perfil) veria o visitante antes da troca de página e mandaria para "Entrar".
     startTransition(() => {
       sair();
-      navigate('/', { state: { aviso: 'saiu' } });
+      navigate('/inicio', { state: { aviso: 'saiu' } });
     });
   };
 }

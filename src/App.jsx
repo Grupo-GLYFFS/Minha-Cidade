@@ -1,14 +1,15 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import LayoutApp from './componentes/LayoutApp';
+import LayoutAntigo from './componentes/LayoutAntigo';
+import PaginaEmConstrucao from './componentes/PaginaEmConstrucao';
 import RotaProtegida from './componentes/RotaProtegida';
+import { PAGINAS_EM_CONSTRUCAO } from './dados/paginasEmConstrucao';
 import Inicio from './paginas/Inicio';
 import Busca from './paginas/Busca';
 import Servicos from './paginas/Servicos';
 import CategoriaServicos from './paginas/CategoriaServicos';
 import Servico from './paginas/Servico';
 import SolicitarServico from './paginas/SolicitarServico';
-import Cidade from './paginas/Cidade';
 import Pedidos from './paginas/Pedidos';
 import NovoPedido from './paginas/NovoPedido';
 import DetalhePedido from './paginas/DetalhePedido';
@@ -23,9 +24,6 @@ import Alertas from './paginas/Alertas';
 import Perfil from './paginas/Perfil';
 import MeusPedidos from './paginas/MeusPedidos';
 import MeusDados from './paginas/MeusDados';
-import ComoFunciona from './paginas/ComoFunciona';
-import Impacto from './paginas/Impacto';
-import Equipe from './paginas/Equipe';
 import Entrar from './paginas/Entrar';
 import CriarConta from './paginas/CriarConta';
 import Acessibilidade from './paginas/Acessibilidade';
@@ -37,58 +35,73 @@ import NaoEncontrada from './paginas/NaoEncontrada';
 // Página de desenvolvimento: só é baixada quando alguém abre /componentes
 const Componentes = lazy(() => import('./paginas/Componentes'));
 
-// Lista de páginas do app. Todas usam o mesmo layout (cabeçalho/abas e rodapé).
-// As que ficam dentro de <RotaProtegida> precisam de conta: o visitante vai para "Entrar".
-// Acessibilidade e as páginas de ajuda ficam de fora: valem também para o visitante.
+// Rotas do app, no mapa de 18/11 (ver .claude/visao-do-projeto.md).
+// - Páginas novas usam <Pagina> por conta própria (topo, cabeçalho, coluna de 880 e rodapé).
+// - Telas antigas ficam dentro de <LayoutAntigo>, que põe o topo e o rodapé em volta delas.
+//   TODO: cada tela refeita sai do LayoutAntigo e passa a usar <Pagina>.
+// - Rotas sem tela ainda abrem a PaginaEmConstrucao (lista em dados/paginasEmConstrucao.js).
+// - As que ficam dentro de <RotaProtegida> precisam de conta: o visitante vai para "Entrar".
 export default function App() {
   return (
     <Routes>
-      <Route element={<LayoutApp />}>
-        <Route path="/" element={<Inicio />} />
+      {PAGINAS_EM_CONSTRUCAO.map((pagina) => (
+        <Route
+          key={pagina.caminho}
+          path={pagina.caminho}
+          element={
+            <PaginaEmConstrucao
+              titulo={pagina.titulo}
+              icone={pagina.icone}
+              trilha={pagina.trilha}
+            />
+          }
+        />
+      ))}
+
+      <Route element={<LayoutAntigo />}>
+        <Route path="/inicio" element={<Inicio />} />
         <Route path="/busca" element={<Busca />} />
         <Route path="/servicos" element={<Servicos />} />
         <Route path="/servicos/categoria/:idCategoria" element={<CategoriaServicos />} />
         <Route path="/servicos/:idServico" element={<Servico />} />
-        <Route path="/cidade" element={<Cidade />} />
-        <Route path="/pedidos" element={<Pedidos />} />
-        <Route path="/pedidos/:id" element={<DetalhePedido />} />
-        <Route path="/cidade-aberta" element={<CidadeAberta />} />
-        <Route path="/cidade-aberta/projetos" element={<ProjetosCidade />} />
-        <Route path="/cidade-aberta/projetos/:id" element={<ProjetoCidade />} />
-        <Route path="/cidade-aberta/obras" element={<ObrasCidade />} />
-        <Route path="/cidade-aberta/orcamento" element={<OrcamentoCidade />} />
-        <Route path="/cidade-aberta/orcamento-do-bairro" element={<OrcamentoBairro />} />
+        <Route path="/minha-cidade" element={<CidadeAberta />} />
+        <Route path="/minha-cidade/pedidos" element={<Pedidos />} />
+        <Route path="/minha-cidade/obras" element={<ObrasCidade />} />
+        <Route path="/minha-cidade/votacoes" element={<ProjetosCidade />} />
+        <Route path="/minha-cidade/votacoes/:id" element={<ProjetoCidade />} />
+        <Route path="/minha-cidade/orcamento" element={<OrcamentoCidade />} />
         <Route path="/meu-bairro" element={<MeuBairro />} />
-        <Route path="/como-funciona" element={<ComoFunciona />} />
-        <Route path="/impacto" element={<Impacto />} />
-        <Route path="/equipe" element={<Equipe />} />
+        <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
+        <Route path="/pedidos/:id" element={<DetalhePedido />} />
         <Route path="/entrar" element={<Entrar />} />
         <Route path="/criar-conta" element={<CriarConta />} />
-        <Route path="/perfil/acessibilidade" element={<Acessibilidade />} />
+        <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
         <Route path="/ajuda/telefones" element={<TelefonesUteis />} />
-        <Route path="/ajuda/perguntas" element={<PerguntasFrequentes />} />
-        {/* A Ouvidoria já é um serviço do catálogo: o link do rodapé leva para a ficha dela */}
-        <Route path="/ajuda/ouvidoria" element={<Navigate to="/servicos/ouvidoria" replace />} />
-        <Route path="/privacidade" element={<Privacidade />} />
-        {/* Página de desenvolvimento: o design system ao vivo (fora do menu principal) */}
-        <Route
-          path="/componentes"
-          element={
-            <Suspense fallback={null}>
-              <Componentes />
-            </Suspense>
-          }
-        />
+        <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />
+        <Route path="/ajuda/privacidade" element={<Privacidade />} />
         <Route element={<RotaProtegida />}>
           <Route path="/pedidos/novo" element={<NovoPedido />} />
           <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
-          <Route path="/alertas" element={<Alertas />} />
+          <Route path="/minha-cidade/alertas" element={<Alertas />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/perfil/pedidos" element={<MeusPedidos />} />
           <Route path="/perfil/dados" element={<MeusDados />} />
         </Route>
-        <Route path="*" element={<NaoEncontrada />} />
       </Route>
+
+      {/* A Ouvidoria já é um serviço do catálogo: o link antigo leva para a ficha dela */}
+      <Route path="/ajuda/ouvidoria" element={<Navigate to="/servicos/ouvidoria" replace />} />
+
+      {/* Página de desenvolvimento: os componentes da base ao vivo (fora do menu) */}
+      <Route
+        path="/componentes"
+        element={
+          <Suspense fallback={null}>
+            <Componentes />
+          </Suspense>
+        }
+      />
+      <Route path="*" element={<NaoEncontrada />} />
     </Routes>
   );
 }

@@ -1,18 +1,12 @@
-import { Link } from 'react-router-dom';
-import { Button, Stack } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import NaoEncontrado from '../componentes/NaoEncontrado';
+import Pagina from '../componentes/Pagina';
 
-// Página mostrada quando o endereço não existe. Sempre oferece um caminho de volta.
+// Página mostrada quando o endereço não existe: só topo, o aviso e o rodapé.
+// Sempre oferece um caminho de volta (o Início do app).
 export default function NaoEncontrada() {
   return (
-    <Stack gap="md" align="flex-start">
-      <CabecalhoPagina
-        titulo="Página não encontrada"
-        descricao="O endereço pode ter mudado. Volte ao início para continuar."
-      />
-      <Button component={Link} to="/">
-        Voltar ao início
-      </Button>
-    </Stack>
+    <Pagina>
+      <NaoEncontrado />
+    </Pagina>
   );
 }
