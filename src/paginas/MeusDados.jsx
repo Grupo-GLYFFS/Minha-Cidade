@@ -1,5 +1,5 @@
 import { Box, Stack } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import LinkVoltar from '../componentes/LinkVoltar';
 import FormularioMeusDados from '../componentes/perfil/FormularioMeusDados';
 
@@ -10,7 +10,7 @@ export default function MeusDados() {
     <Stack gap="lg" maw={720}>
       <Box>
         <LinkVoltar caminho="/perfil" rotulo="Perfil" />
-        <CabecalhoPagina
+        <CabecalhoAntigo
           titulo="Meus dados"
           descricao="Mantenha seu celular e endereço em dia: é por eles que a prefeitura fala com você."
         />

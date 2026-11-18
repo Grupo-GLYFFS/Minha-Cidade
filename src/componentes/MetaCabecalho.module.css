@@ -1,0 +1,33 @@
+/* Metadados do cabeçalho: itens lado a lado, centralizados, texto secundário. */
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8px) rem(16px);
+  margin-top: rem(14px);
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.meta + .meta {
+  margin-top: rem(8px);
+}
+
+.meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(4px);
+}
+
+.meta :global(.icone) {
+  font-size: rem(20px);
+  color: var(--cor-azul-escuro);
+}
+
+.meta b {
+  font-weight: 700;
+  color: var(--cor-texto);
+}

@@ -3,6 +3,7 @@ import CartaoArea from './CartaoArea';
 import CartaoProjeto from './CartaoProjeto';
 import CartaoObra from './CartaoObra';
 import SecaoCabecalho from '../SecaoCabecalho';
+import Botao from '../Botao';
 import EstadoVazio from '../EstadoVazio';
 import { useSessao } from '../../contexto/useSessao';
 import { AREAS_CIDADE_ABERTA, ORCAMENTO_TOTAL_2026 } from '../../dados/cidadeAberta';
@@ -50,7 +51,7 @@ export default function SecoesCidadeAberta() {
           <SecaoCabecalho
             id="votacoes-titulo"
             titulo="Votações abertas"
-            caminho="/cidade-aberta/projetos"
+            caminho="/minha-cidade/votacoes"
             rotuloLink="Ver todas"
           />
           <ul className={classes.grade} data-colunas="3">
@@ -67,7 +68,7 @@ export default function SecoesCidadeAberta() {
         <SecaoCabecalho
           id="obras-perto-titulo"
           titulo={usuario ? 'Obras perto de você' : 'Obras mais adiantadas'}
-          caminho="/cidade-aberta/obras"
+          caminho="/minha-cidade/obras"
           rotuloLink="Ver todas"
         />
         <Text fz={14} c="var(--cor-texto-suave)" mb="sm">
@@ -84,11 +85,11 @@ export default function SecoesCidadeAberta() {
             ))}
           </ul>
         ) : (
-          <EstadoVazio
-            texto={`Nenhuma obra em andamento ${naRegiao(usuario.regiao)} agora.`}
-            rotuloBotao="Ver obras da cidade"
-            caminho="/cidade-aberta/obras"
-          />
+          <EstadoVazio texto={`Nenhuma obra em andamento ${naRegiao(usuario.regiao)} agora.`}>
+            <Botao variante="secundario" para="/minha-cidade/obras">
+              Ver obras da cidade
+            </Botao>
+          </EstadoVazio>
         )}
       </section>
 

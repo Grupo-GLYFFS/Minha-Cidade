@@ -1,25 +1,19 @@
-import { Link } from 'react-router-dom';
-import { Button, Text } from '@mantine/core';
-import Cartao from './Cartao';
 import Icone from './Icone';
+import classes from './Estados.module.css';
 
-// Cartão para quando uma lista está vazia: uma frase e, se quiser, um botão com o próximo passo.
-// Recebe o texto e, opcionalmente, { rotuloBotao, caminho, icone } do botão.
-export default function EstadoVazio({ texto, rotuloBotao, caminho, icone = 'arrow_forward' }) {
+// Estado vazio de uma lista (ou busca sem resultado): caixa tracejada no lugar da lista.
+// Diz o que aconteceu e o que fazer. O cabeçalho e os controles da página continuam visíveis.
+// Recebe o icone (padrão "inbox"; busca sem resultado: "search_off"), o titulo, o texto
+// e, se quiser, os botões do próximo passo (children).
+export default function EstadoVazio({ icone = 'inbox', titulo, texto, children }) {
   return (
-    <Cartao>
-      <Text c="var(--cor-texto-suave)">{texto}</Text>
-      {rotuloBotao && caminho && (
-        <Button
-          component={Link}
-          to={caminho}
-          h={48}
-          mt="md"
-          leftSection={<Icone nome={icone} tamanho={20} />}
-        >
-          {rotuloBotao}
-        </Button>
-      )}
-    </Cartao>
+    <div className={classes.vazio}>
+      <span className={classes.icone}>
+        <Icone nome={icone} tamanho={28} />
+      </span>
+      {titulo && <h3 className={classes.titulo}>{titulo}</h3>}
+      {texto && <p className={classes.texto}>{texto}</p>}
+      {children && <div className={classes.acoes}>{children}</div>}
+    </div>
   );
 }

@@ -1,0 +1,36 @@
+/* Barra de acessibilidade: fundo branco, linha fina embaixo, botões à direita. */
+
+.barra {
+  background: var(--cor-superficie);
+  border-bottom: var(--espessura-borda) solid var(--cor-linha);
+}
+
+.miolo {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: rem(8px);
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
+  min-height: rem(48px);
+  margin-inline: auto;
+}
+
+.rotulo {
+  margin-right: rem(4px);
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .miolo {
+    width: calc(100% - rem(32px));
+    flex-wrap: wrap;
+    padding-block: rem(8px);
+  }
+
+  .rotulo {
+    display: none;
+  }
+}

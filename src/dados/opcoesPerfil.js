@@ -21,7 +21,7 @@ export const GRUPOS_PERFIL = [
         rotulo: 'Acessibilidade',
         descricao: 'Tamanho da letra e alto contraste',
         icone: 'accessibility_new',
-        caminho: '/perfil/acessibilidade',
+        caminho: '/ajuda/acessibilidade',
       },
     ],
   },
@@ -39,7 +39,7 @@ export const GRUPOS_PERFIL = [
         rotulo: 'Perguntas frequentes',
         descricao: 'Dúvidas sobre o app e os serviços',
         icone: 'help',
-        caminho: '/ajuda/perguntas',
+        caminho: '/ajuda/perguntas-frequentes',
       },
       {
         rotulo: 'Ouvidoria',
@@ -75,7 +75,7 @@ export const GRUPOS_PERFIL = [
         rotulo: 'Privacidade dos dados',
         descricao: 'O que guardamos e como usamos',
         icone: 'lock',
-        caminho: '/privacidade',
+        caminho: '/ajuda/privacidade',
       },
       {
         rotulo: 'Componentes (desenvolvimento)',

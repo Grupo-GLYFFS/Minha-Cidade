@@ -43,7 +43,7 @@ export default function CartaoProjeto({ projeto, nivelTitulo = 3 }) {
       </Group>
 
       <Title order={nivelTitulo} fz={{ base: 16, md: 17 }} fw={700} lh={1.3}>
-        <Link to={`/cidade-aberta/projetos/${projeto.id}`} className={clicavel.linkEsticado}>
+        <Link to={`/minha-cidade/votacoes/${projeto.id}`} className={clicavel.linkEsticado}>
           {projeto.titulo}
         </Link>
       </Title>

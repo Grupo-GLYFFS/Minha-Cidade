@@ -17,7 +17,7 @@ import classes from './ProjetoEmVotacao.module.css';
 // vai direto para a página do projeto. Quem já votou vê o próprio voto e o link do resultado.
 export default function ProjetoEmVotacao({ projeto }) {
   const { logado } = useSessao();
-  const caminhoProjeto = `/cidade-aberta/projetos/${projeto.id}`;
+  const caminhoProjeto = `/minha-cidade/votacoes/${projeto.id}`;
   const { entrar } = useCaminhoConta(caminhoProjeto);
   const { votoDe, resultado } = useVotos();
   const status = STATUS_PROJETO.find((item) => item.id === projeto.status);

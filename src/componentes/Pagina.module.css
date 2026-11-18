@@ -1,0 +1,35 @@
+/* Moldura da página: o rodapé fica sempre embaixo, mesmo com pouco conteúdo. */
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--cor-superficie);
+}
+
+.principal {
+  flex: 1 0 auto;
+  outline: none;
+}
+
+/* Coluna de conteúdo de 880, com 48 em cima e 96 embaixo */
+.coluna {
+  box-sizing: border-box;
+  width: min(var(--largura-conteudo), calc(100% - rem(64px)));
+  margin-inline: auto;
+  padding: rem(48px) 0 rem(96px);
+}
+
+/* Coluna larga das telas antigas */
+.colunaLarga {
+  composes: coluna;
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .coluna,
+  .colunaLarga {
+    width: calc(100% - rem(32px));
+    padding: rem(24px) 0 rem(48px);
+  }
+}

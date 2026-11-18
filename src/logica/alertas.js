@@ -124,7 +124,7 @@ export function montarAlertas({
       titulo: `Votação aberta: ${projeto.titulo}`,
       texto: `${textoPrazoVotacao(projeto.fimVotacao, hoje)}. Dê sua opinião antes de o projeto ir para a Câmara.`,
       data: projeto.inicioVotacao,
-      link: `/cidade-aberta/projetos/${projeto.id}`,
+      link: `/minha-cidade/votacoes/${projeto.id}`,
       icone: 'how_to_vote',
     }));
 

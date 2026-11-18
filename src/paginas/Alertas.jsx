@@ -1,5 +1,5 @@
 import { Button, Group, Stack, Text } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import EstadoVazio from '../componentes/EstadoVazio';
 import GrupoAlertas from '../componentes/alertas/GrupoAlertas';
 import Icone from '../componentes/Icone';
@@ -16,7 +16,7 @@ export default function Alertas() {
 
   return (
     <Stack gap="lg" maw={720}>
-      <CabecalhoPagina titulo="Alertas" />
+      <CabecalhoAntigo titulo="Alertas" />
 
       {alertas.length === 0 ? (
         <EstadoVazio texto="Nenhum alerta por enquanto." />

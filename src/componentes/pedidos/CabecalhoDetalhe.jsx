@@ -14,7 +14,7 @@ export default function CabecalhoDetalhe({ pedido }) {
     <header>
       <Anchor
         component={Link}
-        to="/pedidos"
+        to="/minha-cidade/pedidos"
         fw={600}
         fz={14}
         c="var(--cor-link)"

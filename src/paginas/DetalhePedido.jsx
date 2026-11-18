@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Alert, Button, Stack } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import CabecalhoDetalhe from '../componentes/pedidos/CabecalhoDetalhe';
 import SobrePedido from '../componentes/pedidos/SobrePedido';
 import BlocoApoio from '../componentes/pedidos/BlocoApoio';
@@ -32,11 +32,11 @@ export default function DetalhePedido() {
   if (!pedido) {
     return (
       <Stack gap="md" align="flex-start">
-        <CabecalhoPagina
+        <CabecalhoAntigo
           titulo="Pedido não encontrado"
           descricao="O link pode estar errado ou o pedido foi removido. Veja a lista com todos os pedidos."
         />
-        <Button component={Link} to="/pedidos">
+        <Button component={Link} to="/minha-cidade/pedidos">
           Voltar para pedidos
         </Button>
       </Stack>

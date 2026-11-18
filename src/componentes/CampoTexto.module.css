@@ -1,0 +1,54 @@
+/* Campo: 44 de altura, raio 12, borda #D0D5DD; rótulo 16/700; ajuda e erro 14. */
+
+.rotulo {
+  margin-bottom: rem(4px);
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.ajuda {
+  margin-bottom: rem(8px);
+  font-size: rem(14px);
+  line-height: 1.45;
+  color: var(--cor-texto-2);
+}
+
+/* Uma frase por linha */
+.frase {
+  display: block;
+}
+
+.campo {
+  min-height: var(--altura-campo);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  font-family: var(--fonte);
+  font-size: rem(16px);
+  color: var(--cor-texto);
+}
+
+.campo::placeholder {
+  color: var(--cor-texto-placeholder);
+}
+
+.campo:focus {
+  border-color: var(--cor-azul);
+}
+
+.campo[data-error] {
+  border-color: var(--cor-erro);
+  color: var(--cor-texto);
+}
+
+.erro {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(6px);
+  margin-top: rem(6px);
+  font-size: rem(14px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--cor-erro);
+}

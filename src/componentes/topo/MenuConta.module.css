@@ -1,0 +1,118 @@
+/* Botão da conta (avatar + nome) e o painel preso à direita dele. */
+
+.contorno {
+  position: relative;
+}
+
+.botao {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: rem(8px);
+  height: rem(44px);
+  padding: 0 rem(10px) 0 rem(5px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  font-family: var(--fonte);
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+
+.botao:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.botao[aria-expanded='true'] {
+  border-color: var(--cor-azul);
+  box-shadow: 0 0 0 3px var(--cor-faixa);
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: rem(32px);
+  height: rem(32px);
+  border-radius: var(--raio-topo);
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+  font-size: rem(13px);
+  font-weight: 800;
+}
+
+.nome {
+  font-size: rem(15px);
+  font-weight: 700;
+}
+
+/* Painel preso à direita do botão */
+.painelConta {
+  left: auto;
+  right: 0;
+  width: rem(300px);
+}
+
+/* Resumo da conta = link para Meu perfil, área de clique inteira */
+.quem {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  width: 100%;
+  min-height: rem(56px);
+  padding: rem(8px);
+  border-radius: var(--raio-controle);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.quem:hover {
+  background: var(--cor-fundo);
+}
+
+.quem[aria-current] {
+  background: var(--cor-faixa);
+}
+
+.quemAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: rem(40px);
+  height: rem(40px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+  font-size: rem(15px);
+  font-weight: 800;
+}
+
+.quemTexto {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.quemNome {
+  display: block;
+  font-size: rem(16px);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.quemEmail {
+  display: block;
+  overflow: hidden;
+  font-size: rem(14px);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--cor-texto-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quemSeta {
+  color: var(--cor-texto-2);
+}

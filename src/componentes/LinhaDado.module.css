@@ -1,0 +1,50 @@
+/* Linha de dado: 64 de altura mínima, sangra o padding do card (--pad-lateral)
+   para a divisória ir de borda a borda. */
+
+.linha {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  min-height: rem(64px);
+  margin-inline: calc(var(--pad-lateral, 0px) * -1);
+  padding: rem(10px) var(--pad-lateral, 0px);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.linha + .linha {
+  border-top: var(--espessura-borda) solid var(--cor-linha);
+}
+
+.icone {
+  color: var(--cor-texto-2);
+}
+
+.rotulo {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: rem(16px);
+  font-weight: 600;
+}
+
+.valor {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+  text-align: right;
+}
+
+.chevron {
+  color: var(--cor-texto-2);
+}
+
+.link:hover {
+  background: var(--cor-fundo-card);
+}
+
+.link:focus-visible {
+  outline-offset: -3px;
+}

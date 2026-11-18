@@ -1,0 +1,101 @@
+/* Topo: logo à esquerda, menu no meio, ações à direita. Largura do topo: 1088. */
+
+.topo {
+  position: relative;
+  z-index: 50;
+  background: var(--cor-superficie);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.miolo {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(24px);
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
+  min-height: rem(76px);
+  margin-inline: auto;
+}
+
+.logo {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: rem(10px);
+  min-height: rem(44px);
+  text-decoration: none;
+}
+
+.logoIcone {
+  display: block;
+  width: rem(44px);
+  height: rem(44px);
+}
+
+.logoNome {
+  font-family: var(--fonte-logo);
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--cor-azul);
+  white-space: nowrap;
+}
+
+.menu {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.lista {
+  display: flex;
+  gap: rem(4px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.acoes {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  margin-left: auto;
+}
+
+/* Contador do sino, colado no canto de cima à direita */
+.badge {
+  position: absolute;
+  top: rem(-6px);
+  right: rem(-6px);
+  box-sizing: border-box;
+  min-width: rem(20px);
+  height: rem(20px);
+  padding: 0 rem(5px);
+  border: 2px solid var(--cor-superficie);
+  border-radius: var(--raio-selo);
+  background: var(--cor-contador);
+  color: var(--cor-sobre-primaria);
+  font-size: rem(11px);
+  font-weight: 800;
+  line-height: rem(16px);
+  text-align: center;
+}
+
+@media (max-width: $mantine-breakpoint-md) {
+  .menu {
+    display: none;
+  }
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .miolo {
+    width: calc(100% - rem(32px));
+    gap: rem(12px);
+  }
+
+  .logoNome {
+    display: none;
+  }
+}

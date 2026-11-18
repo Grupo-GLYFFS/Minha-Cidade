@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { Button, Group, Stack, Text } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import Cartao from '../componentes/Cartao';
 import Icone from '../componentes/Icone';
 import LinkVoltar from '../componentes/LinkVoltar';
@@ -50,8 +50,8 @@ export default function ObrasCidade() {
   return (
     <Stack gap="lg">
       <div>
-        <LinkVoltar caminho="/cidade-aberta" rotulo="Cidade Aberta" />
-        <CabecalhoPagina
+        <LinkVoltar caminho="/minha-cidade" rotulo="Cidade Aberta" />
+        <CabecalhoAntigo
           titulo="Obras da Cidade"
           descricao="Acompanhe quanto cada obra já andou, quanto foi pago e se está dentro do prazo."
         />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Box, Stack, Title, VisuallyHidden } from '@mantine/core';
-import CartaoPedido from '../CartaoPedido';
+import CardPedido from '../CardPedido';
 import BarraFiltros from './BarraFiltros';
 import FiltrosCelular from './FiltrosCelular';
 import ResultadoFiltros from './ResultadoFiltros';
@@ -95,7 +95,7 @@ export default function ListaPedidos() {
           <ul className={classes.lista} data-visao={visao}>
             {resultado.map((pedido) => (
               <li key={pedido.id}>
-                <CartaoPedido pedido={pedido} comApoio layout={visao} />
+                <CardPedido pedido={pedido} />
               </li>
             ))}
           </ul>

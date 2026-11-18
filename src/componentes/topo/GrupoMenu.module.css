@@ -1,0 +1,87 @@
+/* Item do menu principal. Link simples (Serviços) ou grupo: link + seta + painel. */
+
+.item {
+  position: relative;
+}
+
+.link {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  height: rem(44px);
+  padding: 0 rem(12px);
+  border-radius: var(--raio-controle);
+  font-family: var(--fonte);
+  font-size: rem(15px);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--cor-texto-2);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.link:hover {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+.link[aria-current] {
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+/* Grupo: o nome e a seta ficam numa pílula só */
+.grupo {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--raio-controle);
+}
+
+.grupo .link {
+  padding-right: rem(2px);
+  border-radius: var(--raio-controle) 0 0 var(--raio-controle);
+}
+
+.seta {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(36px);
+  height: rem(44px);
+  padding: 0 rem(6px) 0 0;
+  border: 0;
+  border-radius: 0 var(--raio-controle) var(--raio-controle) 0;
+  background: none;
+  color: var(--cor-texto-2);
+  cursor: pointer;
+}
+
+.seta .setaIcone {
+  transition: transform 0.15s ease;
+}
+
+.seta[aria-expanded='true'] .setaIcone {
+  transform: rotate(180deg);
+}
+
+.seta:hover {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+/* Grupo ativo ou com o painel aberto: a pílula inteira fica azul-clara */
+.grupoAtivo {
+  background: var(--cor-faixa);
+}
+
+.grupoAtivo .link,
+.grupoAtivo .seta {
+  background: none;
+  color: var(--cor-azul-escuro);
+}
+
+.grupoAtivo .link:hover,
+.grupoAtivo .seta:hover {
+  background: none;
+}

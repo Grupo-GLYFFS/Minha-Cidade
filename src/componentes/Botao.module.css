@@ -1,0 +1,249 @@
+/* Botões da regra 15 (base de 18/11/2026).
+   Alturas 48 (padrão) e 44 (compacto: só dentro de cards e no topo). Raio 12, texto 16/700.
+   Ícone 24 (22 no compacto) a 8 px do texto. O lado do ícone fica 4 px mais perto da borda
+   (16|20 no padrão, 12|16 no compacto, 4|8 no botão de texto). */
+
+.botao {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8px);
+  height: var(--altura-botao);
+  min-width: var(--altura-botao);
+  padding: 0 rem(20px);
+  border: var(--espessura-borda) solid transparent;
+  border-radius: var(--raio-controle);
+  background: none;
+  font-family: var(--fonte);
+  font-size: rem(16px);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Ícone do botão: sem sobra de altura de linha */
+.ic {
+  display: block;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  margin-left: rem(-4px);
+}
+
+/* Ícone (ou spinner) depois do texto */
+.ic.direita,
+.spinner.direita {
+  margin-left: 0;
+  margin-right: rem(-4px);
+}
+
+.compacto {
+  height: var(--altura-botao-compacto);
+  min-width: var(--altura-botao-compacto);
+  padding: 0 rem(16px);
+}
+
+/* Popups usam a versão normal (48): o compacto fica só em cards e no topo */
+:global(:is([role='dialog'], [role='alertdialog'])) .compacto {
+  height: var(--altura-botao);
+  min-width: var(--altura-botao);
+  padding: 0 rem(20px);
+}
+
+.largo {
+  display: flex;
+  width: 100%;
+}
+
+/* 1 · Principal: azul cheio, no máximo um por bloco */
+.principal {
+  background: var(--cor-azul);
+  border-color: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+.principal:hover {
+  background: var(--cor-azul-escuro);
+  border-color: var(--cor-azul-escuro);
+}
+
+/* Principal sobre fundo azul */
+.branco {
+  background: var(--cor-superficie);
+  border-color: var(--cor-superficie);
+  color: var(--cor-azul-escuro);
+}
+.branco:hover {
+  background: var(--cor-faixa);
+  border-color: var(--cor-faixa);
+}
+
+/* 2 · Secundário: branco, borda cinza, texto azul */
+.secundario {
+  background: var(--cor-superficie);
+  border-color: var(--cor-borda);
+  color: var(--cor-azul-escuro);
+}
+.secundario:hover {
+  background: var(--cor-fundo-card);
+  border-color: var(--cor-borda-forte);
+}
+
+/* 3 · Texto: azul, sem borda */
+.texto {
+  padding: 0 rem(8px);
+  border-color: transparent;
+  color: var(--cor-azul-escuro);
+}
+.texto:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 4 · Só ícone: quadrado de 44 com borda, ícone 24 no centro */
+.soIcone {
+  width: var(--altura-botao-compacto);
+  min-width: var(--altura-botao-compacto);
+  height: var(--altura-botao-compacto);
+  padding: 0;
+  background: var(--cor-superficie);
+  border-color: var(--cor-borda);
+  color: var(--cor-texto);
+}
+.soIcone:hover {
+  background: var(--cor-fundo-card);
+  border-color: var(--cor-borda-forte);
+}
+
+/* Ação do conteúdo (compartilhar, editar, copiar): ícone azul */
+.iconeAcao {
+  color: var(--cor-azul-escuro);
+}
+
+/* X de fechar: o único, sem borda, cinza */
+.fechar {
+  width: var(--altura-botao-compacto);
+  min-width: var(--altura-botao-compacto);
+  height: var(--altura-botao-compacto);
+  padding: 0;
+  border-color: transparent;
+  background: none;
+  color: var(--cor-status-cinza-texto);
+}
+.fechar:hover {
+  background: var(--cor-status-cinza-fundo);
+}
+
+.soIcone .ic,
+.fechar .ic {
+  margin: 0;
+}
+
+/* 5 · Perigo: sempre fundo vermelho e sempre com ícone */
+.perigo {
+  background: var(--cor-perigo);
+  border-color: var(--cor-perigo);
+  color: var(--cor-sobre-primaria);
+}
+.perigo:hover {
+  background: var(--cor-perigo-hover);
+  border-color: var(--cor-perigo-hover);
+}
+
+/* Toggle ligado (Seguindo, Apoiado): faixa azul-clara com check */
+.botao[aria-pressed='true'] {
+  background: var(--cor-faixa);
+  border-color: var(--cor-azul-borda-forte);
+  color: var(--cor-azul-tinta);
+}
+
+/* Botões da barra de acessibilidade (A−, A, A+, Alto contraste):
+   exceção à regra dos 44. Altura 32, raio 8, texto 14/700, ícone 18 a 6 px do texto. */
+.topo {
+  height: var(--altura-botao-topo);
+  min-width: var(--altura-botao-topo);
+  padding: 0 rem(10px);
+  gap: rem(6px);
+  border-radius: var(--raio-topo);
+  font-size: rem(14px);
+  background: var(--cor-superficie);
+  border-color: var(--cor-borda);
+  color: var(--cor-texto);
+}
+.topo .ic {
+  margin: 0;
+}
+.topo:hover {
+  border-color: var(--cor-borda-forte);
+}
+.topo[aria-pressed='true'] {
+  border-color: var(--cor-azul);
+  color: var(--cor-azul-escuro);
+}
+
+/* Contagem dentro do botão (ex.: Apoiar 23) */
+.contagem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: rem(24px);
+  height: rem(24px);
+  padding: 0 rem(8px);
+  margin-right: rem(-8px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-status-cinza-fundo);
+  font-size: rem(13px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+}
+
+/* Estados: desabilitado com opacidade 0,45; carregando com spinner */
+.botao:disabled,
+.botao[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.botao[aria-busy='true'] {
+  cursor: progress;
+  pointer-events: none;
+}
+
+.spinner {
+  box-sizing: border-box;
+  flex: none;
+  display: block;
+  width: rem(24px);
+  height: rem(24px);
+  margin-left: rem(-4px);
+  border: 2.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: gira 0.8s linear infinite;
+}
+
+.compacto .spinner {
+  width: rem(22px);
+  height: rem(22px);
+}
+
+@keyframes gira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2.4s;
+  }
+}
+
+/* Alto contraste: botões com borda preta de 2 px */
+:global(html[data-contraste='alto']) .botao:not(.texto, .fechar) {
+  border-color: var(--cor-texto);
+}

@@ -1,5 +1,5 @@
 import { Box, Stack } from '@mantine/core';
-import CabecalhoPagina from '../CabecalhoPagina';
+import CabecalhoAntigo from '../CabecalhoAntigo';
 import LinkVoltar from '../LinkVoltar';
 import { useSessao } from '../../contexto/useSessao';
 
@@ -14,8 +14,11 @@ export default function PaginaAjuda({ titulo, descricao, children }) {
   return (
     <Stack gap="lg" maw={720}>
       <Box>
-        <LinkVoltar caminho={logado ? '/perfil' : '/'} rotulo={logado ? 'Perfil' : 'Início'} />
-        <CabecalhoPagina titulo={titulo} descricao={descricao} />
+        <LinkVoltar
+          caminho={logado ? '/perfil' : '/inicio'}
+          rotulo={logado ? 'Perfil' : 'Início'}
+        />
+        <CabecalhoAntigo titulo={titulo} descricao={descricao} />
       </Box>
       {children}
     </Stack>

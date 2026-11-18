@@ -1,5 +1,6 @@
 import { SimpleGrid } from '@mantine/core';
 import CartaoSolicitacao from './CartaoSolicitacao';
+import Botao from '../Botao';
 import EstadoVazio from '../EstadoVazio';
 import classes from './AbaPedidos.module.css';
 
@@ -8,12 +9,11 @@ import classes from './AbaPedidos.module.css';
 export default function AbaServicos({ solicitacoes }) {
   if (solicitacoes.length === 0) {
     return (
-      <EstadoVazio
-        texto="Você ainda não solicitou serviços."
-        rotuloBotao="Ver serviços"
-        caminho="/servicos"
-        icone="apps"
-      />
+      <EstadoVazio texto="Você ainda não solicitou serviços.">
+        <Botao variante="principal" para="/servicos" icone="apps">
+          Ver serviços
+        </Botao>
+      </EstadoVazio>
     );
   }
 

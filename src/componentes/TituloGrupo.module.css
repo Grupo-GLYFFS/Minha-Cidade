@@ -1,0 +1,70 @@
+/* Título de grupo: 24/700, bolinha de 10, contagem e linha de 1 px até a borda. */
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: rem(10px);
+  min-height: rem(44px);
+  margin: 0 0 rem(12px);
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+.bolinha {
+  flex: none;
+  width: rem(10px);
+  height: rem(10px);
+  border-radius: 50%;
+}
+
+.cinza {
+  background: var(--cor-status-cinza-bolinha);
+}
+
+.azul {
+  background: var(--cor-azul);
+}
+
+.ambar {
+  background: var(--cor-status-ambar-texto);
+}
+
+.verde {
+  background: var(--cor-status-verde-texto);
+}
+
+.vermelho {
+  background: var(--cor-status-vermelho-texto);
+}
+
+.texto {
+  flex: none;
+  white-space: nowrap;
+}
+
+.contagem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: rem(24px);
+  height: rem(24px);
+  margin-left: rem(-2px);
+  padding: 0 rem(8px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-status-cinza-fundo);
+  font-size: rem(13px);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--cor-texto-2);
+}
+
+.linha {
+  flex: 1 1 auto;
+  min-width: rem(24px);
+  height: 1px;
+  margin-left: rem(6px);
+  background: var(--cor-borda);
+}

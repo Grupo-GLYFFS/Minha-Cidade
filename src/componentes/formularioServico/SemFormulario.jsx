@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button, Group, Stack } from '@mantine/core';
-import CabecalhoPagina from '../CabecalhoPagina';
+import CabecalhoAntigo from '../CabecalhoAntigo';
 import Icone from '../Icone';
 import { caminhoServico } from '../../logica/servicos';
 
@@ -10,7 +10,7 @@ import { caminhoServico } from '../../logica/servicos';
 export default function SemFormulario({ servico }) {
   return (
     <Stack gap="md" align="flex-start">
-      <CabecalhoPagina
+      <CabecalhoAntigo
         titulo={servico.nome}
         descricao="Este serviço não tem formulário online. Veja na página dele como resolver: lá estão os passos, os documentos e os telefones."
       />

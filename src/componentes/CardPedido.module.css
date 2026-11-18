@@ -1,0 +1,99 @@
+/* Card simples de pedido: miniatura 96 × 72, texto e seta no meio da altura. */
+
+.card {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: rem(16px);
+  padding: rem(16px) rem(64px) rem(16px) rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.card:hover {
+  background: var(--cor-fundo-card);
+  border-color: var(--cor-borda-forte);
+}
+
+.midia {
+  display: block;
+  flex: none;
+  width: rem(96px);
+  height: rem(72px);
+  overflow: hidden;
+  border-radius: var(--raio-controle);
+  background: var(--cor-fundo);
+}
+
+.midia > :is(img, svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.midiaIcone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.texto {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: rem(4px);
+  min-width: 0;
+}
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(4px) rem(10px);
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(2px) rem(6px);
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.seta {
+  position: absolute;
+  top: 50%;
+  right: rem(20px);
+  margin-top: rem(-11px);
+  color: var(--cor-texto-2);
+}
+
+.card:hover .seta {
+  color: var(--cor-azul-escuro);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .midia {
+    width: rem(72px);
+    height: rem(56px);
+  }
+}

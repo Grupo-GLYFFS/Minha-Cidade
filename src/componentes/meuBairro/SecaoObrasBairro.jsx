@@ -1,5 +1,6 @@
 import { Text } from '@mantine/core';
 import CartaoObra from '../cidadeAberta/CartaoObra';
+import Botao from '../Botao';
 import EstadoVazio from '../EstadoVazio';
 import SecaoCabecalho from '../SecaoCabecalho';
 import { OBRAS } from '../../dados/obras';
@@ -14,8 +15,8 @@ export default function SecaoObrasBairro({ bairro, regiao }) {
   const obras = obrasDoBairro(OBRAS, bairro);
   const emAndamento = obras.filter(obraEmAndamento).length;
   const caminhoRegiao = regiao
-    ? `/cidade-aberta/obras?regiao=${encodeURIComponent(regiao)}`
-    : '/cidade-aberta/obras';
+    ? `/minha-cidade/obras?regiao=${encodeURIComponent(regiao)}`
+    : '/minha-cidade/obras';
   const rotuloRegiao = regiao ? `Ver obras ${naRegiao(regiao)}` : 'Ver obras da cidade';
 
   return (
@@ -42,11 +43,11 @@ export default function SecaoObrasBairro({ bairro, regiao }) {
           </ul>
         </>
       ) : (
-        <EstadoVazio
-          texto="Nenhuma obra neste bairro agora."
-          rotuloBotao={rotuloRegiao}
-          caminho={caminhoRegiao}
-        />
+        <EstadoVazio texto="Nenhuma obra neste bairro agora.">
+          <Botao variante="secundario" para={caminhoRegiao}>
+            {rotuloRegiao}
+          </Botao>
+        </EstadoVazio>
       )}
     </section>
   );

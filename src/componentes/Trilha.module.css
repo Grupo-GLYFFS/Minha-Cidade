@@ -1,0 +1,57 @@
+/* Trilha: alinhada à esquerda, numa linha só; o último nível corta com reticências. */
+
+.trilha {
+  width: 100%;
+  text-align: left;
+}
+
+.lista {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: rem(2px) rem(4px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.nivel {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: rem(4px);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: rem(44px);
+  font-weight: 700;
+  color: var(--cor-azul-escuro);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.seta {
+  color: var(--cor-texto-2);
+}
+
+.atual {
+  display: block;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: rem(340px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .lista {
+    flex-wrap: wrap;
+  }
+}

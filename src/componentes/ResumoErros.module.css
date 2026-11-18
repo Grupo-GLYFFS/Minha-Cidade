@@ -1,0 +1,58 @@
+/* Resumo de erros: caixa vermelho-clara, raio 12; cada erro em duas linhas. */
+
+.resumo {
+  display: flex;
+  gap: rem(12px);
+  padding: rem(16px);
+  border: var(--espessura-borda) solid var(--cor-erro-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+}
+
+.texto {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--cor-erro-tinta);
+}
+
+.lista {
+  margin: rem(4px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: block;
+  margin: 0 rem(-10px);
+  padding: rem(8px) rem(10px);
+  border-radius: var(--raio-topo);
+  color: var(--cor-erro-tinta);
+  text-decoration: none;
+}
+
+.item:hover {
+  background: var(--cor-superficie);
+}
+
+.campo {
+  display: block;
+  font-size: rem(15px);
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--cor-erro);
+}
+
+.falta {
+  display: block;
+  font-size: rem(15px);
+  font-weight: 500;
+  line-height: 1.4;
+}

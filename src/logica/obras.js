@@ -85,7 +85,7 @@ export function origemDaObra(obra) {
   if (obra.origem?.tipo === 'projeto') {
     return {
       texto: 'Projeto votado',
-      caminho: `/cidade-aberta/projetos/${obra.origem.id}`,
+      caminho: `/minha-cidade/votacoes/${obra.origem.id}`,
       icone: 'how_to_vote',
     };
   }

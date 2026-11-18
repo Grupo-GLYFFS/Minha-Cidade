@@ -14,7 +14,7 @@ export default function MolduraConta({ titulo, descricao, largura = 'estreita', 
         className={classes.cartao}
         data-largura={largura}
       >
-        <Link to="/" className={classes.logoLink}>
+        <Link to="/inicio" className={classes.logoLink}>
           <img
             className={classes.logo}
             src="/img/logo.png"

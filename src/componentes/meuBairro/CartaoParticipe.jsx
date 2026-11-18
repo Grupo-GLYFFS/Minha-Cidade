@@ -21,7 +21,7 @@ export default function CartaoParticipe({ regiao }) {
         Participe
       </TituloCartao>
 
-      <Link to="/cidade-aberta/orcamento-do-bairro" className={classes.convite}>
+      <Link to="/meu-bairro/orcamento" className={classes.convite}>
         <Icone nome="tune" tamanho={24} />
         <span>
           <strong>Prefeito por 5 minutos</strong>
@@ -43,7 +43,7 @@ export default function CartaoParticipe({ regiao }) {
               <span>
                 <Anchor
                   component={Link}
-                  to={`/cidade-aberta/projetos/${projeto.id}`}
+                  to={`/minha-cidade/votacoes/${projeto.id}`}
                   fw={700}
                   c="var(--cor-link)"
                 >
@@ -59,7 +59,7 @@ export default function CartaoParticipe({ regiao }) {
       ) : (
         <Text fz={14} c="var(--cor-texto-suave)" mt={4}>
           Nenhuma votação aberta nesta região agora.{' '}
-          <Anchor component={Link} to="/cidade-aberta/projetos" fz="inherit" c="var(--cor-link)">
+          <Anchor component={Link} to="/minha-cidade/votacoes" fz="inherit" c="var(--cor-link)">
             Ver os grandes projetos da cidade
           </Anchor>
         </Text>

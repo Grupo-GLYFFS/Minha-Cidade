@@ -1,39 +1,68 @@
+/* Rodapé provisório: faixa azul-clara com três colunas de links. */
+
 .rodape {
-  background: var(--cor-superficie);
-  border-top: 1px solid var(--cor-borda);
+  margin-top: auto;
+  background: var(--cor-faixa);
+  border-top: var(--espessura-borda) solid var(--cor-azul-borda);
 }
 
-.logo {
-  display: block;
-  height: 40px;
-  width: auto;
+.miolo {
+  box-sizing: border-box;
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
+  margin-inline: auto;
+  padding: rem(48px) 0 rem(32px);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: rem(32px);
+}
+
+.titulo {
+  margin: 0 0 rem(8px);
+  font-size: rem(14px);
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--cor-azul-tinta);
 }
 
 .lista {
-  list-style: none;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .link {
-  color: var(--cor-texto-suave);
-  font-size: rem(14px);
+  display: inline-flex;
+  align-items: center;
+  min-height: rem(44px);
+  font-size: rem(15px);
+  color: var(--cor-texto-2);
   text-decoration: none;
 }
 
 .link:hover {
-  color: var(--mantine-color-azul-7);
+  color: var(--cor-texto);
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .base {
-  border-top: 1px solid var(--cor-borda);
+  margin: rem(32px) 0 0;
+  padding-top: rem(24px);
+  border-top: var(--espessura-borda) solid var(--cor-azul-borda);
+  font-size: rem(13px);
+  color: var(--cor-texto-2);
 }
 
-/* Alto contraste: links sempre sublinhados e em negrito */
-:global(html[data-contraste='alto']) .link {
-  color: var(--mantine-color-text);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+@media (max-width: $mantine-breakpoint-sm) {
+  .miolo {
+    width: calc(100% - rem(32px));
+  }
+
+  .grade {
+    grid-template-columns: 1fr;
+    gap: rem(16px);
+  }
 }

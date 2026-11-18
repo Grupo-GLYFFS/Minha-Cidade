@@ -4,10 +4,10 @@ import classes from './LinksAjudaConta.module.css';
 
 // Links que abrem sem conta, para o visitante achar no celular (onde não há rodapé)
 const LINKS = [
-  { rotulo: 'Acessibilidade', caminho: '/perfil/acessibilidade' },
-  { rotulo: 'Perguntas frequentes', caminho: '/ajuda/perguntas' },
+  { rotulo: 'Acessibilidade', caminho: '/ajuda/acessibilidade' },
+  { rotulo: 'Perguntas frequentes', caminho: '/ajuda/perguntas-frequentes' },
   { rotulo: 'Telefones úteis', caminho: '/ajuda/telefones' },
-  { rotulo: 'Privacidade', caminho: '/privacidade' },
+  { rotulo: 'Privacidade', caminho: '/ajuda/privacidade' },
 ];
 
 // Linha de links no pé da tela "Entrar": acessibilidade e ajuda, que não precisam de conta.

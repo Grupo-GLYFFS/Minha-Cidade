@@ -92,7 +92,7 @@ export default function PedidoEnviado({ pedido }) {
           >
             Acompanhar pedido
           </Button>
-          <Button component={Link} to="/pedidos" size="md" variant="default">
+          <Button component={Link} to="/minha-cidade/pedidos" size="md" variant="default">
             Voltar para pedidos
           </Button>
         </SimpleGrid>

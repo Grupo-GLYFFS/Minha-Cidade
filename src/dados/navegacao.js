@@ -1,81 +1,113 @@
-// Itens de navegação do app.
-// O celular agrupa tudo em 5 abas; o computador mostra as opções separadas no cabeçalho.
-// "ativoEm" lista os caminhos em que o item aparece como selecionado.
+// Itens de navegação do topo e do rodapé (menu da regra 18).
+// Ordem do menu: Global Solution ▾ · Serviços · Minha cidade ▾ · Meu bairro ▾.
+// Não existe item "Início": o Início do app (/inicio) abre pelo logo.
+// Itens com "painel" são grupos: o nome leva à página e a seta abre o painel.
+// "ativoEm" lista os caminhos em que o item aparece como selecionado
+// ("page" no próprio caminho, "true" nas subpáginas).
 
-export const ABAS_CELULAR = [
-  { rotulo: 'Início', caminho: '/', icone: 'home', ativoEm: ['/'] },
-  { rotulo: 'Busca', caminho: '/busca', icone: 'search', ativoEm: ['/busca', '/servicos'] },
+// Painel comum de Minha cidade e Meu bairro (o caminho base muda)
+function painelRegiao(base) {
+  return [
+    { rotulo: 'Alertas', caminho: `${base}/alertas`, icone: 'warning' },
+    { rotulo: 'Avisos', caminho: `${base}/avisos`, icone: 'campaign' },
+    { rotulo: 'Pedidos', caminho: `${base}/pedidos`, icone: 'assignment' },
+    { rotulo: 'Obras', caminho: `${base}/obras`, icone: 'construction' },
+    { rotulo: 'Votações', caminho: `${base}/votacoes`, icone: 'how_to_vote' },
+    { rotulo: 'Orçamento', caminho: `${base}/orcamento`, icone: 'payments' },
+  ];
+}
+
+export const MENU_PRINCIPAL = [
   {
-    rotulo: 'Cidade',
-    caminho: '/cidade',
-    icone: 'location_city',
-    ativoEm: ['/cidade', '/pedidos', '/cidade-aberta', '/meu-bairro'],
-  },
-  { rotulo: 'Alertas', caminho: '/alertas', icone: 'notifications', ativoEm: ['/alertas'] },
-  {
-    rotulo: 'Perfil',
-    caminho: '/perfil',
-    icone: 'person',
-    ativoEm: [
-      '/perfil',
-      '/como-funciona',
-      '/impacto',
-      '/equipe',
-      '/ajuda',
-      '/privacidade',
-      '/componentes',
+    id: 'gs',
+    rotulo: 'Global Solution',
+    caminho: '/',
+    ativoEm: ['/como-funciona', '/impacto', '/equipe'],
+    rotuloSeta: 'Mais páginas da Global Solution',
+    painel: [
+      { rotulo: 'Como funciona', caminho: '/como-funciona', icone: 'route' },
+      { rotulo: 'Impacto', caminho: '/impacto', icone: 'insights' },
+      { rotulo: 'Equipe', caminho: '/equipe', icone: 'groups' },
     ],
   },
+  {
+    id: 'servicos',
+    rotulo: 'Serviços',
+    caminho: '/servicos',
+    // Minhas solicitações é página da conta: não marca Serviços
+    ativoEm: ['/servicos/'],
+    foraDe: ['/servicos/minhas-solicitacoes'],
+  },
+  {
+    id: 'cidade',
+    rotulo: 'Minha cidade',
+    caminho: '/minha-cidade',
+    // O detalhe do pedido fica em /pedidos/:id e é da cidade (Abrir pedido não marca nada)
+    ativoEm: ['/minha-cidade/', '/pedidos/'],
+    foraDe: ['/pedidos/novo'],
+    rotuloSeta: 'Mais páginas de Minha cidade',
+    painel: painelRegiao('/minha-cidade'),
+  },
+  {
+    id: 'bairro',
+    rotulo: 'Meu bairro',
+    caminho: '/meu-bairro',
+    ativoEm: ['/meu-bairro/'],
+    rotuloSeta: 'Mais páginas de Meu bairro',
+    painel: painelRegiao('/meu-bairro'),
+  },
 ];
 
-// Para o visitante, a aba Perfil vira "Entrar" (o caminho com o destino de volta é montado na tela)
-export const ABA_ENTRAR = {
-  rotulo: 'Entrar',
-  caminho: '/entrar',
-  icone: 'login',
-  ativoEm: ['/entrar', '/criar-conta'],
-};
-
-export const MENU_COMPUTADOR = [
-  { rotulo: 'Início', caminho: '/', ativoEm: ['/'] },
-  { rotulo: 'Serviços', caminho: '/servicos', ativoEm: ['/servicos', '/busca'] },
-  { rotulo: 'Pedidos', caminho: '/pedidos', ativoEm: ['/pedidos'] },
-  { rotulo: 'Cidade Aberta', caminho: '/cidade-aberta', ativoEm: ['/cidade-aberta', '/cidade'] },
-  { rotulo: 'Meu Bairro', caminho: '/meu-bairro', ativoEm: ['/meu-bairro'] },
+// Itens do menu da conta, abaixo do resumo (que leva a /perfil)
+export const MENU_CONTA = [
+  {
+    rotulo: 'Minhas solicitações',
+    caminho: '/servicos/minhas-solicitacoes',
+    icone: 'event_available',
+  },
+  { rotulo: 'Meus pedidos', caminho: '/perfil/pedidos', icone: 'assignment' },
+  { rotulo: 'Meus votos', caminho: '/perfil/votos', icone: 'how_to_vote' },
+  { rotulo: 'Configurações', caminho: '/configuracoes', icone: 'settings' },
 ];
 
+// Colunas de links do rodapé provisório
 export const LINKS_RODAPE = [
   {
-    titulo: 'O app',
+    titulo: 'Navegar',
+    links: [
+      { rotulo: 'Início', caminho: '/inicio' },
+      { rotulo: 'Serviços', caminho: '/servicos' },
+      { rotulo: 'Minha cidade', caminho: '/minha-cidade' },
+      { rotulo: 'Meu bairro', caminho: '/meu-bairro' },
+    ],
+  },
+  {
+    titulo: 'Ajuda',
+    links: [
+      { rotulo: 'Perguntas frequentes', caminho: '/ajuda/perguntas-frequentes' },
+      { rotulo: 'Telefones úteis', caminho: '/ajuda/telefones' },
+      { rotulo: 'Acessibilidade', caminho: '/ajuda/acessibilidade' },
+      { rotulo: 'Privacidade', caminho: '/ajuda/privacidade' },
+    ],
+  },
+  {
+    titulo: 'Sobre',
     links: [
       { rotulo: 'Como funciona', caminho: '/como-funciona' },
       { rotulo: 'Impacto', caminho: '/impacto' },
       { rotulo: 'Equipe', caminho: '/equipe' },
     ],
   },
-  {
-    titulo: 'Ajuda',
-    links: [
-      { rotulo: 'Telefones úteis', caminho: '/ajuda/telefones' },
-      { rotulo: 'Perguntas frequentes', caminho: '/ajuda/perguntas' },
-      { rotulo: 'Ouvidoria', caminho: '/ajuda/ouvidoria' },
-    ],
-  },
-  {
-    titulo: 'Acessibilidade',
-    links: [
-      { rotulo: 'Recursos de acessibilidade', caminho: '/perfil/acessibilidade' },
-      { rotulo: 'Privacidade dos dados', caminho: '/privacidade' },
-      { rotulo: 'Componentes (desenvolvimento)', caminho: '/componentes' },
-    ],
-  },
 ];
 
-// Diz se um item de navegação deve aparecer selecionado no caminho atual.
-// Recebe o item e o caminho da página (ex.: "/pedidos/12"); devolve true ou false.
-export function estaAtivo(item, caminhoAtual) {
-  return item.ativoEm.some((caminho) =>
-    // A página inicial só fica ativa no "/" exato; as outras valem para subpáginas também
-    caminho === '/' ? caminhoAtual === '/' : caminhoAtual.startsWith(caminho),
+// Diz como um item do menu aparece no caminho atual.
+// Recebe o item e o caminho da página (ex.: "/minha-cidade/obras");
+// devolve "page" (é a própria página do item), "true" (é uma subpágina) ou undefined.
+export function estadoItemMenu(item, caminhoAtual) {
+  if (caminhoAtual === item.caminho) return 'page';
+  if (item.foraDe?.some((caminho) => caminhoAtual.startsWith(caminho))) return undefined;
+  const subpagina = item.ativoEm.some(
+    (caminho) => caminhoAtual === caminho || caminhoAtual.startsWith(caminho),
   );
+  return subpagina ? 'true' : undefined;
 }

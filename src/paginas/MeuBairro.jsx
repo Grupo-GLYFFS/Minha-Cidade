@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { Text } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import SeletorBairro from '../componentes/meuBairro/SeletorBairro';
 import CartaoColeta from '../componentes/meuBairro/CartaoColeta';
 import CartaoServicosReferencia from '../componentes/meuBairro/CartaoServicosReferencia';
@@ -38,7 +38,7 @@ export default function MeuBairro() {
   return (
     <div className={classes.pagina}>
       <div className={classes.topo}>
-        <CabecalhoPagina
+        <CabecalhoAntigo
           titulo="Meu Bairro"
           descricao={regiao ? `${bairro} · ${regiao}` : bairro}
         />

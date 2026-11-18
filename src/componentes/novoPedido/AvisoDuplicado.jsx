@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import Cartao from '../Cartao';
-import CartaoPedido from '../CartaoPedido';
+import CardPedido from '../CardPedido';
 import Icone from '../Icone';
 import { usePedidos } from '../../contexto/usePedidos';
 import classes from './AvisoDuplicado.module.css';
@@ -71,7 +71,7 @@ export default function AvisoDuplicado({ existente, aoEditar }) {
           </div>
         </Group>
 
-        <CartaoPedido pedido={existente} />
+        <CardPedido pedido={existente} />
 
         <SimpleGrid cols={{ base: 1, md: motivo ? 2 : 3 }} spacing="sm">
           {motivo === null && (

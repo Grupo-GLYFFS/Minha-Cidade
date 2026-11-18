@@ -1,0 +1,52 @@
+/* Selo de situação: pílula de 28 com bolinha de 8 na cor do texto. */
+
+.selo {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: rem(6px);
+  height: rem(28px);
+  padding: 0 rem(10px);
+  border-radius: var(--raio-selo);
+  font-size: rem(13px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.selo::before {
+  content: '';
+  width: rem(8px);
+  height: rem(8px);
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cinza {
+  background: var(--cor-status-cinza-fundo);
+  color: var(--cor-status-cinza-texto);
+}
+
+.azul {
+  background: var(--cor-status-azul-fundo);
+  color: var(--cor-status-azul-texto);
+}
+
+.ambar {
+  background: var(--cor-status-ambar-fundo);
+  color: var(--cor-status-ambar-texto);
+}
+
+.verde {
+  background: var(--cor-status-verde-fundo);
+  color: var(--cor-status-verde-texto);
+}
+
+.vermelho {
+  background: var(--cor-status-vermelho-fundo);
+  color: var(--cor-status-vermelho-texto);
+}
+
+:global(html[data-contraste='alto']) .selo {
+  border: 2px solid currentColor;
+}

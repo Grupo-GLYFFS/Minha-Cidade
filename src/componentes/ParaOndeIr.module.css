@@ -1,0 +1,114 @@
+/* Para onde ir: 96 de distância do conteúdo acima, cards de 88 de altura mínima. */
+
+.bloco {
+  margin-top: rem(96px);
+}
+
+.titulo {
+  margin: 0 0 rem(16px);
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: rem(16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.um {
+  grid-template-columns: 1fr;
+}
+
+.tres {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.destino {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  height: 100%;
+  min-height: rem(88px);
+  padding: rem(16px) rem(64px) rem(16px) rem(20px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.destino:hover {
+  border-color: var(--cor-borda-forte);
+  background: var(--cor-fundo-card);
+}
+
+.icone {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(48px);
+  height: rem(48px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.texto {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.nome {
+  display: block;
+  font-size: rem(17px);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.meta {
+  display: block;
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.seta {
+  position: absolute;
+  top: 50%;
+  right: rem(20px);
+  margin-top: rem(-11px);
+  color: var(--cor-azul-escuro);
+}
+
+/* Com 3 cards: ícone em cima do texto, para o nome caber em uma linha */
+.tres .destino {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: rem(12px);
+  padding: rem(20px) rem(56px) rem(20px) rem(20px);
+}
+
+.tres .seta {
+  top: rem(20px);
+  margin-top: 0;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .bloco {
+    margin-top: rem(48px);
+  }
+
+  .grade,
+  .tres {
+    grid-template-columns: 1fr;
+  }
+}

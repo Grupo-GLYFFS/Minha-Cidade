@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Stack, Text } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import LinkVoltar from '../componentes/LinkVoltar';
 import CabecalhoProjeto from '../componentes/cidadeAberta/CabecalhoProjeto';
 import SobreProjeto from '../componentes/cidadeAberta/SobreProjeto';
@@ -27,11 +27,11 @@ export default function ProjetoCidade() {
   if (!projeto) {
     return (
       <Stack gap="md" align="flex-start">
-        <CabecalhoPagina
+        <CabecalhoAntigo
           titulo="Projeto não encontrado"
           descricao="O link pode estar errado ou o projeto saiu da lista. Veja todos os grandes projetos."
         />
-        <Button component={Link} to="/cidade-aberta/projetos">
+        <Button component={Link} to="/minha-cidade/votacoes">
           Ver grandes projetos
         </Button>
       </Stack>
@@ -41,7 +41,7 @@ export default function ProjetoCidade() {
   return (
     <Stack gap="lg">
       <div>
-        <LinkVoltar caminho="/cidade-aberta/projetos" rotulo="Grandes Projetos" />
+        <LinkVoltar caminho="/minha-cidade/votacoes" rotulo="Grandes Projetos" />
         <CabecalhoProjeto projeto={projeto} />
       </div>
 

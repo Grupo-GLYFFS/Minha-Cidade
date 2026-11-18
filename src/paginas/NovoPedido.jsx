@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Anchor, Group, Stack } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import Icone from '../componentes/Icone';
 import FormularioPedido from '../componentes/novoPedido/FormularioPedido';
 import AvisoDuplicado from '../componentes/novoPedido/AvisoDuplicado';
@@ -50,7 +50,7 @@ export default function NovoPedido() {
       <div>
         <Anchor
           component={Link}
-          to="/pedidos"
+          to="/minha-cidade/pedidos"
           fw={600}
           fz={14}
           c="var(--cor-link)"
@@ -62,7 +62,7 @@ export default function NovoPedido() {
             Voltar para pedidos
           </Group>
         </Anchor>
-        <CabecalhoPagina
+        <CabecalhoAntigo
           titulo="Abrir pedido"
           descricao="Conte o que precisa de conserto na sua rua. A prefeitura analisa e você acompanha cada etapa."
         />

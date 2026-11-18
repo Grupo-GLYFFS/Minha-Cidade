@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Stack, Text, Title, VisuallyHidden, useMantineTheme } from '@mantine/core';
-import CabecalhoPagina from '../CabecalhoPagina';
+import CabecalhoAntigo from '../CabecalhoAntigo';
 import CampoBuscaServicos from './CampoBuscaServicos';
 import GradeCategorias from './GradeCategorias';
 import ListaServicos from './ListaServicos';
@@ -50,7 +50,7 @@ export default function ConteudoBusca({ textoInicial }) {
   return (
     <div className={classes.pagina}>
       <div className={classes.topo}>
-        <CabecalhoPagina
+        <CabecalhoAntigo
           titulo="Busca"
           descricao="Encontre qualquer serviço da prefeitura pelo nome ou por uma palavra do dia a dia."
         />

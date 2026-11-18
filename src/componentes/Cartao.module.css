@@ -1,5 +1,55 @@
+/* Card: raio 20, borda 1 px, sem sombra, padding 20/24.
+   --pad-lateral avisa às linhas de dentro (LinhaDado) quanto sangrar até a borda. */
+
 .cartao {
-  background: var(--cor-superficie);
+  --pad-lateral: rem(24px);
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  padding: rem(20px) var(--pad-lateral);
   border: var(--espessura-borda) solid var(--cor-borda);
-  box-shadow: var(--sombra);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.link:hover {
+  background: var(--cor-fundo-card);
+  border-color: var(--cor-borda-forte);
+}
+
+/* Seta arrow_forward no canto de cima à direita */
+.comSeta {
+  padding-right: rem(64px);
+}
+
+.seta {
+  position: absolute;
+  top: rem(20px);
+  right: rem(20px);
+  color: var(--cor-texto-2);
+}
+
+.link:hover .seta {
+  color: var(--cor-azul-escuro);
+}
+
+/* Faixas de cima e de baixo, separadas por linha de borda a borda */
+.comFaixas {
+  padding: 0;
+}
+
+.faixa,
+.corpo {
+  padding: rem(16px) var(--pad-lateral);
+}
+
+.corpo {
+  padding-block: rem(20px);
+}
+
+.faixa + .corpo,
+.corpo + .faixa {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
 }

@@ -1,5 +1,5 @@
 import { Text } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import LinkVoltar from '../componentes/LinkVoltar';
 import TotalOrcamento from '../componentes/orcamento/TotalOrcamento';
 import DeCadaCem from '../componentes/orcamento/DeCadaCem';
@@ -28,8 +28,8 @@ export default function OrcamentoCidade() {
   return (
     <div className={classes.pagina}>
       <div>
-        <LinkVoltar caminho="/cidade-aberta" rotulo="Cidade Aberta" />
-        <CabecalhoPagina
+        <LinkVoltar caminho="/minha-cidade" rotulo="Cidade Aberta" />
+        <CabecalhoAntigo
           titulo="Orçamento da Cidade"
           descricao="Para onde vai o dinheiro que a prefeitura recebe e quanto já foi gasto em 2026."
         />

@@ -5,7 +5,8 @@ export const ALERTAS = [
     id: 'a-001',
     tipo: 'defesa-civil',
     titulo: 'Alerta da Defesa Civil',
-    mensagem: 'chuva forte prevista para hoje à tarde na Zona Sul. Evite passar por ruas alagadas.',
+    mensagem:
+      'chuva forte prevista para hoje à tarde na Vila Mariana. Evite passar por ruas alagadas.',
     regiao: 'Zona Sul',
     ativo: true,
     criadoEm: '2026-11-06T07:30:00-03:00',

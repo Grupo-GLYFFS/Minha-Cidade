@@ -1,0 +1,57 @@
+/* Chip: 44 de altura, raio 12, 16/600 (escolhido 16/700 na faixa azul-clara). */
+
+.chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: rem(8px);
+  height: rem(44px);
+  padding: 0 rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  font-family: var(--fonte);
+  font-size: rem(16px);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--cor-texto);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.chip:is([aria-pressed='true'], [aria-current]) {
+  border-color: var(--cor-azul);
+  background: var(--cor-faixa);
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}
+
+.icone {
+  margin-left: rem(-4px);
+  color: var(--cor-azul-escuro);
+}
+
+.contagem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: rem(24px);
+  height: rem(24px);
+  margin-right: rem(-6px);
+  padding: 0 rem(8px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-status-cinza-fundo);
+  font-size: rem(13px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+}
+
+.chip:is([aria-pressed='true'], [aria-current]) .contagem {
+  background: var(--cor-superficie);
+  color: var(--cor-azul-tinta);
+}

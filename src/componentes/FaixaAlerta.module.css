@@ -1,0 +1,48 @@
+/* Faixa de alerta: fundo amarelo, texto centralizado, link sublinhado no fim. */
+
+.faixa {
+  background: var(--cor-aviso-fundo);
+  border-bottom: var(--espessura-borda) solid var(--cor-aviso-borda);
+  color: var(--cor-aviso-texto);
+}
+
+.miolo {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8px);
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
+  min-height: rem(52px);
+  margin-inline: auto;
+  padding: rem(4px) 0;
+}
+
+.texto {
+  margin: 0;
+  font-size: rem(15px);
+}
+
+.texto strong {
+  font-weight: 800;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: rem(44px);
+  font-size: rem(15px);
+  font-weight: 700;
+  color: var(--cor-aviso-texto);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .miolo {
+    width: calc(100% - rem(32px));
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}

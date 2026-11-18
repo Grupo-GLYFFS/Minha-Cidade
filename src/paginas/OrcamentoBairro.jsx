@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Anchor, Button, Group, Text } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import Icone from '../componentes/Icone';
 import LinkVoltar from '../componentes/LinkVoltar';
 import CartaoOpcaoOrcamento from '../componentes/orcamentoBairro/CartaoOpcaoOrcamento';
@@ -64,8 +64,8 @@ export default function OrcamentoBairro() {
   return (
     <div className={classes.pagina}>
       <div>
-        <LinkVoltar caminho="/cidade-aberta" rotulo="Cidade Aberta" />
-        <CabecalhoPagina
+        <LinkVoltar caminho="/minha-cidade" rotulo="Cidade Aberta" />
+        <CabecalhoAntigo
           titulo="Prefeito por 5 minutos"
           descricao={`Você tem ${textoValor(TOTAL)} para melhorar o bairro ${bairro}. Como dividiria?`}
         />

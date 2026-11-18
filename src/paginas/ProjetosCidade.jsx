@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { Stack, Tabs, Text } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import LinkVoltar from '../componentes/LinkVoltar';
 import CartaoProjeto from '../componentes/cidadeAberta/CartaoProjeto';
 import { PROJETOS } from '../dados/projetos';
@@ -26,8 +26,8 @@ export default function ProjetosCidade() {
   return (
     <Stack gap="lg">
       <div>
-        <LinkVoltar caminho="/cidade-aberta" rotulo="Cidade Aberta" />
-        <CabecalhoPagina
+        <LinkVoltar caminho="/minha-cidade" rotulo="Cidade Aberta" />
+        <CabecalhoAntigo
           titulo="Grandes Projetos"
           descricao={`Neste app, projetos acima de ${formatarValorCurto(VALOR_MINIMO_CONSULTA)} passam por consulta à população antes de ir para a Câmara Municipal. Leia os prós e contras e dê o seu voto: cada pessoa vota uma vez.`}
         />

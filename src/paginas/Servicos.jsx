@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import SecaoCabecalho from '../componentes/SecaoCabecalho';
 import AtalhosServicos from '../componentes/inicio/AtalhosServicos';
 import CampoBuscaServicos from '../componentes/servicos/CampoBuscaServicos';
@@ -21,7 +21,7 @@ export default function Servicos() {
   return (
     <div className={classes.pagina}>
       <div className={classes.topo}>
-        <CabecalhoPagina
+        <CabecalhoAntigo
           titulo="Serviços"
           descricao={`Os ${SERVICOS.length} serviços da prefeitura em um só lugar. Busque pelo nome ou escolha um assunto.`}
         />

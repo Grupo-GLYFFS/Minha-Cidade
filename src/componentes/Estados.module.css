@@ -1,0 +1,194 @@
+/* Estados de lista e de página: vazio, carregando, erro e não encontrado (estados.html).
+   Usado por EstadoVazio, EstadoCarregando, EstadoErro e NaoEncontrado. */
+
+.icone {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(56px);
+  height: rem(56px);
+  margin-bottom: rem(8px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-2);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cor-texto);
+}
+
+.texto {
+  max-width: 52ch;
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: rem(12px);
+  margin-top: rem(12px);
+}
+
+/* Vazio: caixa tracejada, tudo centralizado */
+.vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(8px);
+  padding: rem(48px) rem(24px);
+  border: var(--espessura-borda) dashed var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-fundo-card);
+  text-align: center;
+}
+
+/* Erro: card com ícone vermelho à esquerda e o botão à direita */
+.erro {
+  display: flex;
+  align-items: center;
+  gap: rem(20px);
+  padding: rem(24px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.erro .icone {
+  width: rem(48px);
+  height: rem(48px);
+  margin: 0;
+  border: 0;
+  background: var(--cor-status-vermelho-fundo);
+  color: var(--cor-status-vermelho-texto);
+}
+
+.erroTexto {
+  flex: 1 1 auto;
+}
+
+.erroTexto .titulo {
+  margin-bottom: rem(4px);
+}
+
+/* Carregando: esqueleto no formato dos cards */
+.esqueleto {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.esqueleto > li {
+  display: flex;
+  gap: rem(16px);
+  padding: rem(20px) rem(24px);
+  border: var(--espessura-borda) solid var(--cor-linha);
+  border-radius: var(--raio-card);
+}
+
+.esqueletoTexto {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: rem(10px);
+  padding-top: rem(4px);
+}
+
+.sk {
+  display: block;
+  height: rem(14px);
+  border-radius: var(--raio-topo);
+  background: linear-gradient(90deg, var(--cor-linha), var(--cor-fundo-card), var(--cor-linha));
+  background-size: 200% 100%;
+  animation: brilho 1.4s ease-in-out infinite;
+}
+
+.skMini {
+  flex: none;
+  width: rem(96px);
+  height: rem(72px);
+  border-radius: var(--raio-controle);
+}
+
+.skTitulo {
+  width: 55%;
+  height: rem(18px);
+}
+
+.skMeta {
+  width: 75%;
+}
+
+.skCurta {
+  width: 30%;
+}
+
+@keyframes brilho {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk {
+    animation: none;
+  }
+}
+
+/* Não encontrado: página inteira, alinhada à esquerda */
+.naoEncontrado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: rem(12px);
+  padding: rem(24px) 0 rem(48px);
+}
+
+.naoEncontrado .icone {
+  margin: 0 0 rem(8px);
+}
+
+.naoEncontrado .acoes {
+  justify-content: flex-start;
+}
+
+.tituloPagina {
+  margin: 0;
+  font-size: rem(40px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--cor-texto);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .erro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

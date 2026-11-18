@@ -8,7 +8,7 @@ export const SERVICOS_DEFESA_CIVIL = [
     subcategoria: 'alertas-prevencao',
     tipo: 'proprio',
     icone: 'notifications_active',
-    destino: '/alertas',
+    destino: '/minha-cidade/alertas',
     rotuloDestino: 'Ver meus alertas',
     palavrasChave: ['alerta', 'chuva', 'temporal', 'tempestade', 'aviso', 'risco', 'enchente'],
     info: {

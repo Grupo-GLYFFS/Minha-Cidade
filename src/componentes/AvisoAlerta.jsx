@@ -6,7 +6,7 @@ import classes from './AvisoAlerta.module.css';
 // Faixa amarela com um alerta importante (ex.: chuva forte da Defesa Civil).
 // Recebe o alerta e o caminho do link "Ver orientações".
 // Usa role="status" para o leitor de tela anunciar o aviso sem interromper a pessoa.
-export default function AvisoAlerta({ alerta, caminho = '/alertas' }) {
+export default function AvisoAlerta({ alerta, caminho = '/minha-cidade/alertas' }) {
   return (
     <div role="status" className={classes.aviso}>
       <Icone nome="warning" preenchido />

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Chip, Group, SimpleGrid, Stack, Text } from '@mantine/core';
-import CartaoPedido from '../CartaoPedido';
+import CardPedido from '../CardPedido';
+import Botao from '../Botao';
 import EstadoVazio from '../EstadoVazio';
 import { SITUACOES_PEDIDO, filtrarPorSituacao } from '../../logica/pedidos';
 import { pluralizar } from '../../logica/formatos';
@@ -21,12 +22,11 @@ export default function AbaPedidos({ pedidos }) {
 
   if (pedidos.length === 0) {
     return (
-      <EstadoVazio
-        texto="Você ainda não abriu pedidos."
-        rotuloBotao="Abrir pedido"
-        caminho="/pedidos/novo"
-        icone="add"
-      />
+      <EstadoVazio texto="Você ainda não abriu pedidos.">
+        <Botao variante="principal" para="/pedidos/novo" icone="add">
+          Abrir pedido
+        </Botao>
+      </EstadoVazio>
     );
   }
 
@@ -63,7 +63,7 @@ export default function AbaPedidos({ pedidos }) {
         <SimpleGrid component="ul" cols={{ base: 1, md: 2 }} spacing="md" className={classes.lista}>
           {filtrados.map((pedido) => (
             <li key={pedido.id}>
-              <CartaoPedido pedido={pedido} nivelTitulo={2} />
+              <CardPedido pedido={pedido} nivelTitulo={2} />
             </li>
           ))}
         </SimpleGrid>

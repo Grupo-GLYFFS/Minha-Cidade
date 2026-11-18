@@ -1,0 +1,160 @@
+/* Cabeçalho da página (regra 16): faixa #EDF2FF, 48 em cima e 48 embaixo, miolo centralizado. */
+
+.cabecalho {
+  background: var(--cor-faixa);
+  border-bottom: var(--espessura-borda) solid var(--cor-azul-borda);
+  padding: rem(48px) 0;
+  /* Sobre a faixa azul-clara, o selo azul ganha fundo branco */
+  --cor-status-azul-fundo: var(--cor-superficie);
+}
+
+.miolo {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(var(--largura-conteudo), calc(100% - rem(64px)));
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Trilha à esquerda, na borda da coluna de 880 */
+.trilha {
+  align-self: stretch;
+  margin: rem(-12px) 0 rem(12px);
+}
+
+/* Ícone de 64: quadrado branco, borda, raio 16, ícone de 32 sempre azul */
+.icone {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: rem(64px);
+  height: rem(64px);
+  margin-bottom: rem(20px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-icone);
+  background: var(--cor-superficie);
+  color: var(--cor-azul);
+}
+
+/* Imagem (240) ou mapa (220) com a largura da coluna, cortados sem deformar */
+.midia {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: rem(24px);
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.midia > :is(img, svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imagem {
+  height: rem(240px);
+}
+
+.mapa {
+  height: rem(220px);
+}
+
+/* Linha de categoria (só detalhes) */
+.categoria {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(6px);
+  margin: 0 0 rem(10px);
+  font-size: rem(15px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+}
+
+.categoria :global(.icone) {
+  color: var(--cor-azul-escuro);
+}
+
+.tituloGrande,
+.tituloDetalhe {
+  max-width: rem(800px);
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--cor-texto);
+  text-wrap: balance;
+}
+
+.tituloGrande {
+  font-size: rem(48px);
+  line-height: 1.1;
+}
+
+.tituloDetalhe {
+  font-size: rem(40px);
+  line-height: 1.15;
+}
+
+.subtitulo {
+  max-width: 62ch;
+  margin: rem(12px) auto 0;
+  font-size: rem(17px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+  text-wrap: balance;
+}
+
+/* Confirmação: check verde de 40 na linha do título */
+.confirmacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(14px);
+}
+
+.check {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: rem(40px);
+  height: rem(40px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-sucesso);
+  color: var(--cor-sobre-primaria);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: rem(12px);
+  margin-top: rem(24px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .cabecalho {
+    padding: rem(32px) 0;
+  }
+
+  .miolo {
+    width: calc(100% - rem(32px));
+  }
+
+  .tituloGrande {
+    font-size: rem(34px);
+  }
+
+  .tituloDetalhe {
+    font-size: rem(30px);
+  }
+
+  .imagem,
+  .mapa {
+    height: rem(160px);
+  }
+}

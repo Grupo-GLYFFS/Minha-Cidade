@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import CartaoPerfil from '../componentes/perfil/CartaoPerfil';
 import GrupoOpcoesPerfil from '../componentes/perfil/GrupoOpcoesPerfil';
 import Icone from '../componentes/Icone';
@@ -29,7 +29,7 @@ export default function Perfil() {
 
   return (
     <div className={classes.pagina}>
-      <CabecalhoPagina titulo="Perfil" />
+      <CabecalhoAntigo titulo="Perfil" />
 
       <div className={classes.grade}>
         <div className={classes.lateral}>

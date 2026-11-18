@@ -1,5 +1,5 @@
 import { Stack } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import BotaoAbrirPedido from '../componentes/pedidos/BotaoAbrirPedido';
 import ListaPedidos from '../componentes/pedidos/ListaPedidos';
 import classes from './Pedidos.module.css';
@@ -9,7 +9,7 @@ export default function Pedidos() {
   return (
     <Stack gap="lg">
       <div className={classes.topo}>
-        <CabecalhoPagina
+        <CabecalhoAntigo
           titulo="Pedidos"
           descricao="Veja o que os moradores pediram, apoie os pedidos e abra o seu."
         />

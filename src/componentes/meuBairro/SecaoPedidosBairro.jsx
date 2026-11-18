@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button, Text } from '@mantine/core';
-import CartaoPedido from '../CartaoPedido';
+import CardPedido from '../CardPedido';
 import Icone from '../Icone';
 import SecaoCabecalho from '../SecaoCabecalho';
 import { pluralizar } from '../../logica/formatos';
@@ -13,7 +13,7 @@ import classes from './SecoesMeuBairro.module.css';
 export default function SecaoPedidosBairro({ pedidos, bairro }) {
   const { abertos } = resumirPedidosDoBairro(pedidos, bairro);
   const principais = pedidosPrioritariosDoBairro(pedidos, bairro, 3);
-  const caminhoTodos = `/pedidos?bairro=${encodeURIComponent(bairro)}`;
+  const caminhoTodos = `/minha-cidade/pedidos?bairro=${encodeURIComponent(bairro)}`;
 
   return (
     <section aria-labelledby="pedidos-bairro-titulo">
@@ -34,7 +34,7 @@ export default function SecaoPedidosBairro({ pedidos, bairro }) {
         <ul className={classes.grade} data-colunas="3">
           {principais.map((pedido) => (
             <li key={pedido.id}>
-              <CartaoPedido pedido={pedido} />
+              <CardPedido pedido={pedido} />
             </li>
           ))}
         </ul>

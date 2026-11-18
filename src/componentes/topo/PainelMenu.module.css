@@ -1,0 +1,76 @@
+/* Painel que abre embaixo de um item do topo (grupos do menu e menu da conta). */
+
+.painel {
+  position: absolute;
+  top: calc(100% + rem(8px));
+  left: 0;
+  z-index: 20;
+  width: rem(288px);
+  padding: rem(8px);
+  background: var(--cor-superficie);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+}
+
+/* Ponte invisível sobre o espaço de 8 px: o painel não fecha quando o mouse desce até ele */
+.painel::before {
+  content: '';
+  position: absolute;
+  top: rem(-10px);
+  left: 0;
+  right: 0;
+  height: rem(10px);
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  width: 100%;
+  min-height: rem(44px);
+  padding: 0 rem(12px);
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: none;
+  font-family: var(--fonte);
+  font-size: rem(15px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--cor-texto);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.item:hover {
+  background: var(--cor-fundo);
+}
+
+.item[aria-current] {
+  background: var(--cor-faixa);
+  color: var(--cor-azul-tinta);
+  font-weight: 700;
+}
+
+.itemIcone {
+  color: var(--cor-azul-escuro);
+}
+
+/* Linha de separação de borda a borda do painel (o painel tem padding de 8) */
+.sep {
+  height: 1px;
+  margin: rem(8px) rem(-8px);
+  background: var(--cor-linha);
+}
+
+:global(html[data-contraste='alto']) .painel {
+  box-shadow: none;
+}

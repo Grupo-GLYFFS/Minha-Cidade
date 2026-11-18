@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { Stack, Tabs } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import LinkVoltar from '../componentes/LinkVoltar';
 import TextoResponsivo from '../componentes/TextoResponsivo';
 import AbaPedidos from '../componentes/perfil/AbaPedidos';
@@ -34,7 +34,7 @@ export default function MeusPedidos() {
     <Stack gap="lg">
       <div>
         <LinkVoltar caminho="/perfil" rotulo="Perfil" />
-        <CabecalhoPagina titulo="Meus pedidos e protocolos" />
+        <CabecalhoAntigo titulo="Meus pedidos e protocolos" />
       </div>
 
       <Tabs value={aba} onChange={trocarAba} classNames={{ tab: classes.aba }}>

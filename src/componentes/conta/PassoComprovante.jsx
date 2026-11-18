@@ -38,7 +38,7 @@ export default function PassoComprovante() {
             Li e aceito o{' '}
             <Anchor
               component={Link}
-              to="/privacidade"
+              to="/ajuda/privacidade"
               target="_blank"
               fw={600}
               c="var(--cor-link)"

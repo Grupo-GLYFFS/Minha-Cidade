@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Group, Stack, Text, Title } from '@mantine/core';
-import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
 import Icone from '../componentes/Icone';
 import LinkVoltar from '../componentes/LinkVoltar';
 import CatalogoNaoEncontrado from '../componentes/servicos/CatalogoNaoEncontrado';
@@ -33,7 +33,7 @@ export default function CategoriaServicos() {
     <div className={classes.pagina}>
       <div>
         <LinkVoltar caminho="/servicos" rotulo="Todos os serviços" />
-        <CabecalhoPagina titulo={categoria.nome} descricao={categoria.descricao} />
+        <CabecalhoAntigo titulo={categoria.nome} descricao={categoria.descricao} />
         <Group gap={4} mt="sm" c="var(--cor-texto-suave)">
           <Icone nome={categoria.icone} tamanho={20} />
           <Text fz={14} fw={600} c="inherit">

@@ -1,0 +1,68 @@
+/* Etapas do formulário: círculos numerados ligados por um traço. */
+
+.etapas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: rem(12px);
+  margin: rem(24px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.etapa {
+  display: flex;
+  align-items: center;
+  gap: rem(10px);
+  font-size: rem(15px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+}
+
+.etapa + .etapa::before {
+  content: '';
+  width: rem(40px);
+  height: 2px;
+  margin-right: 2px;
+  background: var(--cor-azul-borda-forte);
+}
+
+.numero {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(32px);
+  height: rem(32px);
+  border: 2px solid var(--cor-borda-forte);
+  border-radius: var(--raio-selo);
+  background: var(--cor-superficie);
+  font-size: rem(15px);
+  font-weight: 800;
+  color: var(--cor-texto-2);
+}
+
+.feita .numero {
+  border-color: var(--cor-azul);
+  color: var(--cor-azul);
+}
+
+.atual {
+  color: var(--cor-texto);
+}
+
+.atual .numero {
+  background: var(--cor-azul);
+  border-color: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

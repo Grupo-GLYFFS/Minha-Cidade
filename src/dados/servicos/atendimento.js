@@ -181,7 +181,7 @@ export const SERVICOS_ATENDIMENTO = [
     subcategoria: 'participacao',
     tipo: 'proprio',
     icone: 'how_to_vote',
-    destino: '/cidade-aberta',
+    destino: '/minha-cidade',
     rotuloDestino: 'Abrir Cidade Aberta',
     palavrasChave: [
       'votar',

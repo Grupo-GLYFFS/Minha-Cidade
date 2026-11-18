@@ -20,7 +20,7 @@ import { descreverSituacao, textoPrazoVotacao, votacaoAberta } from '../../logic
 export default function CartaoVotacao({ projeto }) {
   const { logado } = useSessao();
   const { votoDe, votar, resultado } = useVotos();
-  const { entrar, criarConta } = useCaminhoConta(`/cidade-aberta/projetos/${projeto.id}`);
+  const { entrar, criarConta } = useCaminhoConta(`/minha-cidade/votacoes/${projeto.id}`);
   const [acabouDeVotar, setAcabouDeVotar] = useState(false);
   const aviso = useRef(null);
   const aberta = votacaoAberta(projeto);
