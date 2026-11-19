@@ -45,6 +45,7 @@ export const AVISOS = [
     validoAte: '2026-11-20',
     publicado: 'Publicado em 11 de novembro',
     bairros: [],
+    imagem: '/img/avisos/feriados-novembro.svg',
   },
   {
     id: 'av-show-ibirapuera',
@@ -58,6 +59,7 @@ export const AVISOS = [
     validoAte: '2026-11-21',
     publicado: 'Publicado em 9 de novembro',
     bairros: [],
+    imagem: '/img/avisos/show-ibirapuera.svg',
   },
   {
     id: 'av-matricula-2027',
@@ -72,6 +74,7 @@ export const AVISOS = [
     validoAte: '2026-12-11',
     publicado: 'Publicado em 4 de novembro',
     bairros: [],
+    imagem: '/img/avisos/matricula-2027.svg',
     link: {
       icone: 'school',
       titulo: 'Pedir vaga na escola',
@@ -107,6 +110,7 @@ export const AVISOS = [
     validoAte: '2026-11-25',
     publicado: 'Publicado em 11 de novembro',
     bairros: ['Vila Mariana', 'Moema', 'Saúde'],
+    imagem: '/img/avisos/audiencia-obras-2027.svg',
   },
   {
     id: 'av-farmacia-ubs-vm',

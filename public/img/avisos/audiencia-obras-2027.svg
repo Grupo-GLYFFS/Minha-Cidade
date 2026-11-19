@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice"><rect width="320" height="200" fill="#DCE6FF"/>
+<rect x="0" y="150" width="320" height="50" fill="#B9C9F5"/>
+<rect x="70" y="26" width="180" height="84" rx="6" fill="#FFFFFF"/>
+<g fill="#A9BCF2"><rect x="92" y="62" width="34" height="36"/><rect x="132" y="48" width="30" height="50"/><rect x="168" y="70" width="40" height="28"/></g>
+<path d="M220 98V40h-34M220 40l-18 14" stroke="#F79009" stroke-width="4" fill="none"/><rect x="214" y="96" width="12" height="4" fill="#F79009"/>
+<rect x="128" y="112" width="64" height="40" rx="4" fill="#0052EF"/><rect x="128" y="112" width="64" height="8" rx="3" fill="#002F8A"/>
+<circle cx="160" cy="98" r="10" fill="#6B4F3A"/><rect x="150" y="106" width="20" height="10" rx="5" fill="#344054"/>
+<g fill="#475467"><circle cx="40" cy="168" r="12"/><circle cx="84" cy="172" r="12"/><circle cx="128" cy="170" r="12"/><circle cx="192" cy="170" r="12"/><circle cx="236" cy="172" r="12"/><circle cx="280" cy="168" r="12"/></g>
+<g fill="#344054"><rect x="24" y="178" width="32" height="22" rx="10"/><rect x="68" y="182" width="32" height="18" rx="10"/><rect x="112" y="180" width="32" height="20" rx="10"/><rect x="176" y="180" width="32" height="20" rx="10"/><rect x="220" y="182" width="32" height="18" rx="10"/><rect x="264" y="178" width="32" height="22" rx="10"/></g></svg>
