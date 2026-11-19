@@ -30,9 +30,7 @@ export default function PopupBusca({ aberto, aoFechar }) {
   const { pedidos } = usePedidos();
   const { solicitacoes } = useSolicitacoes();
   const resumo = useResumoConta();
-  // Esc da tela cheia do celular (no computador, o Popup cuida dele)
   const tela = useRef(null);
-  useFecharComEsc(aberto && celular, () => fechar(), tela);
 
   const buscando = texto.trim().length > 0;
   const achados = buscando
@@ -44,6 +42,9 @@ export default function PopupBusca({ aberto, aoFechar }) {
     setTexto('');
     aoFechar();
   }
+
+  // Esc da tela cheia do celular (no computador, o Popup cuida dele)
+  useFecharComEsc(aberto && celular, fechar, tela);
 
   // Enter ou "Buscar": abre a página de Serviços com o texto
   function enviar() {
