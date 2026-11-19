@@ -9,7 +9,7 @@ import EstadoCarregando from '../componentes/EstadoCarregando';
 import EstadoErro from '../componentes/EstadoErro';
 import GruposObras from '../componentes/obras/GruposObras';
 import { OBRAS } from '../dados/obras';
-import { obrasDaSubprefeitura } from '../logica/obras';
+import { obrasDoRecorte } from '../logica/recorte';
 import { destinoOrcamento, destinoVotacoes } from '../logica/destinos';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';
@@ -28,8 +28,7 @@ export default function Obras({ escopo = 'cidade' }) {
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
   const [aba, setAba] = useState('todas');
 
-  const todas =
-    escopo === 'bairro' ? obrasDaSubprefeitura(OBRAS, recorte.subprefeitura.nome) : OBRAS;
+  const todas = obrasDoRecorte(OBRAS, recorte);
   const queSegue = todas.filter((obra) => seguidos.includes(obra.id));
   const visiveis = aba === 'todas' ? todas : queSegue;
 

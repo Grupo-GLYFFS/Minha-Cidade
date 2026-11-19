@@ -1,8 +1,8 @@
 import { OBRAS } from '../dados/obras';
 import { PROJETOS } from '../dados/projetos';
 import { AREAS_ORCAMENTO } from '../dados/orcamento';
-import { obrasDaSubprefeitura } from './obras';
-import { projetosEmVotacao, votacoesDoRecorte } from './votacao';
+import { projetosEmVotacao } from './votacao';
+import { contarObrasEmAndamento, votacoesDoRecorte } from './recorte';
 import { contaDaSubprefeitura, totalOrcamento, valorCurto } from './orcamento';
 import { pluralizar } from './formatos';
 
@@ -12,11 +12,7 @@ import { pluralizar } from './formatos';
 
 // Card das obras: conta as que estão em andamento (no prazo ou atrasadas).
 export function destinoObras(recorte) {
-  const obras =
-    recorte.escopo === 'bairro' ? obrasDaSubprefeitura(OBRAS, recorte.subprefeitura.nome) : OBRAS;
-  const emAndamento = obras.filter(
-    (obra) => obra.situacao === 'no-prazo' || obra.situacao === 'atrasada',
-  ).length;
+  const emAndamento = contarObrasEmAndamento(OBRAS, recorte);
   return {
     icone: 'construction',
     titulo: `Obras ${recorte.deQuem}`,

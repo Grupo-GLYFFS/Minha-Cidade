@@ -50,3 +50,33 @@ export function montarRecorte(escopo, bairro = BAIRRO_PADRAO) {
     deQuem: 'da cidade',
   };
 }
+
+// Situações de obra que contam como "em andamento" (parada e concluída não contam)
+const OBRA_EM_ANDAMENTO = ['no-prazo', 'atrasada'];
+
+// Regra única do recorte do bairro (regra de 17/11): itens da subprefeitura do bairro
+// + itens da cidade cuja área inclui o bairro. Usada nas listas, nos hubs e no "Para onde ir".
+
+// Separa as obras de um recorte. Cidade: todas. Bairro: as da subprefeitura do bairro
+// (as obras não têm área da cidade toda). Recebe a lista e o recorte; devolve uma nova lista.
+export function obrasDoRecorte(obras, recorte) {
+  if (recorte.escopo !== 'bairro') return obras;
+  return obras.filter((obra) => obra.subprefeitura === recorte.subprefeitura.nome);
+}
+
+// Conta as obras em andamento (no prazo ou atrasadas) de um recorte. Recebe a lista e o recorte.
+export function contarObrasEmAndamento(obras, recorte) {
+  return obrasDoRecorte(obras, recorte).filter((obra) => OBRA_EM_ANDAMENTO.includes(obra.situacao))
+    .length;
+}
+
+// Separa as votações de um recorte. Cidade: as votações da cidade toda. Bairro: as da
+// subprefeitura do bairro e as da cidade que incluem o bairro. Recebe a lista e o recorte.
+export function votacoesDoRecorte(projetos, recorte) {
+  if (recorte.escopo !== 'bairro') return projetos.filter((p) => p.escopo === 'cidade');
+  return projetos.filter(
+    (p) =>
+      (p.escopo === 'subprefeitura' && p.subprefeitura === recorte.subprefeitura.nome) ||
+      (p.escopo === 'cidade' && p.bairros.includes(recorte.bairro)),
+  );
+}

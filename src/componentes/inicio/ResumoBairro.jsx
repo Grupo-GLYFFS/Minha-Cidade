@@ -7,7 +7,7 @@ import { buscarBairro, textoProximaColeta } from '../../logica/bairros';
 import { proximoDiaDaLista } from '../../logica/datas';
 import { pluralizar } from '../../logica/formatos';
 import { resumirPedidosDoBairro } from '../../logica/pedidos';
-import { contarObrasDoBairro } from '../../logica/obras';
+import { contarObrasEmAndamento, montarRecorte } from '../../logica/recorte';
 import { OBRAS } from '../../dados/obras';
 import classes from './ResumoBairro.module.css';
 
@@ -16,7 +16,7 @@ const SEM_DADO = 'Consulte em Meu Bairro';
 
 // Resumo do bairro da pessoa: próxima coleta, coleta seletiva, UBS, pedidos abertos e obras.
 // Recebe a pessoa usando o app e a lista de todos os pedidos (para contar os do bairro).
-// As obras vêm de Obras da Cidade (as do bairro que ainda não terminaram).
+// As obras seguem o recorte do bairro (as mesmas de /meu-bairro/obras, em andamento).
 // A coleta e a UBS vêm dos mesmos dados e contas da página Meu Bairro, para as duas concordarem.
 // Bairro que o app não conhece mostra "Consulte em Meu Bairro".
 export default function ResumoBairro({ usuario, pedidos }) {
@@ -26,7 +26,7 @@ export default function ResumoBairro({ usuario, pedidos }) {
   const coleta = dados?.coleta;
   const proximaColeta = coleta ? textoProximaColeta(coleta) : SEM_DADO;
   const { abertos } = resumirPedidosDoBairro(pedidos, bairro);
-  const obras = contarObrasDoBairro(OBRAS, bairro);
+  const obras = contarObrasEmAndamento(OBRAS, montarRecorte('bairro', bairro));
   const totalPedidos = pluralizar(abertos, 'pedido', 'pedidos');
 
   // Cada linha da lista: ícone, rótulo e valor (versão longa e, se precisar, curta para o celular)
