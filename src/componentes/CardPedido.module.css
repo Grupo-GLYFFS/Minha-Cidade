@@ -70,13 +70,22 @@
 }
 
 .meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: rem(2px) rem(6px);
+  /* Texto corrido (e não flex): rua, bairro e data quebram como frase, sem pedaços soltos */
+  display: block;
   font-size: rem(14px);
   font-weight: 500;
+  line-height: 1.5;
   color: var(--cor-texto-2);
+}
+
+.meta > :global(.icone) {
+  margin-right: rem(4px);
+  vertical-align: rem(-4px);
+}
+
+/* O ponto entre o endereço e a data */
+.meta > span:not(:global(.icone)) {
+  margin: 0 rem(6px);
 }
 
 .seta {

@@ -27,13 +27,17 @@ export function diasEntre(inicio, fim) {
   return emDias(fim) - emDias(inicio);
 }
 
-// Escreve há quanto tempo algo aconteceu, em linguagem simples.
-// Recebe a data do acontecimento e a data de hoje; devolve "hoje", "ontem" ou "há N dias".
+// Escreve quando algo aconteceu, em linguagem simples (regra 8: relativa só até 7 dias).
+// Recebe a data do acontecimento e a data de hoje; devolve "hoje", "ontem", "há N dias"
+// (até 7 dias) ou, depois disso, a data curta com "em" ("em 5 nov").
+// Ex.: "Atualizado " + tempoRelativo(data) → "Atualizado há 3 dias" ou "Atualizado em 5 nov".
 export function tempoRelativo(data, hoje = HOJE) {
   const dias = diasEntre(data, hoje);
   if (dias <= 0) return 'hoje';
   if (dias === 1) return 'ontem';
-  return `há ${dias} dias`;
+  if (dias <= 7) return `há ${dias} dias`;
+  const [, mes, dia] = data.slice(0, 10).split('-').map(Number);
+  return `em ${dia} ${NOMES_MESES[mes - 1].slice(0, 3)}`;
 }
 
 // Conta quantos dias faltam até uma data.

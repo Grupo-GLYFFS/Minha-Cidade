@@ -76,7 +76,7 @@ export function pedidosPrioritariosDoBairro(pedidos, bairro, quantidade = 3) {
 
 // Escreve quando o pedido mudou pela última vez.
 // Recebe o pedido e a data de hoje; devolve "Enviado ontem" (se nunca mudou depois de criado)
-// ou "Atualizado há 2 dias".
+// "Atualizado há 2 dias" ou, depois de 7 dias, "Atualizado em 5 nov".
 export function textoUltimaMudanca(pedido, hoje = HOJE) {
   const nuncaMudou = diasEntre(pedido.criadoEm, pedido.atualizadoEm) === 0;
   const verbo = nuncaMudou ? 'Enviado' : 'Atualizado';
