@@ -1,5 +1,5 @@
 // Itens de navegação do topo e do rodapé (menu da regra 18).
-// Ordem do menu: Global Solution ▾ · Serviços · Minha cidade ▾ · Meu bairro ▾.
+// Ordem do menu: Serviços · Minha cidade ▾ · Meu bairro ▾ · Global Solution ▾.
 // Não existe item "Início": o Início do app (/inicio) abre pelo logo.
 // Itens com "painel" são grupos: o nome leva à página e a seta abre o painel.
 // "ativoEm" lista os caminhos em que o item aparece como selecionado
@@ -18,18 +18,6 @@ function painelRegiao(base) {
 }
 
 export const MENU_PRINCIPAL = [
-  {
-    id: 'gs',
-    rotulo: 'Global Solution',
-    caminho: '/',
-    ativoEm: ['/como-funciona', '/impacto', '/equipe'],
-    rotuloSeta: 'Mais páginas da Global Solution',
-    painel: [
-      { rotulo: 'Como funciona', caminho: '/como-funciona', icone: 'route' },
-      { rotulo: 'Impacto', caminho: '/impacto', icone: 'insights' },
-      { rotulo: 'Equipe', caminho: '/equipe', icone: 'groups' },
-    ],
-  },
   {
     id: 'servicos',
     rotulo: 'Serviços',
@@ -55,6 +43,18 @@ export const MENU_PRINCIPAL = [
     ativoEm: ['/meu-bairro/'],
     rotuloSeta: 'Mais páginas de Meu bairro',
     painel: painelRegiao('/meu-bairro'),
+  },
+  {
+    id: 'gs',
+    rotulo: 'Global Solution',
+    caminho: '/',
+    ativoEm: ['/como-funciona', '/impacto', '/equipe'],
+    rotuloSeta: 'Mais páginas da Global Solution',
+    painel: [
+      { rotulo: 'Como funciona', caminho: '/como-funciona', icone: 'route' },
+      { rotulo: 'Impacto', caminho: '/impacto', icone: 'insights' },
+      { rotulo: 'Equipe', caminho: '/equipe', icone: 'groups' },
+    ],
   },
 ];
 
