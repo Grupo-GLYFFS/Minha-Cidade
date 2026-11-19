@@ -234,15 +234,15 @@
     line-clamp: 3;
   }
 
-  /* Ações em largura total; dois botões dividem a linha; botão só de ícone fica do tamanho dele */
+  /* Ações em largura total: ficam lado a lado quando cabem ou empilhadas quando não cabem */
   .acoes {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-self: stretch;
     gap: rem(8px);
   }
 
   .acoes > * {
-    flex: 1 1 0;
+    flex: 1 1 auto;
     min-width: 0;
   }
 

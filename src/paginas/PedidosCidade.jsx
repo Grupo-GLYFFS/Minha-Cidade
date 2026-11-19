@@ -8,13 +8,16 @@ import BotaoFlutuante from '../componentes/pedidos/BotaoFlutuante';
 import { useCarregamentoSimulado } from '../componentes/pedidos/useCarregamentoSimulado';
 import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
+import { useSessao } from '../contexto/useSessao';
 
 // Pedidos da cidade de São Paulo (/minha-cidade/pedidos): todos os pedidos de zeladoria,
 // agrupados por situação, 3 por grupo e o resto em "Mostrar mais".
 export default function PedidosCidade() {
   const { pedidos } = usePedidos();
+  const { usuario, logado } = useSessao();
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
   const destinos = useDestinosPedidos();
+  const meusPedidos = pedidos.filter((pedido) => pedido.autorId === usuario?.id).length;
 
   return (
     <Pagina
@@ -26,9 +29,21 @@ export default function PedidosCidade() {
           icone="assignment"
           trilha={[{ rotulo: 'Cidade de São Paulo', para: '/minha-cidade' }, { rotulo: 'Pedidos' }]}
           acoes={
-            <Botao variante="principal" icone="add" para="/pedidos/novo">
-              Abrir pedido
-            </Botao>
+            <>
+              <Botao variante="principal" icone="add" para="/pedidos/novo">
+                Abrir pedido
+              </Botao>
+              {logado && (
+                <Botao
+                  variante="secundario"
+                  icone="assignment"
+                  contagem={meusPedidos}
+                  para="/perfil/pedidos"
+                >
+                  Meus pedidos
+                </Botao>
+              )}
+            </>
           }
         />
       }

@@ -1,6 +1,5 @@
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
-import Chip from '../componentes/Chip';
 import Botao from '../componentes/Botao';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import EstadoVazio from '../componentes/EstadoVazio';
@@ -17,11 +16,10 @@ import { useSeguidos } from '../contexto/useSeguidos';
 import { useVotos } from '../contexto/useVotos';
 import { useSessao } from '../contexto/useSessao';
 import { useCarregamentoSimulado } from '../contexto/useCarregamentoSimulado';
-import classes from './Votacoes.module.css';
 
 // Página Votações (/minha-cidade/votacoes e /meu-bairro/votacoes): votações agrupadas em Abertas
 // e Encerradas, com Seguir e "Avaliar e votar" em cada card. Os votos da pessoa ficam em
-// Meus votos: o atalho no alto da lista leva para lá, com a contagem da mesma regra.
+// Meus votos: o botão no cabeçalho leva para lá, com a contagem da mesma regra.
 // Recebe o escopo: "cidade" (as da cidade toda) ou "bairro" (as da subprefeitura do bairro e as
 // da cidade que incluem o bairro).
 export default function Votacoes({ escopo = 'cidade' }) {
@@ -33,6 +31,10 @@ export default function Votacoes({ escopo = 'cidade' }) {
 
   const visiveis = votacoesDoRecorte(PROJETOS, recorte);
   const meusVotos = projetosVotados(PROJETOS, votosDaPessoa).length;
+  const subtitulo =
+    escopo === 'cidade'
+      ? 'Projetos abertos para quem mora na cidade votar e acompanhar o resultado.'
+      : `Projetos abertos para quem mora ${noLugar(recorte.lugar)} votar e acompanhar o resultado.`;
 
   // Lista do bairro sem votação aberta: aviso no lugar do grupo Abertas
   const semAbertas =
@@ -86,18 +88,24 @@ export default function Votacoes({ escopo = 'cidade' }) {
         <CabecalhoPagina
           tipo="lista"
           titulo={`Votações ${recorte.sufixo}`}
+          subtitulo={subtitulo}
           icone="how_to_vote"
           trilha={[...recorte.trilha, { rotulo: 'Votações' }]}
+          acoes={
+            logado && (
+              <Botao
+                variante="secundario"
+                icone="how_to_vote"
+                contagem={meusVotos}
+                para="/perfil/votos"
+              >
+                Meus votos
+              </Botao>
+            )
+          }
         />
       }
     >
-      {logado && (
-        <div className={classes.atalhos}>
-          <Chip icone="how_to_vote" contagem={meusVotos} para="/perfil/votos">
-            Meus votos
-          </Chip>
-        </div>
-      )}
       {conteudo}
       <ParaOndeIr destinos={[destinoObras(recorte), destinoOrcamento(recorte)]} />
     </Pagina>

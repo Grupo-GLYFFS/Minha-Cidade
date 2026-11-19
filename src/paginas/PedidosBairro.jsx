@@ -9,6 +9,7 @@ import { useCarregamentoSimulado } from '../componentes/pedidos/useCarregamentoS
 import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
 import { useRecorte } from '../contexto/useRecorte';
+import { useSessao } from '../contexto/useSessao';
 import { pedidosDoLugar } from '../logica/gruposPedidos';
 import { origemDoRecorte } from '../logica/recorte';
 import { noLugar } from '../logica/lugares';
@@ -20,12 +21,14 @@ import { noLugar } from '../logica/lugares';
 // O lugar vem do recorte da rota (useRecorte); os cards abrem o detalhe dentro do mesmo lugar.
 export default function PedidosBairro() {
   const { pedidos } = usePedidos();
+  const { usuario, logado } = useSessao();
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
   const destinos = useDestinosPedidos();
   const recorte = useRecorte('bairro');
   const { lugar } = recorte;
   const doLugar = pedidosDoLugar(pedidos, recorte.bairros);
   const doMeuBairro = recorte.base === '/meu-bairro';
+  const meusPedidos = pedidos.filter((pedido) => pedido.autorId === usuario?.id).length;
   // O Abrir pedido leva o lugar (?de=) para usar a trilha dele
   const novoPedido = `/pedidos/novo?de=${origemDoRecorte(recorte)}`;
 
@@ -39,9 +42,21 @@ export default function PedidosBairro() {
           icone="assignment"
           trilha={[...recorte.trilha, { rotulo: 'Pedidos' }]}
           acoes={
-            <Botao variante="principal" icone="add" para={novoPedido}>
-              Abrir pedido
-            </Botao>
+            <>
+              <Botao variante="principal" icone="add" para={novoPedido}>
+                Abrir pedido
+              </Botao>
+              {logado && (
+                <Botao
+                  variante="secundario"
+                  icone="assignment"
+                  contagem={meusPedidos}
+                  para="/perfil/pedidos"
+                >
+                  Meus pedidos
+                </Botao>
+              )}
+            </>
           }
         />
       }

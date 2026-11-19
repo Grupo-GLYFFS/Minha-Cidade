@@ -1,6 +1,6 @@
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
-import Chip from '../componentes/Chip';
+import Botao from '../componentes/Botao';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import EstadoVazio from '../componentes/EstadoVazio';
 import EstadoCarregando from '../componentes/EstadoCarregando';
@@ -12,10 +12,9 @@ import { destinoOrcamento, destinoVotacoes } from '../logica/destinos';
 import { useRecorte } from '../contexto/useRecorte';
 import { useOQueSegue } from '../contexto/useOQueSegue';
 import { useCarregamentoSimulado } from '../contexto/useCarregamentoSimulado';
-import classes from './Obras.module.css';
 
 // Página Obras (/minha-cidade/obras e /meu-bairro/obras): obras agrupadas pela situação e o
-// Seguir em cada card. As obras seguidas ficam em O que você segue: o atalho no alto da lista
+// Seguir em cada card. As obras seguidas ficam em O que você segue: o botão no cabeçalho
 // leva para lá, com a contagem da mesma regra (useOQueSegue).
 // Recebe o escopo: "cidade" (todas as obras) ou "bairro" (as da subprefeitura do bairro da pessoa).
 export default function Obras({ escopo = 'cidade' }) {
@@ -25,6 +24,10 @@ export default function Obras({ escopo = 'cidade' }) {
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
 
   const visiveis = obrasDoRecorte(OBRAS, recorte);
+  const subtitulo =
+    escopo === 'cidade'
+      ? 'Acompanhe o andamento, o prazo e o investimento das obras da cidade.'
+      : `Acompanhe o andamento, o prazo e o investimento das obras ${recorte.sufixo}.`;
 
   // O que aparece no painel da aba, conforme o estado da lista
   let conteudo;
@@ -61,18 +64,24 @@ export default function Obras({ escopo = 'cidade' }) {
         <CabecalhoPagina
           tipo="lista"
           titulo={`Obras ${recorte.sufixo}`}
+          subtitulo={subtitulo}
           icone="construction"
           trilha={[...recorte.trilha, { rotulo: 'Obras' }]}
+          acoes={
+            logado && (
+              <Botao
+                variante="secundario"
+                icone="bookmark"
+                contagem={seguidos.obras.length}
+                para="/perfil/seguindo?aba=obras"
+              >
+                Obras que você segue
+              </Botao>
+            )
+          }
         />
       }
     >
-      {logado && (
-        <div className={classes.atalhos}>
-          <Chip icone="bookmark" contagem={seguidos.obras.length} para="/perfil/seguindo?aba=obras">
-            Obras que você segue
-          </Chip>
-        </div>
-      )}
       {conteudo}
       <ParaOndeIr destinos={[destinoVotacoes(recorte), destinoOrcamento(recorte)]} />
     </Pagina>
