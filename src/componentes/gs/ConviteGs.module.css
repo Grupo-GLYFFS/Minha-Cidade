@@ -1,9 +1,10 @@
-/* Faixa "Conheça o projeto": azul, raio 20, 24 abaixo dos cards. Em cima, título + frase e o
+/* Faixa "Conheça o projeto": azul, raio 20, 40 abaixo do painel dos celulares (24 no celular). Em cima, título + frase e o
    botão branco; embaixo, uma linha branca de 30% de borda a borda e o "Abrir o app". */
 
 .convite {
   overflow: hidden;
-  margin-top: rem(24px);
+  margin-top: 40px;
+  text-align: left;
   border-radius: var(--raio-card);
   background: var(--cor-azul);
   color: var(--cor-sobre-primaria);
@@ -53,6 +54,10 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  .convite {
+    margin-top: 24px;
+  }
+
   .topo {
     grid-template-columns: 1fr;
     gap: rem(20px);
