@@ -113,19 +113,46 @@
   min-width: rem(220px);
 }
 
-@media (max-width: $mantine-breakpoint-xs) {
+@media (max-width: $mantine-breakpoint-sm) {
+  /* No celular, o card fica sem a miniatura (cards de lista sem imagem) */
   .topo {
-    grid-template-columns: rem(56px) minmax(0, 1fr);
-    gap: rem(16px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
     padding: rem(16px);
   }
 
+  .topo > :first-child:not(.texto) {
+    display: none;
+  }
+
+  .titulo {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: rem(17px);
+  }
+
+  .descricao {
+    font-size: rem(15px);
+  }
+
   .pe {
-    flex-wrap: wrap;
+    gap: rem(8px);
     padding: rem(12px) rem(16px);
   }
 
+  /* O selo encolhe com reticências; o botão fica inteiro */
+  .pe > :first-child {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   .botao {
+    flex: none;
     min-width: 0;
   }
 }
