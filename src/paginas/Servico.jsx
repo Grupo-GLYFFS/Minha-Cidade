@@ -92,11 +92,7 @@ export default function Servico() {
         {documentos.length > 0 && (
           <SecaoCard
             titulo="Documentos"
-            acao={
-              <span className={classes.conta}>
-                {documentos.length === 1 ? '1 documento' : `${documentos.length} documentos`}
-              </span>
-            }
+            contagem={documentos.length === 1 ? '1 documento' : `${documentos.length} documentos`}
           >
             <ul className={classes.documentos}>
               {documentos.map((documento) => (
@@ -108,11 +104,7 @@ export default function Servico() {
         {passos.length > 0 && (
           <SecaoCard
             titulo="Como fazer"
-            acao={
-              <span className={classes.conta}>
-                {passos.length === 1 ? '1 passo' : `${passos.length} passos`}
-              </span>
-            }
+            contagem={passos.length === 1 ? '1 passo' : `${passos.length} passos`}
           >
             <PassosNumerados passos={passos} />
           </SecaoCard>
