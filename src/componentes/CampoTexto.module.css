@@ -29,6 +29,11 @@
   color: var(--cor-texto);
 }
 
+select.campo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .campo::placeholder {
   color: var(--cor-texto-placeholder);
 }
