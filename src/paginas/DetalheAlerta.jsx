@@ -56,7 +56,8 @@ export default function DetalheAlerta({ doBairro = false }) {
   }
 
   const nivel = buscarNivel(alerta.nivel);
-  const caminho = `/minha-cidade/alertas/${alerta.id}`;
+  // Endereço do alerta no recorte aberto (o do compartilhar): bairro ou cidade
+  const caminho = `${doBairro ? '/meu-bairro' : '/minha-cidade'}/alertas/${alerta.id}`;
   const passos = alerta.tipo === 'defesa-civil' ? [...alerta.passos, PASSO_199] : alerta.passos;
   const subs = alerta.subprefeituras
     .map((idSub) => buscarSubprefeitura(idSub)?.nome)

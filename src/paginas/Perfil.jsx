@@ -123,8 +123,8 @@ export default function Perfil() {
           <LinhaDado
             icone="bookmark"
             rotulo="O que você segue"
-            valor="Obras e votações"
-            para="/minha-cidade/obras?aba=que-voce-segue"
+            valor="Votações, obras e pedidos"
+            para="/perfil/seguindo"
           />
         </SecaoCard>
 

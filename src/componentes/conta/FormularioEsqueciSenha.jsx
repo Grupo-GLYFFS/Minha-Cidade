@@ -5,6 +5,7 @@ import Botao from '../Botao';
 import CampoTexto from '../CampoTexto';
 import Icone from '../Icone';
 import ResumoErros from '../ResumoErros';
+import { useCaminhoConta } from '../../contexto/useCaminhoConta';
 import { esquemaEsqueciSenha } from '../../logica/esquemaEntrar';
 import { manterErrosAtuais } from '../../logica/resumoErros';
 import classes from './FormularioConta.module.css';
@@ -15,6 +16,8 @@ const VALIDADOR = yupResolver(esquemaEsqueciSenha);
 // O protótipo não manda e-mail: depois de enviar, só mostra que o link foi enviado.
 // A mensagem é a mesma com ou sem conta, para não revelar quem tem cadastro.
 export default function FormularioEsqueciSenha() {
+  // "Voltar para Entrar" leva junto o destino (?voltar=)
+  const { entrar } = useCaminhoConta();
   const [errosResumo, setErrosResumo] = useState([]);
   const [enviado, setEnviado] = useState(false);
   const {
@@ -38,7 +41,7 @@ export default function FormularioEsqueciSenha() {
             alguns minutos.
           </span>
         </p>
-        <Botao variante="principal" largo para="/entrar">
+        <Botao variante="principal" largo para={entrar}>
           Voltar para Entrar
         </Botao>
       </div>

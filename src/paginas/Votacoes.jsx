@@ -15,6 +15,7 @@ import { destinoObras, destinoOrcamento } from '../logica/destinos';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';
 import { useVotos } from '../contexto/useVotos';
+import { useSessao } from '../contexto/useSessao';
 import { useCarregamentoSimulado } from '../contexto/useCarregamentoSimulado';
 import classes from './Votacoes.module.css';
 
@@ -29,6 +30,7 @@ export default function Votacoes({ escopo = 'cidade' }) {
   const recorte = useRecorte(escopo);
   const seguir = useSeguidos('votacoes');
   const { votosDaPessoa } = useVotos();
+  const { logado } = useSessao();
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
   const [aba, setAba] = useState('todas');
 
@@ -72,11 +74,21 @@ export default function Votacoes({ escopo = 'cidade' }) {
       <EstadoVazio
         icone="how_to_vote"
         titulo="Você ainda não votou"
-        texto="Quando você votar, a votação aparece aqui com o seu voto."
+        texto={
+          logado
+            ? 'Quando você votar, a votação aparece aqui com o seu voto.'
+            : 'Entre na sua conta para votar e ver os seus votos.'
+        }
       >
-        <Botao variante="secundario" onClick={() => setAba('todas')}>
-          Ver as votações abertas
-        </Botao>
+        {logado ? (
+          <Botao variante="secundario" onClick={() => setAba('todas')}>
+            Ver as votações abertas
+          </Botao>
+        ) : (
+          <Botao variante="principal" para={`/entrar?voltar=${recorte.base}/votacoes`}>
+            Entrar
+          </Botao>
+        )}
       </EstadoVazio>
     );
   } else if (visiveis.length === 0) {

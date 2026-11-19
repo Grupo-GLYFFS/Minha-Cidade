@@ -39,6 +39,8 @@ export default function Alertas({ doBairro = false }) {
   const { ativos: todosAtivos, encerrados } = doBairro ? daPessoa : doCidade;
   const ativos = estado === 'vazio' ? [] : todosAtivos;
   const lugarDaLista = doBairro ? bairro : null;
+  // Início das rotas dos detalhes: dentro do Meu bairro, os alertas abrem em /meu-bairro/alertas/:id
+  const base = doBairro ? '/meu-bairro/alertas' : '/minha-cidade/alertas';
 
   const titulo = doBairro ? `Alertas ${doLugar(bairro)}` : 'Alertas da cidade de São Paulo';
   const trilha = doBairro
@@ -113,7 +115,7 @@ export default function Alertas({ doBairro = false }) {
                 <li key={alerta.id}>
                   <CardAlerta
                     alerta={alerta}
-                    caminho={`/minha-cidade/alertas/${alerta.id}`}
+                    caminho={`${base}/${alerta.id}`}
                     local={doBairro ? null : seloDoLugar(alerta, bairro.nome)}
                     area={partesDaArea(alerta, lugarDaLista)}
                   />
@@ -137,7 +139,7 @@ export default function Alertas({ doBairro = false }) {
                 <li key={alerta.id}>
                   <ItemAlertaEncerrado
                     alerta={alerta}
-                    caminho={`/minha-cidade/alertas/${alerta.id}`}
+                    caminho={`${base}/${alerta.id}`}
                     onde={
                       alerta.bairros.length > 0
                         ? juntarNomes(alerta.bairros)

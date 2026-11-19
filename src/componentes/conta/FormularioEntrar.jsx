@@ -11,6 +11,8 @@ import CaixaMarcar from './CaixaMarcar';
 import CampoSenha from './CampoSenha';
 import SeparadorOu from './SeparadorOu';
 import { useSessao } from '../../contexto/useSessao';
+import { useCaminhoConta } from '../../contexto/useCaminhoConta';
+import { caminhoComVoltar } from '../../logica/sessao';
 import { CAMPOS_ENTRAR, NOMES_CAMPOS_ENTRAR, esquemaEntrar } from '../../logica/esquemaEntrar';
 import { simularGovbr } from '../../logica/govbr';
 import { manterErrosAtuais } from '../../logica/resumoErros';
@@ -52,6 +54,8 @@ function avisoDeFalha(ate) {
 // qual dos dados errou; na quinta vez, bloqueia por 15 minutos neste aparelho.
 // Recebe o destino (ex.: "/inicio").
 export default function FormularioEntrar({ destino }) {
+  // O link do "Esqueci minha senha" leva junto o destino (?voltar=)
+  const { voltar } = useCaminhoConta();
   const { entrar, entrarDemonstracao } = useSessao();
   const navigate = useNavigate();
   const [errosResumo, setErrosResumo] = useState([]);
@@ -139,7 +143,7 @@ export default function FormularioEntrar({ destino }) {
         autoComplete="current-password"
         erro={errors.senha?.message}
         acao={
-          <Botao variante="texto" para="/entrar/esqueci">
+          <Botao variante="texto" para={caminhoComVoltar('/entrar/esqueci', voltar)}>
             Esqueci minha senha
           </Botao>
         }

@@ -13,6 +13,7 @@ import CampoSenha from './CampoSenha';
 import CamposEnderecoConta from './CamposEnderecoConta';
 import SeparadorOu from './SeparadorOu';
 import { useSessao } from '../../contexto/useSessao';
+import { useCaminhoConta } from '../../contexto/useCaminhoConta';
 import { formatarCelular } from '../../logica/celular';
 import { ERRO_CPF_EM_USO, ERRO_EMAIL_EM_USO } from '../../logica/contas';
 import { formatarCpf } from '../../logica/cpf';
@@ -42,6 +43,8 @@ function tituloResumo(quantos) {
 // Recebe os valores iniciais (ao voltar de "Corrigir"), aoContinuar e aoMudarBairro (painel azul).
 export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoMudarBairro }) {
   const { emailEmUso, cpfEmUso } = useSessao();
+  // "Entrar com ela" leva junto o destino (?voltar=)
+  const { entrar } = useCaminhoConta();
   const [errosResumo, setErrosResumo] = useState([]);
   // Conta os envios com erro (a cada um, o foco volta para o resumo)
   const [tentativa, setTentativa] = useState(0);
@@ -112,7 +115,7 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
     errors.email?.message === ERRO_EMAIL_EM_USO ? (
       <span>
         {ERRO_EMAIL_EM_USO}{' '}
-        <Link to="/entrar" className={classes.linkErro}>
+        <Link to={entrar} className={classes.linkErro}>
           Entrar com ela
         </Link>
       </span>
