@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import Topo from './Topo';
 import FaixaAlerta from './FaixaAlerta';
 import Rodape from './Rodape';
-import AvisoDaConta from './conta/AvisoDaConta';
 import { useAcessibilidade } from '../contexto/useAcessibilidade';
 import { useBairroDaPessoa } from '../contexto/useBairroDaPessoa';
 import { ALERTAS } from '../dados/alertas';
@@ -19,7 +18,6 @@ import classes from './Pagina.module.css';
 // - larga: coluna de 1088 em vez de 880 (só para as telas antigas, até serem refeitas).
 // Ao trocar de página, a tela volta para o topo. O título da aba do navegador acompanha o h1
 // ("<h1> · Minha Prefeitura"; na Apresentação, "Minha Prefeitura · Global Solution").
-// Os avisos da conta ("Conta criada!", "Você saiu da sua conta") aparecem no alto da coluna.
 export default function Pagina({ cabecalho, children, semFaixaAlerta = false, larga = false }) {
   const { pathname } = useLocation();
   const { mostrarFaixasAlerta } = useAcessibilidade();
@@ -65,10 +63,7 @@ export default function Pagina({ cabecalho, children, semFaixaAlerta = false, la
       )}
       <main id="conteudo" className={classes.principal} tabIndex={-1}>
         {cabecalho}
-        <div className={larga ? classes.colunaLarga : classes.coluna}>
-          <AvisoDaConta />
-          {children}
-        </div>
+        <div className={larga ? classes.colunaLarga : classes.coluna}>{children}</div>
       </main>
       <Rodape />
     </div>

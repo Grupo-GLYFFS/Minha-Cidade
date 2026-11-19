@@ -14,7 +14,7 @@ import { destinoSeguro } from '../logica/sessao';
 // 1. o formulário (dados, senha e endereço pelo CEP);
 // 2. "Confirme seu e-mail", com o código de 6 números. "Corrigir" volta ao formulário preenchido.
 // Com o código certo, a conta é criada, a pessoa já entra nela e vai para o destino do ?voltar=
-// (ou o Início), que mostra "Conta criada! Boas-vindas, <nome>!".
+// (ou o Início).
 export default function CriarConta() {
   const { logado, criarConta } = useSessao();
   const [parametros] = useSearchParams();
@@ -43,10 +43,7 @@ export default function CriarConta() {
       regiao: regiaoDe(valores.distrito),
     });
     if (resultado.ok) {
-      navigate(destino, {
-        replace: true,
-        state: { aviso: 'conta-criada', nome: resultado.usuario.primeiroNome },
-      });
+      navigate(destino, { replace: true });
       return;
     }
     // E-mail ou CPF ganharam conta no meio do caminho: volta ao formulário

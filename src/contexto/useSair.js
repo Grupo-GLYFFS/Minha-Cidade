@@ -5,7 +5,7 @@ import { apagarTodosRascunhos } from '../logica/rascunhos';
 import { apagarAcaoPendente } from '../logica/acaoPendente';
 
 // Ação "Sair da conta", usada no menu do cabeçalho e na página Perfil.
-// Devolve uma função que encerra a sessão e leva ao Início, que mostra "Você saiu da sua conta."
+// Devolve uma função que encerra a sessão e leva ao Início.
 // Apaga também os rascunhos dos formulários e a ação pendente desta aba.
 export function useSair() {
   const { sair } = useSessao();
@@ -19,7 +19,7 @@ export function useSair() {
     // (ex.: Perfil) veria o visitante antes da troca de página e mandaria para "Entrar".
     startTransition(() => {
       sair();
-      navigate('/inicio', { state: { aviso: 'saiu' } });
+      navigate('/inicio');
     });
   };
 }

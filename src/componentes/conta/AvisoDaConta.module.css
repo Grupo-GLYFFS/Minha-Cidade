@@ -1,0 +1,4 @@
+/* No Entrar, o aviso fica 24 abaixo do texto do título; o formulário vem 32 depois dele. */
+.lugar:not(:empty) {
+  margin: rem(24px) 0 0;
+}
