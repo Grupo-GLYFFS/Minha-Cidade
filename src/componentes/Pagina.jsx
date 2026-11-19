@@ -5,11 +5,10 @@ import FaixaAlerta from './FaixaAlerta';
 import Rodape from './Rodape';
 import AvisoDaConta from './conta/AvisoDaConta';
 import { useAcessibilidade } from '../contexto/useAcessibilidade';
+import { useBairroDaPessoa } from '../contexto/useBairroDaPessoa';
 import { ALERTAS } from '../dados/alertas';
+import { alertaDaFaixa } from '../logica/alertas';
 import classes from './Pagina.module.css';
-
-// Alerta da Defesa Civil que aparece na faixa amarela (o primeiro ativo)
-const ALERTA_FAIXA = ALERTAS.find((alerta) => alerta.tipo === 'defesa-civil' && alerta.ativo);
 
 // Moldura de toda página: topo, faixa de alerta, cabeçalho da página, conteúdo e rodapé.
 // Recebe:
@@ -24,6 +23,9 @@ const ALERTA_FAIXA = ALERTAS.find((alerta) => alerta.tipo === 'defesa-civil' && 
 export default function Pagina({ cabecalho, children, semFaixaAlerta = false, larga = false }) {
   const { pathname } = useLocation();
   const { mostrarFaixasAlerta } = useAcessibilidade();
+  // Alerta da faixa amarela: o que vale no bairro da pessoa (ou no escolhido) ou na cidade toda
+  const { nome, temConta, definido } = useBairroDaPessoa();
+  const alertaFaixa = alertaDaFaixa(ALERTAS, temConta || definido ? nome : null);
 
   // Volta ao topo a cada página nova
   useEffect(() => {
@@ -37,10 +39,10 @@ export default function Pagina({ cabecalho, children, semFaixaAlerta = false, la
     else document.title = h1 ? `${h1} · Minha Prefeitura` : 'Minha Prefeitura';
   });
 
-  // A faixa só aparece com a preferência ligada e some nas páginas de alertas
-  // (lá o alerta já é o conteúdo)
+  // A faixa só aparece com a preferência ligada e um alerta que vale para a pessoa,
+  // e some nas páginas de alertas (lá o alerta já é o conteúdo)
   const mostrarFaixa =
-    mostrarFaixasAlerta && ALERTA_FAIXA && !semFaixaAlerta && !pathname.includes('/alertas');
+    mostrarFaixasAlerta && alertaFaixa && !semFaixaAlerta && !pathname.includes('/alertas');
 
   return (
     <div className={classes.pagina}>
@@ -50,9 +52,9 @@ export default function Pagina({ cabecalho, children, semFaixaAlerta = false, la
       <Topo />
       {mostrarFaixa && (
         <FaixaAlerta
-          titulo={ALERTA_FAIXA.titulo}
-          texto={ALERTA_FAIXA.mensagem}
-          para={`/minha-cidade/alertas/${ALERTA_FAIXA.id}`}
+          titulo={alertaFaixa.titulo}
+          texto={alertaFaixa.mensagem}
+          para={`/minha-cidade/alertas/${alertaFaixa.id}`}
         />
       )}
       <main id="conteudo" className={classes.principal} tabIndex={-1}>

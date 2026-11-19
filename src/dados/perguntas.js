@@ -87,7 +87,7 @@ export const GRUPOS_PERGUNTAS = [
         id: 'origem-alertas',
         pergunta: 'De onde vêm os alertas?',
         resposta:
-          'Da Defesa Civil de São Paulo: chuva forte, alagamento, calor e frio intensos. O alerta do seu bairro também aparece na faixa amarela no topo das páginas.',
+          'Da Defesa Civil de São Paulo: chuva forte, alagamento, calor e frio intensos. O alerta do seu bairro também pode aparecer na faixa amarela no topo das páginas: é só ligar as Faixas de alerta em Configurações.',
       },
       {
         id: 'desligar-notificacoes',

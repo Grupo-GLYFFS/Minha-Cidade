@@ -23,6 +23,18 @@ export function alertaDefesaCivilAtivo(alertas, bairro) {
   );
 }
 
+// Escolhe o alerta da faixa amarela: o primeiro alerta ativo da Defesa Civil que vale no
+// bairro da pessoa (ou no escolhido) ou na cidade toda. Sem bairro, só os da cidade toda.
+// Recebe a lista de alertas e o nome do bairro (ou null); devolve o alerta ou undefined.
+export function alertaDaFaixa(alertas, bairro) {
+  return alertas.find(
+    (alerta) =>
+      alerta.tipo === 'defesa-civil' &&
+      alerta.ativo &&
+      (bairro ? alertaValeNoBairro(alerta, bairro) : alerta.bairros.length === 0),
+  );
+}
+
 // Separa os alertas de um lugar. Recebe a lista e os nomes dos bairros do lugar
 // (null = cidade toda, que recebe todos). Devolve { ativos, encerrados }, na ordem dos dados
 // (dados/alertas.js já vem do mais importante para o menos importante).
