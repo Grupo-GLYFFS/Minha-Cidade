@@ -1,0 +1,113 @@
+/* Barra de etapas horizontal: bolinha de 28, linha de 3 px entre as bolinhas, nome 14/600. */
+
+.zona {
+  padding: rem(20px) rem(24px) rem(22px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.etapas {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.colunas3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.colunas6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.etapa {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(8px);
+  text-align: center;
+}
+
+/* Linha que vem da etapa anterior até esta */
+.etapa::before {
+  content: '';
+  position: absolute;
+  top: rem(13px);
+  right: 50%;
+  width: 100%;
+  height: rem(3px);
+  background: var(--cor-linha);
+}
+
+.etapa:first-child::before {
+  display: none;
+}
+
+.feita::before,
+.atual::before {
+  background: var(--cor-azul);
+}
+
+.bola {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(28px);
+  height: rem(28px);
+  border: rem(2px) solid var(--cor-borda);
+  border-radius: 50%;
+  background: var(--cor-superficie);
+}
+
+.feita .bola {
+  border-color: var(--cor-azul);
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+/* Atual: anel com miolo, na cor da situação */
+.atual .bola {
+  border-color: var(--bola-cor);
+  background: var(--bola-cor);
+  box-shadow: inset 0 0 0 rem(5px) var(--cor-superficie);
+}
+
+.azul {
+  --bola-cor: var(--cor-azul);
+}
+
+.ambar {
+  --bola-cor: var(--cor-status-ambar-texto);
+}
+
+.cinza {
+  --bola-cor: var(--cor-status-cinza-bolinha);
+}
+
+.nome {
+  max-width: rem(150px);
+  font-size: rem(14px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--cor-texto-2);
+}
+
+.atual .nome {
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .zona {
+    padding: rem(16px) rem(8px) rem(18px);
+  }
+
+  .nome {
+    font-size: rem(12px);
+  }
+}

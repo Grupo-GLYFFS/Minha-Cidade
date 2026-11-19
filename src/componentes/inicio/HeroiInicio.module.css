@@ -1,0 +1,64 @@
+/* Herói azul do Início: 72 em cima, 64 embaixo, tudo centralizado na coluna de 880. */
+
+.heroi {
+  padding: rem(72px) 0 rem(64px);
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+  text-align: center;
+}
+
+.miolo {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(var(--largura-conteudo), calc(100% - rem(64px)));
+  margin-inline: auto;
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(64px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--cor-sobre-primaria);
+}
+
+.subtitulo {
+  margin: rem(8px) 0 0;
+  font-size: rem(18px);
+  font-weight: 600;
+  color: var(--cor-sobre-primaria);
+  opacity: 0.92;
+}
+
+.busca {
+  width: 100%;
+  max-width: rem(720px);
+  margin-top: rem(28px);
+  color: var(--cor-texto);
+  text-align: left;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .heroi {
+    padding: rem(40px) 0 rem(32px);
+  }
+
+  .miolo {
+    width: calc(100% - rem(32px));
+  }
+
+  .titulo {
+    font-size: rem(40px);
+  }
+
+  .subtitulo {
+    font-size: rem(16px);
+  }
+
+  .busca {
+    margin-top: rem(24px);
+  }
+}

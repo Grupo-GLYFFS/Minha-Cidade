@@ -1,66 +1,233 @@
-import { Text } from '@mantine/core';
-import SaudacaoBusca from '../componentes/inicio/SaudacaoBusca';
-import AvisoSessao from '../componentes/inicio/AvisoSessao';
+import Pagina from '../componentes/Pagina';
+import ParaOndeIr from '../componentes/ParaOndeIr';
+import HeroiInicio from '../componentes/inicio/HeroiInicio';
+import SecaoInicio from '../componentes/inicio/SecaoInicio';
 import ConviteEntrar from '../componentes/inicio/ConviteEntrar';
-import AvisoAlerta from '../componentes/AvisoAlerta';
-import AtalhosServicos from '../componentes/inicio/AtalhosServicos';
-import MeusPedidos from '../componentes/inicio/MeusPedidos';
-import ResumoBairro from '../componentes/inicio/ResumoBairro';
-import ProjetoEmVotacao from '../componentes/inicio/ProjetoEmVotacao';
-import PorQueExiste from '../componentes/inicio/PorQueExiste';
-import { ALERTAS } from '../dados/alertas';
+import CardProximoAgendamento from '../componentes/inicio/CardProximoAgendamento';
+import ListaAgendamentos from '../componentes/inicio/ListaAgendamentos';
+import CardAndamento from '../componentes/inicio/CardAndamento';
+import CardAvisoInicio from '../componentes/inicio/CardAvisoInicio';
+import CardVotacaoInicio from '../componentes/inicio/CardVotacaoInicio';
+import CardSeguido from '../componentes/inicio/CardSeguido';
+import { AVISOS } from '../dados/avisos';
+import { OBRAS } from '../dados/obras';
 import { PROJETOS } from '../dados/projetos';
-import { servicosMaisUsados } from '../logica/servicos';
-import { alertaDefesaCivilAtivo } from '../logica/alertas';
-import { pedidosAbertosDaPessoa } from '../logica/pedidos';
-import { projetosEmVotacao } from '../logica/votacao';
-import { usePedidos } from '../contexto/usePedidos';
 import { useSessao } from '../contexto/useSessao';
+import { usePedidos } from '../contexto/usePedidos';
+import { useSolicitacoes } from '../contexto/useSolicitacoes';
+import { useVotos } from '../contexto/useVotos';
+import { useSeguidos } from '../contexto/useSeguidos';
+import { buscarCategoria, buscarStatus, pedidosAbertosDaPessoa, textoUltimaMudanca } from '../logica/pedidos';
+import { buscarStatusSolicitacao, textoContagemSolicitacoes } from '../logica/solicitacoes';
+import { buscarServico } from '../logica/servicos';
+import { contar, resumirLugar } from '../logica/resumoLugar';
+import {
+  agendaDoInicio,
+  avisosDoInicio,
+  etapasDaSolicitacao,
+  etapasDoPedidoInicio,
+  itensSeguidos,
+  solicitacoesEsperando,
+  textosDaSolicitacao,
+  votacoesDoInicio,
+} from '../logica/inicio';
 import classes from './Inicio.module.css';
 
-// Atalhos da seção "Serviços mais usados", lidos do catálogo
-const MAIS_USADOS = servicosMaisUsados();
-
-// Página inicial: busca, alerta da Defesa Civil, atalhos, pedidos da pessoa,
-// resumo do bairro, votação aberta e "Por que o Minha Prefeitura existe".
-// Para o visitante: "Olá!" e o convite para entrar, sem "Meus pedidos" nem "Meu Bairro".
+// Página Início (/inicio): o resumo da cidade para a pessoa.
+// Com conta: herói "Olá, <nome>", serviços agendados, pedidos em andamento, solicitações
+// esperando resposta, avisos, votações abertas, o que ela segue e "Para onde ir".
+// Visitante: herói "Olá", convite para entrar, avisos da cidade e votações da cidade.
+// Seções pessoais vazias não aparecem.
 export default function Inicio() {
   const { usuario } = useSessao();
-  const { pedidos } = usePedidos();
-  const alerta = alertaDefesaCivilAtivo(ALERTAS, usuario?.bairro);
-  // Votação que encerra primeiro, para a pessoa não perder o prazo
-  const projetoAberto = projetosEmVotacao(PROJETOS)[0];
+  const { pedidos, seguidos: pedidosSeguidos } = usePedidos();
+  const { solicitacoes } = useSolicitacoes();
+  const { votoDe, resultado } = useVotos();
+  const obrasSeguidas = useSeguidos('obras');
+  const votacoesSeguidas = useSeguidos('votacoes');
+  const bairro = usuario?.bairro ?? null;
+
+  const agenda = agendaDoInicio(solicitacoes);
   const meusPedidos = usuario ? pedidosAbertosDaPessoa(pedidos, usuario.id) : [];
-  const nuncaAbriu = usuario ? !pedidos.some((pedido) => pedido.autorId === usuario.id) : false;
+  const esperando = solicitacoesEsperando(solicitacoes);
+  const avisos = avisosDoInicio(AVISOS, bairro);
+  const votacoes = votacoesDoInicio(PROJETOS, bairro);
+  const seguidos = usuario
+    ? itensSeguidos({
+        obras: OBRAS,
+        idsObras: obrasSeguidas.seguidos,
+        pedidos,
+        idsPedidos: pedidosSeguidos,
+        projetos: PROJETOS,
+        idsVotacoes: votacoesSeguidas.seguidos,
+      })
+    : [];
+
+  // "Para onde ir": as páginas da conta e os dois hubs, cada um com um número real
+  const alertasCidade = resumirLugar(pedidos).alertas;
+  const destinosHubs = [
+    {
+      icone: 'home_pin',
+      titulo: 'Meu bairro',
+      meta: bairro
+        ? `${bairro} · ${contar(resumirLugar(pedidos, [bairro]).alertas, 'alerta ativo', 'alertas ativos')}`
+        : 'O resumo do seu bairro',
+      para: '/meu-bairro',
+    },
+    {
+      icone: 'location_city',
+      titulo: 'Minha cidade',
+      meta: `Cidade de São Paulo · ${contar(alertasCidade, 'alerta ativo', 'alertas ativos')}`,
+      para: '/minha-cidade',
+    },
+  ];
+  const destinos = usuario
+    ? [
+        {
+          icone: 'assignment',
+          titulo: 'Meus pedidos',
+          meta: contar(
+            pedidos.filter((pedido) => pedido.autorId === usuario.id).length,
+            'feito por você',
+            'feitos por você',
+          ),
+          para: '/perfil/pedidos',
+        },
+        {
+          icone: 'event_available',
+          titulo: 'Minhas solicitações',
+          meta: textoContagemSolicitacoes(solicitacoes),
+          para: '/servicos/minhas-solicitacoes',
+        },
+        ...destinosHubs,
+      ]
+    : destinosHubs;
 
   return (
-    <div className={classes.pagina}>
-      <AvisoSessao />
-
-      <SaudacaoBusca usuario={usuario} />
-
+    <Pagina cabecalho={<HeroiInicio primeiroNome={usuario?.primeiroNome} />}>
       {!usuario && <ConviteEntrar />}
 
-      {alerta && <AvisoAlerta alerta={alerta} />}
+      <div className={classes.secoes}>
+        {agenda.proxima && (
+          <SecaoInicio
+            titulo="Serviços agendados"
+            contagem={agenda.total}
+            cor="azul"
+            para="/servicos/minhas-solicitacoes"
+            lista={false}
+          >
+            <CardProximoAgendamento solicitacao={agenda.proxima} />
+            {agenda.seguintes.length > 0 && <ListaAgendamentos solicitacoes={agenda.seguintes} />}
+          </SecaoInicio>
+        )}
 
-      <AtalhosServicos servicos={MAIS_USADOS} />
+        {meusPedidos.length > 0 && (
+          <SecaoInicio
+            titulo="Pedidos em andamento"
+            contagem={meusPedidos.length}
+            cor="azul"
+            para="/perfil/pedidos"
+          >
+            {meusPedidos.map((pedido) => {
+              const status = buscarStatus(pedido.status);
+              const categoria = buscarCategoria(pedido.categoria);
+              return (
+                <li key={pedido.id}>
+                  <CardAndamento
+                    caminho={`/pedidos/${pedido.id}`}
+                    icone={categoria?.icone ?? 'assignment'}
+                    categoria={categoria?.rotulo}
+                    selo={status && { cor: status.cor, rotulo: status.rotulo }}
+                    titulo={pedido.titulo}
+                    etapas={etapasDoPedidoInicio(pedido)}
+                  >
+                    {pedido.rua} · {textoUltimaMudanca(pedido)}
+                  </CardAndamento>
+                </li>
+              );
+            })}
+          </SecaoInicio>
+        )}
 
-      {/* No computador, pedidos e bairro ficam lado a lado */}
-      {usuario && (
-        <div className={classes.duasColunas}>
-          <MeusPedidos pedidos={meusPedidos} nuncaAbriu={nuncaAbriu} />
-          <ResumoBairro usuario={usuario} pedidos={pedidos} />
-        </div>
-      )}
+        {esperando.length > 0 && (
+          <SecaoInicio
+            titulo="Solicitações esperando resposta"
+            contagem={esperando.length}
+            rotuloVer="Ver todas"
+            para="/servicos/minhas-solicitacoes"
+          >
+            {esperando.map((solicitacao) => {
+              const status = buscarStatusSolicitacao(solicitacao.status);
+              const textos = textosDaSolicitacao(solicitacao);
+              return (
+                <li key={solicitacao.id}>
+                  <CardAndamento
+                    caminho={`/servicos/minhas-solicitacoes/${solicitacao.id}`}
+                    icone={buscarServico(solicitacao.idServico)?.icone ?? 'event'}
+                    categoria="Solicitação"
+                    selo={{ cor: status.cor, rotulo: status.rotulo }}
+                    titulo={solicitacao.nomeServico}
+                    etapas={etapasDaSolicitacao(solicitacao)}
+                  >
+                    {textos.quando}
+                    {textos.prazo && (
+                      <>
+                        {' · '}
+                        <strong className={classes.prazo}>{textos.prazo}</strong>
+                      </>
+                    )}
+                  </CardAndamento>
+                </li>
+              );
+            })}
+          </SecaoInicio>
+        )}
 
-      {projetoAberto && <ProjetoEmVotacao projeto={projetoAberto} />}
+        {avisos.length > 0 && (
+          <SecaoInicio titulo="Avisos" contagem={avisos.length} para="/minha-cidade/avisos">
+            {avisos.map((aviso) => (
+              <li key={aviso.id}>
+                <CardAvisoInicio aviso={aviso} />
+              </li>
+            ))}
+          </SecaoInicio>
+        )}
 
-      <PorQueExiste />
+        {votacoes.length > 0 && (
+          <SecaoInicio
+            titulo="Votações abertas"
+            contagem={votacoes.length}
+            cor="azul"
+            rotuloVer="Ver todas"
+            para="/minha-cidade/votacoes"
+          >
+            {votacoes.map((votacao) => (
+              <li key={votacao.id}>
+                <CardVotacaoInicio
+                  votacao={votacao}
+                  totalVotos={resultado(votacao).total}
+                  voto={votoDe(votacao.id)}
+                  segue={votacoesSeguidas.segue(votacao.id)}
+                  aoSeguir={() => votacoesSeguidas.alternar(votacao.id)}
+                  logado={Boolean(usuario)}
+                />
+              </li>
+            ))}
+          </SecaoInicio>
+        )}
 
-      {/* No computador este aviso já aparece no rodapé */}
-      <Text hiddenFrom="md" fz={12} ta="center" c="var(--cor-texto-suave)">
-        Protótipo acadêmico, não é um serviço oficial da Prefeitura de São Paulo. Dados de exemplo.
-      </Text>
-    </div>
+        {seguidos.length > 0 && (
+          <SecaoInicio titulo="O que você segue" contagem={seguidos.length} cor="verde" para="/perfil">
+            {seguidos.map((item) => (
+              <li key={item.id}>
+                <CardSeguido item={item} />
+              </li>
+            ))}
+          </SecaoInicio>
+        )}
+      </div>
+
+      <ParaOndeIr destinos={destinos} />
+    </Pagina>
   );
 }

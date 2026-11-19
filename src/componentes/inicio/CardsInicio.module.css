@@ -1,0 +1,418 @@
+/* Cards do Início: raio 20, borda 1 px, sem sombra. Faixas e divisórias de borda a borda.
+   Faixa de cima 12/24, corpo 20/24, faixa de baixo 16/24 com botões de 44 à direita. */
+
+.card {
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+}
+
+/* Próximo agendamento: borda azul com anel de 1 px */
+.proximo {
+  border-color: var(--cor-azul);
+  box-shadow: 0 0 0 1px var(--cor-azul);
+}
+
+/* Faixa de cima: ícone azul, texto 14/600 cinza, destaque em 700 e selo à direita */
+.faixa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(4px) rem(8px);
+  min-height: rem(52px);
+  padding: rem(12px) rem(24px);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.faixa > .icone {
+  color: var(--cor-azul-escuro);
+}
+
+.faixa strong {
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.faixaVotacao strong {
+  color: var(--cor-azul-tinta);
+}
+
+.faixaDireita {
+  margin-left: auto;
+}
+
+/* Faixa de baixo: botões compactos alinhados à direita */
+.pe {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: rem(12px);
+  padding: rem(16px) rem(24px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+/* Próximo agendamento: hora em coluna de 64, ícone de 48 e texto */
+.agenda {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(20px);
+  padding: rem(20px) rem(24px);
+}
+
+.hora {
+  flex: none;
+  width: rem(64px);
+  margin: 0;
+  font-size: rem(20px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.texto {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: rem(4px);
+  min-width: 0;
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.descricao {
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.meta {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.meta strong {
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.prazo {
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}
+
+.onde {
+  display: flex;
+  align-items: center;
+  gap: rem(4px);
+  margin: rem(2px) 0 0;
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+/* Linha "categoria + selo" e "ícone + tipo · lugar + selo" */
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(4px) rem(8px);
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.topo > .icone {
+  color: var(--cor-azul-escuro);
+}
+
+.topo strong {
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+/* Lista dos agendamentos seguintes: linhas de 64 com divisória de borda a borda */
+.linhas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.linhas > li + li {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.linha {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  min-height: rem(64px);
+  padding: rem(14px) rem(56px) rem(14px) rem(24px);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.linha:hover,
+.link:hover {
+  background: var(--cor-fundo-card);
+}
+
+.linha .seta {
+  top: 50%;
+  right: rem(20px);
+  transform: translateY(-50%);
+}
+
+.linhas > li:first-child .linha {
+  border-radius: rem(19px) rem(19px) 0 0;
+}
+
+.linhas > li:last-child .linha {
+  border-radius: 0 0 rem(19px) rem(19px);
+}
+
+.linhas > li:only-child .linha {
+  border-radius: rem(19px);
+}
+
+.data {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  width: rem(64px);
+  font-size: rem(16px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.data small {
+  font-size: rem(13px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.linhaTitulo {
+  font-size: rem(16px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* Parte de cima de pedidos e solicitações: o link com ícone, texto e seta no meio */
+.link {
+  position: relative;
+  display: flex;
+  gap: rem(16px);
+  padding: rem(20px) rem(64px) rem(20px) rem(24px);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.seta {
+  position: absolute;
+  top: rem(20px);
+  right: rem(20px);
+  color: var(--cor-texto-2);
+}
+
+.link .seta {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.link:hover .seta,
+.linha:hover .seta,
+.cardLink:hover .seta {
+  color: var(--cor-azul-escuro);
+}
+
+/* Card inteiro como link (avisos e "O que você segue") */
+.cardLink {
+  display: flex;
+  gap: rem(16px);
+  padding: rem(20px) rem(64px) rem(20px) rem(24px);
+  text-decoration: none;
+}
+
+.cardLink:hover {
+  background: var(--cor-fundo-card);
+  border-color: var(--cor-borda-forte);
+}
+
+/* Miniatura do aviso: 96 × 72, raio 12, igual à do card de pedido */
+.miniatura {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(96px);
+  height: rem(72px);
+  overflow: hidden;
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.miniatura img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Barra de quanto da obra já foi feito */
+.barra {
+  display: block;
+  width: 100%;
+  height: rem(8px);
+  margin-top: rem(4px);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--raio-selo);
+  background: var(--cor-linha);
+  color: var(--cor-azul);
+  appearance: none;
+}
+
+.barra::-webkit-progress-bar {
+  border-radius: var(--raio-selo);
+  background: var(--cor-linha);
+}
+
+.barra::-webkit-progress-value {
+  border-radius: var(--raio-selo);
+  background: var(--cor-azul);
+}
+
+.barra::-moz-progress-bar {
+  border-radius: var(--raio-selo);
+  background: var(--cor-azul);
+}
+
+/* Votação: corpo com ícone e números no pé */
+.corpo {
+  display: flex;
+  gap: rem(16px);
+  padding: rem(18px) rem(24px);
+}
+
+.peVotacao {
+  justify-content: space-between;
+  padding-block: rem(14px);
+}
+
+.numeros {
+  display: flex;
+  gap: rem(28px);
+  margin: 0;
+}
+
+.numeros dt {
+  font-size: rem(13px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.numeros dd {
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 700;
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(12px);
+  margin-left: auto;
+}
+
+.votou {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(4px);
+  height: rem(28px);
+  margin-left: auto;
+  padding: 0 rem(10px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-status-verde-fundo);
+  font-size: rem(13px);
+  font-weight: 700;
+  color: var(--cor-status-verde-texto);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.icone {
+  flex: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .faixa,
+  .pe,
+  .agenda,
+  .corpo {
+    padding-inline: rem(16px);
+  }
+
+  .agenda {
+    flex-wrap: wrap;
+    gap: rem(12px);
+  }
+
+  .hora {
+    width: auto;
+  }
+
+  .link,
+  .cardLink {
+    padding: rem(16px) rem(52px) rem(16px) rem(16px);
+  }
+
+  .linha {
+    padding: rem(14px) rem(48px) rem(14px) rem(16px);
+    gap: rem(12px);
+  }
+
+  .seta,
+  .linha .seta {
+    right: rem(16px);
+  }
+
+  .miniatura {
+    width: rem(64px);
+    height: rem(56px);
+  }
+
+  .pe > *,
+  .botoes > * {
+    flex: 1 1 auto;
+  }
+
+  .botoes {
+    width: 100%;
+  }
+}

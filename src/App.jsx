@@ -69,6 +69,9 @@ export default function App() {
         />
       ))}
 
+      {/* Início: resumo da cidade e da conta */}
+      <Route path="/inicio" element={<Inicio />} />
+
       {/* Conta: moldura própria, sem topo e sem rodapé */}
       <Route path="/entrar" element={<Entrar />} />
       <Route path="/entrar/esqueci" element={<EsqueciSenha />} />
@@ -100,7 +103,6 @@ export default function App() {
       <Route path="/meu-bairro/avisos/:id" element={<DetalheAviso doBairro />} />
 
       <Route element={<LayoutAntigo />}>
-        <Route path="/inicio" element={<Inicio />} />
         <Route path="/minha-cidade/obras" element={<ObrasCidade />} />
         <Route path="/minha-cidade/votacoes" element={<ProjetosCidade />} />
         <Route path="/minha-cidade/votacoes/:id" element={<ProjetoCidade />} />

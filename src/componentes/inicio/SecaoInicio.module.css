@@ -1,0 +1,58 @@
+/* Seção do Início: 56 px entre seções (32 no celular), 12 px do título aos cards e entre cards. */
+
+.secao + .secao {
+  margin-top: rem(56px);
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  gap: rem(4px);
+  margin-bottom: rem(12px);
+}
+
+/* O título de grupo ocupa o espaço que sobra; a linha dele vai até o botão */
+.cabecalho > h2 {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+}
+
+.cabecalho > a {
+  flex: none;
+  margin-right: rem(-8px);
+}
+
+.pilha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .secao + .secao {
+    margin-top: rem(32px);
+  }
+
+  /* No celular o título pode quebrar a linha */
+  .cabecalho > h2 {
+    font-size: rem(20px);
+  }
+
+  .cabecalho > h2 > span {
+    white-space: normal;
+  }
+}

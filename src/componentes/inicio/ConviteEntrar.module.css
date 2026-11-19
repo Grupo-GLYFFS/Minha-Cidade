@@ -1,38 +1,67 @@
-/* Celular: ícone e texto em cima, botões lado a lado embaixo.
-   Computador: tudo numa linha, botões à direita */
-.cartao {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+/* Convite para entrar: card com ícone, texto e os dois botões à direita. */
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px 16px;
+  gap: rem(16px);
+  margin-bottom: rem(56px);
+  padding: rem(20px) rem(24px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
 }
 
-/* Círculo azul claro com o ícone de pessoa */
 .icone {
   display: inline-flex;
+  flex: none;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--cor-azul-suave);
-  color: var(--mantine-color-azul-8);
+  width: rem(48px);
+  height: rem(48px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.texto {
+  flex: 1 1 rem(240px);
+  min-width: 0;
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cor-texto);
+}
+
+.frase {
+  margin: rem(4px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
 }
 
 .botoes {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  display: flex;
+  gap: rem(12px);
+  margin-left: auto;
 }
 
-@media (min-width: $mantine-breakpoint-md) {
-  .cartao {
-    grid-template-columns: auto minmax(0, 1fr) auto;
+@media (max-width: $mantine-breakpoint-sm) {
+  .card {
+    margin-bottom: rem(32px);
+    padding: rem(16px);
   }
 
   .botoes {
-    grid-column: auto;
-    display: flex;
+    width: 100%;
+  }
+
+  .botoes > * {
+    flex: 1 1 0;
   }
 }

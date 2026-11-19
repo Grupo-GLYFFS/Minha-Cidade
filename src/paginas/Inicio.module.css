@@ -1,24 +1,12 @@
-/* Seções empilhadas: 24 px entre elas no celular e 32 px no computador */
-.pagina {
+/* Página Início: o prazo da solicitação em azul-tinta, em 700. */
+
+.prazo {
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}
+
+/* As seções ficam no fluxo; o "Para onde ir" já traz o próprio espaço acima */
+.secoes {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.duasColunas {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-}
-
-@media (min-width: $mantine-breakpoint-md) {
-  .pagina {
-    gap: 32px;
-  }
-
-  /* Pedidos um pouco mais largos que o bairro */
-  .duasColunas {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  }
 }
