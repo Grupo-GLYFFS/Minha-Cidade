@@ -39,7 +39,7 @@ export const GRUPOS_PEDIDO = [
   {
     id: 'encerrados',
     titulo: 'Encerrados',
-    status: ['concluida', 'avaliada', 'recusada'],
+    status: ['concluida', 'avaliada', 'recusada', 'cancelada'],
     cor: 'cinza',
     singular: 'encerrado',
     plural: 'encerrados',

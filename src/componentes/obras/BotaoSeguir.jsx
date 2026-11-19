@@ -1,5 +1,6 @@
 import Botao from '../Botao';
 import { useAcaoPendente } from '../../contexto/useAcaoPendente';
+import { useAvisoTemporario } from '../../contexto/useAvisoTemporario';
 
 // Botão Seguir/Seguindo de uma obra ou votação (toggle com aria-pressed).
 // Para o visitante, leva para "Entrar", que depois volta para esta página já seguindo.
@@ -17,10 +18,23 @@ export default function BotaoSeguir({
   nome,
   compacto = false,
 }) {
+  const mostrarAviso = useAvisoTemporario();
+  // Texto curto do aviso: "esta obra" ou "esta votação" (vem do começo da chave)
+  const oQue = chave.startsWith('votacao') ? 'esta votação' : 'esta obra';
+
   // Pedido pelo visitante: segue quando ele volta logado (só liga, nunca desliga)
   const seguirDepois = useAcaoPendente(`seguir-${chave}`, () => {
-    if (!seguindo) aoAlternar();
+    if (seguindo) return;
+    aoAlternar();
+    mostrarAviso(`Você está seguindo ${oQue}.`, '/perfil/seguindo');
   });
+
+  // Liga ou desliga e confirma no rodapé da tela
+  function alternar() {
+    aoAlternar();
+    if (seguindo) mostrarAviso(`Você deixou de seguir ${oQue}.`);
+    else mostrarAviso(`Você está seguindo ${oQue}.`, '/perfil/seguindo');
+  }
 
   if (!logado) {
     return (
@@ -42,7 +56,7 @@ export default function BotaoSeguir({
       compacto={compacto}
       icone="add"
       pressionado={seguindo}
-      onClick={aoAlternar}
+      onClick={alternar}
       aria-label={seguindo ? `Seguindo ${nome}. Deixar de seguir` : `Seguir ${nome}`}
     >
       {seguindo ? 'Seguindo' : 'Seguir'}

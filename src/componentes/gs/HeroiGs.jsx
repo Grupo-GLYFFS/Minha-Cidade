@@ -28,7 +28,7 @@ export default function HeroiGs() {
         </p>
         <div className={classes.acoes}>
           <Botao variante="secundario" para="/inicio">
-            Entrar no app
+            Abrir o app
           </Botao>
           <Botao variante="principal" icone="arrow_forward" iconeDireita para="/como-funciona">
             Como funciona

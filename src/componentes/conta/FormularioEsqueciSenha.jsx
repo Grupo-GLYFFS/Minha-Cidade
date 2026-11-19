@@ -8,18 +8,21 @@ import ResumoErros from '../ResumoErros';
 import { useCaminhoConta } from '../../contexto/useCaminhoConta';
 import { esquemaEsqueciSenha } from '../../logica/esquemaEntrar';
 import { manterErrosAtuais } from '../../logica/resumoErros';
+import { caminhoComVoltar } from '../../logica/sessao';
 import classes from './FormularioConta.module.css';
 
 const VALIDADOR = yupResolver(esquemaEsqueciSenha);
 
 // Formulário "Esqueci minha senha": e-mail ou CPF da conta.
-// O protótipo não manda e-mail: depois de enviar, só mostra que o link foi enviado.
+// O protótipo não manda e-mail: depois de enviar, mostra que o link foi enviado e um botão
+// que faz o papel do link do e-mail (leva à tela "Nova senha" desta conta).
 // A mensagem é a mesma com ou sem conta, para não revelar quem tem cadastro.
 export default function FormularioEsqueciSenha() {
   // "Voltar para Entrar" leva junto o destino (?voltar=)
-  const { entrar } = useCaminhoConta();
+  const { entrar, voltar } = useCaminhoConta();
   const [errosResumo, setErrosResumo] = useState([]);
-  const [enviado, setEnviado] = useState(false);
+  // Guarda o e-mail ou CPF enviado (o link de demonstração leva para a senha nova desta conta)
+  const [enviado, setEnviado] = useState(null);
   const {
     register,
     handleSubmit,
@@ -41,6 +44,15 @@ export default function FormularioEsqueciSenha() {
             alguns minutos.
           </span>
         </p>
+        <Botao
+          variante="texto"
+          icone="arrow_forward"
+          iconeDireita
+          para={caminhoComVoltar('/entrar/nova-senha', voltar)}
+          state={{ login: enviado }}
+        >
+          Abrir o link do e-mail (demonstração)
+        </Botao>
         <Botao variante="principal" largo para={entrar}>
           Voltar para Entrar
         </Botao>
@@ -51,7 +63,7 @@ export default function FormularioEsqueciSenha() {
   return (
     <form
       className={classes.formulario}
-      onSubmit={handleSubmit(() => setEnviado(true), aoFalhar)}
+      onSubmit={handleSubmit((valores) => setEnviado(valores.login.trim()), aoFalhar)}
       noValidate
     >
       <ResumoErros

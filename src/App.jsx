@@ -26,6 +26,7 @@ import MeusPedidos from './paginas/MeusPedidos';
 import Entrar from './paginas/Entrar';
 import CriarConta from './paginas/CriarConta';
 import EsqueciSenha from './paginas/EsqueciSenha';
+import NovaSenha from './paginas/NovaSenha';
 import TelefonesUteis from './paginas/TelefonesUteis';
 import PerguntasFrequentes from './paginas/PerguntasFrequentes';
 import Privacidade from './paginas/Privacidade';
@@ -72,6 +73,7 @@ export default function App() {
       {/* Conta: moldura própria, sem topo e sem rodapé */}
       <Route path="/entrar" element={<Entrar />} />
       <Route path="/entrar/esqueci" element={<EsqueciSenha />} />
+      <Route path="/entrar/nova-senha" element={<NovaSenha />} />
       <Route path="/criar-conta" element={<CriarConta />} />
 
       {/* Serviços: catálogo, ficha, formulário e Minhas solicitações (as 3 últimas pedem conta) */}

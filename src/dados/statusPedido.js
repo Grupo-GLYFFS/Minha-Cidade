@@ -59,4 +59,13 @@ export const STATUS_PEDIDO = [
     corTexto: '#A11A1A',
     aberto: false,
   },
+  // Cancelado por quem abriu (só dá para cancelar enquanto está Enviado ou Em análise)
+  {
+    id: 'cancelada',
+    cor: 'vermelho',
+    rotulo: 'Cancelado',
+    corFundo: '#FDE4E4',
+    corTexto: '#A11A1A',
+    aberto: false,
+  },
 ];

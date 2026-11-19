@@ -6,6 +6,7 @@ import PopupVoto from './PopupVoto';
 import BarrasResultado from './BarrasResultado';
 import { useVotos } from '../../contexto/useVotos';
 import { useCaminhoConta } from '../../contexto/useCaminhoConta';
+import { useAvisoTemporario } from '../../contexto/useAvisoTemporario';
 import { buscarOpcaoVoto } from '../../logica/votacao';
 import { dataDiaMes } from '../../logica/datasTexto';
 import { formatarNumero } from '../../logica/formatos';
@@ -19,6 +20,7 @@ import classes from './SeuVoto.module.css';
 export default function SeuVoto({ projeto }) {
   const { votoDe, explicarSemVoto, votar, resultado } = useVotos();
   const { entrar, criarConta } = useCaminhoConta();
+  const mostrarAviso = useAvisoTemporario();
   const [aberto, setAberto] = useState(false);
   const [acabouDeVotar, setAcabouDeVotar] = useState(false);
   const caixa = useRef(null);
@@ -34,7 +36,10 @@ export default function SeuVoto({ projeto }) {
 
   // Registra o voto escolhido na caixa e fecha
   function confirmar(opcao) {
-    if (votar(projeto.id, opcao)) setAcabouDeVotar(true);
+    if (votar(projeto.id, opcao)) {
+      setAcabouDeVotar(true);
+      mostrarAviso(`Voto registrado: ${buscarOpcaoVoto(opcao)?.rotulo}.`, '/perfil/votos');
+    }
     setAberto(false);
   }
 

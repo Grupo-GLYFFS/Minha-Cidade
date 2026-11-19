@@ -56,7 +56,7 @@ export const ATUALIZACOES_PEDIDO = [
   },
   {
     idPedido: 'p-008',
-    data: '2026-10-28',
+    data: '2026-11-11',
     texto: 'Lâmpada trocada. O poste voltou a funcionar normalmente.',
   },
 ];

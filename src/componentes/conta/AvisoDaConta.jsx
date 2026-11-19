@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AvisoFeito from '../servicos/AvisoFeito';
 
 // Mostra, no alto da página de destino, o aviso mandado em state.aviso pelas ações da conta:
-// "conta-criada" (CriarConta, com state.nome) e "saiu" (useSair).
+// "conta-criada" (CriarConta, com state.nome), "saiu" (useSair) e "senha-trocada" (Nova senha).
 // Ao fechar, o aviso some e sai do histórico (não volta ao recarregar a página).
 export default function AvisoDaConta() {
   const { pathname, search, state, key } = useLocation();
@@ -16,6 +16,8 @@ export default function AvisoDaConta() {
     texto = state.nome ? `Conta criada! Boas-vindas, ${state.nome}!` : 'Conta criada! Boas-vindas!';
   } else if (state?.aviso === 'saiu') {
     texto = 'Você saiu da sua conta.';
+  } else if (state?.aviso === 'senha-trocada') {
+    texto = 'Senha trocada. Entre com a senha nova.';
   }
   if (fechadoEm === key) texto = '';
 

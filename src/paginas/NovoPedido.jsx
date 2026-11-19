@@ -11,6 +11,7 @@ import BarraEtapas from '../componentes/novoPedido/BarraEtapas';
 import PedidoEnviado from '../componentes/novoPedido/PedidoEnviado';
 import { usePedidos } from '../contexto/usePedidos';
 import { useSessao } from '../contexto/useSessao';
+import { useAvisoTemporario } from '../contexto/useAvisoTemporario';
 import {
   ETAPAS_NOVO_PEDIDO,
   esquemaDescreva,
@@ -47,6 +48,7 @@ const RASCUNHO = 'novo-pedido';
 // outro ?enviado= leva ao detalhe do pedido). Voltar do navegador depois do envio sai do formulário.
 export default function NovoPedido() {
   const { pedidos, adicionarPedido } = usePedidos();
+  const mostrarAviso = useAvisoTemporario();
   const { usuario } = useSessao();
   const [parametros, setParametros] = useSearchParams();
   const local = useLocation();
@@ -191,6 +193,7 @@ export default function NovoPedido() {
       setEnviando(false);
       travaEnvio.current = false;
       window.scrollTo(0, 0);
+      mostrarAviso('Pedido enviado.', `/minha-cidade/pedidos/${novo.id}`);
     }, ESPERA_ENVIO_MS);
   }
 

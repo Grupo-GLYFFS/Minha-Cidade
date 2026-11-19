@@ -11,7 +11,7 @@ import {
   aplicarAcompanhamentos,
   motivoSemAcompanhar,
 } from '../logica/acompanhamento';
-import { aplicarMudancasStatus, buscarPedido } from '../logica/pedidos';
+import { aplicarMudancasStatus, buscarPedido, podeCancelar } from '../logica/pedidos';
 import { montarNovoPedido } from '../logica/novoPedido';
 import { momentoDeHoje } from '../logica/datas';
 import { pedidosEsperandoAnalise, tempoAteAnalise } from '../logica/analiseSimulada';
@@ -106,6 +106,45 @@ export default function PedidosProvider({ children }) {
     return () => relogios.forEach(clearTimeout);
   }, [pedidos, avancarStatus, idPessoa]);
 
+  // Cancela um pedido da pessoa logada (só enquanto Enviado ou Em análise).
+  // Recebe o id; devolve true se cancelou. Guarda de onde ele saiu, para a linha do tempo.
+  const cancelarPedido = useCallback(
+    (idPedido) => {
+      const pedido = buscarPedido(pedidos, idPedido);
+      if (!pedido || !podeCancelar(pedido, idPessoa)) return false;
+      setMudancas((atual) => ({
+        ...atual,
+        [idPedido]: {
+          status: 'cancelada',
+          atualizadoEm: momentoDeHoje(),
+          canceladoDe: pedido.status,
+        },
+      }));
+      return true;
+    },
+    [pedidos, idPessoa],
+  );
+
+  // Guarda a avaliação de um pedido concluído da pessoa logada e passa ele para "Avaliado".
+  // Recebe o id, a nota (1 a 5) e o comentário (pode ser vazio); devolve true se guardou.
+  const avaliarPedido = useCallback(
+    (idPedido, nota, comentario) => {
+      const pedido = buscarPedido(pedidos, idPedido);
+      if (!pedido || pedido.status !== 'concluida' || pedido.autorId !== idPessoa) return false;
+      const agora = momentoDeHoje();
+      setMudancas((atual) => ({
+        ...atual,
+        [idPedido]: {
+          status: 'avaliada',
+          atualizadoEm: agora,
+          avaliacao: { nota, comentario: comentario.trim(), em: agora },
+        },
+      }));
+      return true;
+    },
+    [pedidos, idPessoa],
+  );
+
   // Diz por que a pessoa não pode apoiar o pedido (ou null se pode)
   const explicarSemApoio = useCallback(
     (pedido) => motivoSemApoio(pedido, apoiados, idPessoa),
@@ -165,6 +204,8 @@ export default function PedidosProvider({ children }) {
       explicarSemApoio,
       adicionarPedido,
       avancarStatus,
+      cancelarPedido,
+      avaliarPedido,
     }),
     [
       pedidos,
@@ -177,6 +218,8 @@ export default function PedidosProvider({ children }) {
       explicarSemApoio,
       adicionarPedido,
       avancarStatus,
+      cancelarPedido,
+      avaliarPedido,
     ],
   );
 

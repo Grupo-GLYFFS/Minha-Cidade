@@ -2,7 +2,7 @@ import Botao from '../Botao';
 import classes from './ConviteGs.module.css';
 
 // Faixa azul "Conheça o projeto" do fim da Apresentação: título, frase e um botão só
-// (Como funciona). Embaixo, separada por uma linha, a nota da demonstração e "Entrar no app".
+// (Como funciona). Embaixo, separada por uma linha, a nota da demonstração e "Abrir o app".
 export default function ConviteGs() {
   return (
     <nav className={classes.convite} aria-labelledby="gs-convite">
@@ -28,7 +28,7 @@ export default function ConviteGs() {
           para="/inicio"
           className={classes.entrar}
         >
-          Entrar no app
+          Abrir o app
         </Botao>
       </p>
     </nav>

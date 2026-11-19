@@ -128,6 +128,8 @@
   --cor-roxo-texto: var(--cor-status-azul-texto);
   --sombra: none;
   --sombra-destaque: none;
+  /* Sombra leve do aviso temporário do rodapé da tela */
+  --sombra-aviso: 0 4px 16px rgb(15 23 42 / 12%);
   --altura-abas: 0px;
 }
 

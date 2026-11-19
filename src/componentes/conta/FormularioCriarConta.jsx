@@ -37,7 +37,7 @@ function tituloResumo(quantos) {
 }
 
 // Formulário "Criar conta" numa página só: gov.br (simulado, preenche os dados), nome, CPF,
-// celular, e-mail, senha com requisitos, endereço pelo CEP e aceite dos termos.
+// celular, e-mail, senha com requisitos, endereço pelo CEP e aceite da política de privacidade.
 // Com erro: resumo no topo (CPF que não existe, e-mail ou CPF que já têm conta…).
 // Tudo certo: chama aoContinuar(valores), que leva à confirmação do e-mail.
 // Recebe os valores iniciais (ao voltar de "Corrigir"), aoContinuar e aoMudarBairro (painel azul).
@@ -140,7 +140,8 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
           <p className={classes.ok} role="status">
             <Icone nome="check_circle" preenchido />
             <span>
-              <b>Dados trazidos do gov.br.</b> Confira, crie a senha e aceite os termos.
+              <b>Dados trazidos do gov.br.</b> Confira, crie a senha e aceite a política de
+              privacidade.
             </span>
           </p>
         ) : (
@@ -197,11 +198,7 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
         <CamposEnderecoConta aoMudarBairro={aoMudarBairro} />
 
         <CaixaMarcar id="termos" erro={errors.termos?.message} {...register('termos')}>
-          Li e aceito os{' '}
-          <Link to="/ajuda/privacidade" target="_blank">
-            Termos de uso
-          </Link>{' '}
-          e a{' '}
+          Li e aceito a{' '}
           <Link to="/ajuda/privacidade" target="_blank">
             Política de privacidade
           </Link>

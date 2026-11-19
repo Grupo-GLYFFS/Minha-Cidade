@@ -8,6 +8,7 @@ import FormularioSolicitacao from '../componentes/servicos/FormularioSolicitacao
 import SolicitacaoEnviada from '../componentes/servicos/SolicitacaoEnviada';
 import { useSessao } from '../contexto/useSessao';
 import { useSolicitacoes } from '../contexto/useSolicitacoes';
+import { useAvisoTemporario } from '../contexto/useAvisoTemporario';
 import {
   buscarCategoriaServico,
   buscarServico,
@@ -24,6 +25,7 @@ export default function SolicitarServico() {
   const { idServico } = useParams();
   const { usuario } = useSessao();
   const { adicionarSolicitacao } = useSolicitacoes();
+  const mostrarAviso = useAvisoTemporario();
   const [parametros, setParametros] = useSearchParams();
   const [enviada, setEnviada] = useState(null);
   const servico = buscarServico(idServico);
@@ -56,9 +58,11 @@ export default function SolicitarServico() {
     setParametros(numero === 1 ? {} : { etapa: String(numero) });
   }
 
-  // Salva a solicitação e mostra a confirmação no topo da tela
+  // Salva a solicitação, mostra a confirmação no topo da tela e o aviso no rodapé
   function enviar(respostas) {
-    setEnviada(adicionarSolicitacao(servico, respostas));
+    const nova = adicionarSolicitacao(servico, respostas);
+    setEnviada(nova);
+    mostrarAviso('Solicitação enviada.', `/servicos/minhas-solicitacoes/${nova.id}`);
     window.scrollTo({ top: 0 });
   }
 

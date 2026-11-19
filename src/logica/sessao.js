@@ -1,7 +1,12 @@
 // Caminhos usados para entrar na conta e voltar depois para onde a pessoa estava.
 
 // Páginas de entrar e criar conta (nelas o "voltar" atual é mantido, e não trocado por elas mesmas)
-export const PAGINAS_DE_CONTA = ['/entrar', '/criar-conta', '/entrar/esqueci'];
+export const PAGINAS_DE_CONTA = [
+  '/entrar',
+  '/criar-conta',
+  '/entrar/esqueci',
+  '/entrar/nova-senha',
+];
 
 // Confere o destino recebido no endereço (?voltar=...) antes de usar.
 // Recebe o texto do parâmetro; devolve o caminho se for uma página do próprio app,
