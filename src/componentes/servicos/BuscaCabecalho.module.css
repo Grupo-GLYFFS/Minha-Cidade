@@ -7,6 +7,11 @@
   margin-top: rem(32px);
 }
 
+/* O painel de resultados abre logo abaixo do campo */
+.area {
+  position: relative;
+}
+
 .rotulo {
   margin: rem(24px) 0 rem(12px);
   font-size: rem(15px);
