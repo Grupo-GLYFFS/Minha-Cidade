@@ -1,14 +1,17 @@
+import { useRef } from 'react';
 import { Modal } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import Botao from './Botao';
 import { CONSULTA_CELULAR } from '../logica/navegacaoCelular';
+import useFecharComEsc from './useFecharComEsc';
 import classes from './Popup.module.css';
 
 // Popup (Modal do Mantine) no padrão "Seus dados": cabeçalho com título e X, corpo e faixa
-// de botões, com linhas de borda a borda entre as faixas. O Mantine cuida do foco, do Esc
-// e do fundo escuro.
-// No celular, vira folha que sobe de baixo: vai até em cima da barra de abas, com raio 20
-// em cima, alça de 40 × 4, título de 20 e os botões dividindo a linha em partes iguais.
+// de botões, com linhas de borda a borda entre as faixas. O Mantine cuida do foco e do fundo
+// escuro; o Esc fica com o useFecharComEsc.
+// No celular, vira folha que sobe de baixo: vai até o fim da tela, por cima da barra de abas,
+// com raio 20 em cima, alça de 40 × 4, título de 20 e os botões dividindo a linha em partes
+// iguais.
 // Recebe:
 // - aberto e aoFechar (fecha pelo X, pelo Esc e clicando fora);
 // - titulo;
@@ -27,6 +30,8 @@ export default function Popup({
   semPadding = false,
 }) {
   const celular = useMediaQuery(CONSULTA_CELULAR);
+  const caixa = useRef(null);
+  useFecharComEsc(aberto, aoFechar, caixa);
 
   return (
     <Modal.Root
@@ -34,11 +39,12 @@ export default function Popup({
       onClose={aoFechar}
       size={largura}
       centered
+      closeOnEscape={false}
       classNames={{ inner: classes.inner }}
       transitionProps={celular ? { transition: 'slide-up', duration: 200 } : undefined}
     >
       <Modal.Overlay className={classes.veu} />
-      <Modal.Content className={classes.caixa}>
+      <Modal.Content ref={caixa} className={classes.caixa}>
         <span className={classes.alca} aria-hidden="true" />
         <Modal.Header className={classes.cab}>
           <Modal.Title className={classes.titulo}>{titulo}</Modal.Title>

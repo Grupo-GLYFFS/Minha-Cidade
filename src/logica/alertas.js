@@ -182,3 +182,8 @@ export function montarAlertas({
     .map((alerta) => ({ importante: false, ...alerta, lido: lidos.includes(alerta.id) }))
     .sort((a, b) => Number(b.importante) - Number(a.importante) || b.data.localeCompare(a.data));
 }
+
+// Alerta com o "Ligar 199 · Defesa Civil" na barra do pé: ativo e da Defesa Civil
+export function temLigar199(alerta) {
+  return alerta.ativo && alerta.tipo === 'defesa-civil';
+}

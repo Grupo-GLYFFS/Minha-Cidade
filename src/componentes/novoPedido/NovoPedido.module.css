@@ -871,7 +871,33 @@
     align-self: center;
   }
 
+  /* Pedido enviado: número em cima, numa linha; embaixo, o selo e o "Copiar" */
+  .protocolo {
+    flex-direction: column;
+    align-items: stretch;
+    gap: rem(12px);
+    padding: rem(16px);
+  }
+
+  .protocolo > div {
+    min-width: 0;
+  }
+
   .protocoloNumero {
+    overflow: hidden;
     font-size: rem(26px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Os dois botões do fim empilham em largura total, com o principal em cima */
+  .enviadoFim > * {
+    flex-direction: column-reverse;
+    gap: rem(8px);
+  }
+
+  .enviadoFim > * > * {
+    flex: none;
+    width: 100%;
   }
 }

@@ -8,14 +8,19 @@ import classes from './LinhaDado.module.css';
 // Recebe:
 // - icone (opcional), rotulo e valor (texto ou elemento);
 // - para: a linha inteira vira link, com chevron_right no fim;
-// - acao: um botão no fim da linha (ex.: Copiar, Editar).
+// - acao: um botão no fim da linha (ex.: Copiar, Editar);
+// - umaLinha: no celular, o valor fica numa linha só, com reticências.
 // Use dentro de <SecaoCard lista> ou de <Cartao>.
-export default function LinhaDado({ icone, rotulo, valor, para, acao }) {
+export default function LinhaDado({ icone, rotulo, valor, para, acao, umaLinha = false }) {
   const conteudo = (
     <>
       {icone && <Icone nome={icone} tamanho={20} className={classes.icone} />}
       <span className={classes.rotulo}>{rotulo}</span>
-      {valor !== undefined && <span className={classes.valor}>{valor}</span>}
+      {valor !== undefined && (
+        <span className={umaLinha ? `${classes.valor} ${classes.valorUmaLinha}` : classes.valor}>
+          {valor}
+        </span>
+      )}
       {acao}
       {para && <Icone nome="chevron_right" tamanho={22} className={classes.chevron} />}
     </>

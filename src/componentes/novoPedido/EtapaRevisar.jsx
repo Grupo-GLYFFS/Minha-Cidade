@@ -59,7 +59,13 @@ export default function EtapaRevisar({ valores, irPara, aoMudarTitulo }) {
               </Botao>
             ),
           },
-          { icone: 'notes', rotulo: 'Descrição', valor: valores.descricao.trim() },
+          {
+            icone: 'notes',
+            rotulo: 'Descrição',
+            valor: valores.descricao.trim(),
+            // No celular, até 2 linhas com reticências
+            classeValor: 'm-2l-cel',
+          },
           {
             icone: 'signal_cellular_alt',
             rotulo: 'Gravidade estimada',

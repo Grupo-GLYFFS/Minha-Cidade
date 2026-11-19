@@ -14,9 +14,6 @@ const CAMINHOS_MAIS = [
   '/equipe',
 ];
 
-// Páginas da conta (sem trilha): o "‹ Voltar" delas é o "‹ Mais", que abre a folha Mais
-const CAMINHOS_CONTA = ['/perfil', '/configuracoes', '/notificacoes'];
-
 // Páginas de 1º nível: não têm barra "‹ Voltar" no celular
 export const PAGINAS_PRIMEIRO_NIVEL = ['/inicio', '/servicos', '/minha-cidade', '/meu-bairro'];
 
@@ -44,10 +41,11 @@ export function abaDoCelular(caminho, busca = '') {
   return null;
 }
 
-// Diz se a página é da conta (o "‹ Voltar" vira "‹ Mais").
+// Diz se a página é da aba Mais: conta, ajuda ou Global Solution (sem trilha, o "‹ Voltar"
+// delas vira "‹ Mais", que abre a folha Mais).
 // Recebe o caminho; devolve true ou false.
-export function ehPaginaDaConta(caminho) {
-  return comecaCom(caminho, CAMINHOS_CONTA);
+export function ehPaginaDoMais(caminho) {
+  return caminho === '/' || comecaCom(caminho, CAMINHOS_MAIS);
 }
 
 // Páginas sem trilha que têm um "pai" fixo no celular (como nas pranchas)
@@ -66,5 +64,8 @@ export function voltarDaTrilha(trilha, caminho = '') {
     const pai = trilha[trilha.length - 2];
     if (pai.para) return { rotulo: pai.rotulo, para: pai.para };
   }
-  return PAIS_SEM_TRILHA[caminho] ?? null;
+  if (PAIS_SEM_TRILHA[caminho]) return PAIS_SEM_TRILHA[caminho];
+  // Serviços de uma categoria (/servicos/categoria/:id): voltam para Serviços
+  if (caminho.startsWith('/servicos/categoria/')) return { rotulo: 'Serviços', para: '/servicos' };
+  return null;
 }

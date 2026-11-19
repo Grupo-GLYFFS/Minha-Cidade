@@ -10,11 +10,7 @@ import { useAcessibilidade } from '../contexto/useAcessibilidade';
 import { useBairroDaPessoa } from '../contexto/useBairroDaPessoa';
 import { ALERTAS } from '../dados/alertas';
 import { alertaDaFaixa } from '../logica/alertas';
-import {
-  PAGINAS_PRIMEIRO_NIVEL,
-  ehPaginaDaConta,
-  voltarDaTrilha,
-} from '../logica/navegacaoCelular';
+import { PAGINAS_PRIMEIRO_NIVEL, ehPaginaDoMais, voltarDaTrilha } from '../logica/navegacaoCelular';
 import classes from './Pagina.module.css';
 
 // Moldura de toda página: topo, faixa de alerta, cabeçalho da página, conteúdo e rodapé.
@@ -51,7 +47,8 @@ export default function Pagina({
   // Alerta da faixa amarela: o que vale no bairro da pessoa (ou no escolhido) ou na cidade toda
   const { nome, temConta, definido } = useBairroDaPessoa();
   const alertaFaixa = alertaDaFaixa(ALERTAS, temConta || definido ? nome : null);
-  // Folha Mais do celular (aberta pela aba Mais ou pelo "‹ Mais" das páginas da conta)
+  // Folha Mais do celular (aberta pela aba Mais ou pelo "‹ Mais" das páginas da conta, da
+  // ajuda e da Global Solution)
   const [maisAberto, setMaisAberto] = useState(false);
   const [caminhoDoMais, setCaminhoDoMais] = useState(pathname);
 
@@ -80,7 +77,7 @@ export default function Pagina({
 
   // Barra "‹ Voltar" do celular: some nas páginas de 1º nível e nas confirmações
   const propsCabecalho = cabecalho?.props ?? {};
-  const contaSemTrilha = ehPaginaDaConta(pathname) && !(propsCabecalho.trilha?.length >= 2);
+  const maisSemTrilha = ehPaginaDoMais(pathname) && !(propsCabecalho.trilha?.length >= 2);
   const mostrarVoltar =
     voltar !== false &&
     !PAGINAS_PRIMEIRO_NIVEL.includes(pathname) &&
@@ -110,8 +107,8 @@ export default function Pagina({
       )}
       {mostrarVoltar && (
         <BarraVoltar
-          voltar={!voltar && contaSemTrilha ? { rotulo: 'Mais' } : destinoVoltar}
-          aoVoltar={!voltar && contaSemTrilha ? () => setMaisAberto(true) : undefined}
+          voltar={!voltar && maisSemTrilha ? { rotulo: 'Mais' } : destinoVoltar}
+          aoVoltar={!voltar && maisSemTrilha ? () => setMaisAberto(true) : undefined}
           titulo={tituloTopo}
           acao={acaoTopo}
         />

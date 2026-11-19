@@ -176,10 +176,16 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-clamp: 2;
+    /* Uma palavra maior que a coluna quebra em vez de passar da largura */
+    overflow-wrap: break-word;
   }
 
+  /* Até 3 linhas, como na prancha 27: o "… da Subprefeitura Vila Mariana" não cabe em 2, e
+     o "…" de um título centralizado cortado em 2 linhas passava 3 px da coluna */
   .tituloGrande {
     font-size: rem(36px);
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 
   .tituloDetalhe {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
@@ -14,6 +14,7 @@ import { SERVICOS } from '../../dados/servicos';
 import { buscarNoApp } from '../../logica/buscaGeral';
 import { CONSULTA_CELULAR } from '../../logica/navegacaoCelular';
 import { useResumoConta } from './useResumoConta';
+import useFecharComEsc from '../useFecharComEsc';
 import classes from './PopupBusca.module.css';
 
 // Popup de busca do topo, em 3 estados (vazio, com resultados e sem resultado; ver CorpoBusca).
@@ -29,6 +30,7 @@ export default function PopupBusca({ aberto, aoFechar }) {
   const { pedidos } = usePedidos();
   const { solicitacoes } = useSolicitacoes();
   const resumo = useResumoConta();
+  const tela = useRef(null);
 
   const buscando = texto.trim().length > 0;
   const achados = buscando
@@ -40,6 +42,9 @@ export default function PopupBusca({ aberto, aoFechar }) {
     setTexto('');
     aoFechar();
   }
+
+  // Esc da tela cheia do celular (no computador, o Popup cuida dele)
+  useFecharComEsc(aberto && celular, fechar, tela);
 
   // Enter ou "Buscar": abre a página de Serviços com o texto
   function enviar() {
@@ -109,11 +114,12 @@ export default function PopupBusca({ aberto, aoFechar }) {
         opened={aberto}
         onClose={fechar}
         fullScreen
+        closeOnEscape={false}
         returnFocus={false}
         transitionProps={{ transition: 'fade', duration: 150 }}
         classNames={{ inner: classes.telaFundo }}
       >
-        <Modal.Content className={classes.tela}>
+        <Modal.Content ref={tela} className={classes.tela}>
           <Modal.Header className={classes.telaCab}>
             <Modal.Title className={classes.telaTitulo}>Buscar</Modal.Title>
             <Botao variante="fechar" aria-label="Fechar" onClick={fechar} />

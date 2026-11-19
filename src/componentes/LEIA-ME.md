@@ -95,7 +95,7 @@ Não têm trilha: Início, Serviços, Cidade de São Paulo, as páginas da conta
 | Para                                                  | Use            | Props principais                                                           |
 | ----------------------------------------------------- | -------------- | -------------------------------------------------------------------------- |
 | Seção de conteúdo em card (h2 + linha + corpo)        | `SecaoCard`    | `titulo`, `contagem`, `acao`, `lista`                                      |
-| Linha "rótulo … valor" com divisória de borda a borda | `LinhaDado`    | `icone`, `rotulo`, `valor`, `para`, `acao`                                 |
+| Linha "rótulo … valor" com divisória de borda a borda | `LinhaDado`    | `icone`, `rotulo`, `valor`, `para`, `acao`, `umaLinha` (celular)           |
 | Card genérico (clicável ou não)                       | `Cartao`       | `para`, `seta`, `topo`, `rodape`, `component`                              |
 | Pedido em qualquer lista                              | `CardPedido`   | `pedido`, `midia`, `nivelTitulo`                                           |
 | Título de grupo numa lista agrupada                   | `TituloGrupo`  | `titulo`, `contagem`, `cor`, `id`, `nivel`                                 |
@@ -155,9 +155,9 @@ O celular segue as pranchas de `celular/` e o `CELULAR-PADRAO.md`. Tudo do celul
 
 - Esconde o `Topo` e o `Rodape`.
 - Mostra a **barra de abas** presa embaixo (Início · Serviços · Cidade · Bairro · Mais). A aba marcada vem da rota (`abaDoCelular` em `src/logica/navegacaoCelular.js`); o Mais mostra as notificações não lidas e abre a **folha Mais**.
-- Mostra a **barra "‹ Voltar"** nas páginas internas. O destino é o **penúltimo item da `trilha`** do `CabecalhoPagina`. Sem trilha: as páginas da conta (`/perfil…`, `/configuracoes`, `/notificacoes`) ganham "‹ Mais", que abre a folha Mais; Minhas solicitações vai para Serviços; Entrar e Criar conta vão para o Início; o resto ganha "‹ Voltar" (volta uma página).
+- Mostra a **barra "‹ Voltar"** nas páginas internas. O destino é o **penúltimo item da `trilha`** do `CabecalhoPagina`. Sem trilha: as páginas da conta, da ajuda e da Global Solution (`/perfil…`, `/configuracoes`, `/notificacoes`, `/ajuda/…`, `/`, `/como-funciona`, `/impacto`, `/equipe`) ganham "‹ Mais", que abre a folha Mais; Minhas solicitações e `/servicos/categoria/…` vão para Serviços; Entrar e Criar conta vão para o Início; o resto ganha "‹ Voltar" (volta uma página).
 - Não mostra a barra "‹ Voltar" nas páginas de 1º nível (`/inicio`, `/servicos`, `/minha-cidade`, `/meu-bairro`) nem no cabeçalho `tipo="confirmacao"`.
-- No `CabecalhoPagina`, a trilha e as etapas somem, o h1 vai até 2 linhas (3 no detalhe) e as `acoes` ficam em largura total, divididas em partes iguais.
+- No `CabecalhoPagina`, a trilha e as etapas somem, o h1 vai até 3 linhas (o de lista e hub cabe em 2; o "… da Subprefeitura Vila Mariana" usa a 3ª, como na prancha 27) e as `acoes` ficam em largura total, divididas em partes iguais.
 
 ### Props do `Pagina` para o celular
 
@@ -203,7 +203,7 @@ import FaixaPasso from '../componentes/celular/FaixaPasso';
 
 - O que sai do cabeçalho no celular (ex.: Seguir e Apoiar do detalhe, que vão para a `BarraPe`): esconda no CSS da página com `@media (max-width: $mantine-breakpoint-sm)`.
 - A `BarraPe` e a `FaixaPasso` só aparecem no celular. Com a `BarraPe` na página, o aviso do rodapé sobe para ficar 16 acima dela, e o fim da página ganha espaço para nada ficar por baixo.
-- `Popup` vira folha que sobe de baixo, até em cima da barra de abas, com os botões divididos em partes iguais. Não precisa fazer nada.
+- `Popup` vira folha que sobe de baixo até o fim da tela, por cima da barra de abas e da `BarraPe`, com os botões divididos em partes iguais. Não precisa fazer nada.
 
 ### Texto que não quebra o layout (classes globais)
 
