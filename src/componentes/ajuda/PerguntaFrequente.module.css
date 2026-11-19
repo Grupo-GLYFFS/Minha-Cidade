@@ -1,0 +1,83 @@
+/* Pergunta que abre e fecha (32): linha de 64, divisória de borda a borda do card
+   (o card tem --pad-lateral, a linha sangra esse padding). */
+
+.item {
+  margin-inline: calc(var(--pad-lateral, 0px) * -1);
+}
+
+/* O corpo de lista do SecaoCard tem 8 em cima e embaixo: a lista encosta nas bordas */
+.item:first-child {
+  margin-top: rem(-8px);
+}
+
+.item:last-child {
+  margin-bottom: rem(-8px);
+  overflow: hidden;
+  border-radius: 0 0 var(--raio-card) var(--raio-card);
+}
+
+.item + .item {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.titulo {
+  margin: 0;
+}
+
+.pergunta {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  width: 100%;
+  min-height: rem(64px);
+  padding: rem(16px) calc(var(--pad-lateral, 0px) - rem(4px)) rem(16px) var(--pad-lateral, 0px);
+  border: 0;
+  background: none;
+  font-family: var(--fonte);
+  font-size: rem(17px);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--cor-texto);
+  text-align: left;
+  cursor: pointer;
+}
+
+.pergunta:hover {
+  background: var(--cor-fundo-card);
+}
+
+.pergunta:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: -3px;
+}
+
+.texto {
+  flex: 1 1 auto;
+}
+
+.pergunta > :last-child {
+  flex: none;
+  color: var(--cor-texto-2);
+}
+
+.pergunta[aria-expanded='true'] {
+  font-weight: 700;
+}
+
+.pergunta[aria-expanded='true'] > :last-child {
+  color: var(--cor-azul-escuro);
+}
+
+.resposta {
+  padding: 0 var(--pad-lateral, 0px) rem(24px);
+}
+
+.resposta p {
+  max-width: 68ch;
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--cor-texto-2);
+}

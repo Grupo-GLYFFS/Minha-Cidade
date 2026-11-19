@@ -76,9 +76,6 @@ export default function App() {
         <Route path="/entrar" element={<Entrar />} />
         <Route path="/criar-conta" element={<CriarConta />} />
         <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
-        <Route path="/ajuda/telefones" element={<TelefonesUteis />} />
-        <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />
-        <Route path="/ajuda/privacidade" element={<Privacidade />} />
         <Route element={<RotaProtegida />}>
           <Route path="/pedidos/novo" element={<NovoPedido />} />
           <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
@@ -88,6 +85,11 @@ export default function App() {
           <Route path="/perfil/dados" element={<MeusDados />} />
         </Route>
       </Route>
+
+      {/* Ajuda (páginas novas, fora do LayoutAntigo) */}
+      <Route path="/ajuda/telefones" element={<TelefonesUteis />} />
+      <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />
+      <Route path="/ajuda/privacidade" element={<Privacidade />} />
 
       {/* A Ouvidoria já é um serviço do catálogo: o link antigo leva para a ficha dela */}
       <Route path="/ajuda/ouvidoria" element={<Navigate to="/servicos/ouvidoria" replace />} />

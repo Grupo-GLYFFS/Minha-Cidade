@@ -1,0 +1,55 @@
+/* Aviso de endereço que não existe (38): alinhado à esquerda, 72 em cima e 96 embaixo
+   (o <Pagina> já dá 48 em cima, então aqui vão mais 24). */
+
+.aviso {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: rem(12px);
+  padding: rem(24px) 0 rem(48px);
+}
+
+.icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(48px);
+  height: rem(48px);
+  margin-bottom: rem(8px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-status-vermelho-fundo);
+  color: var(--cor-status-vermelho-texto);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+  text-wrap: balance;
+}
+
+.texto {
+  max-width: 52ch;
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.acoes {
+  margin-top: rem(12px);
+}
+
+/* Os botões ficam à esquerda, como o resto do aviso */
+.acoes > div {
+  justify-content: flex-start;
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .aviso {
+    padding: 0 0 rem(24px);
+  }
+}

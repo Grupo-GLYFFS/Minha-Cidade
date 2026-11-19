@@ -1,73 +1,83 @@
-import { useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Alert, Text, Title } from '@mantine/core';
-import PaginaAjuda from '../componentes/ajuda/PaginaAjuda';
-import ListaDados from '../componentes/privacidade/ListaDados';
-import ApagarDados from '../componentes/privacidade/ApagarDados';
-import Cartao from '../componentes/Cartao';
-import Icone from '../componentes/Icone';
+import Pagina from '../componentes/Pagina';
+import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import SecaoCard from '../componentes/SecaoCard';
+import LinhaDado from '../componentes/LinhaDado';
+import PilhaCards from '../componentes/ajuda/PilhaCards';
+import TextoCard from '../componentes/ajuda/TextoCard';
 import { DADOS_GUARDADOS, DADOS_NAO_GUARDADOS } from '../dados/privacidade';
 
-// Privacidade dos dados: o que o app guarda (só neste navegador), o que não guarda,
-// o aviso de protótipo, a LGPD em uma frase e o botão para apagar tudo.
-// Depois de apagar, o endereço traz "?dados=apagados" e a página mostra a confirmação.
+// Privacidade (/ajuda/privacidade): o que fica guardado neste navegador, o que não fica,
+// os direitos pela LGPD (com atalhos para Meu perfil e Configurações) e o aviso de protótipo.
 export default function Privacidade() {
-  const [parametros] = useSearchParams();
-  const apagou = parametros.get('dados') === 'apagados';
-  const aviso = useRef(null);
-
-  // Leva o foco até a confirmação, para o leitor de tela ler o aviso logo de cara
-  useEffect(() => {
-    if (apagou) aviso.current?.focus();
-  }, [apagou]);
-
   return (
-    <PaginaAjuda
-      titulo="Privacidade dos dados"
-      descricao="O que o Minha Prefeitura guarda, onde guarda e como apagar."
+    <Pagina
+      cabecalho={
+        <CabecalhoPagina
+          tipo="lista"
+          titulo="Privacidade"
+          subtitulo="O que o Minha Prefeitura guarda sobre você e como apagar."
+          icone="shield_person"
+        />
+      }
     >
-      {apagou && (
-        <Alert
-          ref={aviso}
-          tabIndex={-1}
-          role="status"
-          color="green"
-          radius="lg"
-          icon={<Icone nome="check_circle" preenchido />}
-          title="Pronto, seus dados foram apagados"
-        >
-          Tudo o que o app guardava neste navegador foi apagado e você saiu da conta.
-        </Alert>
-      )}
+      <PilhaCards>
+        <SecaoCard titulo="O que fica guardado" lista>
+          <TextoCard antesDaLista>
+            <p>Tudo fica só neste navegador. Nada vai para a prefeitura nem para outra pessoa.</p>
+          </TextoCard>
+          {DADOS_GUARDADOS.map((item) => (
+            <LinhaDado
+              key={item.rotulo}
+              icone={item.icone}
+              rotulo={item.rotulo}
+              valor={item.detalhe}
+            />
+          ))}
+        </SecaoCard>
 
-      <ListaDados
-        id="titulo-guardados"
-        titulo="O que fica guardado"
-        introducao="Tudo fica só neste navegador, no próprio aparelho. Nada é enviado para a prefeitura nem para outro lugar."
-        itens={DADOS_GUARDADOS}
-      />
+        <SecaoCard titulo="O que não fica guardado" lista>
+          {DADOS_NAO_GUARDADOS.map((item) => (
+            <LinhaDado
+              key={item.rotulo}
+              icone={item.icone}
+              rotulo={item.rotulo}
+              valor={item.detalhe}
+            />
+          ))}
+        </SecaoCard>
 
-      <ListaDados
-        id="titulo-nao-guardados"
-        titulo="O que não fica guardado"
-        itens={DADOS_NAO_GUARDADOS}
-      />
+        <SecaoCard titulo="Seus direitos pela LGPD" lista>
+          <TextoCard antesDaLista>
+            <p>
+              A Lei Geral de Proteção de Dados (Lei 13.709/2018) garante que você saiba o que é
+              guardado sobre você, corrija o que estiver errado e peça para apagar pelo 156.
+            </p>
+          </TextoCard>
+          <LinhaDado
+            icone="badge"
+            rotulo="Ver e corrigir seus dados"
+            valor="Meu perfil"
+            para="/perfil"
+          />
+          <LinhaDado
+            icone="notifications"
+            rotulo="Escolher o que receber"
+            valor="Configurações"
+            para="/configuracoes"
+          />
+        </SecaoCard>
 
-      <Cartao component="section" aria-labelledby="titulo-prototipo">
-        <Title order={2} id="titulo-prototipo" fz={{ base: 18, md: 20 }} fw={700} mb={4}>
-          Um projeto de estudantes
-        </Title>
-        <Text c="var(--cor-texto-suave)">
-          O Minha Prefeitura é um protótipo acadêmico da FIAP. Não é um serviço oficial da
-          Prefeitura de São Paulo, e os pedidos daqui não chegam a ela.
-        </Text>
-        <Text c="var(--cor-texto-suave)" mt="sm">
-          A LGPD, lei que protege os dados pessoais no Brasil, garante que você saiba o que é
-          guardado sobre você e possa pedir para apagar. Aqui, você mesmo apaga, no botão abaixo.
-        </Text>
-      </Cartao>
-
-      <ApagarDados />
-    </PaginaAjuda>
+        <SecaoCard titulo="Sobre este app">
+          <TextoCard>
+            <p>
+              O Minha Prefeitura é um protótipo feito por estudantes da FIAP, com dados de exemplo.
+              Não é um serviço oficial da Prefeitura de São Paulo, e os pedidos feitos aqui não
+              chegam a ela.
+            </p>
+            <p>Para pedidos de verdade, ligue 156.</p>
+          </TextoCard>
+        </SecaoCard>
+      </PilhaCards>
+    </Pagina>
   );
 }

@@ -1,0 +1,19 @@
+.texto p {
+  max-width: 68ch;
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--cor-texto-2);
+}
+
+.texto p + p {
+  margin-top: rem(12px);
+}
+
+/* Dentro do corpo de lista (8 de respiro): 24 em cima e embaixo e linha de borda a borda */
+.antesDaLista {
+  margin: rem(-8px) calc(var(--pad-lateral, 0px) * -1) 0;
+  padding: rem(24px) var(--pad-lateral, 0px);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+}
