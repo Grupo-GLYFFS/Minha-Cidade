@@ -1,6 +1,6 @@
 /* Rodapé: fundo cinza-claro, container de 1200.
-   Computador: 88 em cima, 6 grupos (vão de 32) → 64 → linha final com o logo à esquerda e o © à direita, 64 embaixo.
-   Celular: 64 em cima, 2 colunas (vãos de 40 e 24) → 48 → logo em cima do ©, 48 embaixo. */
+   Computador: 88 em cima, 3 grupos de 240 alinhados à esquerda (vão de 64) → 64 → linha final com o logo à esquerda e o © à direita, 64 embaixo.
+   Celular: 64 em cima, 2 colunas com Ajuda embaixo de Páginas (vãos de 40 e 24) → 48 → logo em cima do ©, 48 embaixo. */
 
 .rodape {
   margin-top: auto;
@@ -18,8 +18,8 @@
 
 .grade {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: rem(32px);
+  grid-template-columns: repeat(3, minmax(0, rem(240px)));
+  gap: rem(32px) rem(64px);
 }
 
 .titulo {
