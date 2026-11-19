@@ -1,0 +1,50 @@
+/* "+" flutuante (só no celular): redondo de 56, 16 acima da barra de abas (85) e 16 da direita. */
+
+.marcador {
+  display: block;
+  height: 0;
+}
+
+.botao {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .botao {
+    position: fixed;
+    right: rem(16px);
+    bottom: rem(101px);
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(56px);
+    height: rem(56px);
+    border-radius: 50%;
+    background: var(--cor-azul);
+    color: var(--cor-sobre-primaria);
+    text-decoration: none;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition:
+      opacity 150ms ease-out,
+      transform 150ms ease-out;
+  }
+
+  .botao:hover {
+    background: var(--cor-azul-escuro);
+  }
+
+  .visivel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .botao {
+    transition: none;
+  }
+}
