@@ -33,6 +33,8 @@ const CHAVE_CONTAS = 'contas';
 const CHAVE_SESSAO = 'sessao';
 // Mudanças feitas em "Meus dados" na conta de demonstração (a Maria fica no código)
 const CHAVE_AJUSTES_DEMO = 'conta-demo-ajustes';
+// Senha nova da conta de demonstração (hash), depois de "Esqueci minha senha"
+const CHAVE_SENHA_DEMO = 'conta-demo-senha';
 
 // Lê a sessão salva: primeiro a que fica no aparelho ("Manter conectado"), depois a que
 // vale só enquanto a aba está aberta. Devolve { id, manter } (id null para visitante).
@@ -53,6 +55,7 @@ export default function SessaoProvider({ children }) {
   const [idLogado, setIdLogado] = useState(sessaoSalva.id);
   const [manter, setManter] = useState(sessaoSalva.manter);
   const [ajustesDemo, setAjustesDemo] = useState(() => lerDado(CHAVE_AJUSTES_DEMO, null, ehObjeto));
+  const [senhaDemo, setSenhaDemo] = useState(() => lerDado(CHAVE_SENHA_DEMO, null, ehTexto));
 
   // Salva as contas sempre que mudam (só depois da primeira conta, para não criar a chave à toa)
   useEffect(() => {
@@ -63,6 +66,11 @@ export default function SessaoProvider({ children }) {
   useEffect(() => {
     if (ajustesDemo) salvarDado(CHAVE_AJUSTES_DEMO, ajustesDemo);
   }, [ajustesDemo]);
+
+  // Salva a senha nova da conta de demonstração (só depois de trocar)
+  useEffect(() => {
+    if (senhaDemo) salvarDado(CHAVE_SENHA_DEMO, senhaDemo);
+  }, [senhaDemo]);
 
   // Salva quem está logado (no aparelho ou só na aba); ao sair, apaga dos dois lugares
   useEffect(() => {
@@ -97,17 +105,17 @@ export default function SessaoProvider({ children }) {
       // O e-mail da conta é o "sal" do hash, então o CPF também serve para entrar
       const hashDigitado = await gerarHashSenha(conta.email, senha);
 
-      // A conta de demonstração confere com o hash da senha pública dela
+      // A conta de demonstração confere com o hash da senha pública dela (ou da senha nova)
       const hashCerto =
         conta.id === USUARIO.id
-          ? await gerarHashSenha(USUARIO.email, SENHA_DEMONSTRACAO)
+          ? (senhaDemo ?? (await gerarHashSenha(USUARIO.email, SENHA_DEMONSTRACAO)))
           : conta.hashSenha;
       if (hashDigitado !== hashCerto) return { ok: false, erro: ERRO_ENTRAR };
       setManter(manterConectado);
       setIdLogado(conta.id);
       return { ok: true };
     },
-    [contas],
+    [contas, senhaDemo],
   );
 
   // Entra direto na conta de demonstração (botão "Entrar com gov.br", que simula a volta do gov.br)
@@ -158,6 +166,25 @@ export default function SessaoProvider({ children }) {
     [idLogado],
   );
 
+  // Troca a senha de uma conta (link do e-mail do "Esqueci minha senha").
+  // Recebe o e-mail ou CPF pedido no "Esqueci" e a senha nova; devolve uma promessa com
+  // { ok: true } ou { ok: false } se não houver conta com esses dados.
+  const trocarSenha = useCallback(
+    async (login, senha) => {
+      const conta = buscarContaPorLogin([USUARIO, ...contas], login ?? '');
+      if (!conta) return { ok: false };
+      const hash = await gerarHashSenha(conta.email, senha);
+      if (conta.id === USUARIO.id) setSenhaDemo(hash);
+      else {
+        setContas((atual) =>
+          atual.map((item) => (item.id === conta.id ? { ...item, hashSenha: hash } : item)),
+        );
+      }
+      return { ok: true };
+    },
+    [contas],
+  );
+
   // Sai da conta: a pessoa volta a ser visitante
   const sair = useCallback(() => setIdLogado(null), []);
 
@@ -171,9 +198,20 @@ export default function SessaoProvider({ children }) {
       emailEmUso,
       cpfEmUso,
       atualizarConta,
+      trocarSenha,
       sair,
     }),
-    [usuario, entrar, entrarDemonstracao, criarConta, emailEmUso, cpfEmUso, atualizarConta, sair],
+    [
+      usuario,
+      entrar,
+      entrarDemonstracao,
+      criarConta,
+      emailEmUso,
+      cpfEmUso,
+      atualizarConta,
+      trocarSenha,
+      sair,
+    ],
   );
 
   return <ContextoSessao.Provider value={valor}>{children}</ContextoSessao.Provider>;
