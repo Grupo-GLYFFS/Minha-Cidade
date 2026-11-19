@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
@@ -11,15 +10,16 @@ import ParaOndeIr from '../componentes/ParaOndeIr';
 import NaoEncontrado from '../componentes/NaoEncontrado';
 import EstadoCarregando from '../componentes/EstadoCarregando';
 import EstadoErro from '../componentes/EstadoErro';
-import AvisoFeito from '../componentes/servicos/AvisoFeito';
 import CartaoAgenda from '../componentes/servicos/CartaoAgenda';
 import AcoesAgendamento from '../componentes/servicos/AcoesAgendamento';
+import CancelarSolicitacao from '../componentes/servicos/CancelarSolicitacao';
 import LinhaDoTempoSolicitacao from '../componentes/servicos/LinhaDoTempoSolicitacao';
 import SecaoOnde from '../componentes/servicos/SecaoOnde';
 import ListaRespostas from '../componentes/servicos/ListaRespostas';
 import { useCarregamento } from '../componentes/servicos/useCarregamento';
 import { useResumoConta } from '../componentes/servicos/useResumoConta';
 import { useSolicitacoes } from '../contexto/useSolicitacoes';
+import { useAvisoTemporario } from '../contexto/useAvisoTemporario';
 import { SERVICOS } from '../dados/servicos';
 import { buscarCategoriaServico, buscarServico } from '../logica/servicos';
 import { buscarSolicitacao, buscarStatusSolicitacao } from '../logica/solicitacoes';
@@ -28,13 +28,13 @@ import classes from './DetalheSolicitacao.module.css';
 
 // Detalhe de uma solicitação (/servicos/minhas-solicitacoes/:id, só com conta):
 // cabeçalho com a situação, o protocolo e o cartão da agenda (ou do prazo), Remarcar e
-// Cancelar nos agendamentos, andamento, instruções, onde e o que a pessoa enviou.
+// Cancelar nos agendamentos (Cancelar solicitação na recém-enviada), andamento, instruções, onde e o que a pessoa enviou.
 export default function DetalheSolicitacao() {
   const { id } = useParams();
   const { solicitacoes } = useSolicitacoes();
   const { carregando, erro, tentarDeNovo } = useCarregamento();
   const resumo = useResumoConta();
-  const [aviso, setAviso] = useState('');
+  const mostrarAviso = useAvisoTemporario();
   const solicitacao = buscarSolicitacao(solicitacoes, id);
 
   const trilhaBase = [{ rotulo: 'Minhas solicitações', para: '/servicos/minhas-solicitacoes' }];
@@ -107,7 +107,12 @@ export default function DetalheSolicitacao() {
           icone={servico?.icone ?? 'event_available'}
           categoria={categoria && { icone: categoria.icone, rotulo: categoria.nome }}
           trilha={[...trilhaBase, { rotulo: solicitacao.nomeServico }]}
-          acoes={agendada && <AcoesAgendamento solicitacao={solicitacao} aoAvisar={setAviso} />}
+          acoes={
+            (agendada && <AcoesAgendamento solicitacao={solicitacao} aoAvisar={mostrarAviso} />) ||
+            (solicitacao.status === 'solicitada' && (
+              <CancelarSolicitacao solicitacao={solicitacao} />
+            ))
+          }
         >
           <MetaCabecalho>
             <SeloSituacao cor={situacao.cor}>{situacao.rotulo}</SeloSituacao>
@@ -122,7 +127,6 @@ export default function DetalheSolicitacao() {
         </CabecalhoPagina>
       }
     >
-      <AvisoFeito texto={aviso} aoFechar={() => setAviso('')} />
       <div className={classes.pilha}>
         <SecaoCard titulo="Andamento">
           <LinhaDoTempoSolicitacao solicitacao={solicitacao} />
