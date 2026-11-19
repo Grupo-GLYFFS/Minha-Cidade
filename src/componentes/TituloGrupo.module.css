@@ -40,9 +40,10 @@
   background: var(--cor-status-vermelho-texto);
 }
 
+/* O texto pode encolher e quebrar a linha: título longo não passa da largura da tela */
 .texto {
-  flex: none;
-  white-space: nowrap;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .contagem {

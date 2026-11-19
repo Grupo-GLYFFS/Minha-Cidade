@@ -5,7 +5,7 @@ export const CIDADE_ATENDIDA = 'São Paulo';
 
 // Procura o endereço de um CEP no ViaCEP (serviço público e gratuito).
 // Recebe o CEP, com ou sem hífen; devolve um objeto com a "situacao":
-// - "encontrado": também traz rua, bairro e cidade;
+// - "encontrado": também traz rua, bairro, cidade e estado (sigla, ex.: "SP");
 // - "fora-da-cidade": o CEP existe, mas é de outra cidade (traz a cidade);
 // - "nao-encontrado": o CEP não existe;
 // - "falha": sem internet ou o serviço não respondeu.
@@ -25,6 +25,7 @@ export async function buscarCep(cep) {
       rua: dados.logradouro ?? '',
       bairro: dados.bairro ?? '',
       cidade: dados.localidade,
+      estado: dados.uf ?? '',
     };
     if (dados.localidade !== CIDADE_ATENDIDA) return { situacao: 'fora-da-cidade', ...endereco };
     return { situacao: 'encontrado', ...endereco };

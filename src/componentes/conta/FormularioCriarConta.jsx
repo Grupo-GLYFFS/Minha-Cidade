@@ -96,10 +96,14 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
     setVeioDoGovbr(true);
   }
 
-  // Liga um campo com máscara: aplica a máscara enquanto a pessoa digita
+  // Liga um campo com máscara: aplica a máscara enquanto a pessoa digita.
+  // Depois de um envio com erro, confere de novo já com a máscara (o erro some quando fica certo).
   function comMascara(campo, formatar) {
     return register(campo, {
-      onChange: (evento) => setValue(campo, formatar(evento.target.value)),
+      onChange: (evento) =>
+        setValue(campo, formatar(evento.target.value), {
+          shouldValidate: formState.isSubmitted,
+        }),
     });
   }
 

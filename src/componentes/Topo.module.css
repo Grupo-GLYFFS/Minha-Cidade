@@ -58,6 +58,19 @@
   text-align: center;
 }
 
+/* Computador estreito (de 992 a 1100 px): para o menu caber sem passar da tela,
+   o logo fica só com o ícone (o nome continua no aria-label) e os vãos ficam menores.
+   As laterais continuam alinhadas com a faixa de alerta e o rodapé. */
+@media (min-width: $mantine-breakpoint-md) and (max-width: 68.75em) {
+  .miolo {
+    gap: rem(16px);
+  }
+
+  .logo > span {
+    display: none;
+  }
+}
+
 @media (max-width: $mantine-breakpoint-md) {
   .menu {
     display: none;

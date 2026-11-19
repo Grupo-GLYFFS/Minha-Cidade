@@ -19,13 +19,15 @@ const AVISO_CEP = {
 
 // Popup "Editar endereço" do Meu perfil (30, quadro 5): CEP (busca rua e bairro no ViaCEP),
 // rua, número, complemento, bairro e cidade. Bairro e cidade vêm do CEP (só leitura, em
-// cinza); o bairro só fica livre quando a busca falha. Valida ao salvar, com as regras do cadastro.
+// cinza); o bairro só fica livre quando a busca falha. CEP de outra cidade mostra o erro
+// na hora, embaixo do CEP. Valida tudo ao salvar, com as regras do cadastro.
 // Recebe o usuario (endereço atual), aoSalvar(endereco) e aoFechar().
 // Monte com key diferente a cada abertura, para começar do endereço salvo.
 export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
   const [valores, setValores] = useState({
     cep: usuario.cep ?? '',
     cidadeDoCep: '',
+    estadoDoCep: '',
     rua: usuario.rua ?? '',
     numero: usuario.numero ?? '',
     complemento: usuario.complemento ?? '',
@@ -56,10 +58,19 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
       setValores((atual) => ({
         ...atual,
         cidadeDoCep: resposta.cidade,
+        estadoDoCep: resposta.estado,
         rua: resposta.rua || atual.rua,
         bairro: resposta.bairro || atual.bairro,
       }));
       setBairroLivre(!resposta.bairro);
+      // CEP de outra cidade: o erro aparece na hora, com a mesma frase de quando salva
+      if (resposta.situacao === 'fora-da-cidade') {
+        try {
+          esquemaEnderecoPerfil.validateSyncAt('cep', { cep, cidadeDoCep: resposta.cidade });
+        } catch (falha) {
+          setErros((atual) => ({ ...atual, cep: falha.message }));
+        }
+      }
       return;
     }
     setAvisoCep(AVISO_CEP[resposta.situacao]);
@@ -82,6 +93,11 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
       document.getElementById(`endereco-${primeiro}`)?.focus();
     }
   }
+
+  // A cidade mostrada é a do último CEP buscado (antes da busca, a do endereço salvo)
+  const cidade = valores.cidadeDoCep
+    ? [valores.cidadeDoCep, valores.estadoDoCep].filter(Boolean).join(' - ')
+    : 'São Paulo - SP';
 
   return (
     <Popup
@@ -160,7 +176,7 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
           <CampoTexto
             id="endereco-cidade"
             rotulo="Cidade"
-            value="São Paulo - SP"
+            value={cidade}
             variant="filled"
             readOnly
           />
