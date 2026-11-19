@@ -14,7 +14,7 @@ export default function PontosApoio({ pontos }) {
   return (
     <ul className={classes.linhas}>
       {pontos.map((ponto) => (
-        <li key={ponto.nome} className={classes.linha}>
+        <li key={ponto.nome} className={`${classes.linha} ${classes.linhaPonto}`}>
           <Icone nome={ponto.icone} tamanho={20} />
           <div className={classes.linhaTexto}>
             <p className={classes.linhaNome}>{ponto.nome}</p>

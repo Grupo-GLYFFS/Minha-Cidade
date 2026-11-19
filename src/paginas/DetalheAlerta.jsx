@@ -117,12 +117,16 @@ export default function DetalheAlerta({ doBairro = false }) {
             <LinhaDado icone="location_city" rotulo="Onde" valor="Cidade toda" />
           ) : (
             <>
-              <LinhaDado icone="home_work" rotulo="Bairros" valor={juntarNomes(alerta.bairros)} />
+              <LinhaDado
+                icone="home_work"
+                rotulo="Bairros"
+                valor={<span className={classes.quebra}>{juntarNomes(alerta.bairros)}</span>}
+              />
               {subs.length > 0 && (
                 <LinhaDado
                   icone="account_balance"
                   rotulo="Subprefeituras"
-                  valor={juntarNomes(subs)}
+                  valor={<span className={classes.quebra}>{juntarNomes(subs)}</span>}
                 />
               )}
             </>

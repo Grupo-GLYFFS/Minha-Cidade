@@ -406,6 +406,11 @@
   gap: rem(12px);
 }
 
+/* Nomes longos sem espaço ("Aricanduva/Formosa/Carrão") quebram em vez de vazar */
+.quebra {
+  overflow-wrap: anywhere;
+}
+
 /* Texto só para o leitor de tela */
 .oculto {
   position: absolute;
@@ -448,8 +453,17 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .linha {
+  /* Pontos de apoio: o "Como chegar" desce para a linha de baixo */
+  .linhaPonto {
     flex-wrap: wrap;
+  }
+
+  .linhaPonto .linhaTexto {
+    flex-basis: calc(100% - rem(36px));
+  }
+
+  .linhaPonto > :last-child {
+    margin-left: rem(36px);
   }
 
   .barra {
