@@ -1,4 +1,6 @@
-/* Catálogo: assuntos à esquerda (painel cinza-claro, raio 20) e a lista que rola à direita.
+/* Catálogo: assuntos à esquerda (painel, raio 20) e a lista que rola à direita.
+   No computador o painel é branco e o assunto escolhido fica azul-claro sem borda azul,
+   como a lista "Assunto" do celular.
    No celular, os chips quebram linha em cima e a lista vem inteira embaixo. */
 
 .bloco {
@@ -75,6 +77,19 @@
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+@media (min-width: $mantine-breakpoint-sm) {
+  /* Painel branco com a borda padrão: o assunto azul-claro se destaca dele */
+  .assuntos {
+    background: var(--cor-superficie);
+  }
+
+  /* Escolhido igual ao "Assunto" do celular: fundo azul-claro, texto azul 700, sem borda azul.
+     A borda fica da cor do fundo para o chip não mudar de tamanho. */
+  .chips a[aria-current] {
+    border-color: var(--cor-faixa);
+  }
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
