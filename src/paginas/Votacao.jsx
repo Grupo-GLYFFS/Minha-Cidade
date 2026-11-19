@@ -63,9 +63,9 @@ export default function Votacao({ escopo = 'cidade' }) {
     );
   }
 
-  // Em /meu-bairro, só a votação do bairro ou a da cidade toda; outra vai para a da cidade
-  const doBairro = projeto.escopo === 'cidade' || votacoesDoRecorte([projeto], recorte).length > 0;
-  if (escopo === 'bairro' && !doBairro) {
+  // Em /meu-bairro, só a votação do recorte do bairro (a da subprefeitura ou a da cidade
+  // que inclui o bairro); outra vai para a da cidade
+  if (escopo === 'bairro' && votacoesDoRecorte([projeto], recorte).length === 0) {
     return <Navigate to={`/minha-cidade/votacoes/${projeto.id}`} replace />;
   }
 
