@@ -1,0 +1,113 @@
+/* Linha do tempo: marca de 28 à esquerda, ligada à próxima por uma linha de 2 px
+   (cheia até a etapa atual, tracejada depois). */
+
+.lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.etapa {
+  position: relative;
+  display: flex;
+  gap: rem(16px);
+  padding-bottom: rem(20px);
+}
+
+.etapa:last-child {
+  padding-bottom: 0;
+}
+
+/* Linha até a próxima etapa */
+.etapa:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: rem(30px);
+  bottom: rem(2px);
+  left: rem(13px);
+  width: 2px;
+  background: var(--cor-azul);
+}
+
+.etapa[data-estado='atual']:not(:last-child)::before,
+.etapa[data-estado='futura']:not(:last-child)::before {
+  background: none;
+  border-left: 2px dashed var(--cor-borda);
+}
+
+.marca {
+  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: rem(28px);
+  height: rem(28px);
+  border-radius: 50%;
+  background: var(--cor-superficie);
+}
+
+.etapa[data-estado='feita'] .marca {
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+.etapa[data-estado='atual'] .marca {
+  border: 2px solid var(--cor-azul);
+  color: var(--cor-azul);
+  box-shadow: 0 0 0 4px var(--cor-faixa);
+}
+
+.etapa[data-estado='futura'] .marca {
+  border: 2px solid var(--cor-borda);
+}
+
+.ponto {
+  width: rem(10px);
+  height: rem(10px);
+  border-radius: 50%;
+  background: var(--cor-azul);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: rem(2px);
+  min-width: 0;
+  padding-top: rem(2px);
+}
+
+.rotulo {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(4px) rem(10px);
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.agora {
+  display: inline-flex;
+  align-items: center;
+  height: rem(22px);
+  padding: 0 rem(8px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-faixa);
+  font-size: rem(12px);
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}
+
+.data {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.descricao {
+  margin-top: rem(4px);
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}

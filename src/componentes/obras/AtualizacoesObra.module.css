@@ -1,0 +1,46 @@
+/* Mensagens da prefeitura: uma por linha, divisórias de borda a borda. */
+
+.lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  margin-inline: calc(var(--pad-lateral, 0px) * -1);
+  padding: rem(16px) var(--pad-lateral, 0px);
+}
+
+.item + .item {
+  border-top: var(--espessura-borda) solid var(--cor-linha);
+}
+
+.icone {
+  flex: none;
+  color: var(--cor-texto-2);
+}
+
+.quem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(6px);
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.quem b {
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.texto {
+  margin: rem(2px) 0 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}

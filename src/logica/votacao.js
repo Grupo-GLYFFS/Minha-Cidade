@@ -13,7 +13,7 @@ export function buscarStatusProjeto(idStatus) {
   return STATUS_PROJETO.find((status) => status.id === idStatus);
 }
 
-// Procura o rótulo e o ícone de uma opção de voto. Recebe "sim", "nao" ou "abstencao".
+// Procura o rótulo e o ícone de uma opção de voto. Recebe "sim" ou "nao".
 export function buscarOpcaoVoto(valor) {
   return OPCOES_VOTO.find((opcao) => opcao.valor === valor);
 }
@@ -82,7 +82,7 @@ export function calcularResultado(projeto, votosPorPessoa = {}) {
       percentual: total > 0 ? Math.round((quantidade / total) * 100) : 0,
     };
   });
-  const vencedora = contagem.sim >= contagem.nao ? opcoes[0] : opcoes[1];
+  const vencedora = (contagem.sim ?? 0) >= (contagem.nao ?? 0) ? opcoes[0] : opcoes[1];
 
   return { total, opcoes, vencedora };
 }
@@ -111,4 +111,58 @@ export function descreverSituacao(projeto) {
   if (!situacao) return null;
   const data = projeto.dataSituacao ? ` ${formatarDataCurta(projeto.dataSituacao)}` : '';
   return { rotulo: situacao.rotulo, frase: `${situacao.texto}${data}`, icone: situacao.icone };
+}
+
+// Diz em que endereço fica a página da votação: as da cidade em /minha-cidade/votacoes,
+// as da subprefeitura do bairro em /meu-bairro/votacoes. Recebe o projeto; devolve o caminho.
+export function caminhoVotacao(projeto) {
+  const base = projeto.escopo === 'subprefeitura' ? '/meu-bairro' : '/minha-cidade';
+  return `${base}/votacoes/${projeto.id}`;
+}
+
+// Separa as votações de um recorte (ver logica/recorte.js).
+// Cidade: as votações da cidade toda. Bairro: as da subprefeitura do bairro e as da cidade
+// que incluem o bairro. Recebe a lista e o recorte; devolve uma nova lista.
+export function votacoesDoRecorte(projetos, recorte) {
+  if (recorte.escopo !== 'bairro') return projetos.filter((p) => p.escopo === 'cidade');
+  return projetos.filter(
+    (p) =>
+      (p.escopo === 'subprefeitura' && p.subprefeitura === recorte.subprefeitura.nome) ||
+      (p.escopo === 'cidade' && p.bairros.includes(recorte.bairro)),
+  );
+}
+
+// Separa uma lista de votações em abertas (a que termina antes primeiro) e encerradas
+// (a que terminou por último primeiro). Recebe a lista e hoje; devolve { abertas, encerradas }.
+export function separarVotacoes(projetos, hoje = HOJE) {
+  return {
+    abertas: projetosEmVotacao(projetos, hoje),
+    encerradas: projetosEncerrados(projetos, hoje),
+  };
+}
+
+// Escreve quanto falta para a votação acabar, para o card. Recebe a data final e hoje;
+// devolve "Termina hoje", "Falta 1 dia" ou "Faltam N dias".
+export function textoFaltam(fimVotacao, hoje = HOJE) {
+  const dias = diasAte(fimVotacao, hoje);
+  if (dias === 0) return 'Termina hoje';
+  if (dias === 1) return 'Falta 1 dia';
+  return `Faltam ${dias} dias`;
+}
+
+// Escreve o resultado curto de uma votação encerrada. Recebe o resultado de calcularResultado();
+// devolve "Aprovada, 58% sim" ou "Recusada, 60% não".
+export function resultadoCurto(resultado) {
+  const { vencedora } = resultado;
+  if (vencedora.valor === 'sim') return `Aprovada, ${vencedora.percentual}% sim`;
+  return `Recusada, ${vencedora.percentual}% não`;
+}
+
+// Escreve o que aconteceu depois da votação, curto, para o card.
+// Recebe o projeto e a função que escreve a data curta ("4 nov");
+// devolve "Encaminhado à Câmara em 4 nov" ou null se ainda não aconteceu nada.
+export function depoisCurto(projeto, dataLista) {
+  const situacao = SITUACOES_PROJETO.find((item) => item.id === projeto.situacao);
+  if (!situacao) return null;
+  return `${situacao.curto} ${dataLista(projeto.dataSituacao)}`;
 }

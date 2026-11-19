@@ -1,0 +1,193 @@
+/* Card de obra: corpo (miniatura 80, texto e seta) e pé (barra, previsão e Seguir),
+   separados por linha de borda a borda. O link do título cobre o card todo. */
+
+.cartao {
+  box-sizing: border-box;
+  position: relative;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+}
+
+.cartao:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.corpo {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(20px);
+  padding: rem(20px) rem(64px) rem(20px) rem(32px);
+}
+
+.midia {
+  display: block;
+  flex: none;
+  width: rem(80px);
+  height: rem(80px);
+  overflow: hidden;
+  border-radius: var(--raio-controle);
+  background: var(--cor-fundo);
+}
+
+.midia > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.midiaIcone {
+  display: grid;
+  place-items: center;
+  background: var(--cor-faixa);
+  color: var(--cor-azul);
+}
+
+.texto {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: rem(4px);
+  min-width: 0;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(6px);
+  margin: 0;
+  font-size: rem(13px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* O link cobre o card todo; o botão Seguir fica por cima dele */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--raio-card);
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link:focus-visible::after {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.cartao:hover .titulo {
+  text-decoration: underline;
+  text-underline-offset: rem(3px);
+}
+
+.linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(8px) rem(12px);
+  margin-top: rem(6px);
+}
+
+.onde {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(4px) rem(6px);
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.seta {
+  position: absolute;
+  top: rem(20px);
+  right: rem(32px);
+  color: var(--cor-texto-2);
+}
+
+.cartao:hover .seta {
+  color: var(--cor-azul-escuro);
+}
+
+.pe {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(12px) rem(16px);
+  min-height: rem(68px);
+  padding: rem(12px) rem(32px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.barra {
+  flex: none;
+  width: rem(120px);
+}
+
+.progresso {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(4px) rem(10px);
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.progresso b {
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.acao {
+  position: relative;
+  z-index: 1;
+  margin-left: auto;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .corpo {
+    gap: rem(12px);
+    padding: rem(16px) rem(48px) rem(16px) rem(16px);
+  }
+
+  .midia {
+    width: rem(56px);
+    height: rem(56px);
+  }
+
+  .seta {
+    top: rem(16px);
+    right: rem(16px);
+  }
+
+  .pe {
+    padding: rem(12px) rem(16px);
+  }
+
+  .barra {
+    width: 100%;
+  }
+
+  .acao {
+    margin-left: 0;
+  }
+}
