@@ -1,5 +1,6 @@
 /* Barra do pé (celular): presa acima da barra de abas, 16 de padding, linha fina em cima,
-   sem sombra. No computador ela não aparece. */
+   sem sombra. No computador ela não aparece. z-index 180: abaixo da barra de abas (190) e das
+   folhas e popups do Mantine (200), que ficam por cima dela. */
 
 .barra,
 .espaco {
@@ -17,7 +18,7 @@
     left: 0;
     right: 0;
     bottom: var(--altura-abas);
-    z-index: 290;
+    z-index: 180;
     box-sizing: border-box;
     padding: rem(16px);
     border-top: var(--espessura-borda) solid var(--cor-borda);

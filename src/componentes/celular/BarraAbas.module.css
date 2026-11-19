@@ -1,5 +1,6 @@
 /* Barra de abas do celular: presa embaixo, 85 de altura (14 + 56 + 14 + 1 de borda).
-   No computador ela não aparece. */
+   No computador ela não aparece. z-index 190: acima das barras da página e abaixo das folhas
+   e popups do Mantine (200). */
 
 .barra {
   display: none;
@@ -11,7 +12,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 300;
+    z-index: 190;
     display: block;
     box-sizing: border-box;
     padding: rem(14px) rem(6px);
