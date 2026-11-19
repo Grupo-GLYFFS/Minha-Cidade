@@ -1,10 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ContextoPedidos } from './ContextoPedidos';
 import { PEDIDOS } from '../dados/pedidos';
-import { USUARIO } from '../dados/usuario';
+import { PEDIDOS_ACOMPANHADOS } from '../dados/pedidosAcompanhados';
 import { lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
-import { aplicarApoios, juntarApoios, motivoSemApoio } from '../logica/apoios';
+import { motivoSemApoio } from '../logica/apoios';
+import {
+  acompanhamentosIniciais,
+  alternarNaLista,
+  aplicarAcompanhamentos,
+  motivoSemAcompanhar,
+} from '../logica/acompanhamento';
 import { aplicarMudancasStatus, buscarPedido } from '../logica/pedidos';
 import { montarNovoPedido } from '../logica/novoPedido';
 import { momentoDeHoje } from '../logica/datas';
@@ -12,25 +18,24 @@ import { pedidosEsperandoAnalise, tempoAteAnalise } from '../logica/analiseSimul
 
 // Nomes com que cada dado fica guardado no navegador
 const CHAVE_CRIADOS = 'pedidos-criados';
-const CHAVE_APOIADOS = 'pedidos-apoiados';
+const CHAVE_ACOMPANHADOS = 'pedidos-acompanhados';
 const CHAVE_MUDANCAS = 'pedidos-mudancas-status';
 
-// Lê os apoios salvos no formato { idPessoa: [ids] }.
-// Versões antigas guardavam só a lista da Maria; nesse caso a lista passa a ser dela.
-function lerApoiosPorPessoa() {
-  const salvo = lerDado(CHAVE_APOIADOS, {});
-  return Array.isArray(salvo) ? { [USUARIO.id]: salvo } : salvo;
-}
+// Lista vazia usada para visitante (fica fora do componente para não mudar a cada tela)
+const NENHUM = [];
 
-// Guarda os pedidos do app inteiro: os de exemplo, os que as pessoas abriram e os apoios.
-// Pedidos e apoios ficam ligados à pessoa logada (useSessao); visitante só vê.
+// Guarda os pedidos do app inteiro: os de exemplo, os que as pessoas abriram,
+// os apoios e os pedidos que cada pessoa segue.
+// Pedidos, apoios e seguidos ficam ligados à pessoa logada (useSessao); visitante só vê.
 // Tudo que muda fica salvo no navegador e continua lá depois de recarregar a página.
 // Recebe as telas do app (children), que leem os dados com usePedidos().
 export default function PedidosProvider({ children }) {
   const { usuario } = useSessao();
   const idPessoa = usuario?.id ?? null;
   const [criados, setCriados] = useState(() => lerDado(CHAVE_CRIADOS, []));
-  const [apoiosPorPessoa, setApoiosPorPessoa] = useState(lerApoiosPorPessoa);
+  const [acompanhamentos, setAcompanhamentos] = useState(() =>
+    lerDado(CHAVE_ACOMPANHADOS, acompanhamentosIniciais(PEDIDOS_ACOMPANHADOS)),
+  );
   const [mudancas, setMudancas] = useState(() => lerDado(CHAVE_MUDANCAS, {}));
   // Pedidos que entraram em análise nesta visita (para mostrar o aviso); não fica salvo
   const [recemAnalisados, setRecemAnalisados] = useState([]);
@@ -40,26 +45,25 @@ export default function PedidosProvider({ children }) {
     salvarDado(CHAVE_CRIADOS, criados);
   }, [criados]);
   useEffect(() => {
-    salvarDado(CHAVE_APOIADOS, apoiosPorPessoa);
-  }, [apoiosPorPessoa]);
-
-  // Pedidos que a pessoa logada já apoiou (lista vazia para visitante)
-  const apoiados = useMemo(
-    () => (idPessoa ? (apoiosPorPessoa[idPessoa] ?? []) : []),
-    [apoiosPorPessoa, idPessoa],
-  );
+    salvarDado(CHAVE_ACOMPANHADOS, acompanhamentos);
+  }, [acompanhamentos]);
   useEffect(() => {
     salvarDado(CHAVE_MUDANCAS, mudancas);
   }, [mudancas]);
 
-  // Lista final: exemplos + pedidos abertos aqui, com status atualizados e apoios de todos somados
+  // Pedidos que a pessoa logada apoia e segue (listas vazias para visitante)
+  const apoiados = (idPessoa && acompanhamentos[idPessoa]?.apoia) || NENHUM;
+  const seguidos = (idPessoa && acompanhamentos[idPessoa]?.segue) || NENHUM;
+
+  // Lista final: exemplos + pedidos abertos aqui, com status atualizados e apoios recalculados
   const pedidos = useMemo(
     () =>
-      aplicarApoios(
+      aplicarAcompanhamentos(
         aplicarMudancasStatus([...PEDIDOS, ...criados], mudancas),
-        juntarApoios(apoiosPorPessoa),
+        acompanhamentos,
+        PEDIDOS_ACOMPANHADOS,
       ),
-    [criados, mudancas, apoiosPorPessoa],
+    [criados, mudancas, acompanhamentos],
   );
 
   // Muda o status de um pedido (ex.: simular a prefeitura passando de "enviada" para "em análise").
@@ -91,20 +95,34 @@ export default function PedidosProvider({ children }) {
     [apoiados, idPessoa],
   );
 
-  // Soma o apoio da pessoa logada a um pedido, uma vez só.
-  // Recebe o id do pedido; devolve true se o apoio entrou ou false se não era permitido.
-  const apoiar = useCallback(
-    (idPedido) => {
+  // Liga ou desliga uma lista ("apoia" ou "segue") da pessoa logada para um pedido.
+  // Recebe a lista e o id do pedido; devolve true se mudou ou false se não era permitido
+  // (visitante, pedido da própria pessoa ou pedido encerrado).
+  const alternar = useCallback(
+    (lista, idPedido) => {
       const pedido = buscarPedido(pedidos, idPedido);
-      if (!idPessoa || !pedido || explicarSemApoio(pedido) !== null) return false;
-      setApoiosPorPessoa((atual) => {
-        const daPessoa = atual[idPessoa] ?? [];
-        if (daPessoa.includes(idPedido)) return atual;
-        return { ...atual, [idPessoa]: [...daPessoa, idPedido] };
+      if (!idPessoa || !pedido || motivoSemAcompanhar(pedido, idPessoa) !== null) return false;
+      setAcompanhamentos((atual) => {
+        const daPessoa = atual[idPessoa] ?? { apoia: [], segue: [] };
+        return {
+          ...atual,
+          [idPessoa]: { ...daPessoa, [lista]: alternarNaLista(daPessoa[lista] ?? [], idPedido) },
+        };
       });
       return true;
     },
-    [pedidos, explicarSemApoio, idPessoa],
+    [pedidos, idPessoa],
+  );
+
+  // Apoiar/Apoiado e Seguir/Seguindo: ligam e desligam. Recebem o id do pedido.
+  const alternarApoio = useCallback((idPedido) => alternar('apoia', idPedido), [alternar]);
+  const alternarSeguir = useCallback((idPedido) => alternar('segue', idPedido), [alternar]);
+
+  // Soma o apoio da pessoa logada a um pedido, uma vez só (usado fora do detalhe).
+  // Recebe o id do pedido; devolve true se o apoio entrou ou false se não era permitido.
+  const apoiar = useCallback(
+    (idPedido) => !apoiados.includes(idPedido) && alternarApoio(idPedido),
+    [apoiados, alternarApoio],
   );
 
   // Salva um pedido aberto pela pessoa logada (a tela de novo pedido só abre para quem entrou).
@@ -122,13 +140,27 @@ export default function PedidosProvider({ children }) {
     () => ({
       pedidos,
       apoiados,
+      seguidos,
       recemAnalisados,
       apoiar,
+      alternarApoio,
+      alternarSeguir,
       explicarSemApoio,
       adicionarPedido,
       avancarStatus,
     }),
-    [pedidos, apoiados, recemAnalisados, apoiar, explicarSemApoio, adicionarPedido, avancarStatus],
+    [
+      pedidos,
+      apoiados,
+      seguidos,
+      recemAnalisados,
+      apoiar,
+      alternarApoio,
+      alternarSeguir,
+      explicarSemApoio,
+      adicionarPedido,
+      avancarStatus,
+    ],
   );
 
   return <ContextoPedidos.Provider value={valor}>{children}</ContextoPedidos.Provider>;

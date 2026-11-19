@@ -1,4 +1,4 @@
-// Etapas por onde um pedido passa, na ordem.
+// Etapas por onde um pedido passa, na ordem. O rótulo fica no masculino (o pedido: Enviado, Aprovado…).
 // "aberto" diz se o pedido ainda está em andamento (aparece em "Meus pedidos em andamento").
 // "cor" é uma das 5 cores de status do SeloSituacao (regra 7).
 // corFundo e corTexto são da etiqueta antiga: fundo claro e texto escuro, com contraste de pelo menos 4,5:1.
@@ -6,7 +6,7 @@ export const STATUS_PEDIDO = [
   {
     id: 'enviada',
     cor: 'cinza',
-    rotulo: 'Enviada',
+    rotulo: 'Enviado',
     corFundo: '#EEF0F4',
     corTexto: '#3B4351',
     aberto: true,
@@ -22,7 +22,7 @@ export const STATUS_PEDIDO = [
   {
     id: 'aprovada',
     cor: 'azul',
-    rotulo: 'Aprovada',
+    rotulo: 'Aprovado',
     corFundo: '#E3ECFF',
     corTexto: '#0040C2',
     aberto: true,
@@ -38,7 +38,7 @@ export const STATUS_PEDIDO = [
   {
     id: 'concluida',
     cor: 'verde',
-    rotulo: 'Concluída',
+    rotulo: 'Concluído',
     corFundo: '#DDF5E6',
     corTexto: '#126336',
     aberto: false,
@@ -46,7 +46,7 @@ export const STATUS_PEDIDO = [
   {
     id: 'avaliada',
     cor: 'verde',
-    rotulo: 'Avaliada',
+    rotulo: 'Avaliado',
     corFundo: '#DDF5E6',
     corTexto: '#126336',
     aberto: false,
@@ -54,7 +54,7 @@ export const STATUS_PEDIDO = [
   {
     id: 'recusada',
     cor: 'vermelho',
-    rotulo: 'Recusada',
+    rotulo: 'Recusado',
     corFundo: '#FDE4E4',
     corTexto: '#A11A1A',
     aberto: false,

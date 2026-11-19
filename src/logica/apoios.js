@@ -22,20 +22,3 @@ export function motivoSemApoio(pedido, apoiados, idPessoa) {
 export function podeApoiar(pedido, apoiados, idPessoa) {
   return motivoSemApoio(pedido, apoiados, idPessoa) === null;
 }
-
-// Junta os apoios de todas as pessoas deste aparelho numa lista só.
-// Recebe { idPessoa: [ids dos pedidos apoiados] }; devolve a lista de ids
-// (um id aparece uma vez para cada pessoa que apoiou o pedido).
-export function juntarApoios(apoiosPorPessoa) {
-  return Object.values(apoiosPorPessoa).flat();
-}
-
-// Soma os apoios dados neste aparelho aos pedidos.
-// Recebe a lista de pedidos e a lista de ids apoiados (com repetição, uma por pessoa);
-// devolve uma nova lista com +1 apoio para cada vez que o id aparece.
-export function aplicarApoios(pedidos, apoiados) {
-  return pedidos.map((pedido) => {
-    const novos = apoiados.filter((id) => id === pedido.id).length;
-    return novos > 0 ? { ...pedido, apoios: pedido.apoios + novos } : pedido;
-  });
-}
