@@ -4,7 +4,7 @@
   gap: rem(6px);
   padding: rem(4px);
   border: var(--espessura-borda) solid var(--cor-borda);
-  border-radius: rem(14px);
+  border-radius: rem(16px);
   background: var(--cor-superficie);
 }
 
@@ -16,10 +16,10 @@
   height: rem(44px);
   padding: 0 rem(12px);
   border: var(--espessura-borda) solid transparent;
-  border-radius: rem(10px);
+  border-radius: var(--raio-controle);
   background: none;
   font-family: var(--fonte);
-  font-size: rem(15px);
+  font-size: rem(16px);
   font-weight: 700;
   line-height: 1;
   color: var(--cor-texto-2);
@@ -34,7 +34,6 @@
 .opcao[aria-pressed='true'] {
   border-color: var(--cor-azul);
   background: var(--cor-faixa);
-  font-weight: 800;
   color: var(--cor-azul-tinta);
 }
 
