@@ -29,6 +29,7 @@ import {
   destinosDoInicio,
   solicitacoesEsperando,
   votacoesDoInicio,
+  destinoVotacoesDoInicio,
 } from '../logica/inicio';
 import classes from './Inicio.module.css';
 
@@ -136,7 +137,7 @@ export default function Inicio() {
             contagem={votacoes.length}
             cor="azul"
             rotuloVer="Ver todas"
-            para="/minha-cidade/votacoes"
+            para={destinoVotacoesDoInicio(bairro)}
           >
             {votacoes.map((votacao) => (
               <li key={votacao.id}>{cardVotacao(votacao)}</li>

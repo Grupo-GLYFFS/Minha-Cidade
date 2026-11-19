@@ -5,7 +5,7 @@ import { avisoValendo } from './avisos';
 import { buscarStatusSolicitacao, textoContagemSolicitacoes } from './solicitacoes';
 import { contar, resumirLugar } from './resumoLugar';
 import { projetosEmVotacao } from './votacao';
-import { subprefeituraDoBairro } from './recorte';
+import { montarRecorte, votacoesDoRecorte } from './recorte';
 
 // Funções de leitura da página Início: juntam os dados que já existem (solicitações, pedidos,
 // avisos, votações e obras) no formato dos cards. Nenhuma guarda ou copia dados.
@@ -106,16 +106,20 @@ export function avisosDoInicio(avisos, bairro = null, hoje = HOJE) {
     }));
 }
 
-// Separa as votações abertas para a pessoa: as da cidade toda e as da subprefeitura do bairro
-// dela, da que termina antes para a que termina depois. Recebe os projetos, o bairro (null para
-// visitante: só as da cidade) e o hoje. Devolve uma nova lista de projetos.
+// Separa as votações abertas para a pessoa, com o mesmo recorte da lista para onde o "Ver todas"
+// leva: com bairro, o de /meu-bairro/votacoes (as da subprefeitura do bairro e as da cidade que
+// incluem o bairro); sem bairro (visitante), as da cidade, como em /minha-cidade/votacoes.
+// Recebe os projetos, o bairro (ou null) e o hoje. Devolve uma nova lista de projetos.
 export function votacoesDoInicio(projetos, bairro = null, hoje = HOJE) {
-  const sub = bairro ? subprefeituraDoBairro(bairro).nome : null;
-  return projetosEmVotacao(projetos, hoje).filter(
-    (projeto) =>
-      projeto.escopo === 'cidade' ||
-      (projeto.escopo === 'subprefeitura' && projeto.subprefeitura === sub),
-  );
+  const abertas = projetosEmVotacao(projetos, hoje);
+  if (!bairro) return abertas.filter((projeto) => projeto.escopo === 'cidade');
+  return votacoesDoRecorte(abertas, montarRecorte('bairro', bairro));
+}
+
+// Diz para onde vai o "Ver todas" das votações do Início: a lista do bairro, se a pessoa tem
+// bairro, ou a da cidade. Recebe o bairro (ou null); devolve o caminho.
+export function destinoVotacoesDoInicio(bairro = null) {
+  return bairro ? '/meu-bairro/votacoes' : '/minha-cidade/votacoes';
 }
 
 // Monta os cards do "Para onde ir" do Início, cada um com um número real.
