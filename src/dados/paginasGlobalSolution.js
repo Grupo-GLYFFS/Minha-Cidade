@@ -26,11 +26,11 @@ export const PAGINAS_GLOBAL_SOLUTION = [
     caminho: '/equipe',
     icone: 'groups',
     fim: {
-      titulo: 'Agora, entre no app',
+      titulo: 'Agora, abra o app',
       linha: 'O Início da Maria, na Vila Mariana, com dados de exemplo.',
     },
   },
 ];
 
 // Destino do botão "Próxima" na última página: o Início do app
-export const FIM_GLOBAL_SOLUTION = { rotulo: 'Entrar no app', caminho: '/inicio' };
+export const FIM_GLOBAL_SOLUTION = { rotulo: 'Abrir o app', caminho: '/inicio' };
