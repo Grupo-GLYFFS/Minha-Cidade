@@ -46,8 +46,15 @@ const CampoBusca = forwardRef(function CampoBusca(
         autoComplete="off"
         {...props}
       />
-      {valor && <Botao variante="fechar" aria-label="Limpar busca" onClick={() => aoMudar('')} />}
-      <Botao variante="principal" compacto type="submit">
+      {valor && (
+        <Botao
+          variante="fechar"
+          aria-label="Limpar busca"
+          className={classes.limpar}
+          onClick={() => aoMudar('')}
+        />
+      )}
+      <Botao variante="principal" compacto type="submit" className={classes.enviar}>
         Buscar
       </Botao>
     </form>

@@ -1,13 +1,15 @@
-/* Campo de busca: borda 1 px, raio 12, botão "Buscar" de 44 dentro, à direita. */
+/* Campo de busca: borda 1 px, raio 12, botão "Buscar" dentro, à direita, com a mesma folga
+   de 6 em cima, embaixo e à direita; o raio do botão é o do campo menos essa folga. */
 
 .campo {
+  --folga-botao: rem(6px);
   box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: rem(8px);
   width: 100%;
   height: rem(52px);
-  padding: 0 rem(4px) 0 rem(16px);
+  padding: var(--folga-botao) var(--folga-botao) var(--folga-botao) rem(16px);
   border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: var(--raio-controle);
   background: var(--cor-superficie);
@@ -22,7 +24,26 @@
 .grande {
   height: rem(60px);
   padding-left: rem(20px);
-  padding-right: rem(8px);
+}
+
+/* "Buscar" ocupa a altura que sobra dentro do campo (vale também dentro de popups, que
+   aumentariam o compacto para 48) */
+.campo .enviar.enviar {
+  flex: none;
+  height: 100%;
+  min-height: 0;
+  padding: 0 rem(16px);
+  border-radius: calc(var(--raio-controle) - var(--folga-botao));
+}
+
+/* X de limpar: quadrado da mesma altura do botão, para não passar da borda do campo */
+.campo .limpar.limpar {
+  flex: none;
+  width: auto;
+  min-width: 0;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: calc(var(--raio-controle) - var(--folga-botao));
 }
 
 .lupa {
@@ -70,6 +91,5 @@
   .grande {
     height: rem(52px);
     padding-left: rem(12px);
-    padding-right: rem(4px);
   }
 }
