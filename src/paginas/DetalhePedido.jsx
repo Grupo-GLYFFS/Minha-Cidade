@@ -147,15 +147,18 @@ export default function DetalhePedido({ escopo = 'cidade' }) {
         </SecaoCard>
         <SecaoPrioridade pedido={pedido} />
         <SecaoCard titulo="Onde" lista>
-          <LinhaDado icone="location_on" rotulo="Rua" valor={enderecoDoPedido(pedido)} />
-          <LinhaDado icone="home_work" rotulo="Bairro" valor={pedido.bairro} />
-          {pedido.subprefeitura && (
-            <LinhaDado
-              icone="account_balance"
-              rotulo="Subprefeitura"
-              valor={nomeSubprefeitura(pedido.subprefeitura)}
-            />
-          )}
+          {/* O invólucro só serve ao celular: rótulo inteiro e valor no resto da linha */}
+          <div className={classes.onde}>
+            <LinhaDado icone="location_on" rotulo="Rua" valor={enderecoDoPedido(pedido)} />
+            <LinhaDado icone="home_work" rotulo="Bairro" valor={pedido.bairro} />
+            {pedido.subprefeitura && (
+              <LinhaDado
+                icone="account_balance"
+                rotulo="Subprefeitura"
+                valor={nomeSubprefeitura(pedido.subprefeitura)}
+              />
+            )}
+          </div>
         </SecaoCard>
         <SecaoCard titulo="Andamento">
           <AndamentoPedido etapas={etapasDoPedido(pedido)} />

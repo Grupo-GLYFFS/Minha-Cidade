@@ -131,3 +131,18 @@
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* Celular: data e explicação numa linha, com reticências (o motivo da recusa continua inteiro) */
+@media (max-width: $mantine-breakpoint-sm) {
+  .data,
+  .explicacao {
+    overflow: hidden;
+    font-size: rem(14px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .recusada .explicacao {
+    white-space: normal;
+  }
+}

@@ -123,3 +123,10 @@
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* Celular: as cinco estrelas de 44 mais juntas, para caber a nota ao lado */
+@media (max-width: $mantine-breakpoint-sm) {
+  .estrelas {
+    gap: rem(2px);
+  }
+}

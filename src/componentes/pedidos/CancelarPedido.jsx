@@ -4,6 +4,7 @@ import Popup from '../Popup';
 import { usePedidos } from '../../contexto/usePedidos';
 import { useAvisoTemporario } from '../../contexto/useAvisoTemporario';
 import classes from '../servicos/PopupsAgendamento.module.css';
+import classesFolha from './CancelarPedido.module.css';
 
 // Botão "Cancelar pedido" do detalhe (pedido da própria pessoa, Enviado ou Em análise)
 // e o popup que confirma, com "Manter pedido" e "Cancelar pedido".
@@ -35,14 +36,14 @@ export default function CancelarPedido({ pedido }) {
         aoFechar={() => setAberto(false)}
         titulo="Cancelar o pedido?"
         botoes={
-          <>
+          <div className={classesFolha.botoesFolha}>
             <Botao variante="secundario" onClick={() => setAberto(false)}>
               Manter pedido
             </Botao>
             <Botao variante="perigo" icone="cancel" onClick={confirmar}>
               Cancelar pedido
             </Botao>
-          </>
+          </div>
         }
       >
         <p className={classes.destaque}>

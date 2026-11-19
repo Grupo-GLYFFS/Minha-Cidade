@@ -237,19 +237,65 @@ button.foto:hover {
     gap: rem(24px);
   }
 
+  /* Prioridade: os três degraus numa linha, ícone ao lado do nome (48 de altura) */
   .degraus {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: rem(8px);
   }
 
   .degrau {
-    flex-direction: column;
-    gap: rem(2px);
-    min-height: rem(64px);
+    gap: rem(4px);
+    min-width: 0;
+    min-height: rem(48px);
+    padding: 0 rem(8px);
     font-size: rem(14px);
+    white-space: nowrap;
+  }
+
+  /* Pontos e apoios numa linha só; a frase do fim encolhe com reticências */
+  .pontos {
+    display: block;
+    overflow: hidden;
+    font-size: rem(14px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pontos > span[aria-hidden='true'] {
+    margin: 0 rem(5px);
+  }
+
+  /* Fotos de quem relatou: grade de 3, quadradas, na largura do card */
+  .fotos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: rem(8px);
+    margin-top: rem(16px);
+  }
+
+  .fotos > li {
+    min-width: 0;
   }
 
   .foto {
-    width: rem(96px);
-    height: rem(96px);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  /* "Onde": o rótulo curto fica inteiro e o valor usa o resto da linha, com reticências.
+     As linhas são LinhaDado: ícone (1º), rótulo (2º) e valor (3º). */
+  .onde > * > :nth-child(2) {
+    flex: none;
+  }
+
+  .onde > * > :nth-child(3) {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

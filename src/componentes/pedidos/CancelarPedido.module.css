@@ -1,0 +1,18 @@
+/* Botões da confirmação de cancelar: no computador não mudam nada (lado a lado, como o Popup põe). */
+
+.botoesFolha {
+  display: contents;
+}
+
+/* Celular: na folha, empilhados em largura total, o principal (vermelho) em cima */
+@media (max-width: $mantine-breakpoint-sm) {
+  .botoesFolha {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: rem(12px);
+  }
+
+  .botoesFolha > * {
+    width: 100%;
+  }
+}
