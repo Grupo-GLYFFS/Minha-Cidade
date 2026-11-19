@@ -48,8 +48,26 @@
   justify-content: flex-start;
 }
 
-@media (max-width: $mantine-breakpoint-xs) {
+@media (max-width: $mantine-breakpoint-sm) {
   .aviso {
-    padding: 0 0 rem(24px);
+    padding: rem(8px) 0 rem(24px);
+  }
+
+  .titulo {
+    font-size: rem(22px);
+  }
+
+  /* No celular, os dois botões empilham na largura toda, o principal em cima */
+  .acoes {
+    align-self: stretch;
+  }
+
+  .acoes > div {
+    flex-direction: column-reverse;
+    gap: rem(8px);
+  }
+
+  .acoes > div > * {
+    width: 100%;
   }
 }

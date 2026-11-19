@@ -85,17 +85,23 @@
   text-underline-offset: rem(4px);
 }
 
-/* Celular: o número desce para baixo do nome, alinhado com o texto */
-@media (max-width: $mantine-breakpoint-xs) {
+/* Celular: o número fica à direita, menor; para que serve vai até 2 linhas */
+@media (max-width: $mantine-breakpoint-sm) {
   .linha {
-    display: grid;
-    grid-template-columns: rem(20px) minmax(0, 1fr);
-    column-gap: rem(16px);
-    row-gap: rem(4px);
+    gap: rem(12px);
+    min-height: rem(68px);
+    padding: rem(12px) rem(16px);
+  }
+
+  .uso {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.4;
   }
 
   .numero {
-    grid-column: 2;
     font-size: rem(20px);
   }
 }

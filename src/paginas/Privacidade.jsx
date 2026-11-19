@@ -4,6 +4,7 @@ import SecaoCard from '../componentes/SecaoCard';
 import LinhaDado from '../componentes/LinhaDado';
 import PilhaCards from '../componentes/ajuda/PilhaCards';
 import TextoCard from '../componentes/ajuda/TextoCard';
+import classes from './Privacidade.module.css';
 import { DADOS_GUARDADOS, DADOS_NAO_GUARDADOS, DIREITOS_LGPD } from '../dados/privacidade';
 
 // Privacidade (/ajuda/privacidade): o que fica guardado neste navegador, o que não fica,
@@ -25,39 +26,45 @@ export default function Privacidade() {
           <TextoCard antesDaLista>
             <p>Tudo fica só neste navegador. Nada vai para a prefeitura nem para outra pessoa.</p>
           </TextoCard>
-          {DADOS_GUARDADOS.map((item) => (
-            <LinhaDado
-              key={item.rotulo}
-              icone={item.icone}
-              rotulo={item.rotulo}
-              valor={item.detalhe}
-            />
-          ))}
+          <div className={classes.linhas}>
+            {DADOS_GUARDADOS.map((item) => (
+              <LinhaDado
+                key={item.rotulo}
+                icone={item.icone}
+                rotulo={item.rotulo}
+                valor={item.detalhe}
+              />
+            ))}
+          </div>
         </SecaoCard>
 
         <SecaoCard titulo="O que não fica guardado" lista>
-          {DADOS_NAO_GUARDADOS.map((item) => (
-            <LinhaDado
-              key={item.rotulo}
-              icone={item.icone}
-              rotulo={item.rotulo}
-              valor={item.detalhe}
-            />
-          ))}
+          <div className={classes.linhas}>
+            {DADOS_NAO_GUARDADOS.map((item) => (
+              <LinhaDado
+                key={item.rotulo}
+                icone={item.icone}
+                rotulo={item.rotulo}
+                valor={item.detalhe}
+              />
+            ))}
+          </div>
         </SecaoCard>
 
         <SecaoCard titulo="Seus direitos pela LGPD" lista>
           <TextoCard antesDaLista>
             <p>A Lei Geral de Proteção de Dados (Lei 13.709/2018) garante estes direitos a você.</p>
           </TextoCard>
-          {DIREITOS_LGPD.map((item) => (
-            <LinhaDado
-              key={item.rotulo}
-              icone={item.icone}
-              rotulo={item.rotulo}
-              valor={item.detalhe}
-            />
-          ))}
+          <div className={classes.linhas}>
+            {DIREITOS_LGPD.map((item) => (
+              <LinhaDado
+                key={item.rotulo}
+                icone={item.icone}
+                rotulo={item.rotulo}
+                valor={item.detalhe}
+              />
+            ))}
+          </div>
         </SecaoCard>
 
         <SecaoCard titulo="Sobre este app">

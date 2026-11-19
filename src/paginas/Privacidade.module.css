@@ -1,0 +1,27 @@
+/* No celular, o valor vai embaixo do rótulo (são frases, não cabem ao lado) e vai até 2 linhas. */
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .linhas > div {
+    display: grid;
+    grid-template-columns: rem(22px) minmax(0, 1fr);
+    column-gap: rem(14px);
+    row-gap: rem(2px);
+    align-items: start;
+    padding-block: rem(12px);
+  }
+
+  .linhas > div > :first-child {
+    grid-row: 1 / span 2;
+    margin-top: rem(1px);
+  }
+
+  .linhas > div > :nth-child(3) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: rem(14px);
+    line-height: 1.4;
+    text-align: left;
+  }
+}
