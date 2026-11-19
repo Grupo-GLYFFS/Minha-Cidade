@@ -160,17 +160,8 @@ button.card:hover .seta {
   font-variant-numeric: tabular-nums;
 }
 
-/* Card de alertas com alerta ativo: amarelo da faixa da Defesa Civil */
-.aconteceAlerta {
-  border-color: var(--cor-aviso-borda);
-  background: var(--cor-aviso-fundo-claro);
-}
-
-a.aconteceAlerta:hover {
-  border-color: var(--cor-aviso-borda);
-  background: var(--cor-aviso-fundo-claro);
-}
-
+/* Card de alertas com alerta ativo: borda padrão do card; o destaque âmbar fica só
+   no ícone e na meta */
 .aconteceAlerta .iconeCaixa {
   background: var(--cor-aviso-fundo);
   color: var(--cor-aviso-texto);
