@@ -5,7 +5,7 @@ import classes from './DiasAgendados.module.css';
 
 // Agendamentos por dia: a data aparece uma vez, como título acima dos cards daquele dia
 // ("14 nov · amanhã"). O primeiro card da lista é o próximo agendamento.
-// Recebe as agendadas já em ordem e aoAvisar(texto).
+// Recebe as agendadas já em ordem e aoAvisar(texto, link).
 export default function DiasAgendados({ agendadas, aoAvisar }) {
   const dias = agruparPorDia(agendadas);
   const primeiro = agendadas[0]?.id;

@@ -7,8 +7,9 @@ import { agendamentoRemarcado, textoRemarcado } from '../../logica/solicitacoes'
 
 // Botões "Remarcar" e "Cancelar" de um agendamento, com os popups de cada um.
 // Depois de remarcar ou cancelar, avisa a página com a frase do que aconteceu.
-// Recebe a solicitação agendada, compacto (44, dentro de cards) e aoAvisar(texto).
-export default function AcoesAgendamento({ solicitacao, compacto = false, aoAvisar }) {
+// Recebe a solicitação agendada, compacto (44, dentro de cards), aoAvisar(texto, link) e
+// linkDoAviso: o "Ver" do aviso (o detalhe da solicitação, quando as ações estão numa lista).
+export default function AcoesAgendamento({ solicitacao, compacto = false, aoAvisar, linkDoAviso }) {
   const { remarcar, cancelar } = useSolicitacoes();
   const [aberto, setAberto] = useState(null);
 
@@ -16,14 +17,17 @@ export default function AcoesAgendamento({ solicitacao, compacto = false, aoAvis
   function confirmarRemarcar(data, hora) {
     remarcar(solicitacao.id, data, hora);
     setAberto(null);
-    aoAvisar?.(textoRemarcado('Remarcado', agendamentoRemarcado(solicitacao, data, hora)));
+    aoAvisar?.(
+      textoRemarcado('Remarcado', agendamentoRemarcado(solicitacao, data, hora)),
+      linkDoAviso,
+    );
   }
 
   // Cancela, fecha o popup e conta para a página
   function confirmarCancelar() {
     cancelar(solicitacao.id);
     setAberto(null);
-    aoAvisar?.(`Agendamento cancelado: ${solicitacao.nomeServico}.`);
+    aoAvisar?.(`Agendamento cancelado: ${solicitacao.nomeServico}.`, linkDoAviso);
   }
 
   return (

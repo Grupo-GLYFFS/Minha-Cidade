@@ -13,7 +13,8 @@ import classes from './CardsSolicitacao.module.css';
 // Card de um agendamento em Minhas solicitações: hora, ícone, nome do serviço (link para
 // o detalhe), o que foi pedido e o local. O próximo agendamento ganha o selo "Próxima"
 // e a faixa com 4 botões: Como chegar, Remarcar, Cancelar e Ver agendamento.
-// Recebe a solicitação, proxima (true no primeiro da lista) e aoAvisar(texto).
+// Recebe a solicitação, proxima (true no primeiro da lista) e aoAvisar(texto, link); o aviso
+// de Remarcar e Cancelar ganha o "Ver" para o detalhe.
 export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar }) {
   const { agendamento, local } = solicitacao;
   const servico = buscarServico(solicitacao.idServico);
@@ -64,7 +65,12 @@ export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar
               Como chegar<span className={classes.oculto}> a {local.nome} (abre o mapa)</span>
             </Botao>
           )}
-          <AcoesAgendamento solicitacao={solicitacao} compacto aoAvisar={aoAvisar} />
+          <AcoesAgendamento
+            solicitacao={solicitacao}
+            compacto
+            aoAvisar={aoAvisar}
+            linkDoAviso={caminho}
+          />
           <Botao variante="principal" compacto para={caminho}>
             Ver agendamento
           </Botao>
