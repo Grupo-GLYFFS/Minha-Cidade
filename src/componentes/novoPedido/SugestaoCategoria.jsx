@@ -29,14 +29,20 @@ export default function SugestaoCategoria({
   const naFolha = celular && Boolean(atual);
   const listaVisivel = !naFolha && (aberta || !atual);
 
-  // As categorias, em botões de opção (na folha, em grade de 2 colunas)
+  // As categorias, em botões de opção (na folha, em grade de 2 colunas).
+  // Tocar na categoria que já está marcada não dispara o onChange: o onClick do label fecha
+  // a lista (ou a folha) mesmo assim.
   function opcoes(folha) {
     return (
       <div
         className={folha ? `${classes.categorias} ${classes.categoriasFolha}` : classes.categorias}
       >
         {CATEGORIAS_PEDIDO.map((item, indice) => (
-          <label key={item.id} className={classes.categoria}>
+          <label
+            key={item.id}
+            className={classes.categoria}
+            onClick={categoria === item.id ? () => aoAbrir(false) : undefined}
+          >
             <input
               type="radio"
               name="categoria"
