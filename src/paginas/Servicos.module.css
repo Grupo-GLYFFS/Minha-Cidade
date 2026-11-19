@@ -1,18 +1,14 @@
-/* Seções empilhadas: 24 px entre elas no celular e 32 px no computador */
-.pagina {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+/* Serviços: título de seção 24/700 e respiro para o Enter da busca não esconder o título. */
+
+.ancora {
+  scroll-margin-top: rem(16px);
 }
 
-.topo {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-@media (min-width: $mantine-breakpoint-md) {
-  .pagina {
-    gap: 32px;
-  }
+.titulo {
+  margin: 0 0 rem(24px);
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
 }

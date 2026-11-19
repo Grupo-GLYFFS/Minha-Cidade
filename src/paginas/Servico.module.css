@@ -1,36 +1,63 @@
-.etiqueta {
-  margin-top: 12px;
-}
+/* Ficha do serviço: cards empilhados com 16 entre eles, relacionados a 96 do bloco acima. */
 
-/* Celular: uma coluna, na ordem do código */
-.grade {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 16px;
-  align-items: start;
-}
-
-.lateral {
+.pilha {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: rem(16px);
 }
 
-/* Computador: ficha mais larga à esquerda; a coluna da direita acompanha a rolagem */
-@media (min-width: $mantine-breakpoint-md) {
-  .grade {
-    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-    grid-template-areas: 'ficha lateral';
-    gap: 24px;
-  }
+.texto {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}
 
-  .ficha {
-    grid-area: ficha;
-  }
+.conta {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
 
-  .lateral {
-    grid-area: lateral;
-    position: sticky;
-    top: 24px;
+.documentos {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+  margin: 0;
+  padding-left: rem(20px);
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.documentos li::marker {
+  color: var(--cor-azul);
+}
+
+.relacionados {
+  margin-top: rem(96px);
+}
+
+.tituloSecao {
+  margin: 0 0 rem(16px);
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .relacionados {
+    margin-top: rem(48px);
   }
 }

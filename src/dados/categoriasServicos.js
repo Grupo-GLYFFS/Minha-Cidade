@@ -125,7 +125,7 @@ export const CATEGORIAS_SERVICOS = [
     icone: 'support_agent',
     subcategorias: [
       { id: 'ouvidoria', nome: 'Ouvidoria e informação' },
-      { id: 'participacao', nome: 'Seus pedidos e participação' },
+      { id: 'participacao', nome: 'Pedidos e participação' },
       { id: 'contatos', nome: 'Contatos' },
     ],
   },

@@ -1,0 +1,104 @@
+/* Catálogo: assuntos à esquerda (painel cinza-claro, raio 20) e a lista que rola à direita.
+   No celular, os chips quebram linha em cima e a lista vem inteira embaixo. */
+
+.bloco {
+  display: grid;
+  grid-template-columns: rem(312px) minmax(0, 1fr);
+  gap: rem(20px);
+  align-items: start;
+}
+
+.assuntos {
+  box-sizing: border-box;
+  padding: rem(12px);
+  border: var(--espessura-borda) solid var(--cor-azul-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-faixa);
+}
+
+.chips {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada chip ocupa a largura do painel, com a contagem encostada à direita */
+.chips a {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.nomeChip {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+/* Área que rola: a altura do painel de assuntos */
+.area {
+  position: relative;
+  box-sizing: border-box;
+  max-height: rem(640px);
+  overflow-y: auto;
+  padding: 0 rem(12px) 0 0;
+  scrollbar-gutter: stable;
+}
+
+.area:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+  border-radius: var(--raio-controle);
+}
+
+.grupo + .grupo {
+  margin-top: rem(32px);
+}
+
+.tituloGrupo {
+  margin: 0 0 rem(16px);
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .bloco {
+    grid-template-columns: minmax(0, 1fr);
+    gap: rem(24px);
+  }
+
+  .chips {
+    flex-flow: row wrap;
+  }
+
+  .chips a {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .area {
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .grupo {
+    scroll-margin-top: rem(16px);
+  }
+}

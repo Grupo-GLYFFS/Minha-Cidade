@@ -275,3 +275,20 @@ export function descricaoCampo(campo, hoje = HOJE) {
   const texto = partes.filter(Boolean).join(' ');
   return texto || undefined;
 }
+
+// Confere só alguns campos do formulário (os de uma etapa).
+// Recebe o esquema completo, os nomes dos campos e os valores;
+// devolve { nome: mensagem } com o primeiro erro de cada campo (objeto vazio se está tudo certo).
+export function validarCampos(esquema, nomes, valores) {
+  if (nomes.length === 0) return {};
+  try {
+    esquema.pick(nomes).validateSync(valores, { abortEarly: false });
+    return {};
+  } catch (erro) {
+    const erros = {};
+    (erro.inner ?? []).forEach((item) => {
+      if (item.path && !erros[item.path]) erros[item.path] = item.message;
+    });
+    return erros;
+  }
+}

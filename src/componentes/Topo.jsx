@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Botao from './Botao';
+import BotaoBusca from './servicos/BotaoBusca';
 import BarraAcessibilidade from './topo/BarraAcessibilidade';
 import GrupoMenu from './topo/GrupoMenu';
 import MenuConta from './topo/MenuConta';
@@ -48,7 +48,7 @@ export default function Topo() {
           </nav>
 
           <div className={classes.acoes}>
-            <Botao variante="icone" icone="search" para="/busca" aria-label="Buscar" />
+            <BotaoBusca />
             {logado && <SinoNotificacoes />}
             <MenuConta />
           </div>

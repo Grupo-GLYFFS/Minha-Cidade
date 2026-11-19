@@ -20,10 +20,11 @@ export const SERVICOS_ZELADORIA = [
     categoria: 'zeladoria',
     subcategoria: 'ruas-calcadas',
     tipo: 'proprio',
-    maisUsado: true,
+    maisUsado: 4,
     icone: 'campaign',
     destino: '/pedidos/novo',
     rotuloDestino: 'Abrir pedido',
+    atalho: '/pedidos/novo',
     palavrasChave: [
       'reclamação',
       'problema na rua',
@@ -44,7 +45,7 @@ export const SERVICOS_ZELADORIA = [
   },
   {
     id: 'buraco-na-rua',
-    nome: 'Pedir conserto de buraco na rua',
+    nome: 'Conserto de buraco na rua',
     resumo: 'Buraco, asfalto afundado ou rua sem pavimento.',
     categoria: 'zeladoria',
     subcategoria: 'ruas-calcadas',
@@ -71,7 +72,7 @@ export const SERVICOS_ZELADORIA = [
   },
   {
     id: 'calcada-danificada',
-    nome: 'Pedir conserto de calçada',
+    nome: 'Conserto de calçada',
     resumo: 'Calçada quebrada, desnivelada ou sem rampa de acessibilidade.',
     categoria: 'zeladoria',
     subcategoria: 'ruas-calcadas',
@@ -92,7 +93,7 @@ export const SERVICOS_ZELADORIA = [
   },
   {
     id: 'iluminacao-publica',
-    nome: 'Pedir conserto de poste apagado',
+    nome: 'Conserto de poste apagado',
     resumo: 'Lâmpada queimada, poste piscando ou aceso durante o dia.',
     categoria: 'zeladoria',
     subcategoria: 'iluminacao-arvores',
@@ -112,7 +113,7 @@ export const SERVICOS_ZELADORIA = [
   },
   {
     id: 'poda-de-arvore',
-    nome: 'Pedir poda ou remoção de árvore',
+    nome: 'Poda ou remoção de árvore',
     resumo: 'Galhos nos fios, árvore com risco de cair ou que já caiu.',
     categoria: 'zeladoria',
     subcategoria: 'iluminacao-arvores',
@@ -134,7 +135,7 @@ export const SERVICOS_ZELADORIA = [
   },
   {
     id: 'retirada-de-entulho',
-    nome: 'Pedir retirada de entulho ou lixo na rua',
+    nome: 'Retirada de entulho ou lixo na rua',
     resumo: 'Entulho, lixo jogado em terreno ou na calçada.',
     categoria: 'zeladoria',
     subcategoria: 'limpeza-drenagem',
@@ -161,7 +162,7 @@ export const SERVICOS_ZELADORIA = [
   },
   {
     id: 'boca-de-lobo',
-    nome: 'Pedir limpeza de boca de lobo',
+    nome: 'Limpeza de boca de lobo',
     resumo: 'Bueiro entupido, sem tampa ou com mau cheiro.',
     categoria: 'zeladoria',
     subcategoria: 'limpeza-drenagem',
@@ -181,7 +182,7 @@ export const SERVICOS_ZELADORIA = [
   },
   {
     id: 'sinalizacao-de-transito',
-    nome: 'Pedir conserto de placa ou semáforo',
+    nome: 'Conserto de placa ou semáforo',
     resumo: 'Semáforo apagado, placa caída ou faixa de pedestre apagada.',
     categoria: 'zeladoria',
     subcategoria: 'sinalizacao',

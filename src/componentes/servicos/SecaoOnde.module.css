@@ -1,0 +1,38 @@
+/* Onde: mapa de 200 de altura, raio 12, e o local embaixo. */
+
+.mapa {
+  display: grid;
+  place-items: center;
+  height: rem(200px);
+  margin-bottom: rem(16px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-fundo);
+  color: var(--cor-texto-placeholder);
+}
+
+.nome {
+  margin: 0;
+  font-size: rem(17px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.endereco {
+  margin: rem(2px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.acao {
+  margin-top: rem(16px);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

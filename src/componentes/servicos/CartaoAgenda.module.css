@@ -1,0 +1,61 @@
+/* Cartão da agenda no cabeçalho: branco, raio 20, hora grande (48/800, azul-tinta) e texto. */
+
+.cartao {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(28px);
+  width: 100%;
+  margin-top: rem(24px);
+  padding: rem(20px) rem(32px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  text-align: left;
+}
+
+.grande {
+  flex: none;
+  font-size: rem(48px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cor-azul-tinta);
+  white-space: nowrap;
+}
+
+.texto {
+  min-width: 0;
+}
+
+.linha {
+  margin: 0;
+  font-size: rem(19px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.nota {
+  margin: rem(2px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .cartao {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(8px);
+    padding: rem(16px);
+  }
+
+  .grande {
+    font-size: rem(36px);
+  }
+
+  .linha {
+    font-size: rem(17px);
+  }
+}

@@ -1,82 +1,85 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Stack, Text, Title } from '@mantine/core';
-import LinkVoltar from '../componentes/LinkVoltar';
-import CatalogoNaoEncontrado from '../componentes/servicos/CatalogoNaoEncontrado';
-import FormularioServico from '../componentes/formularioServico/FormularioServico';
-import ResumoServico from '../componentes/formularioServico/ResumoServico';
-import SemFormulario from '../componentes/formularioServico/SemFormulario';
-import SolicitacaoEnviada from '../componentes/formularioServico/SolicitacaoEnviada';
+import { useState } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
+import Pagina from '../componentes/Pagina';
+import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import Botao from '../componentes/Botao';
+import NaoEncontrado from '../componentes/NaoEncontrado';
+import FormularioSolicitacao from '../componentes/servicos/FormularioSolicitacao';
+import SolicitacaoEnviada from '../componentes/servicos/SolicitacaoEnviada';
+import { useSessao } from '../contexto/useSessao';
 import { useSolicitacoes } from '../contexto/useSolicitacoes';
-import { buscarServico, caminhoServico } from '../logica/servicos';
-import { prepararRespostas } from '../logica/solicitacoes';
-import classes from './SolicitarServico.module.css';
+import {
+  buscarCategoriaServico,
+  buscarServico,
+  caminhoCategoria,
+  caminhoServico,
+  etapasDoFormulario,
+} from '../logica/servicos';
 
-// Tempo do envio simulado, para o botão mostrar que está enviando
-const ESPERA_ENVIO_MS = 800;
-
-// Espera um tempo. Recebe os milissegundos; devolve uma promessa que termina depois dele.
-function esperar(ms) {
-  return new Promise((resolver) => setTimeout(resolver, ms));
-}
-
-// Formulário online de um serviço (/servicos/agendar-consulta/solicitar), montado a partir
-// de servico.campos. Depois do envio, a mesma página mostra o protocolo no lugar do formulário.
-// Serviço que não existe ou sem formulário online: mensagem com o caminho de volta.
+// Solicitar serviço (/servicos/:idServico/solicitar, só com conta): formulário em 3 etapas
+// e, depois do envio, a tela "Solicitação enviada" no mesmo endereço.
+// Serviço sem formulário online volta para a ficha dele.
 export default function SolicitarServico() {
   const { idServico } = useParams();
-  const servico = buscarServico(idServico);
+  const { usuario } = useSessao();
   const { adicionarSolicitacao } = useSolicitacoes();
-  // Solicitação recém-enviada: só vale para o serviço em que foi feita
-  const [envio, setEnvio] = useState(null);
-  const enviada = envio?.idServico === idServico ? envio : null;
+  const [etapa, setEtapa] = useState(1);
+  const [enviada, setEnviada] = useState(null);
+  const servico = buscarServico(idServico);
 
-  // Ao abrir outro serviço, começa a página do topo
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [idServico]);
+  if (!servico) {
+    return (
+      <Pagina>
+        <NaoEncontrado
+          titulo="Não encontramos este serviço"
+          texto="O link pode estar incompleto ou o serviço mudou de nome."
+          icone="search_off"
+        >
+          <Botao variante="principal" icone="arrow_forward" iconeDireita para="/servicos">
+            Ver todos os serviços
+          </Botao>
+        </NaoEncontrado>
+      </Pagina>
+    );
+  }
+  if (servico.tipo !== 'solicitacao') return <Navigate to={caminhoServico(servico)} replace />;
 
-  if (!servico) return <CatalogoNaoEncontrado titulo="Serviço não encontrado" />;
-  if (servico.tipo !== 'solicitacao') return <SemFormulario servico={servico} />;
+  if (enviada) return <SolicitacaoEnviada servico={servico} solicitacao={enviada} />;
 
-  // Recebe os valores já validados; simula o envio e guarda a solicitação
-  async function enviar(valores) {
-    await esperar(ESPERA_ENVIO_MS);
-    setEnvio(adicionarSolicitacao(servico, prepararRespostas(servico.campos, valores)));
+  const categoria = buscarCategoriaServico(servico.categoria);
+  const etapas = etapasDoFormulario(servico);
+
+  // Salva a solicitação e mostra a confirmação no topo da tela
+  function enviar(respostas) {
+    setEnviada(adicionarSolicitacao(servico, respostas));
+    window.scrollTo({ top: 0 });
   }
 
   return (
-    <Stack gap="lg">
-      <header>
-        <LinkVoltar caminho={caminhoServico(servico)} rotulo="Voltar para o serviço" />
-        <Text fz="sm" fw={700} c="var(--cor-texto-suave)" mt={4}>
-          Solicitação online
-        </Text>
-        <Title order={1} fz={{ base: 26, md: 32 }} lh={1.15} lts="-0.02em" mt={4}>
-          {servico.nome}
-        </Title>
-        <Text c="var(--cor-texto-suave)" fz={{ base: 15, md: 17 }} mt="sm" maw={720}>
-          {servico.resumo}
-        </Text>
-      </header>
-
-      {/* O resumo vem antes no código, como no celular; no computador ele vai para a direita.
-          Depois do envio ele some: o prazo já aparece na confirmação */}
-      <div className={classes.grade}>
-        {!enviada && (
-          <div className={classes.lateral}>
-            <ResumoServico servico={servico} />
-          </div>
-        )}
-        <div className={classes.principal}>
-          {enviada ? (
-            <SolicitacaoEnviada servico={servico} solicitacao={enviada} />
-          ) : (
-            // A chave recria o formulário (vazio) ao trocar de serviço na mesma página
-            <FormularioServico key={servico.id} servico={servico} aoEnviar={enviar} />
-          )}
-        </div>
-      </div>
-    </Stack>
+    <Pagina
+      cabecalho={
+        <CabecalhoPagina
+          tipo="formulario"
+          titulo={servico.nome}
+          trilha={[
+            { rotulo: 'Serviços', para: '/servicos' },
+            { rotulo: categoria.nome, para: caminhoCategoria(categoria) },
+            { rotulo: servico.nome, para: caminhoServico(servico) },
+            { rotulo: 'Solicitar' },
+          ]}
+          etapas={[...etapas.map((item) => item.nome), 'Revisar']}
+          etapaAtual={etapa}
+        />
+      }
+    >
+      <FormularioSolicitacao
+        servico={servico}
+        etapas={etapas}
+        etapa={etapa}
+        aoMudarEtapa={setEtapa}
+        usuario={usuario}
+        aoEnviar={enviar}
+      />
+    </Pagina>
   );
 }

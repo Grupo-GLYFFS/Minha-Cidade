@@ -1,0 +1,48 @@
+/* Faixa do fim da ficha: fundo azul-claro, raio 20, ícone · texto · botão. */
+
+.fim {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  padding: rem(20px) rem(24px);
+  border: var(--espessura-borda) solid var(--cor-azul-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-faixa);
+}
+
+/* O ícone fica em quadrado branco sobre o azul-claro */
+.fim > * {
+  --cor-faixa: var(--cor-superficie);
+}
+
+.texto {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nome {
+  font-size: rem(17px);
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--cor-texto);
+}
+
+.detalhe {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .fim {
+    flex-wrap: wrap;
+    padding: rem(16px);
+  }
+
+  .fim > :last-child:is(a, button) {
+    width: 100%;
+  }
+}

@@ -1,0 +1,22 @@
+/* Minhas solicitações: grupos com 48 entre eles, cards com 12 entre eles. */
+
+.grupos {
+  display: flex;
+  flex-direction: column;
+  gap: rem(48px);
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

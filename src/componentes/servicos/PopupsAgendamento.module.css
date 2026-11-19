@@ -1,0 +1,36 @@
+/* Corpo dos popups Remarcar e Cancelar: o horário em destaque, a nota cinza e os dias. */
+
+.destaque {
+  margin: 0;
+  font-size: rem(17px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.nota {
+  margin: rem(4px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.dia {
+  margin-top: rem(20px);
+}
+
+.tituloDia {
+  margin: 0 0 rem(8px);
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.tituloDia::first-letter {
+  text-transform: uppercase;
+}
+
+.horas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(8px);
+}

@@ -1,0 +1,50 @@
+/* Linhas de 56 com rótulo 600 à esquerda e valor à direita; a divisória sangra o padding
+   do card (--pad-lateral) para ir de borda a borda. */
+
+.lista {
+  margin: 0;
+}
+
+.linha {
+  box-sizing: border-box;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: rem(16px);
+  min-height: rem(56px);
+  margin-inline: calc(var(--pad-lateral, 0px) * -1);
+  padding: rem(16px) var(--pad-lateral, 0px);
+}
+
+.linha + .linha {
+  border-top: var(--espessura-borda) solid var(--cor-linha);
+}
+
+.rotulo {
+  flex: 0 1 auto;
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.valor {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .linha {
+    flex-direction: column;
+    gap: rem(2px);
+  }
+
+  .valor {
+    text-align: left;
+  }
+}

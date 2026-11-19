@@ -8,7 +8,7 @@ export const SERVICOS_SAUDE = [
     categoria: 'saude',
     subcategoria: 'consultas',
     tipo: 'solicitacao',
-    maisUsado: true,
+    maisUsado: 1,
     icone: 'stethoscope',
     palavrasChave: [
       'médico',
@@ -90,7 +90,7 @@ export const SERVICOS_SAUDE = [
     categoria: 'saude',
     subcategoria: 'consultas',
     tipo: 'informativo',
-    maisUsado: true,
+    maisUsado: 2,
     icone: 'id_card',
     palavrasChave: ['cartão sus', 'cartao do sus', 'carteirinha', 'cns', 'cadastro na ubs'],
     info: {

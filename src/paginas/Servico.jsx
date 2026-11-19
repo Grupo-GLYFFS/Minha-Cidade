@@ -1,83 +1,157 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Stack, Text, Title } from '@mantine/core';
-import Etiqueta from '../componentes/Etiqueta';
-import AcaoServico from '../componentes/servicos/AcaoServico';
-import CartaoTelefones from '../componentes/servicos/CartaoTelefones';
-import CatalogoNaoEncontrado from '../componentes/servicos/CatalogoNaoEncontrado';
-import FichaServico from '../componentes/servicos/FichaServico';
-import ListaServicos from '../componentes/servicos/ListaServicos';
-import TrilhaServico from '../componentes/servicos/TrilhaServico';
+import Pagina from '../componentes/Pagina';
+import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import SecaoCard from '../componentes/SecaoCard';
+import ParaOndeIr from '../componentes/ParaOndeIr';
+import Botao from '../componentes/Botao';
+import NaoEncontrado from '../componentes/NaoEncontrado';
+import FatosServico from '../componentes/servicos/FatosServico';
+import PassosNumerados from '../componentes/servicos/PassosNumerados';
+import FimServico from '../componentes/servicos/FimServico';
+import CardServico from '../componentes/servicos/CardServico';
+import { useResumoConta } from '../componentes/servicos/useResumoConta';
 import {
+  acaoDoServico,
   buscarCategoriaServico,
   buscarServico,
-  buscarTipoServico,
+  caminhoCategoria,
+  servicosDaCategoria,
   servicosRelacionados,
+  textoQuantidadeServicos,
 } from '../logica/servicos';
 import classes from './Servico.module.css';
 
-// Página de um serviço: caminho até ele, nome, resumo, a ficha completa e o próximo passo
-// (formulário online, tela do app ou telefones), com serviços parecidos no fim.
-// O id vem do endereço (/servicos/agendar-consulta). Se não existir, oferece a volta ao catálogo.
+// Ficha de um serviço (/servicos/:idServico): cabeçalho com o botão principal,
+// fatos (prazo, custo, onde ir), seções em card, faixa do fim, relacionados e "Para onde ir".
+// Serviço só de informação não tem botão; o que leva a outra tela do app tem o botão dela.
 export default function Servico() {
   const { idServico } = useParams();
+  const resumo = useResumoConta();
   const servico = buscarServico(idServico);
 
-  // Ao abrir outro serviço (ex.: pelos relacionados), começa a página do topo
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [idServico]);
-
-  if (!servico) return <CatalogoNaoEncontrado titulo="Serviço não encontrado" />;
+  if (!servico) {
+    return (
+      <Pagina>
+        <NaoEncontrado
+          titulo="Não encontramos este serviço"
+          texto="O link pode estar incompleto ou o serviço mudou de nome."
+          icone="search_off"
+        >
+          <Botao variante="principal" icone="arrow_forward" iconeDireita para="/servicos">
+            Ver todos os serviços
+          </Botao>
+        </NaoEncontrado>
+      </Pagina>
+    );
+  }
 
   const categoria = buscarCategoriaServico(servico.categoria);
-  const tipo = buscarTipoServico(servico.tipo);
+  const acao = acaoDoServico(servico);
+  const { info } = servico;
   const relacionados = servicosRelacionados(servico);
-  // Telefones aparecem sempre nos informativos (com o 156, se o serviço não tiver outro)
-  const mostrarTelefones = servico.tipo === 'informativo' || servico.info.telefones?.length > 0;
-  const acaoPrimeiro = servico.tipo !== 'informativo';
-  const lateral = (
-    <div className={classes.lateral}>
-      <AcaoServico servico={servico} />
-      {mostrarTelefones && <CartaoTelefones telefones={servico.info.telefones} />}
-    </div>
-  );
+  const passos = info.comoFazer ?? [];
+  const documentos = info.documentos ?? [];
 
   return (
-    <Stack gap="lg">
-      <header>
-        {categoria && <TrilhaServico categoria={categoria} />}
-        <Title order={1} fz={{ base: 26, md: 32 }} lh={1.15} lts="-0.02em" mt={4}>
-          {servico.nome}
-        </Title>
-        <Text c="var(--cor-texto-suave)" fz={{ base: 15, md: 17 }} mt="sm" maw={720}>
-          {servico.resumo}
-        </Text>
-        {tipo && (
-          <div className={classes.etiqueta}>
-            <Etiqueta texto={tipo.rotulo} corFundo={tipo.corFundo} corTexto={tipo.corTexto} />
-          </div>
-        )}
-      </header>
+    <Pagina
+      cabecalho={
+        <CabecalhoPagina
+          tipo="detalhe"
+          titulo={servico.nome}
+          subtitulo={servico.resumo}
+          icone={servico.icone}
+          categoria={{ icone: categoria.icone, rotulo: categoria.nome }}
+          trilha={[
+            { rotulo: 'Serviços', para: '/servicos' },
+            { rotulo: categoria.nome, para: caminhoCategoria(categoria) },
+            { rotulo: servico.nome },
+          ]}
+          acoes={
+            acao && (
+              <Botao variante="principal" icone="arrow_forward" iconeDireita para={acao.para}>
+                {acao.rotulo}
+              </Botao>
+            )
+          }
+        />
+      }
+    >
+      <div className={classes.pilha}>
+        <FatosServico info={info} />
 
-      {/* Computador: ficha à esquerda, ação e telefones à direita.
-          Celular: segue a ordem do código, com a ação antes da ficha (menos nos informativos) */}
-      <div className={classes.grade}>
-        {acaoPrimeiro && lateral}
-        <div className={classes.ficha}>
-          <FichaServico info={servico.info} />
-        </div>
-        {!acaoPrimeiro && lateral}
+        {info.oQueE && (
+          <SecaoCard titulo="O que é">
+            <p className={classes.texto}>{info.oQueE}</p>
+          </SecaoCard>
+        )}
+        {info.quemPode && (
+          <SecaoCard titulo="Quem pode usar">
+            <p className={classes.texto}>{info.quemPode}</p>
+          </SecaoCard>
+        )}
+        {documentos.length > 0 && (
+          <SecaoCard
+            titulo="Documentos"
+            acao={
+              <span className={classes.conta}>
+                {documentos.length === 1 ? '1 documento' : `${documentos.length} documentos`}
+              </span>
+            }
+          >
+            <ul className={classes.documentos}>
+              {documentos.map((documento) => (
+                <li key={documento}>{documento}</li>
+              ))}
+            </ul>
+          </SecaoCard>
+        )}
+        {passos.length > 0 && (
+          <SecaoCard
+            titulo="Como fazer"
+            acao={
+              <span className={classes.conta}>
+                {passos.length === 1 ? '1 passo' : `${passos.length} passos`}
+              </span>
+            }
+          >
+            <PassosNumerados passos={passos} />
+          </SecaoCard>
+        )}
+
+        <FimServico servico={servico} acao={acao} />
       </div>
 
       {relacionados.length > 0 && (
-        <Stack component="section" gap="sm" aria-labelledby="relacionados-titulo">
-          <Title order={2} id="relacionados-titulo" fz={{ base: 18, md: 20 }} fw={700}>
+        <section className={classes.relacionados} aria-labelledby="relacionados-titulo">
+          <h2 className={classes.tituloSecao} id="relacionados-titulo">
             Serviços relacionados
-          </Title>
-          <ListaServicos servicos={relacionados} colunas={3} />
-        </Stack>
+          </h2>
+          <ul className={classes.cards}>
+            {relacionados.map((item) => (
+              <li key={item.id}>
+                <CardServico servico={item} />
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
-    </Stack>
+
+      <ParaOndeIr
+        destinos={[
+          {
+            icone: categoria.icone,
+            titulo: categoria.nome,
+            meta: textoQuantidadeServicos(servicosDaCategoria(categoria.id).length),
+            para: caminhoCategoria(categoria),
+          },
+          {
+            icone: 'event_available',
+            titulo: 'Minhas solicitações',
+            meta: resumo.solicitacoes,
+            para: '/servicos/minhas-solicitacoes',
+          },
+        ]}
+      />
+    </Pagina>
   );
 }

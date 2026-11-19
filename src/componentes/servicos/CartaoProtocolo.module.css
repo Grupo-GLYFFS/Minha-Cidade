@@ -1,0 +1,64 @@
+/* Cartão do protocolo no cabeçalho da confirmação: branco, raio 20, número à esquerda. */
+
+.cartao {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(16px);
+  width: 100%;
+  margin-top: rem(24px);
+  padding: rem(20px) rem(24px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  text-align: left;
+}
+
+.numero {
+  min-width: 0;
+}
+
+.rotulo {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.protocolo {
+  margin: 0;
+  font-size: rem(26px);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+.lado {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: rem(12px);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .cartao {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: rem(16px);
+  }
+
+  .protocolo {
+    font-size: rem(22px);
+  }
+}

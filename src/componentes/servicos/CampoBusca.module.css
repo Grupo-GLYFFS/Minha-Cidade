@@ -1,0 +1,75 @@
+/* Campo de busca: borda 1 px, raio 12, botão "Buscar" de 44 dentro, à direita. */
+
+.campo {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  width: 100%;
+  height: rem(52px);
+  padding: 0 rem(4px) 0 rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+}
+
+.campo:focus-within {
+  border-color: var(--cor-azul);
+  outline: var(--foco-contorno);
+  outline-offset: 1px;
+}
+
+.grande {
+  height: rem(60px);
+  padding-left: rem(20px);
+  padding-right: rem(8px);
+}
+
+.lupa {
+  flex: none;
+  color: var(--cor-texto-2);
+}
+
+.entrada {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--fonte);
+  font-size: rem(17px);
+  font-weight: 500;
+  color: var(--cor-texto);
+  outline: none;
+}
+
+.entrada::placeholder {
+  color: var(--cor-texto-placeholder);
+}
+
+/* O X próprio do navegador some: o app usa o seu */
+.entrada::-webkit-search-cancel-button {
+  display: none;
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .entrada {
+    font-size: rem(16px);
+  }
+
+  .grande {
+    height: rem(52px);
+    padding-left: rem(12px);
+    padding-right: rem(4px);
+  }
+}

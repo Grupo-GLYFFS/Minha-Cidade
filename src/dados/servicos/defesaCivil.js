@@ -9,7 +9,8 @@ export const SERVICOS_DEFESA_CIVIL = [
     tipo: 'proprio',
     icone: 'notifications_active',
     destino: '/minha-cidade/alertas',
-    rotuloDestino: 'Ver meus alertas',
+    rotuloDestino: 'Ver os alertas',
+    atalho: '/minha-cidade/alertas',
     palavrasChave: ['alerta', 'chuva', 'temporal', 'tempestade', 'aviso', 'risco', 'enchente'],
     info: {
       oQueE:
@@ -91,7 +92,9 @@ export const SERVICOS_DEFESA_CIVIL = [
   },
   {
     id: 'vistoria-de-imovel',
-    nome: 'Pedir vistoria de imóvel com risco',
+    nome: 'Vistoria de imóvel com risco',
+    prazoDias: 14,
+    textoPrazo: 'A Defesa Civil marca o dia até',
     resumo: 'Rachaduras, muro ameaçando cair ou barranco cedendo perto de casa.',
     categoria: 'defesa-civil',
     subcategoria: 'emergencias',

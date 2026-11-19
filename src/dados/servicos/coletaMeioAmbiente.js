@@ -8,10 +8,10 @@ export const SERVICOS_COLETA_MEIO_AMBIENTE = [
     categoria: 'coleta-meio-ambiente',
     subcategoria: 'coleta',
     tipo: 'proprio',
-    maisUsado: true,
+    maisUsado: 5,
     icone: 'delete',
     destino: '/meu-bairro',
-    rotuloDestino: 'Ver a coleta no Meu Bairro',
+    rotuloDestino: 'Ver a coleta no Meu bairro',
     palavrasChave: [
       'lixo',
       'coleta',
@@ -38,7 +38,9 @@ export const SERVICOS_COLETA_MEIO_AMBIENTE = [
   },
   {
     id: 'cata-treco',
-    nome: 'Pedir retirada de móveis velhos (Cata-Treco)',
+    nome: 'Retirada de móveis velhos (Cata-Treco)',
+    nomeCurto: 'Cata-Treco',
+    maisUsado: 7,
     resumo: 'Sofá, colchão, armário ou eletrodoméstico que não cabe no lixo comum.',
     categoria: 'coleta-meio-ambiente',
     subcategoria: 'coleta',
@@ -166,6 +168,9 @@ export const SERVICOS_COLETA_MEIO_AMBIENTE = [
     subcategoria: 'animais',
     tipo: 'solicitacao',
     icone: 'pets',
+    nomeEtapa: 'Animal',
+    prazoDias: 20,
+    textoPrazo: 'A data da cirurgia sai até',
     palavrasChave: [
       'castração',
       'castrar',

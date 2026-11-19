@@ -8,7 +8,7 @@ export const SERVICOS_IMPOSTOS_TAXAS = [
     categoria: 'impostos-taxas',
     subcategoria: 'iptu',
     tipo: 'solicitacao',
-    maisUsado: true,
+    maisUsado: 6,
     icone: 'receipt_long',
     palavrasChave: [
       'iptu',
@@ -65,7 +65,7 @@ export const SERVICOS_IMPOSTOS_TAXAS = [
   },
   {
     id: 'isencao-iptu',
-    nome: 'Pedir desconto ou isenção do IPTU',
+    nome: 'Desconto ou isenção do IPTU',
     resumo: 'Para aposentados, pessoas com deficiência e imóveis de menor valor.',
     categoria: 'impostos-taxas',
     subcategoria: 'iptu',

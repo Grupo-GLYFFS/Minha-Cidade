@@ -1,0 +1,44 @@
+/* Card de serviço: raio 20, borda 1 px, sem sombra, 88 de altura mínima, seta à direita. */
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  min-height: rem(88px);
+  padding: rem(16px) rem(20px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.card:hover {
+  border-color: var(--cor-borda-forte);
+  background: var(--cor-fundo-card);
+}
+
+.texto {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nome {
+  font-size: rem(17px);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.meta {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.seta {
+  flex: none;
+  color: var(--cor-azul-escuro);
+}

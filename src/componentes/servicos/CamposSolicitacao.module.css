@@ -1,0 +1,134 @@
+/* Campos do formulário de solicitação: rótulo 16/700, ajuda e erro 14 (iguais ao CampoTexto),
+   opções em cards de rádio de 48 e campos estreitos para CPF e números. */
+
+.grupo {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.rotulo {
+  margin-bottom: rem(4px);
+  padding: 0;
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.obrigatorio {
+  color: var(--cor-erro);
+}
+
+.ajuda {
+  margin: 0 0 rem(8px);
+  font-size: rem(14px);
+  line-height: 1.45;
+  color: var(--cor-texto-2);
+}
+
+.opcoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: rem(8px);
+  margin-top: rem(8px);
+}
+
+.opcao {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  min-height: rem(48px);
+  padding: rem(8px) rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+
+.opcao:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+/* Escolhida: igual ao estado selecionado das listas de escolha */
+.opcao:has(:checked) {
+  border-color: var(--cor-azul);
+  background: var(--cor-faixa);
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}
+
+.opcao:has(:focus-visible) {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.opcaoErro {
+  border-color: var(--cor-erro);
+}
+
+.radio {
+  flex: none;
+  width: rem(20px);
+  height: rem(20px);
+  margin: 0;
+  accent-color: var(--cor-azul);
+}
+
+.radio:focus-visible {
+  outline: none;
+}
+
+.erro {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(6px);
+  margin: rem(8px) 0 0;
+  font-size: rem(14px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--cor-erro);
+}
+
+/* CPF, números, datas e horas: o campo fica estreito, o rótulo não */
+.estreito input {
+  max-width: rem(240px);
+}
+
+.numero input {
+  max-width: rem(120px);
+}
+
+/* Arquivo: o botão do navegador vira um botão secundário */
+.arquivo {
+  display: block;
+  max-width: 100%;
+  font-family: var(--fonte);
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.arquivo::file-selector-button {
+  height: rem(44px);
+  margin-right: rem(12px);
+  padding: 0 rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  font-family: var(--fonte);
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-azul-escuro);
+  cursor: pointer;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .opcoes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,50 @@
+/* Passos numerados: círculo de 28 com o número e linha fina entre um passo e outro. */
+
+.passos {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passo {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: rem(16px);
+}
+
+/* Linha que liga o círculo ao do passo seguinte */
+.passo:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: rem(32px);
+  bottom: rem(-20px);
+  left: rem(13.5px);
+  width: 1px;
+  background: var(--cor-azul-borda);
+}
+
+.numero {
+  box-sizing: border-box;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: rem(28px);
+  height: rem(28px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-faixa);
+  font-size: rem(14px);
+  font-weight: 800;
+  color: var(--cor-azul-tinta);
+}
+
+.texto {
+  margin: 0;
+  padding-top: rem(2px);
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}

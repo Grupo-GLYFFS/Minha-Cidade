@@ -106,15 +106,18 @@ export function montarAlertas({
     .map(avisoDoPedido)
     .filter(Boolean);
 
-  const dosServicos = solicitacoes.map((solicitacao) => ({
-    id: `servico-${solicitacao.id}`,
-    tipo: 'servico',
-    titulo: `Recebemos sua solicitação: ${solicitacao.nomeServico}`,
-    texto: `Protocolo ${solicitacao.protocolo}. Guarde este número para acompanhar.`,
-    data: solicitacao.criadoEm,
-    link: '/perfil/pedidos?aba=servicos',
-    icone: 'inbox',
-  }));
+  // As solicitações de exemplo não geram aviso; só as que a pessoa enviou
+  const dosServicos = solicitacoes
+    .filter((solicitacao) => !solicitacao.exemplo)
+    .map((solicitacao) => ({
+      id: `servico-${solicitacao.id}`,
+      tipo: 'servico',
+      titulo: `Recebemos sua solicitação: ${solicitacao.nomeServico}`,
+      texto: `Protocolo ${solicitacao.protocolo}. Guarde este número para acompanhar.`,
+      data: solicitacao.criadoEm,
+      link: `/servicos/minhas-solicitacoes/${solicitacao.id}`,
+      icone: 'inbox',
+    }));
 
   const votacoes = projetosEmVotacao(projetos, hoje)
     .filter((projeto) => !votos[projeto.id])

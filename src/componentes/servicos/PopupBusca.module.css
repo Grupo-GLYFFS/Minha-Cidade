@@ -1,0 +1,229 @@
+/* Popup de busca: campo no topo do corpo, grupos com título pequeno, linhas de 52 e
+   a faixa "Quer abrir um pedido?" embaixo. */
+
+.campo {
+  padding-bottom: rem(24px);
+  margin-inline: calc(var(--pad-lateral) * -1);
+  padding-inline: var(--pad-lateral);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+  padding-top: rem(24px);
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+}
+
+.tituloGrupo {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.contagem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: rem(22px);
+  height: rem(22px);
+  padding: 0 rem(6px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-status-cinza-fundo);
+  font-size: rem(12px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+}
+
+.lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(4px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista > li {
+  flex: 1 1 100%;
+}
+
+/* Os chips "Mais buscados" ficam lado a lado */
+.lista > .itemChip {
+  flex: none;
+}
+
+.item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  min-height: rem(56px);
+  padding: rem(6px) rem(12px) rem(6px) rem(8px);
+  border: var(--espessura-borda) solid transparent;
+  border-radius: var(--raio-controle);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.item:hover,
+.item:focus-visible {
+  border-color: var(--cor-azul);
+  background: var(--cor-faixa);
+}
+
+/* Sobre o fundo azul-claro, o ícone fica em quadrado branco */
+.item:is(:hover, :focus-visible) > span:first-child {
+  background: var(--cor-superficie);
+}
+
+.item:focus-visible {
+  outline: none;
+}
+
+.itemTexto {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.itemTitulo {
+  font-size: rem(16px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* Nos resultados, só a palavra buscada fica em negrito */
+.itemTituloBusca {
+  font-weight: 500;
+}
+
+.marca {
+  background: none;
+  font-weight: 800;
+  color: inherit;
+}
+
+.itemMeta {
+  font-size: rem(13px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.chevron {
+  flex: none;
+  color: var(--cor-texto-2);
+}
+
+/* Sem resultado */
+.nada {
+  display: flex;
+  flex-direction: column;
+  gap: rem(4px);
+}
+
+.nadaTitulo {
+  margin: 0;
+  font-size: rem(20px);
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+.nadaTexto {
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.nadaAcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(12px);
+  margin-top: rem(20px);
+}
+
+/* Faixa de baixo: ícone, pergunta e o botão Abrir pedido */
+.fim {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: rem(16px);
+}
+
+.fimIcone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: rem(40px);
+  height: rem(40px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.fimTexto {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  /* No celular, o selo desce para baixo do texto */
+  .item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: rem(12px);
+    row-gap: rem(4px);
+  }
+
+  .item > :first-child {
+    grid-row: 1 / span 2;
+  }
+
+  .selo {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .chevron {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .fim {
+    flex-wrap: wrap;
+  }
+
+  .fim > :last-child {
+    width: 100%;
+  }
+
+  .nadaAcoes > * {
+    width: 100%;
+  }
+}

@@ -52,11 +52,6 @@ export const PAGINAS_EM_CONSTRUCAO = [
   { caminho: '/impacto', titulo: 'Impacto', icone: 'insights' },
   { caminho: '/equipe', titulo: 'Equipe', icone: 'groups' },
   // Conta (sem trilha)
-  {
-    caminho: '/servicos/minhas-solicitacoes',
-    titulo: 'Minhas solicitações',
-    icone: 'event_available',
-  },
   { caminho: '/perfil/votos', titulo: 'Meus votos', icone: 'how_to_vote' },
   // Cidade, subprefeitura e bairro
   {

@@ -1,0 +1,49 @@
+/* Fatos da ficha: card de raio 20, linhas de 56 com divisória de borda a borda,
+   rótulo numa coluna de 160 e o valor ao lado. No celular, o valor vai embaixo. */
+
+.fatos {
+  margin: 0;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.linha {
+  display: grid;
+  grid-template-columns: rem(160px) minmax(0, 1fr);
+  gap: rem(16px);
+  align-items: baseline;
+  padding: rem(16px) rem(32px);
+}
+
+.linha + .linha {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(8px);
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.icone {
+  color: var(--cor-texto-2);
+}
+
+.valor {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .linha {
+    grid-template-columns: minmax(0, 1fr);
+    gap: rem(4px);
+    padding: rem(16px);
+  }
+}

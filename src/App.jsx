@@ -7,12 +7,13 @@ import { PAGINAS_EM_CONSTRUCAO } from './dados/paginasEmConstrucao';
 import Inicio from './paginas/Inicio';
 import Busca from './paginas/Busca';
 import Servicos from './paginas/Servicos';
-import CategoriaServicos from './paginas/CategoriaServicos';
 import Servico from './paginas/Servico';
 import SolicitarServico from './paginas/SolicitarServico';
 import PedidosCidade from './paginas/PedidosCidade';
 import PedidosBairro from './paginas/PedidosBairro';
 import RedirecionarPedido from './paginas/RedirecionarPedido';
+import MinhasSolicitacoes from './paginas/MinhasSolicitacoes';
+import DetalheSolicitacao from './paginas/DetalheSolicitacao';
 import NovoPedido from './paginas/NovoPedido';
 import DetalhePedido from './paginas/DetalhePedido';
 import CidadeAberta from './paginas/CidadeAberta';
@@ -68,12 +69,19 @@ export default function App() {
       <Route path="/entrar/esqueci" element={<EsqueciSenha />} />
       <Route path="/criar-conta" element={<CriarConta />} />
 
+      {/* Serviços: catálogo, ficha, formulário e Minhas solicitações (as 3 últimas pedem conta) */}
+      <Route path="/busca" element={<Busca />} />
+      <Route path="/servicos" element={<Servicos />} />
+      <Route path="/servicos/categoria/:idCategoria" element={<Servicos />} />
+      <Route path="/servicos/:idServico" element={<Servico />} />
+      <Route element={<RotaProtegida />}>
+        <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
+        <Route path="/servicos/minhas-solicitacoes" element={<MinhasSolicitacoes />} />
+        <Route path="/servicos/minhas-solicitacoes/:id" element={<DetalheSolicitacao />} />
+      </Route>
+
       <Route element={<LayoutAntigo />}>
         <Route path="/inicio" element={<Inicio />} />
-        <Route path="/busca" element={<Busca />} />
-        <Route path="/servicos" element={<Servicos />} />
-        <Route path="/servicos/categoria/:idCategoria" element={<CategoriaServicos />} />
-        <Route path="/servicos/:idServico" element={<Servico />} />
         <Route path="/minha-cidade" element={<CidadeAberta />} />
         <Route path="/minha-cidade/obras" element={<ObrasCidade />} />
         <Route path="/minha-cidade/votacoes" element={<ProjetosCidade />} />
@@ -83,7 +91,6 @@ export default function App() {
         <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
         <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
         <Route element={<RotaProtegida />}>
-          <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
           <Route path="/minha-cidade/alertas" element={<Alertas />} />
           <Route path="/perfil/dados" element={<MeusDados />} />
         </Route>
