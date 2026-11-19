@@ -1,4 +1,5 @@
-/* Card do número do herói: branco, raio 20, borda #D0D5DD, padding 20/24. */
+/* Card do número do herói: branco, raio 20, borda #D0D5DD, padding 20/24.
+   Ícone azul de 24, 12 de respiro, o número e a frase em cinza. */
 
 .card {
   box-sizing: border-box;
@@ -8,6 +9,12 @@
   border-radius: var(--raio-card);
   background: var(--cor-superficie);
   text-align: left;
+}
+
+.icone {
+  display: block;
+  margin-bottom: rem(12px);
+  color: var(--cor-azul);
 }
 
 .numero {
@@ -20,21 +27,13 @@
   color: var(--cor-texto);
 }
 
-.vermelho {
-  color: var(--cor-erro);
-}
-
-.azul {
-  color: var(--cor-azul);
-}
-
 .texto {
   display: block;
   margin-top: rem(8px);
-  font-size: rem(15px);
+  font-size: rem(16px);
   font-weight: 600;
   line-height: 1.4;
-  color: var(--cor-texto);
+  color: var(--cor-texto-2);
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
@@ -44,5 +43,9 @@
 
   .numero {
     font-size: rem(40px);
+  }
+
+  .texto {
+    font-size: rem(15px);
   }
 }

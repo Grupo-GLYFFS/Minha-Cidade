@@ -1,12 +1,13 @@
+import Icone from '../Icone';
 import classes from './NumeroGs.module.css';
 
-// Card branco com uma porcentagem grande (48/800) e a frase que explica o número.
-// Recebe o numero (sem o %), o texto e a cor do número: "vermelho" (o problema),
-// "azul" (a comparação) ou nada (texto escuro).
-export default function NumeroGs({ numero, texto, cor }) {
+// Card branco do herói com um ícone, a porcentagem grande (48/800) e a frase que explica o número.
+// Recebe o icone (nome do Material Symbols), o numero (sem o %) e o texto.
+export default function NumeroGs({ icone, numero, texto }) {
   return (
     <p className={classes.card}>
-      <strong className={`${classes.numero} ${cor ? classes[cor] : ''}`}>{numero}%</strong>
+      <Icone nome={icone} tamanho={24} className={classes.icone} />
+      <strong className={classes.numero}>{numero}%</strong>
       <span className={classes.texto}>{texto}</span>
     </p>
   );

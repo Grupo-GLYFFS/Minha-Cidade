@@ -1,10 +1,11 @@
-/* Herói da Apresentação: faixa azul-clara de largura total, conteúdo centralizado em 1088,
-   padding 36 em cima e embaixo. Embaixo, a grade 1fr | 380 | 1fr com os números e o mapa. */
+/* Herói da Apresentação (HR11): faixa azul-clara de largura total, conteúdo centralizado em 1088,
+   padding 36 em cima e 48 embaixo. Embaixo, a frase "O que as prefeituras oferecem pela internet"
+   e a grade 1fr | 420 | 1fr com os números e o mapa. */
 
 .heroi {
   background: var(--cor-faixa);
   border-bottom: var(--espessura-borda) solid var(--cor-azul-borda);
-  padding: rem(36px) 0;
+  padding: rem(36px) 0 rem(48px);
   text-align: center;
 }
 
@@ -29,8 +30,8 @@
 }
 
 .texto {
-  max-width: 50ch;
-  margin: rem(20px) auto 0;
+  max-width: 54ch;
+  margin: rem(16px) auto 0;
   font-size: rem(18px);
   line-height: 1.6;
   color: var(--cor-texto-2);
@@ -44,13 +45,21 @@
   margin-top: rem(28px);
 }
 
+.legenda {
+  margin: rem(48px) 0 0;
+  font-size: rem(16px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--cor-texto);
+}
+
 .dados {
   display: grid;
-  grid-template-columns: 1fr rem(380px) 1fr;
+  grid-template-columns: 1fr rem(420px) 1fr;
   grid-template-areas: 'esquerda centro direita';
   gap: rem(32px);
   align-items: center;
-  margin-top: rem(32px);
+  margin-top: rem(20px);
 }
 
 .esquerda,
@@ -99,7 +108,7 @@
   }
 
   .centro {
-    width: min(100%, rem(380px));
+    width: min(100%, rem(420px));
     margin-inline: auto;
   }
 }
@@ -119,23 +128,53 @@
   }
 
   .titulo {
-    font-size: rem(32px);
+    font-size: rem(30px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
 
   .texto {
+    margin-top: rem(12px);
     font-size: rem(16px);
+    line-height: 1.55;
+  }
+
+  /* Os dois botões dividem a linha em partes iguais */
+  .acoes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: rem(8px);
+    margin-top: rem(24px);
   }
 
   .acoes > * {
-    flex: 1 1 auto;
+    width: 100%;
+    padding-inline: rem(12px);
   }
 
+  .legenda {
+    margin-top: rem(32px);
+    text-align: left;
+  }
+
+  /* Mapa em cima (12 a mais de respiro), depois os cards numa coluna */
   .dados {
     grid-template-columns: 1fr;
     grid-template-areas:
       'centro'
       'esquerda'
       'direita';
-    gap: rem(16px);
+    gap: rem(12px);
+    margin-top: rem(16px);
+  }
+
+  .centro {
+    width: 100%;
+    margin-bottom: rem(12px);
+  }
+
+  .esquerda,
+  .direita {
+    gap: rem(12px);
   }
 }

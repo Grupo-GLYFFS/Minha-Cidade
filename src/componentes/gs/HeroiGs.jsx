@@ -2,15 +2,28 @@ import Botao from '../Botao';
 import PassosGs from './PassosGs';
 import MapaBrasil from './MapaBrasil';
 import NumeroGs from './NumeroGs';
-import { AGENDAMENTO_ONLINE, AGENDAMENTO_ONLINE_GERAL } from '../../dados/pesquisaTic';
+import { FONTE_TIC, NUMEROS_TIC } from '../../dados/pesquisaTic';
 import classes from './HeroiGs.module.css';
 
-// Porcentagens da pesquisa TIC Governo Eletrônico 2023 (cidades pequenas e grandes)
-const PEQUENAS = AGENDAMENTO_ONLINE.find((item) => item.id === 'ate-10-mil').porcentagem;
-const GRANDES = AGENDAMENTO_ONLINE.find((item) => item.id === 'mais-500-mil').porcentagem;
+// Cards de cada lado do mapa (votação e fórum à esquerda, app à direita)
+const ESQUERDA = NUMEROS_TIC.filter((numero) => numero.lado === 'esquerda');
+const DIREITA = NUMEROS_TIC.filter((numero) => numero.lado === 'direita');
 
-// Herói da Apresentação (/): passos, o problema (h1 + texto), os botões e o dado real
-// com a fonte: 27% e 33% à esquerda, o mapa do Brasil em pontos no meio e 88% à direita.
+// Mostra os cards de uma lista de números da pesquisa TIC Governo 2025.
+function cards(numeros) {
+  return numeros.map((numero) => (
+    <NumeroGs
+      key={numero.id}
+      icone={numero.icone}
+      numero={numero.porcentagem}
+      texto={numero.texto}
+    />
+  ));
+}
+
+// Herói da Apresentação (/): passos, o que o app faz (h1 + texto), os botões e o dado real
+// com a fonte: o que as prefeituras oferecem pela internet (votar e fórum à esquerda,
+// app à direita) em volta do mapa do Brasil em pontos com as cidades pequenas.
 export default function HeroiGs() {
   return (
     <section className={classes.heroi} aria-labelledby="gs-titulo">
@@ -19,12 +32,11 @@ export default function HeroiGs() {
           <PassosGs atual="apresentacao" />
         </div>
         <h1 className={classes.titulo} id="gs-titulo">
-          Na maior parte do Brasil, a prefeitura ainda atende por telefone e no balcão
+          Vote, peça e acompanhe a sua cidade
         </h1>
         <p className={classes.texto}>
-          Quase metade dos municípios tem até 10 mil habitantes. Neles, só {PEQUENAS}% das
-          prefeituras com site deixam agendar um serviço pela internet. O Minha Prefeitura é um app
-          que qualquer uma delas pode usar.
+          Pedidos de melhoria, obras e votações do bairro, num app que qualquer prefeitura pode
+          usar.
         </p>
         <div className={classes.acoes}>
           <Botao variante="secundario" para="/inicio">
@@ -35,29 +47,16 @@ export default function HeroiGs() {
           </Botao>
         </div>
 
+        <h2 className={classes.legenda}>O que as prefeituras oferecem pela internet</h2>
         <div className={classes.dados}>
-          <div className={classes.esquerda}>
-            <NumeroGs
-              numero={PEQUENAS}
-              cor="vermelho"
-              texto="das prefeituras de cidades com até 10 mil habitantes deixam agendar online"
-            />
-            <NumeroGs numero={AGENDAMENTO_ONLINE_GERAL} texto="de todas as prefeituras com site" />
-          </div>
+          <div className={classes.esquerda}>{cards(ESQUERDA)}</div>
           <div className={classes.centro}>
             <MapaBrasil />
           </div>
           <div className={classes.direita}>
-            <NumeroGs
-              numero={GRANDES}
-              cor="azul"
-              texto="das prefeituras de cidades com mais de 500 mil habitantes"
-            />
+            {cards(DIREITA)}
             <p className={classes.fonte}>
-              Agendamento:{' '}
-              <a href="https://cetic.br/pt/pesquisa/governo-eletronico/">
-                TIC Governo Eletrônico 2023, Cetic.br/NIC.br
-              </a>
+              Prefeituras, em 2025. Fonte: <a href={FONTE_TIC.link}>{FONTE_TIC.texto}</a>
             </p>
           </div>
         </div>
