@@ -25,6 +25,10 @@
 
 .cabComAcao > :last-child {
   flex: none;
+}
+
+/* Botão de texto não tem borda: puxa 8 px para o texto alinhar com o conteúdo */
+.cabComAcao > [data-variante='texto']:last-child {
   margin-right: rem(-8px);
 }
 
