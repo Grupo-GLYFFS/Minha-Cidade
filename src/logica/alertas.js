@@ -1,7 +1,7 @@
 import { HOJE } from './datas';
 import { projetosEmVotacao, textoPrazoVotacao } from './votacao';
 import { juntarNomes } from './avisos';
-import { buscarSubprefeitura, comArtigo } from './lugares';
+import { buscarSubprefeitura, comArtigo, distritoDoBairro } from './lugares';
 import { NIVEIS_ALERTA } from '../dados/niveisAlerta';
 
 // Diz se um alerta vale num bairro. Alerta sem bairros vale para a cidade toda.
@@ -117,13 +117,13 @@ export function montarAlertas({
   hoje = HOJE,
 }) {
   if (!usuario) return [];
+  // Distrito do endereço (uma conta antiga pode ter o bairro do CEP)
+  const bairro = distritoDoBairro(usuario.bairro)?.nome ?? usuario.bairro;
 
   const defesaCivil = alertasCidade
     .filter(
       (alerta) =>
-        alerta.tipo === 'defesa-civil' &&
-        alerta.ativo &&
-        alertaValeNoBairro(alerta, usuario.bairro),
+        alerta.tipo === 'defesa-civil' && alerta.ativo && alertaValeNoBairro(alerta, bairro),
     )
     .map((alerta) => ({
       id: `defesa-civil-${alerta.id}`,

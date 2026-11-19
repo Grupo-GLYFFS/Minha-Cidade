@@ -1,6 +1,6 @@
 import { HOJE, formatarDataCurta, momentoDeHoje } from './datas';
 import { mascararCpf } from './cpf';
-import { formatarDataDetalhe, formatarHora, somarDias } from './datasExtenso';
+import { formatarDataDetalhe, formatarHora, somarDias, horarioPorExtenso } from './datasExtenso';
 import { STATUS_SOLICITACAO } from '../dados/statusSolicitacao';
 import { GRUPOS_SOLICITACAO } from '../dados/gruposSolicitacao';
 
@@ -179,18 +179,28 @@ export function textoHorario(agendamento) {
   return agendamento.horaFim ? `${inicio} às ${formatarHora(agendamento.horaFim)}` : inicio;
 }
 
+// Calcula o agendamento novo de uma remarcação, mantendo a duração quando há hora de fim.
+// Recebe a solicitação, a data e a hora escolhidas; devolve { data, hora, horaFim? }.
+export function agendamentoRemarcado(solicitacao, data, hora) {
+  const { horaFim } = solicitacao.agendamento;
+  if (!horaFim) return { data, hora };
+  const minutos = (texto) => Number(texto.slice(0, 2)) * 60 + Number(texto.slice(3, 5));
+  const fim = minutos(hora) + minutos(horaFim) - minutos(solicitacao.agendamento.hora);
+  const novoFim = `${String(Math.floor(fim / 60)).padStart(2, '0')}:${String(fim % 60).padStart(2, '0')}`;
+  return { data, hora, horaFim: novoFim };
+}
+
+// Frase da remarcação, igual no aviso do rodapé, no histórico e na notificação.
+// Recebe o começo ("Remarcado" ou "Remarcada") e o agendamento novo;
+// devolve, por exemplo, "Remarcado para sexta, 20 de novembro, das 7h às 13h."
+export function textoRemarcado(comeco, { data, hora, horaFim }) {
+  return `${comeco} para ${formatarDataDetalhe(data)}, ${horarioPorExtenso(hora, horaFim)}.`;
+}
+
 // Remarca um agendamento para outro dia e hora, com a etapa nova no histórico.
 // Recebe a solicitação, a data e a hora escolhidas e o momento de agora; devolve a solicitação nova.
 export function remarcarSolicitacao(solicitacao, data, hora, agora = momentoDeHoje()) {
-  const { horaFim } = solicitacao.agendamento;
-  // Mantém a duração quando o agendamento tem hora de fim
-  let novoFim;
-  if (horaFim) {
-    const minutos = (texto) => Number(texto.slice(0, 2)) * 60 + Number(texto.slice(3, 5));
-    const fim = minutos(hora) + minutos(horaFim) - minutos(solicitacao.agendamento.hora);
-    novoFim = `${String(Math.floor(fim / 60)).padStart(2, '0')}:${String(fim % 60).padStart(2, '0')}`;
-  }
-  const agendamento = { data, hora, ...(novoFim ? { horaFim: novoFim } : {}) };
+  const agendamento = agendamentoRemarcado(solicitacao, data, hora);
   return {
     ...solicitacao,
     agendamento,
@@ -204,7 +214,7 @@ export function remarcarSolicitacao(solicitacao, data, hora, agora = momentoDeHo
         status: 'agendada',
         rotulo: 'Remarcada',
         em: agora,
-        textos: [`Remarcada para ${formatarDataDetalhe(data)}, às ${formatarHora(hora)}.`],
+        textos: [textoRemarcado('Remarcada', agendamento)],
       },
     ],
   };

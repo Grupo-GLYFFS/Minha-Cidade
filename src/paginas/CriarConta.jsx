@@ -25,7 +25,7 @@ export default function CriarConta() {
   const [jaEstavaLogado] = useState(logado);
   const [valores, setValores] = useState(VALORES_CRIAR_CONTA);
   const [passo, setPasso] = useState('dados');
-  const [bairro, setBairro] = useState('');
+  const [bairro, setBairro] = useState(null);
 
   // Dados certos: guarda e passa para a confirmação do e-mail
   function aoContinuar(valoresDoFormulario) {

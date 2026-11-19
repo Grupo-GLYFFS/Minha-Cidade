@@ -50,6 +50,14 @@ export function formatarHora(texto) {
   return m === 0 ? `${h}h` : `${h}h${String(m).padStart(2, '0')}`;
 }
 
+// Horário de um agendamento. Recebe a hora e, se houver, a hora de fim ("07:00", "13:00");
+// devolve "das 7h às 13h" ou, sem hora de fim, "às 8h30".
+export function horarioPorExtenso(hora, horaFim) {
+  return horaFim
+    ? `das ${formatarHora(hora)} às ${formatarHora(horaFim)}`
+    : `às ${formatarHora(hora)}`;
+}
+
 // Momento completo. Recebe uma data ISO com hora e o separador;
 // devolve "terça, 3 de novembro · 20h15" (ou com ", " no lugar do " · ").
 export function formatarMomento(dataHora, separador = ' · ') {

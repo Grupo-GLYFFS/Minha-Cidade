@@ -78,9 +78,10 @@ export default function CamposEnderecoConta({ aoMudarBairro }) {
     aoMudarCep(limparCep(cep));
   }, [cep]);
 
-  // Avisa o painel azul do distrito (só depois de um CEP de São Paulo achado)
+  // Avisa o painel azul do distrito: null sem um CEP de São Paulo achado;
+  // "" com o CEP achado e o distrito ainda por escolher
   useEffect(() => {
-    aoMudarBairro?.(situacao === 'encontrado' ? distrito : '');
+    aoMudarBairro?.(situacao === 'encontrado' ? distrito : null);
   }, [situacao, distrito, aoMudarBairro]);
 
   const campoCep = register('cep', {
@@ -123,12 +124,7 @@ export default function CamposEnderecoConta({ aoMudarBairro }) {
         </Botao>
       )}
       {situacao === 'encontrado' && (
-        <EnderecoEncontrado
-          rua={rua}
-          bairro={bairro}
-          distrito={distritoAutomatico ? distrito : ''}
-          cep={cep}
-        />
+        <EnderecoEncontrado rua={rua} bairro={bairro} distrito={distrito} cep={cep} />
       )}
       {situacao === 'encontrado' && !distritoAutomatico && (
         <CampoDistrito

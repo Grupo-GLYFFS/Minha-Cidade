@@ -121,15 +121,16 @@ export function votacoesDoInicio(projetos, bairro = null, hoje = HOJE) {
 // Monta os cards do "Para onde ir" do Início, cada um com um número real.
 // Com conta: Meus pedidos, Minhas solicitações, Meu bairro e Minha cidade.
 // Visitante: só Meu bairro e Minha cidade.
-// Recebe { usuario, pedidos, solicitacoes }; devolve [{ icone, titulo, meta, para }].
-export function destinosDoInicio({ usuario, pedidos, solicitacoes }) {
+// Recebe { usuario, bairro (o distrito da pessoa ou o escolhido sem conta; null se nenhum),
+// pedidos, solicitacoes }; devolve [{ icone, titulo, meta, para }].
+export function destinosDoInicio({ usuario, bairro = null, pedidos, solicitacoes }) {
   const alertas = (bairros) =>
     contar(resumirLugar(pedidos, bairros).alertas, 'alerta ativo', 'alertas ativos');
   const hubs = [
     {
       icone: 'home_pin',
       titulo: 'Meu bairro',
-      meta: usuario ? `${usuario.bairro} · ${alertas([usuario.bairro])}` : 'O resumo do seu bairro',
+      meta: bairro ? `${bairro} · ${alertas([bairro])}` : 'Escolha um bairro',
       para: '/meu-bairro',
     },
     {

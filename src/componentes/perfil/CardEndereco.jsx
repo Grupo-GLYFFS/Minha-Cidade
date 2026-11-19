@@ -1,13 +1,16 @@
 import SecaoCard from '../SecaoCard';
 import Botao from '../Botao';
 import { nomeSubprefeitura, subprefeituraDoBairro } from '../../logica/localPedido';
+import { distritoDoBairro } from '../../logica/lugares';
 import classes from './CardEndereco.module.css';
 
 // Card "Seu endereço" do Meu perfil: rua e número em destaque, CEP e cidade embaixo e,
 // numa faixa separada por linha, o bairro e a subprefeitura. "Editar" abre o popup.
 // Recebe o usuario (endereço) e aoEditar().
 export default function CardEndereco({ usuario, aoEditar }) {
-  const subprefeitura = nomeSubprefeitura(subprefeituraDoBairro(usuario.bairro));
+  // A linha do bairro mostra o distrito do app (uma conta antiga pode ter o bairro do CEP)
+  const distrito = distritoDoBairro(usuario.bairro)?.nome ?? usuario.bairro;
+  const subprefeitura = nomeSubprefeitura(subprefeituraDoBairro(distrito));
   const complemento = usuario.complemento ? ` · ${usuario.complemento}` : '';
 
   return (
@@ -34,7 +37,7 @@ export default function CardEndereco({ usuario, aoEditar }) {
       <dl className={classes.local}>
         <div>
           <dt>Bairro</dt>
-          <dd>{usuario.bairro}</dd>
+          <dd>{distrito}</dd>
         </div>
         {subprefeitura && (
           <div>

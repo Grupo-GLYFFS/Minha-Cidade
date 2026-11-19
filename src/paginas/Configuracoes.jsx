@@ -12,6 +12,7 @@ import PopupDesligarAlertas from '../componentes/configuracoes/PopupDesligarAler
 import { useAcessibilidade } from '../contexto/useAcessibilidade';
 import { usePreferenciasAvisos } from '../contexto/usePreferenciasAvisos';
 import { useSessao } from '../contexto/useSessao';
+import { useBairroDaPessoa } from '../contexto/useBairroDaPessoa';
 import { TIPOS_AVISO } from '../dados/avisosConta';
 import { rotuloComBairro, textoCanais } from '../logica/avisosConta';
 import { lugarPorNome, noLugar } from '../logica/lugares';
@@ -31,7 +32,8 @@ export default function Configuracoes() {
   // Muda a cada abertura do popup de canais, para ele começar dos canais salvos
   const [abertura, setAbertura] = useState(0);
 
-  const bairro = usuario.bairro;
+  // Distrito do endereço (uma conta antiga pode ter o bairro do CEP)
+  const { nome: bairro } = useBairroDaPessoa();
   const tipos = TIPOS_AVISO.map((tipo) => ({
     ...tipo,
     rotulo: rotuloComBairro(tipo.rotulo, bairro),

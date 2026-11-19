@@ -20,6 +20,7 @@ import { usePedidos } from '../contexto/usePedidos';
 import { useSolicitacoes } from '../contexto/useSolicitacoes';
 import { useVotos } from '../contexto/useVotos';
 import { useOQueSegue } from '../contexto/useOQueSegue';
+import { useBairroDaPessoa } from '../contexto/useBairroDaPessoa';
 import { pedidosAbertosDaPessoa } from '../logica/pedidos';
 import { lugarDaVotacao } from '../logica/votacao';
 import {
@@ -43,7 +44,10 @@ export default function Inicio() {
   const { votoDe, resultado } = useVotos();
   // O que a pessoa segue: mesma regra de O que você segue e do Meu perfil
   const { seguidos: tudoSeguido, seguirVotacoes: votacoesSeguidas } = useOQueSegue();
-  const bairro = usuario?.bairro ?? null;
+  // Bairro da pessoa: com conta, o distrito do endereço; sem conta, o escolhido (ou nenhum)
+  const daPessoa = useBairroDaPessoa();
+  const bairro = usuario ? daPessoa.nome : null;
+  const bairroDoCard = daPessoa.temConta || daPessoa.definido ? daPessoa.nome : null;
 
   const agenda = agendaDoInicio(solicitacoes);
   const meusPedidos = usuario ? pedidosAbertosDaPessoa(pedidos, usuario.id) : [];
@@ -170,7 +174,9 @@ export default function Inicio() {
         )}
       </div>
 
-      <ParaOndeIr destinos={destinosDoInicio({ usuario, pedidos, solicitacoes })} />
+      <ParaOndeIr
+        destinos={destinosDoInicio({ usuario, bairro: bairroDoCard, pedidos, solicitacoes })}
+      />
     </Pagina>
   );
 }

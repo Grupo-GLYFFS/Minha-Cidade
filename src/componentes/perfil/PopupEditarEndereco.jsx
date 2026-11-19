@@ -41,6 +41,8 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
   const [erros, setErros] = useState({});
   const [avisoCep, setAvisoCep] = useState('');
   const [bairroLivre, setBairroLivre] = useState(false);
+  // O último CEP buscado não trouxe bairro (ou a busca falhou): o distrito é obrigatório
+  const [cepSemBairro, setCepSemBairro] = useState(false);
   const [buscando, setBuscando] = useState(false);
 
   // Troca um campo e apaga o erro dele. Recebe o nome do campo e o valor.
@@ -65,10 +67,12 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
         cidadeDoCep: resposta.cidade,
         estadoDoCep: resposta.estado,
         rua: resposta.rua || atual.rua,
-        bairro: resposta.bairro || atual.bairro,
-        distrito: sugerirDistrito(resposta.bairro || atual.bairro)?.nome ?? '',
+        // Sem bairro no CEP, o bairro antigo não vale mais para o endereço novo
+        bairro: resposta.bairro ?? '',
+        distrito: sugerirDistrito(resposta.bairro)?.nome ?? '',
       }));
       setBairroLivre(!resposta.bairro);
+      setCepSemBairro(!resposta.bairro);
       // CEP de outra cidade: o erro aparece na hora, com a mesma frase de quando salva
       if (resposta.situacao === 'fora-da-cidade') {
         try {
@@ -81,11 +85,12 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
     }
     setAvisoCep(AVISO_CEP[resposta.situacao]);
     setBairroLivre(true);
+    setCepSemBairro(true);
   }
 
   // Distrito achado pelo bairro (sem ele, a pessoa escolhe no campo "Distrito")
   const distritoAchado = distritoDoBairro(valores.bairro);
-  const pedirDistrito = Boolean(valores.bairro.trim()) && !distritoAchado;
+  const pedirDistrito = cepSemBairro || (Boolean(valores.bairro.trim()) && !distritoAchado);
 
   // Confere tudo e salva; com erro, mostra embaixo de cada campo e leva o foco ao primeiro
   function salvar(evento) {
@@ -104,7 +109,7 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
     }
     if (limpos && !novos.distrito) {
       const { distrito: _escolhido, ...endereco } = limpos;
-      aoSalvar({ ...endereco, bairro: distritoAchado?.nome ?? valores.distrito });
+      aoSalvar({ ...endereco, bairro: pedirDistrito ? valores.distrito : distritoAchado.nome });
     } else {
       setErros(novos);
       const primeiro = ORDEM.find((campo) => novos[campo]);
@@ -202,7 +207,7 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
         {pedirDistrito && (
           <CampoDistrito
             id="endereco-distrito"
-            ajuda={`Escolha o distrito onde fica ${valores.bairro}.`}
+            ajuda={`Escolha o distrito onde fica ${valores.bairro.trim() || 'o seu endereço'}.`}
             value={valores.distrito}
             erro={erros.distrito}
             onChange={(evento) => mudar('distrito', evento.currentTarget.value)}

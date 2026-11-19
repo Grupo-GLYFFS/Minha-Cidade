@@ -1,5 +1,5 @@
 import { diaDaSemana, diasEntre, formatarDataExtenso } from './datas';
-import { formatarDataDetalhe, formatarHora } from './datasExtenso';
+import { formatarDataDetalhe, horarioPorExtenso } from './datasExtenso';
 
 // Começo do endereço das notificações que falam de uma solicitação de serviço
 const CAMINHO_SOLICITACAO = '/servicos/minhas-solicitacoes/';
@@ -24,13 +24,9 @@ export function aplicarSituacaoDasSolicitacoes(notificacoes, solicitacoes) {
     const remarcada = (solicitacao.historico ?? []).some((etapa) => etapa.rotulo === 'Remarcada');
     if (remarcada && solicitacao.agendamento) {
       const { data, hora, horaFim } = solicitacao.agendamento;
-      // "às 8h30" ou, com hora de fim, "das 7h às 13h"
-      const horario = horaFim
-        ? `das ${formatarHora(hora)} às ${formatarHora(horaFim)}`
-        : `às ${formatarHora(hora)}`;
       return {
         ...item,
-        texto: `Remarcado para ${formatarDataDetalhe(data)}, ${horario}.`,
+        texto: `Remarcado para ${formatarDataDetalhe(data)}, ${horarioPorExtenso(hora, horaFim)}.`,
         situacao: { cor: 'azul', rotulo: 'Remarcado' },
       };
     }

@@ -3,7 +3,7 @@ import Botao from '../Botao';
 import PopupRemarcar from './PopupRemarcar';
 import PopupCancelar from './PopupCancelar';
 import { useSolicitacoes } from '../../contexto/useSolicitacoes';
-import { formatarDataDetalhe, formatarHora } from '../../logica/datasExtenso';
+import { agendamentoRemarcado, textoRemarcado } from '../../logica/solicitacoes';
 
 // Botões "Remarcar" e "Cancelar" de um agendamento, com os popups de cada um.
 // Depois de remarcar ou cancelar, avisa a página com a frase do que aconteceu.
@@ -16,7 +16,7 @@ export default function AcoesAgendamento({ solicitacao, compacto = false, aoAvis
   function confirmarRemarcar(data, hora) {
     remarcar(solicitacao.id, data, hora);
     setAberto(null);
-    aoAvisar?.(`Remarcado para ${formatarDataDetalhe(data)}, às ${formatarHora(hora)}.`);
+    aoAvisar?.(textoRemarcado('Remarcado', agendamentoRemarcado(solicitacao, data, hora)));
   }
 
   // Cancela, fecha o popup e conta para a página

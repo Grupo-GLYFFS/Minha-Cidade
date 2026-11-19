@@ -13,7 +13,8 @@ const VANTAGENS = [
 
 // Painel azul à esquerda das páginas de conta: logo, mensagem no meio e rodapé curto.
 // Recebe o tipo ("entrar" mostra o que a conta permite; "endereco" mostra o bairro e quem cuida dele)
-// e o bairro (distrito) achado pelo CEP. Sem um CEP válido de São Paulo, não mostra bairro nenhum.
+// e o bairro (distrito) achado pelo CEP ou escolhido: "" quando o CEP foi achado e falta escolher
+// o distrito; null sem um CEP válido de São Paulo (aí não mostra bairro nenhum).
 export default function PainelConta({ tipo = 'entrar', bairro }) {
   const subprefeitura = bairro ? subprefeituraDe(bairro) : null;
 
@@ -56,7 +57,10 @@ export default function PainelConta({ tipo = 'entrar', bairro }) {
               <Icone nome="home_pin" />
               <div>
                 <dt>Seu bairro</dt>
-                <dd>{bairro || 'Aparece quando você digitar o CEP'}</dd>
+                <dd>
+                  {bairro ||
+                    (bairro === '' ? 'Escolha o distrito' : 'Aparece quando você digitar o CEP')}
+                </dd>
               </div>
             </div>
             {subprefeitura && (
