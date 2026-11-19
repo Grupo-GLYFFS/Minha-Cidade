@@ -1,34 +1,24 @@
-import { Text, Title } from '@mantine/core';
-import Cartao from '../Cartao';
+import SecaoCard from '../SecaoCard';
 import Icone from '../Icone';
 import { RECURSOS_ACESSIBILIDADE } from '../../dados/recursosAcessibilidade';
 import classes from './RecursosApp.module.css';
 
-// Lista dos recursos de acessibilidade que o app já traz, sem precisar ligar nada.
+// Card "Recursos do app": o que o app já traz de acessibilidade, sem precisar ligar nada.
+// Uma linha por recurso (ícone de 20, nome e frase), com divisória de borda a borda.
 export default function RecursosApp() {
   return (
-    <Cartao component="section" aria-labelledby="titulo-recursos">
-      <Title order={2} id="titulo-recursos" fz={{ base: 18, md: 20 }} fw={700} mb={4}>
-        Recursos do app
-      </Title>
-      <Text c="var(--cor-texto-suave)" mb="md">
-        Funcionam sempre, para todo mundo.
-      </Text>
+    <SecaoCard titulo="Recursos do app" contagem={RECURSOS_ACESSIBILIDADE.length} lista>
       <ul className={classes.lista}>
         {RECURSOS_ACESSIBILIDADE.map((recurso) => (
           <li key={recurso.nome} className={classes.item}>
-            <span className={classes.icone}>
-              <Icone nome={recurso.icone} tamanho={20} />
-            </span>
+            <Icone nome={recurso.icone} tamanho={20} className={classes.icone} />
             <div className={classes.textos}>
-              <Text fw={700}>{recurso.nome}</Text>
-              <Text fz="sm" c="var(--cor-texto-suave)">
-                {recurso.texto}
-              </Text>
+              <p className={classes.nome}>{recurso.nome}</p>
+              <p className={classes.texto}>{recurso.texto}</p>
             </div>
           </li>
         ))}
       </ul>
-    </Cartao>
+    </SecaoCard>
   );
 }

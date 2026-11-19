@@ -1,9 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import LayoutAntigo from './componentes/LayoutAntigo';
-import PaginaEmConstrucao from './componentes/PaginaEmConstrucao';
 import RotaProtegida from './componentes/RotaProtegida';
-import { PAGINAS_EM_CONSTRUCAO } from './dados/paginasEmConstrucao';
 import Inicio from './paginas/Inicio';
 import Busca from './paginas/Busca';
 import Servicos from './paginas/Servicos';
@@ -26,7 +23,6 @@ import OrcamentoCidade from './paginas/OrcamentoCidade';
 import OrcamentoBairro from './paginas/OrcamentoBairro';
 import Perfil from './paginas/Perfil';
 import MeusPedidos from './paginas/MeusPedidos';
-import MeusDados from './paginas/MeusDados';
 import Entrar from './paginas/Entrar';
 import CriarConta from './paginas/CriarConta';
 import EsqueciSenha from './paginas/EsqueciSenha';
@@ -54,28 +50,11 @@ import Equipe from './paginas/Equipe';
 const Componentes = lazy(() => import('./paginas/Componentes'));
 
 // Rotas do app, no mapa de 18/11 (ver .claude/visao-do-projeto.md).
-// - Páginas novas usam <Pagina> por conta própria (topo, cabeçalho, coluna de 880 e rodapé).
-// - Telas antigas ficam dentro de <LayoutAntigo>, que põe o topo e o rodapé em volta delas.
-//   TODO: cada tela refeita sai do LayoutAntigo e passa a usar <Pagina>.
-// - Rotas sem tela ainda abrem a PaginaEmConstrucao (lista em dados/paginasEmConstrucao.js).
+// - Cada página usa <Pagina> por conta própria (topo, cabeçalho, coluna de 880 e rodapé).
 // - As que ficam dentro de <RotaProtegida> precisam de conta: o visitante vai para "Entrar".
 export default function App() {
   return (
     <Routes>
-      {PAGINAS_EM_CONSTRUCAO.map((pagina) => (
-        <Route
-          key={pagina.caminho}
-          path={pagina.caminho}
-          element={
-            <PaginaEmConstrucao
-              titulo={pagina.titulo}
-              icone={pagina.icone}
-              trilha={pagina.trilha}
-            />
-          }
-        />
-      ))}
-
       {/* Global Solution: a Apresentação abre o app; depois Como funciona, Impacto e Equipe */}
       <Route path="/" element={<Apresentacao />} />
       <Route path="/como-funciona" element={<ComoFunciona />} />
@@ -131,13 +110,6 @@ export default function App() {
         <Route path="/perfil/seguindo" element={<OQueVoceSegue />} />
       </Route>
 
-      <Route element={<LayoutAntigo />}>
-        <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
-        <Route element={<RotaProtegida />}>
-          <Route path="/perfil/dados" element={<MeusDados />} />
-        </Route>
-      </Route>
-
       {/* Pedidos (zeladoria) */}
       <Route path="/minha-cidade/pedidos" element={<PedidosCidade />} />
       <Route path="/minha-cidade/pedidos/:id" element={<DetalhePedido />} />
@@ -149,14 +121,16 @@ export default function App() {
         <Route path="/perfil/pedidos" element={<MeusPedidos />} />
       </Route>
 
-      {/* Conta (páginas novas, fora do LayoutAntigo; precisam de conta) */}
+      {/* Conta (precisam de conta); o antigo "Meus dados" virou parte do Meu perfil */}
       <Route element={<RotaProtegida />}>
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/notificacoes" element={<Notificacoes />} />
         <Route path="/configuracoes" element={<Configuracoes />} />
       </Route>
+      <Route path="/perfil/dados" element={<Navigate to="/perfil" replace />} />
 
-      {/* Ajuda (páginas novas, fora do LayoutAntigo) */}
+      {/* Ajuda */}
+      <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
       <Route path="/ajuda/telefones" element={<TelefonesUteis />} />
       <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />
       <Route path="/ajuda/privacidade" element={<Privacidade />} />

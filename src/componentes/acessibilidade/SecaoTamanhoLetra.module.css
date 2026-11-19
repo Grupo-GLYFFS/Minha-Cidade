@@ -1,7 +1,3 @@
-.controle {
-  margin-top: 12px;
-}
-
 /* Cada opção mostra um "A" maior que o anterior */
 .letra {
   font-weight: 800;
@@ -21,10 +17,24 @@
   font-size: rem(24px);
 }
 
-/* Caixa da prévia: dentro do cartão (raio 20, padding 16) usa o mínimo de 8 px */
+/* Caixa da prévia: raio 12, como campos e miniaturas */
 .previa {
-  margin-top: 16px;
+  margin-top: rem(16px);
   padding: var(--pad);
-  border-radius: 8px;
+  border-radius: var(--raio-controle);
   background: var(--cor-cinza-suave);
+}
+
+.textoPrevia {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.tamanho {
+  margin: rem(4px) 0 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
 }

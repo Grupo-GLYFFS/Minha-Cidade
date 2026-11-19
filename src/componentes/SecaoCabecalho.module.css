@@ -1,5 +1,0 @@
-/* O link "Ver todos" nunca quebra em duas linhas */
-.link {
-  flex: none;
-  white-space: nowrap;
-}

@@ -45,7 +45,7 @@ export default function ObrasCidade() {
 }
 ```
 
-Depois, em `src/App.jsx`, troque a rota: tire o item de `src/dados/paginasEmConstrucao.js` (ou tire a página antiga de dentro do `<LayoutAntigo>`) e coloque `<Route path="…" element={<SuaPagina />} />` fora do `LayoutAntigo`.
+Depois, em `src/App.jsx`, coloque a rota: `<Route path="…" element={<SuaPagina />} />`.
 
 ## Moldura
 
@@ -151,5 +151,3 @@ Não têm trilha: Início, Serviços, Cidade de São Paulo, as páginas da conta
 
 - `Rodape`: simples, até o usuário escolher o novo.
 - `Topo` no celular: o menu some abaixo de 992 px.
-- `LayoutAntigo`, `CabecalhoAntigo`, `Etiqueta`, `EtiquetaStatus`, `SecaoCabecalho`, `LinkVoltar`, `AvisoAlerta` e `TextoResponsivo`: só as telas antigas usam. Não use em página nova. Apague quando a última tela que usa for refeita.
-- Rotas sem tela: `src/dados/paginasEmConstrucao.js`.
