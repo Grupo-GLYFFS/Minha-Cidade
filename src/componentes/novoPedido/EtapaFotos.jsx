@@ -8,6 +8,7 @@ import classes from './NovoPedido.module.css';
 
 // Etapa 3 do Abrir pedido: até 3 fotos (opcional), arrastando para a área ou pelo botão.
 // Cada foto aparece em miniatura, com o X para tirar. Tipo e tamanho são conferidos na hora.
+// No celular a área de arrastar some: as fotos ficam em grade de 3 com o quadrado "Adicionar".
 // Recebe as fotos atuais ([{ nome, url }]) e aoMudar(novaLista).
 export default function EtapaFotos({ fotos, aoMudar }) {
   const entrada = useRef(null);
@@ -93,7 +94,23 @@ export default function EtapaFotos({ fotos, aoMudar }) {
           {erro}
         </p>
       )}
-      <MiniaturasFotos fotos={fotos} aoTirar={tirar} />
+      <MiniaturasFotos
+        fotos={fotos}
+        aoTirar={tirar}
+        adicionar={
+          !cheia && (
+            <button
+              type="button"
+              className={classes.adicionar}
+              aria-describedby="rotulo-fotos ajuda-fotos"
+              onClick={() => entrada.current?.click()}
+            >
+              <Icone nome="add_a_photo" tamanho={28} />
+              Adicionar<span className={classes.oculto}> fotos</span>
+            </button>
+          )
+        }
+      />
     </div>
   );
 }

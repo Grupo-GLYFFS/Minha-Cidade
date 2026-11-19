@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
+import Botao from '../componentes/Botao';
+import FaixaPasso from '../componentes/celular/FaixaPasso';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import SecaoCard from '../componentes/SecaoCard';
 import EtapaDescreva from '../componentes/novoPedido/EtapaDescreva';
@@ -225,25 +227,43 @@ export default function NovoPedido() {
   }
 
   const nomeEtapa = ETAPAS_NOVO_PEDIDO[etapa - 1];
+  // Celular: "‹ Voltar" leva à etapa anterior (na 1ª, à lista de pedidos) e "Cancelar" à lista
+  const lista = origem ? `${origem.base}/pedidos` : '/minha-cidade/pedidos';
+  const anterior =
+    etapa === 1
+      ? lista
+      : `/pedidos/novo?${new URLSearchParams(comOrigem(etapa === 2 ? {} : { etapa: String(etapa - 1) }))}`;
 
   return (
     <Pagina
+      voltar={{ rotulo: 'Voltar', para: anterior }}
+      tituloTopo="Abrir pedido"
+      acaoTopo={
+        <Botao variante="texto" compacto para={lista}>
+          Cancelar
+        </Botao>
+      }
+      faixaTopo={<FaixaPasso etapas={ETAPAS_NOVO_PEDIDO} atual={etapa} />}
       cabecalho={
-        <CabecalhoPagina
-          tipo="formulario"
-          titulo="Abrir pedido"
-          trilha={[
-            ...(origem
-              ? [...origem.trilha, { rotulo: 'Pedidos', para: `${origem.base}/pedidos` }]
-              : [
-                  { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
-                  { rotulo: 'Pedidos', para: '/minha-cidade/pedidos' },
-                ]),
-            { rotulo: 'Abrir pedido' },
-          ]}
-          etapas={ETAPAS_NOVO_PEDIDO}
-          etapaAtual={etapa}
-        />
+        // No celular o cabeçalho azul sai (o nome vai na barra do topo e as etapas na faixa);
+        // o h1 continua lá para o leitor de tela
+        <div className={classes.cabecalhoComputador}>
+          <CabecalhoPagina
+            tipo="formulario"
+            titulo="Abrir pedido"
+            trilha={[
+              ...(origem
+                ? [...origem.trilha, { rotulo: 'Pedidos', para: `${origem.base}/pedidos` }]
+                : [
+                    { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
+                    { rotulo: 'Pedidos', para: '/minha-cidade/pedidos' },
+                  ]),
+              { rotulo: 'Abrir pedido' },
+            ]}
+            etapas={ETAPAS_NOVO_PEDIDO}
+            etapaAtual={etapa}
+          />
+        </div>
       }
     >
       <form className={classes.formulario} noValidate onSubmit={aoEnviar}>

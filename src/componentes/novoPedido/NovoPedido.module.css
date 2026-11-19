@@ -661,55 +661,213 @@
 
 /* ---------- Celular ---------- */
 
+/* Só no celular: a grade de fotos vazia (só com o "Adicionar") e o quadrado "Adicionar" */
+.minisSoCelular,
+.miniAdicionar {
+  display: none;
+}
+
+.adicionar {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: rem(4px);
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: rem(2px) dashed var(--cor-borda-forte);
+  border-radius: var(--raio-controle);
+  background: var(--cor-fundo-card);
+  color: var(--cor-azul-escuro);
+  font: inherit;
+  font-size: rem(14px);
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.adicionar:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+/* Lista de categorias dentro da folha "Trocar categoria" */
+.listaFolha {
+  margin: 0;
+  padding: rem(16px);
+  border: 0;
+}
+
 @media (max-width: $mantine-breakpoint-sm) {
-  .categorias {
-    grid-template-columns: 1fr;
-  }
-
-  .repetidoCab,
-  .repetidoPedido,
-  .repetidoBotoes {
-    padding-inline: rem(16px);
-  }
-
-  .linhaRevisao {
-    grid-template-columns: 1fr auto;
-  }
-
-  .linhaValor {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-
-  .minisPequenas {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  /* Barra do pé: presa acima da barra de abas, etapa e "Passo x de N" à esquerda e só o
-     botão de avançar à direita (o Voltar fica no alto da página) */
-  .barra {
-    bottom: var(--altura-abas);
-    flex-wrap: nowrap;
-    margin: rem(32px) 0 rem(-48px);
-  }
-
-  .barraTexto {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-
-  .barraTexto > * {
+  /* O cabeçalho azul sai (fica só para o leitor de tela): o nome vai na barra do topo
+     e as etapas na faixa "Passo x de 4" */
+  .cabecalhoComputador {
+    position: absolute;
+    width: 1px;
+    height: 1px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    clip-path: inset(50%);
     white-space: nowrap;
   }
 
-  .barraBotoes {
-    flex: none;
+  /* A barra do computador some: no celular vale a BarraPe (na BarraEtapas) */
+  .barra {
+    display: none;
   }
 
-  .barraBotoes > :not(:last-child) {
+  /* Etapa 1: categoria sugerida numa linha, com "Trocar" à direita */
+  .sugestao {
+    border-radius: rem(12px);
+  }
+
+  .sugestaoLinha {
+    flex-wrap: nowrap;
+    column-gap: rem(12px);
+    padding: rem(12px) rem(12px) rem(12px) rem(14px);
+  }
+
+  .sugestaoLinha :global(.botao),
+  .sugestaoLinha > button,
+  .sugestaoLinha > a {
+    flex: none;
+    padding-inline: rem(16px);
+  }
+
+  .categorias {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Folha "Trocar categoria": grade de 2 colunas, cards de 88 com o botão de opção no canto */
+  .categoriasFolha {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 0;
+  }
+
+  .categoriasFolha .categoria {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: rem(8px);
+    min-height: rem(88px);
+    padding: rem(12px);
+    font-size: rem(15px);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .categoriasFolha .categoria input {
+    position: absolute;
+    top: rem(12px);
+    right: rem(12px);
+  }
+
+  .categoriasFolha .iconeCategoria {
+    width: rem(32px);
+    height: rem(32px);
+  }
+
+  .categoriasFolha .categoria:has(input:checked) {
+    padding: calc(rem(12px) - 1px);
+    border: rem(2px) solid var(--cor-azul);
+    background: var(--cor-faixa);
+  }
+
+  /* Etapa 2: aviso de pedido repetido */
+  .repetidoCab,
+  .repetidoPedido {
+    padding: rem(16px);
+  }
+
+  .repetidoCab {
+    column-gap: rem(12px);
+  }
+
+  .repetidoBotoes {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: rem(4px);
+    padding: rem(12px) rem(16px) rem(16px);
+  }
+
+  .repetidoBotoes > * {
+    width: 100%;
+  }
+
+  /* Etapa 3: sem a área de arrastar; fotos em grade de 3 com o quadrado "Adicionar" */
+  .zona {
     display: none;
+  }
+
+  .minis,
+  .minisPequenas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: rem(8px);
+  }
+
+  .minisSoCelular {
+    display: grid;
+  }
+
+  .miniAdicionar {
+    display: block;
+    min-width: 0;
+  }
+
+  .minis:not(.minisPequenas) .miniFoto {
+    aspect-ratio: 1;
+  }
+
+  .miniTirar {
+    top: rem(4px);
+    right: rem(4px);
+    border: var(--espessura-borda) solid var(--cor-borda);
+  }
+
+  .miniNome {
+    font-size: rem(12px);
+  }
+
+  /* Etapa 4: rótulo em cima do valor, ação à direita */
+  .grupoRevisaoCab {
+    min-height: rem(56px);
+    padding: rem(10px) rem(6px) rem(10px) var(--pad-lateral);
+  }
+
+  .grupoRevisaoTitulo {
+    font-size: rem(17px);
+  }
+
+  .linhaRevisao {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: rem(2px) rem(12px);
+    min-height: 0;
+    padding: rem(12px) rem(6px) rem(12px) var(--pad-lateral);
+  }
+
+  .linhaRotulo {
+    grid-column: 1;
+    grid-row: 1;
+    gap: rem(12px);
+    font-size: rem(14px);
+    color: var(--cor-texto-2);
+  }
+
+  .linhaValor {
+    grid-column: 1;
+    grid-row: 2;
+    padding-left: rem(32px);
+    font-size: rem(16px);
+    font-weight: 600;
+  }
+
+  .linhaAcao {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
   }
 
   .protocoloNumero {

@@ -1,5 +1,8 @@
+import { useMediaQuery } from '@mantine/hooks';
 import Icone from '../Icone';
 import Botao from '../Botao';
+import Popup from '../Popup';
+import { CONSULTA_CELULAR } from '../../logica/navegacaoCelular';
 import { CATEGORIAS_PEDIDO } from '../../dados/categoriasPedido';
 import { buscarCategoria } from '../../logica/pedidos';
 import classes from './NovoPedido.module.css';
@@ -9,6 +12,7 @@ const TEXTO_MINIMO = 10;
 
 // Categoria sugerida pelo app a partir da descrição, com "Trocar categoria" para escolher outra.
 // Se o app não achar a categoria, a lista já vem aberta para a pessoa escolher.
+// No celular, "Trocar" abre a lista numa folha que sobe de baixo, em grade de 2 colunas.
 // Recebe o id da categoria atual, a descrição, o erro, aoEscolher(id), aberta e aoAbrir(aberta).
 export default function SugestaoCategoria({
   categoria,
@@ -18,9 +22,38 @@ export default function SugestaoCategoria({
   aberta,
   aoAbrir,
 }) {
+  const celular = useMediaQuery(CONSULTA_CELULAR);
   const atual = buscarCategoria(categoria);
   if (!atual && descricao.trim().length < TEXTO_MINIMO && !erro) return null;
-  const listaVisivel = aberta || !atual;
+  // No celular, com uma categoria já sugerida, a lista vai para a folha
+  const naFolha = celular && Boolean(atual);
+  const listaVisivel = !naFolha && (aberta || !atual);
+
+  // As categorias, em botões de opção (na folha, em grade de 2 colunas)
+  function opcoes(folha) {
+    return (
+      <div
+        className={folha ? `${classes.categorias} ${classes.categoriasFolha}` : classes.categorias}
+      >
+        {CATEGORIAS_PEDIDO.map((item, indice) => (
+          <label key={item.id} className={classes.categoria}>
+            <input
+              type="radio"
+              name="categoria"
+              id={indice === 0 ? 'categoria' : undefined}
+              value={item.id}
+              checked={categoria === item.id}
+              onChange={() => aoEscolher(item.id)}
+            />
+            <span className={classes.iconeCategoria} aria-hidden="true">
+              <Icone nome={item.icone} tamanho={22} />
+            </span>
+            {item.rotulo}
+          </label>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className={classes.sugestao}>
@@ -33,17 +66,28 @@ export default function SugestaoCategoria({
             <p className={classes.sugestaoRotulo}>Categoria sugerida</p>
             <p className={classes.sugestaoValor}>{atual.rotulo}</p>
           </div>
-          <Botao
-            variante="secundario"
-            compacto
-            icone={aberta ? 'expand_less' : 'expand_more'}
-            iconeDireita
-            aria-expanded={aberta}
-            aria-controls="lista-categorias"
-            onClick={() => aoAbrir(!aberta)}
-          >
-            {aberta ? 'Fechar a lista' : 'Trocar categoria'}
-          </Botao>
+          {naFolha ? (
+            <Botao
+              variante="secundario"
+              compacto
+              aria-haspopup="dialog"
+              onClick={() => aoAbrir(true)}
+            >
+              Trocar<span className={classes.oculto}> a categoria</span>
+            </Botao>
+          ) : (
+            <Botao
+              variante="secundario"
+              compacto
+              icone={aberta ? 'expand_less' : 'expand_more'}
+              iconeDireita
+              aria-expanded={aberta}
+              aria-controls="lista-categorias"
+              onClick={() => aoAbrir(!aberta)}
+            >
+              {aberta ? 'Fechar a lista' : 'Trocar categoria'}
+            </Botao>
+          )}
         </div>
       )}
       {listaVisivel && (
@@ -55,25 +99,16 @@ export default function SugestaoCategoria({
               {erro}
             </p>
           )}
-          <div className={classes.categorias}>
-            {CATEGORIAS_PEDIDO.map((item, indice) => (
-              <label key={item.id} className={classes.categoria}>
-                <input
-                  type="radio"
-                  name="categoria"
-                  id={indice === 0 ? 'categoria' : undefined}
-                  value={item.id}
-                  checked={categoria === item.id}
-                  onChange={() => aoEscolher(item.id)}
-                />
-                <span className={classes.iconeCategoria} aria-hidden="true">
-                  <Icone nome={item.icone} tamanho={22} />
-                </span>
-                {item.rotulo}
-              </label>
-            ))}
-          </div>
+          {opcoes(false)}
         </fieldset>
+      )}
+      {naFolha && (
+        <Popup aberto={aberta} aoFechar={() => aoAbrir(false)} titulo="Trocar categoria" semPadding>
+          <fieldset className={classes.listaFolha}>
+            <legend className={classes.oculto}>Escolha a categoria</legend>
+            {opcoes(true)}
+          </fieldset>
+        </Popup>
       )}
     </div>
   );
