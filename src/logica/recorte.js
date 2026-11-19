@@ -1,5 +1,5 @@
 import { subprefeiturasComOrcamento } from './orcamento';
-import { BAIRRO_PADRAO } from './lugares';
+import { BAIRRO_PADRAO, doLugar, lugarPorNome } from './lugares';
 import { subprefeituraDoBairro as nomeDaSubprefeitura } from './localPedido';
 
 // Primeiro nível da trilha de toda subpágina da cidade
@@ -15,17 +15,20 @@ export function subprefeituraDoBairro(bairro) {
 
 // Monta o recorte de uma subpágina (Obras, Votações, Orçamento) da cidade ou do bairro.
 // Recebe o escopo ("cidade" ou "bairro") e o bairro da pessoa.
-// Devolve { escopo, bairro, subprefeitura, base, trilha, sufixo, deQuem }:
+// Devolve { escopo, bairro, lugar, subprefeitura, base, trilha, sufixo, deQuem }:
+// - lugar: o bairro com a preposição (para noLugar/doLugar/comArtigo);
 // - base: "/minha-cidade" ou "/meu-bairro" (início das rotas);
 // - trilha: os níveis antes do nome da página;
 // - sufixo: o fim do título ("da cidade de São Paulo" ou "da Vila Mariana");
 // - deQuem: o fim dos nomes no "Para onde ir" ("da cidade" ou "do bairro").
 export function montarRecorte(escopo, bairro = BAIRRO_PADRAO) {
   const subprefeitura = subprefeituraDoBairro(bairro);
+  const lugar = lugarPorNome(bairro);
   if (escopo === 'bairro') {
     return {
       escopo,
       bairro,
+      lugar,
       subprefeitura,
       base: '/meu-bairro',
       trilha: [
@@ -36,13 +39,14 @@ export function montarRecorte(escopo, bairro = BAIRRO_PADRAO) {
         },
         { rotulo: bairro, para: '/meu-bairro' },
       ],
-      sufixo: `da ${bairro}`,
+      sufixo: doLugar(lugar),
       deQuem: 'do bairro',
     };
   }
   return {
     escopo: 'cidade',
     bairro,
+    lugar,
     subprefeitura,
     base: '/minha-cidade',
     trilha: [NIVEL_CIDADE],

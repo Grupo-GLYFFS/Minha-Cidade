@@ -10,6 +10,7 @@ import EstadoErro from '../componentes/EstadoErro';
 import GruposVotacoes from '../componentes/votacoes/GruposVotacoes';
 import { PROJETOS } from '../dados/projetos';
 import { votacoesDoRecorte } from '../logica/recorte';
+import { noLugar } from '../logica/lugares';
 import { destinoObras, destinoOrcamento } from '../logica/destinos';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';
@@ -45,7 +46,7 @@ export default function Votacoes({ escopo = 'cidade' }) {
     escopo === 'bairro' && aba === 'todas' ? (
       <EstadoVazio
         icone="how_to_vote"
-        titulo={`Nenhuma votação aberta na ${recorte.bairro}`}
+        titulo={`Nenhuma votação aberta ${noLugar(recorte.lugar)}`}
         texto="Quando a subprefeitura abrir uma votação, ela aparece aqui."
       >
         <Botao variante="secundario" para="/minha-cidade/votacoes">

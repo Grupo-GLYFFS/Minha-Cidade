@@ -36,7 +36,7 @@ const MAXIMO_BAIRROS = 6;
 export default function Subprefeitura() {
   const { id } = useParams();
   const sub = buscarSubprefeitura(id);
-  const { bairro: bairroDaPessoa, pedidos } = useLugarDaPessoa();
+  const { bairro: bairroDaPessoa, pedidos, temConta, definido } = useLugarDaPessoa();
   const { estado, tentarDeNovo } = useCarregamento();
   const [popupAberto, setPopupAberto] = useState(false);
 
@@ -58,8 +58,9 @@ export default function Subprefeitura() {
 
   const bairros = bairrosDaSubprefeitura(sub.id).map((bairro) => ({
     ...bairro,
-    para: caminhoDoBairro(bairro, bairroDaPessoa.nome),
-    seu: bairro.nome === bairroDaPessoa.nome,
+    // O bairro da pessoa (da conta ou escolhido) leva a /meu-bairro; o selo "Seu" só com conta
+    para: caminhoDoBairro(bairro, definido ? bairroDaPessoa.nome : null),
+    seu: temConta && bairro.nome === bairroDaPessoa.nome,
     resumo: resumirLugar(pedidos, [bairro.nome]),
   }));
   // O bairro da pessoa vem primeiro nos cards; o resto continua de A a Z

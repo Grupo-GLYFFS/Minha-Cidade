@@ -26,8 +26,8 @@ export const TIPOS_AVISO = [
   { id: 'obras', rotulo: 'Obras que você segue', icone: 'construction', canais: ['app'] },
   {
     id: 'avisos',
-    // O bairro entra no lugar de {bairro}
-    rotulo: 'Avisos da prefeitura na {bairro}',
+    // O bairro, com a preposição certa, entra no lugar de {noBairro}
+    rotulo: 'Avisos da prefeitura {noBairro}',
     icone: 'campaign',
     canais: ['app', 'email'],
   },

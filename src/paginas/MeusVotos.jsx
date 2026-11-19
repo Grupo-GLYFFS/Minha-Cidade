@@ -8,6 +8,7 @@ import EstadoErro from '../componentes/EstadoErro';
 import GruposVotacoes from '../componentes/votacoes/GruposVotacoes';
 import { PROJETOS } from '../dados/projetos';
 import { destinoVotacoes } from '../logica/destinos';
+import { doLugar } from '../logica/lugares';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';
 import { useVotos } from '../contexto/useVotos';
@@ -67,7 +68,7 @@ export default function MeusVotos() {
       <ParaOndeIr
         destinos={[
           destinoVotacoes(recorteCidade),
-          destinoVotacoes(recorteBairro, `Votações da ${recorteBairro.bairro}`),
+          destinoVotacoes(recorteBairro, `Votações ${doLugar(recorteBairro.lugar)}`),
         ]}
       />
     </Pagina>

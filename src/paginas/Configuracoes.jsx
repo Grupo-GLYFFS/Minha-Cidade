@@ -14,6 +14,7 @@ import { usePreferenciasAvisos } from '../contexto/usePreferenciasAvisos';
 import { useSessao } from '../contexto/useSessao';
 import { TIPOS_AVISO } from '../dados/avisosConta';
 import { rotuloComBairro, textoCanais } from '../logica/avisosConta';
+import { lugarPorNome, noLugar } from '../logica/lugares';
 
 // Configurações (/configuracoes): três cards.
 // - Acessibilidade: tamanho da letra e alto contraste (os mesmos da barra do topo).
@@ -86,7 +87,7 @@ export default function Configuracoes() {
             <LinhaAjuste
               icone="warning"
               rotulo="Alertas de emergência"
-              detalhe={`Defesa Civil, na ${bairro} e na cidade toda`}
+              detalhe={`Defesa Civil, ${noLugar(lugarPorNome(bairro))} e na cidade toda`}
               controle={(idRotulo) => (
                 <Interruptor
                   ligado={preferencias.alertas.ligados}

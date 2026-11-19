@@ -1,6 +1,7 @@
 import Pagina from '../Pagina';
 import CabecalhoPagina from '../CabecalhoPagina';
 import ParaOndeIr from '../ParaOndeIr';
+import Botao from '../Botao';
 import BlocoAcontece from './BlocoAcontece';
 import CardNumero from './CardNumero';
 import CardQuemCuida from './CardQuemCuida';
@@ -25,9 +26,13 @@ import classes from './Hub.module.css';
 // Página de um bairro (prancha 15 e 16): o bairro da pessoa (/meu-bairro, com o selo
 // "Seu bairro" e "Perto de você") ou outro bairro (/minha-cidade/bairros/:id, com "No bairro").
 // Seções: o que acontece, o bairro em números, serviços perto, quem cuida e "Para onde ir".
-// Recebe o bairro (de BAIRROS_CIDADE) e seu (true quando é o bairro da pessoa).
+// Recebe o bairro (de BAIRROS_CIDADE) e seu (true em /meu-bairro: o bairro da conta ou o
+// escolhido por quem não tem conta). O selo "Seu bairro" e o "Perto de você" só aparecem
+// com conta; sem conta, o cabeçalho ganha o botão "Trocar bairro".
 export default function PerfilBairro({ bairro, seu = false }) {
-  const { bairro: bairroDaPessoa, pedidos, destinoMeusPedidos } = useLugarDaPessoa();
+  const { pedidos, temConta, destinoMeusPedidos, destinoMeuBairro } = useLugarDaPessoa();
+  const comSelo = seu && temConta;
+  const tituloPerto = comSelo ? 'Perto de você' : 'No bairro';
   const { estado, tentarDeNovo } = useCarregamento();
   const sub = buscarSubprefeitura(bairro.subprefeitura);
   const perfil = perfilDoBairro(bairro.id);
@@ -54,16 +59,7 @@ export default function PerfilBairro({ bairro, seu = false }) {
         destinoMeusPedidos,
       ]
     : [
-        {
-          icone: 'home_pin',
-          titulo: `${bairroDaPessoa.nome}, seu bairro`,
-          meta: contar(
-            resumirLugar(pedidos, [bairroDaPessoa.nome]).pedidos,
-            'pedido aberto',
-            'pedidos abertos',
-          ),
-          para: '/meu-bairro',
-        },
+        destinoMeuBairro,
         {
           icone: 'location_city',
           titulo: 'Cidade de São Paulo',
@@ -85,7 +81,16 @@ export default function PerfilBairro({ bairro, seu = false }) {
           ]}
           midia={<img src={perfil?.mapa ?? '/img/mapas/subprefeitura.svg'} alt="" />}
           categoria={
-            seu ? { rotulo: <span className={classes.seloCabecalho}>Seu bairro</span> } : undefined
+            comSelo
+              ? { rotulo: <span className={classes.seloCabecalho}>Seu bairro</span> }
+              : undefined
+          }
+          acoes={
+            seu && !temConta ? (
+              <Botao variante="secundario" icone="swap_horiz" para="/meu-bairro/escolher">
+                Trocar bairro
+              </Botao>
+            ) : undefined
           }
         />
       }
@@ -96,7 +101,7 @@ export default function PerfilBairro({ bairro, seu = false }) {
         estado={estado}
         aoTentarDeNovo={tentarDeNovo}
         textoErro="Não conseguimos carregar os números do bairro agora."
-        restoDaPagina={`${seu ? 'Perto de você' : 'No bairro'} e quem cuida continuam nesta página.`}
+        restoDaPagina={`${tituloPerto} e quem cuida continuam nesta página.`}
       />
 
       {perfil?.numeros && (
@@ -118,7 +123,7 @@ export default function PerfilBairro({ bairro, seu = false }) {
       )}
 
       {servicos.length > 0 && (
-        <SecaoHub titulo={seu ? 'Perto de você' : 'No bairro'}>
+        <SecaoHub titulo={tituloPerto}>
           {(idTitulo) => (
             <GradeHub colunas={2} idTitulo={idTitulo}>
               {servicos.map((servico) => (

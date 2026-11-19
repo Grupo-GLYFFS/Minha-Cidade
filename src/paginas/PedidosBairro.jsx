@@ -8,15 +8,17 @@ import { useCarregamentoSimulado } from '../componentes/pedidos/useCarregamentoS
 import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
 import { pedidosDoBairro } from '../logica/gruposPedidos';
+import { doLugar, lugarPorNome, noLugar } from '../logica/lugares';
 import { idSubprefeitura, nomeSubprefeitura, subprefeituraDoBairro } from '../logica/localPedido';
 
 // Pedidos do bairro de quem usa o app (/meu-bairro/pedidos), agrupados por situação.
-// Sem conta, mostra a Vila Mariana.
+// Sem conta, mostra o bairro escolhido na Escolher bairro.
 export default function PedidosBairro() {
   const { pedidos } = usePedidos();
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
   const destinos = useDestinosPedidos();
   const bairro = destinos.nomeBairro;
+  const lugar = lugarPorNome(bairro);
   const subprefeitura = subprefeituraDoBairro(bairro);
   const doBairro = pedidosDoBairro(pedidos, bairro);
 
@@ -40,8 +42,8 @@ export default function PedidosBairro() {
       cabecalho={
         <CabecalhoPagina
           tipo="lista"
-          titulo={`Pedidos da ${bairro}`}
-          subtitulo={`Buracos, lixo, iluminação e outros problemas de rua avisados por quem mora na ${bairro}.`}
+          titulo={`Pedidos ${doLugar(lugar)}`}
+          subtitulo={`Buracos, lixo, iluminação e outros problemas de rua avisados por quem mora ${noLugar(lugar)}.`}
           icone="assignment"
           trilha={trilha}
           acoes={
@@ -59,7 +61,7 @@ export default function PedidosBairro() {
         prefixo="bairro"
         vazio={
           <EstadoVazio
-            titulo={`Nenhum pedido na ${bairro}`}
+            titulo={`Nenhum pedido ${noLugar(lugar)}`}
             texto="Ninguém avisou um problema de rua no bairro ainda. Se você viu um, avise a prefeitura."
           >
             <Botao variante="secundario" para="/minha-cidade/pedidos">

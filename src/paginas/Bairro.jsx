@@ -7,10 +7,10 @@ import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
 import { buscarBairro } from '../logica/lugares';
 
 // Outro bairro (/minha-cidade/bairros/:id, prancha 16): o mesmo molde do Meu bairro,
-// sem o selo "Seu bairro". O bairro da própria pessoa vai para /meu-bairro.
+// sem o selo "Seu bairro". O bairro da própria pessoa (o da conta ou o escolhido) vai para /meu-bairro.
 export default function Bairro() {
   const { id } = useParams();
-  const { bairro: bairroDaPessoa } = useLugarDaPessoa();
+  const { bairro: bairroDaPessoa, definido } = useLugarDaPessoa();
   const bairro = buscarBairro(id);
 
   if (!bairro) {
@@ -28,7 +28,8 @@ export default function Bairro() {
       </Pagina>
     );
   }
-  if (bairro.id === bairroDaPessoa.id) return <Navigate to="/meu-bairro" replace />;
+  // Só o bairro da conta ou o escolhido (sem conta) vai para /meu-bairro
+  if (definido && bairro.id === bairroDaPessoa.id) return <Navigate to="/meu-bairro" replace />;
 
   // A key faz a página recomeçar (carregando) ao trocar de bairro
   return <PerfilBairro key={bairro.id} bairro={bairro} />;

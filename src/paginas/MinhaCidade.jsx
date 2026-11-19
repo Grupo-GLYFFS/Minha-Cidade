@@ -17,7 +17,7 @@ import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
 import { PREFEITURA } from '../dados/prefeitura';
 import { SUBPREFEITURAS } from '../dados/subprefeituras';
 import { bairrosDaSubprefeitura } from '../logica/lugares';
-import { cardsAcontece, contar, resumirLugar } from '../logica/resumoLugar';
+import { cardsAcontece, resumirLugar } from '../logica/resumoLugar';
 
 // Junta a subprefeitura com os nomes dos bairros dela, para os cards e a busca do popup
 function comBairros(sub, idDaPessoa) {
@@ -36,7 +36,10 @@ function comBairros(sub, idDaPessoa) {
 // na cidade, 8 subprefeituras + "Ver todas" (popup com busca das 32), números, quem governa,
 // o 156 e "Para onde ir". Sem trilha (é página do menu).
 export default function MinhaCidade() {
-  const { bairro, subprefeitura, pedidos, destinoMeusPedidos } = useLugarDaPessoa();
+  const { subprefeitura, pedidos, temConta, destinoMeusPedidos, destinoMeuBairro } =
+    useLugarDaPessoa();
+  // O selo "Sua" e o grupo "A sua" só valem para quem tem conta (o endereço é dela)
+  const idDaPessoa = temConta ? subprefeitura.id : null;
   const { estado, tentarDeNovo } = useCarregamento();
   const [popupAberto, setPopupAberto] = useState(false);
 
@@ -47,13 +50,12 @@ export default function MinhaCidade() {
     'Pedidos da cidade',
     PREFEITURA.percentualPago,
   );
-  const todas = SUBPREFEITURAS.map((sub) => comBairros(sub, subprefeitura.id));
+  const todas = SUBPREFEITURAS.map((sub) => comBairros(sub, idDaPessoa));
   // As 8 subprefeituras do card, na ordem do campo "destaque"
   const destaques = SUBPREFEITURAS.filter((sub) => sub.destaque)
     .sort((a, b) => a.destaque - b.destaque)
-    .map((sub) => comBairros(sub, subprefeitura.id));
+    .map((sub) => comBairros(sub, idDaPessoa));
   const daPessoa = todas.find((sub) => sub.id === subprefeitura.id);
-  const pedidosDoBairro = resumirLugar(pedidos, [bairro.nome]).pedidos;
 
   return (
     <Pagina
@@ -130,17 +132,7 @@ export default function MinhaCidade() {
         <CardTelefone {...PREFEITURA.telefone} />
       </SecaoHub>
 
-      <ParaOndeIr
-        destinos={[
-          {
-            icone: 'home_pin',
-            titulo: `${bairro.nome}, seu bairro`,
-            meta: contar(pedidosDoBairro, 'pedido aberto', 'pedidos abertos'),
-            para: '/meu-bairro',
-          },
-          destinoMeusPedidos,
-        ]}
-      />
+      <ParaOndeIr destinos={[destinoMeuBairro, destinoMeusPedidos]} />
 
       <PopupLugares
         aberto={popupAberto}
@@ -150,7 +142,7 @@ export default function MinhaCidade() {
         contagem={`${SUBPREFEITURAS.length} subprefeituras`}
         nomeResultado={['subprefeitura', 'subprefeituras']}
         grupos={[
-          { titulo: 'A sua', itens: [daPessoa] },
+          ...(temConta ? [{ titulo: 'A sua', itens: [daPessoa] }] : []),
           { titulo: 'Todas, de A a Z', itens: todas },
         ]}
       />

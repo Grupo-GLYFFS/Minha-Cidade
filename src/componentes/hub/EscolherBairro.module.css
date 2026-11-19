@@ -1,0 +1,74 @@
+/* Página Escolher bairro (EB-final): grupos por letra e grade de 3 colunas de card compacto. */
+
+.grupo + .grupo {
+  margin-top: rem(40px);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Card compacto (molde: card de subprefeitura da Cidade de São Paulo) */
+.card {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: rem(2px);
+  min-width: 0;
+  height: 100%;
+  padding: rem(16px) rem(52px) rem(16px) rem(20px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.card:hover {
+  border-color: var(--cor-borda-forte);
+  background: var(--cor-fundo-card);
+}
+
+.nome,
+.sub {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nome {
+  font-size: rem(17px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.sub {
+  font-size: rem(14px);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--cor-texto-2);
+}
+
+.seta {
+  position: absolute;
+  top: rem(16px);
+  right: rem(16px);
+  color: var(--cor-texto-2);
+}
+
+.card:hover .seta {
+  color: var(--cor-azul-escuro);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .grade {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

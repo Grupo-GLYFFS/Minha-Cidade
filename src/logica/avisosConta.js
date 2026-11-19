@@ -1,4 +1,5 @@
 import { ALERTAS_PADRAO, CANAIS_AVISO, TIPOS_AVISO } from '../dados/avisosConta';
+import { lugarPorNome, noLugar } from './lugares';
 
 // Preferências de aviso de quem nunca mexeu: alertas ligados e os canais padrão de cada tipo.
 // Devolve { alertas: { ligados, canais }, canais: { pedidos: [...], votacoes: [...] ... } }.
@@ -32,8 +33,8 @@ export function textoCanais(canais) {
   return `${nomes.slice(0, -1).join(', ')} e ${nomes[nomes.length - 1]}`;
 }
 
-// Troca o {bairro} do rótulo pelo bairro da pessoa.
-// Recebe o rótulo e o bairro; devolve, por exemplo, "Avisos da prefeitura na Vila Mariana".
+// Troca o {noBairro} do rótulo pelo bairro da pessoa, com a preposição certa.
+// Recebe o rótulo e o nome do bairro; devolve, por exemplo, "Avisos da prefeitura na Vila Mariana".
 export function rotuloComBairro(rotulo, bairro) {
-  return rotulo.replace('{bairro}', bairro);
+  return rotulo.replace('{noBairro}', noLugar(lugarPorNome(bairro)));
 }

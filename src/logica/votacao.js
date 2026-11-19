@@ -2,6 +2,7 @@ import { OPCOES_VOTO } from '../dados/opcoesVoto';
 import { SITUACOES_PROJETO, STATUS_PROJETO } from '../dados/statusProjeto';
 import { HOJE, diasAte, formatarDataCurta } from './datas';
 import { pluralizar } from './formatos';
+import { comArtigo } from './lugares';
 
 // Procura um projeto pelo id. Recebe a lista e o id; devolve o projeto ou undefined.
 export function buscarProjeto(projetos, idProjeto) {
@@ -160,7 +161,7 @@ export function depoisCurto(projeto, dataLista) {
 // Recebe o projeto e o recorte da página (ou nada, fora das listas da cidade e do bairro).
 export function lugarDaVotacao(projeto, recorte) {
   if (recorte?.escopo === 'bairro' && projeto.escopo === 'cidade') {
-    return `Cidade toda · inclui a ${recorte.bairro}`;
+    return `Cidade toda · inclui ${comArtigo(recorte.lugar)}`;
   }
   return projeto.bairro ?? `Subprefeitura ${projeto.subprefeitura}`;
 }

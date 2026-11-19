@@ -36,6 +36,8 @@ import MinhaCidade from './paginas/MinhaCidade';
 import Subprefeitura from './paginas/Subprefeitura';
 import MeuBairro from './paginas/MeuBairro';
 import Bairro from './paginas/Bairro';
+import EscolherBairro from './paginas/EscolherBairro';
+import RotaBairro from './componentes/hub/RotaBairro';
 import Alertas from './paginas/Alertas';
 import DetalheAlerta from './paginas/DetalheAlerta';
 import Avisos from './paginas/Avisos';
@@ -83,27 +85,34 @@ export default function App() {
       <Route path="/minha-cidade" element={<MinhaCidade />} />
       <Route path="/minha-cidade/subprefeituras/:id" element={<Subprefeitura />} />
       <Route path="/minha-cidade/bairros/:id" element={<Bairro />} />
-      <Route path="/meu-bairro" element={<MeuBairro />} />
       <Route path="/minha-cidade/alertas" element={<Alertas />} />
       <Route path="/minha-cidade/alertas/:id" element={<DetalheAlerta />} />
-      <Route path="/meu-bairro/alertas" element={<Alertas doBairro />} />
-      <Route path="/meu-bairro/alertas/:id" element={<DetalheAlerta doBairro />} />
       <Route path="/minha-cidade/avisos" element={<Avisos />} />
       <Route path="/minha-cidade/avisos/:id" element={<DetalheAviso />} />
-      <Route path="/meu-bairro/avisos" element={<Avisos doBairro />} />
-      <Route path="/meu-bairro/avisos/:id" element={<DetalheAviso doBairro />} />
+
+      {/* Meu bairro: sem conta e sem bairro escolhido, todas abrem a Escolher bairro */}
+      <Route path="/meu-bairro/escolher" element={<EscolherBairro />} />
+      <Route element={<RotaBairro />}>
+        <Route path="/meu-bairro" element={<MeuBairro />} />
+        <Route path="/meu-bairro/alertas" element={<Alertas doBairro />} />
+        <Route path="/meu-bairro/alertas/:id" element={<DetalheAlerta doBairro />} />
+        <Route path="/meu-bairro/avisos" element={<Avisos doBairro />} />
+        <Route path="/meu-bairro/avisos/:id" element={<DetalheAviso doBairro />} />
+        <Route path="/meu-bairro/obras" element={<Obras escopo="bairro" />} />
+        <Route path="/meu-bairro/obras/:id" element={<DetalheObra escopo="bairro" />} />
+        <Route path="/meu-bairro/votacoes" element={<Votacoes escopo="bairro" />} />
+        <Route path="/meu-bairro/votacoes/:id" element={<Votacao escopo="bairro" />} />
+        <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
+        <Route path="/meu-bairro/pedidos" element={<PedidosBairro />} />
+        <Route path="/meu-bairro/pedidos/:id" element={<RedirecionarPedido />} />
+      </Route>
 
       {/* Obras, votações e orçamento da cidade e do bairro */}
       <Route path="/minha-cidade/obras" element={<Obras escopo="cidade" />} />
       <Route path="/minha-cidade/obras/:id" element={<DetalheObra escopo="cidade" />} />
-      <Route path="/meu-bairro/obras" element={<Obras escopo="bairro" />} />
-      <Route path="/meu-bairro/obras/:id" element={<DetalheObra escopo="bairro" />} />
       <Route path="/minha-cidade/votacoes" element={<Votacoes escopo="cidade" />} />
       <Route path="/minha-cidade/votacoes/:id" element={<Votacao escopo="cidade" />} />
-      <Route path="/meu-bairro/votacoes" element={<Votacoes escopo="bairro" />} />
-      <Route path="/meu-bairro/votacoes/:id" element={<Votacao escopo="bairro" />} />
       <Route path="/minha-cidade/orcamento" element={<OrcamentoCidade />} />
-      <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
       <Route element={<RotaProtegida />}>
         <Route path="/perfil/votos" element={<MeusVotos />} />
         <Route path="/perfil/seguindo" element={<OQueVoceSegue />} />
@@ -112,8 +121,6 @@ export default function App() {
       {/* Pedidos (zeladoria) */}
       <Route path="/minha-cidade/pedidos" element={<PedidosCidade />} />
       <Route path="/minha-cidade/pedidos/:id" element={<DetalhePedido />} />
-      <Route path="/meu-bairro/pedidos" element={<PedidosBairro />} />
-      <Route path="/meu-bairro/pedidos/:id" element={<RedirecionarPedido />} />
       <Route path="/pedidos/:id" element={<RedirecionarPedido />} />
       <Route element={<RotaProtegida />}>
         <Route path="/pedidos/novo" element={<NovoPedido />} />

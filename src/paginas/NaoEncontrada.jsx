@@ -4,7 +4,7 @@ import ParaOndeIr from '../componentes/ParaOndeIr';
 import EnderecoInexistente from '../componentes/ajuda/EnderecoInexistente';
 import { usePedidos } from '../contexto/usePedidos';
 import { useSessao } from '../contexto/useSessao';
-import { estaAberto } from '../logica/pedidos';
+import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
 import { SERVICOS } from '../dados/servicos';
 
 // Página "Página não encontrada" (rota *): cabeçalho só com o título, o aviso com os dois
@@ -13,8 +13,7 @@ import { SERVICOS } from '../dados/servicos';
 export default function NaoEncontrada() {
   const { pedidos } = usePedidos();
   const { usuario } = useSessao();
-  const bairro = usuario?.bairro ?? 'Vila Mariana';
-  const abertosNoBairro = pedidos.filter((p) => p.bairro === bairro && estaAberto(p)).length;
+  const { destinoMeuBairro } = useLugarDaPessoa();
 
   const destinos = [
     {
@@ -29,12 +28,7 @@ export default function NaoEncontrada() {
       meta: '32 subprefeituras',
       para: '/minha-cidade',
     },
-    {
-      icone: 'home_pin',
-      titulo: `${bairro}, seu bairro`,
-      meta: `${abertosNoBairro} pedidos abertos`,
-      para: '/meu-bairro',
-    },
+    destinoMeuBairro,
   ];
   if (usuario) {
     const feitos = pedidos.filter((p) => p.autorId === usuario.id).length;

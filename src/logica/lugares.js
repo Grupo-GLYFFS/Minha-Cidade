@@ -11,6 +11,18 @@ export function ordenarPorNome(lista) {
   return [...lista].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 }
 
+// Agrupa lugares pela primeira letra do nome, sem acento ("Água Rasa" fica no A).
+// Recebe a lista; devolve [{ letra, bairros }] de A a Z, com cada grupo também de A a Z.
+export function agruparPorLetra(lista) {
+  const grupos = new Map();
+  ordenarPorNome(lista).forEach((lugar) => {
+    const letra = normalizarTexto(lugar.nome).charAt(0).toUpperCase();
+    if (!grupos.has(letra)) grupos.set(letra, []);
+    grupos.get(letra).push(lugar);
+  });
+  return [...grupos].map(([letra, bairros]) => ({ letra, bairros }));
+}
+
 // Procura uma subprefeitura pelo id. Devolve a subprefeitura ou undefined.
 export function buscarSubprefeitura(id) {
   return SUBPREFEITURAS.find((sub) => sub.id === id);
@@ -79,6 +91,12 @@ export function servicosDoBairro(bairro, referencias) {
     },
     { icone: 'recycling', nome: 'Coleta seletiva', linhas: [textoDias(ref.coleta.seletiva)] },
   ];
+}
+
+// Acha o lugar (para noLugar/doLugar/comArtigo) pelo nome do bairro. Recebe o nome;
+// devolve o bairro de BAIRROS_CIDADE ou, se o app não o conhece, { nome, prep: 'na' }.
+export function lugarPorNome(nome) {
+  return bairroPorNome(nome) ?? { nome, prep: 'na' };
 }
 
 // Escreve o lugar com a preposição certa. Recebe { nome, prep }; devolve "na Vila Mariana".
