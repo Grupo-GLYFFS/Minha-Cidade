@@ -94,18 +94,23 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
-  .colunas,
-  .eixo {
+  /* No celular: colunas finas, de 150, sem os números em cima (estão na lista de baixo) */
+  .colunas {
     gap: rem(4px);
+    height: rem(150px);
   }
 
-  /* No celular os números ficam só na lista de baixo */
+  .eixo {
+    gap: rem(4px);
+    font-size: rem(12px);
+  }
+
   .gasto em,
   .arrecadado em {
     display: none;
   }
 
-  .eixo {
-    font-size: rem(11px);
+  .legenda {
+    gap: rem(16px);
   }
 }

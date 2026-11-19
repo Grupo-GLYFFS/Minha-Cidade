@@ -39,12 +39,23 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
-  /* No celular, o valor principal fica à esquerda e o segundo à direita, embaixo do nome */
+  /* No celular, os nomes das colunas ficam em cima dos dois valores (mesma grade das linhas) */
   .colunas {
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) rem(80px) rem(80px);
+    column-gap: rem(8px);
+    font-size: rem(12px);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .colunas > :first-child {
+    grid-column: 2;
   }
 
   .comLink {
+    grid-template-columns: minmax(0, 1fr) rem(84px) rem(66px) rem(18px);
+    column-gap: rem(6px);
     padding-right: 0;
   }
 

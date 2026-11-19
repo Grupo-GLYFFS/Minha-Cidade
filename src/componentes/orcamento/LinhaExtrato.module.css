@@ -87,26 +87,98 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  /* No celular, a linha vira grade: nome (com o detalhe numa linha embaixo) | valor | segundo */
   .linha {
-    flex-wrap: wrap;
-    row-gap: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) rem(80px) rem(80px);
+    column-gap: rem(8px);
+    align-items: start;
+    min-height: 0;
+    padding: rem(9px) 0;
     font-size: rem(15px);
+    line-height: 1.35;
   }
 
   .nome {
-    flex-basis: 100%;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .nome small {
+    display: block;
+    margin-top: rem(2px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .pontos {
     display: none;
   }
 
+  /* Selo de situação (extra) embaixo do nome */
+  .linha > span:not(.nome, .pontos, .segundo, .chevron) {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+    margin-top: rem(6px);
+  }
+
   .valor {
-    margin-right: auto;
+    grid-column: 2;
+    grid-row: 1;
+    font-size: rem(14px);
+    text-align: right;
   }
 
   .segundo,
   .comLink .segundo {
+    grid-column: 3;
+    grid-row: 1;
     width: auto;
+    font-size: rem(14px);
+  }
+
+  /* Sem segundo valor, o valor ocupa as duas colunas */
+  .valor:last-child {
+    grid-column: 2 / 4;
+  }
+
+  .total {
+    margin-top: rem(4px);
+    padding-top: rem(14px);
+    border-top: var(--espessura-borda) solid var(--cor-texto);
+  }
+
+  .recuo .nome {
+    padding-left: rem(10px);
+    border-left: 2px solid var(--cor-borda);
+  }
+
+  /* Linhas com link (subprefeituras): + a coluna da seta */
+  .comLink {
+    grid-template-columns: minmax(0, 1fr) rem(84px) rem(66px) rem(18px);
+    column-gap: rem(6px);
+    align-items: center;
+    min-height: rem(52px);
+  }
+
+  .comLink .segundo {
+    font-size: rem(13px);
+  }
+
+  .chevron {
+    grid-column: 4;
+    grid-row: 1;
+  }
+
+  .comLink .nome small {
+    text-decoration: none;
+  }
+
+  .destaque {
+    margin-inline: rem(-16px);
+    padding-inline: rem(16px);
+    border-radius: 0;
   }
 }

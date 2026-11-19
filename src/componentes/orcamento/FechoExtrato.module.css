@@ -29,7 +29,12 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  .fecho {
+    flex-wrap: nowrap;
+    gap: rem(12px);
+  }
+
   .fecho b {
-    font-size: rem(36px);
+    font-size: rem(32px);
   }
 }
