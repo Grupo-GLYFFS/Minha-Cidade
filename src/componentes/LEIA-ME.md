@@ -157,7 +157,7 @@ O celular segue as pranchas de `celular/` e o `CELULAR-PADRAO.md`. Tudo do celul
 - Mostra a **barra de abas** presa embaixo (Início · Serviços · Cidade · Bairro · Mais). A aba marcada vem da rota (`abaDoCelular` em `src/logica/navegacaoCelular.js`); o Mais mostra as notificações não lidas e abre a **folha Mais**.
 - Mostra a **barra "‹ Voltar"** nas páginas internas. O destino é o **penúltimo item da `trilha`** do `CabecalhoPagina`. Sem trilha: as páginas da conta, da ajuda e da Global Solution (`/perfil…`, `/configuracoes`, `/notificacoes`, `/ajuda/…`, `/`, `/como-funciona`, `/impacto`, `/equipe`) ganham "‹ Mais", que abre a folha Mais; Minhas solicitações e `/servicos/categoria/…` vão para Serviços; Entrar e Criar conta vão para o Início; o resto ganha "‹ Voltar" (volta uma página).
 - Não mostra a barra "‹ Voltar" nas páginas de 1º nível (`/inicio`, `/servicos`, `/minha-cidade`, `/meu-bairro`) nem no cabeçalho `tipo="confirmacao"`.
-- No `CabecalhoPagina`, a trilha e as etapas somem, o h1 vai até 2 linhas (3 no detalhe) e as `acoes` ficam em largura total, divididas em partes iguais.
+- No `CabecalhoPagina`, a trilha e as etapas somem, o h1 vai até 3 linhas (o de lista e hub cabe em 2; o "… da Subprefeitura Vila Mariana" usa a 3ª, como na prancha 27) e as `acoes` ficam em largura total, divididas em partes iguais.
 
 ### Props do `Pagina` para o celular
 
