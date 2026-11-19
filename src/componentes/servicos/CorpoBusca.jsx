@@ -23,9 +23,9 @@ const MAIS_BUSCADOS = contarTermos(SUGESTOES_BUSCA, SERVICOS);
 export default function CorpoBusca({ texto, achados, metaPedidos, fechar, setTexto }) {
   const buscando = Boolean(achados);
   const maisBuscados = (
-    <GrupoBusca titulo="Mais buscados">
+    <GrupoBusca titulo="Mais buscados" variante="chips">
       {MAIS_BUSCADOS.map(({ termo, quantidade }) => (
-        <li key={termo} className={classes.itemChip}>
+        <li key={termo}>
           <Chip icone="search" contagem={quantidade} onClick={() => setTexto(termo)}>
             {termo}
           </Chip>
@@ -38,7 +38,7 @@ export default function CorpoBusca({ texto, achados, metaPedidos, fechar, setTex
   if (!buscando) {
     corpo = (
       <>
-        <GrupoBusca titulo="Ações rápidas">
+        <GrupoBusca titulo="Ações rápidas" variante="cartoes">
           <li>
             <ItemBusca
               icone="add"
@@ -46,6 +46,7 @@ export default function CorpoBusca({ texto, achados, metaPedidos, fechar, setTex
               meta="Problema na rua ou no bairro"
               para="/pedidos/novo"
               aoEscolher={fechar}
+              cartao
             />
           </li>
           <li>
@@ -55,6 +56,7 @@ export default function CorpoBusca({ texto, achados, metaPedidos, fechar, setTex
               meta={metaPedidos}
               para="/perfil/pedidos"
               aoEscolher={fechar}
+              cartao
             />
           </li>
           <li>
@@ -64,6 +66,7 @@ export default function CorpoBusca({ texto, achados, metaPedidos, fechar, setTex
               meta="Serviços que você pediu à prefeitura"
               para="/servicos/minhas-solicitacoes"
               aoEscolher={fechar}
+              cartao
             />
           </li>
         </GrupoBusca>

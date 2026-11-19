@@ -8,11 +8,26 @@ import classes from './PopupBusca.module.css';
 // Uma linha de resultado do popup de busca: ícone, título (com a palavra buscada marcada),
 // a linha de apoio, o selo de situação (pedidos) e o chevron. A linha inteira é o link.
 // Recebe o icone, o titulo, a meta, o selo ({ cor, rotulo }, opcional), o caminho (para),
-// a busca (para marcar) e aoEscolher() (fecha o popup).
-export default function ItemBusca({ icone, titulo, meta, selo, para, busca = '', aoEscolher }) {
+// a busca (para marcar), aoEscolher() (fecha o popup) e cartao (as "Ações rápidas", no padrão
+// dos cards "Para onde ir": borda, raio 20, ícone de 48 e a seta de ir a outra página).
+export default function ItemBusca({
+  icone,
+  titulo,
+  meta,
+  selo,
+  para,
+  busca = '',
+  aoEscolher,
+  cartao = false,
+}) {
   return (
-    <Link to={para} className={classes.item} onClick={aoEscolher}>
-      <IconeServico nome={icone} tamanho={40} />
+    <Link
+      to={para}
+      className={cartao ? `${classes.item} ${classes.itemCartao}` : classes.item}
+      onClick={aoEscolher}
+      data-item-busca
+    >
+      <IconeServico nome={icone} tamanho={cartao ? 48 : 40} />
       <span className={classes.itemTexto}>
         <strong
           className={
@@ -36,7 +51,11 @@ export default function ItemBusca({ icone, titulo, meta, selo, para, busca = '',
           <SeloSituacao cor={selo.cor}>{selo.rotulo}</SeloSituacao>
         </span>
       )}
-      <Icone nome="chevron_right" tamanho={22} className={classes.chevron} />
+      <Icone
+        nome={cartao ? 'arrow_forward' : 'chevron_right'}
+        tamanho={22}
+        className={cartao ? `${classes.chevron} ${classes.seta}` : classes.chevron}
+      />
     </Link>
   );
 }

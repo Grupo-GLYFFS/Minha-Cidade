@@ -20,7 +20,8 @@ import classes from './Popup.module.css';
 //   (o principal fica à direita);
 // - largura em px (padrão 560);
 // - semPadding: o corpo fica sem padding (listas de linhas de borda a borda, como a folha Mais);
-// - extras: classes a mais para { inner, veu, caixa } (a folha Mais acaba no topo das abas).
+// - extras: classes a mais para { inner, veu, caixa, corpo } (a folha Mais acaba no topo das
+//   abas; a busca do topo rola só os resultados).
 // Junta a classe do Popup com a classe a mais, deixando de fora a que não existir
 function juntar(classe, extra) {
   return [classe, extra].filter(Boolean).join(' ') || undefined;
@@ -58,7 +59,10 @@ export default function Popup({
           <Botao variante="fechar" aria-label="Fechar" onClick={aoFechar} />
         </Modal.Header>
         <Modal.Body
-          className={semPadding ? `${classes.corpo} ${classes.semPadding}` : classes.corpo}
+          className={juntar(
+            semPadding ? `${classes.corpo} ${classes.semPadding}` : classes.corpo,
+            extras.corpo,
+          )}
         >
           {children}
         </Modal.Body>

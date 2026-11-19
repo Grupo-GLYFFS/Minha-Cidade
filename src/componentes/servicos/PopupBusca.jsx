@@ -15,6 +15,7 @@ import { buscarNoApp } from '../../logica/buscaGeral';
 import { CONSULTA_CELULAR } from '../../logica/navegacaoCelular';
 import { useResumoConta } from './useResumoConta';
 import useFecharComEsc from '../useFecharComEsc';
+import { moverComSetas } from './setasBusca';
 import classes from './PopupBusca.module.css';
 
 // Popup de busca do topo, em 3 estados (vazio, com resultados e sem resultado; ver CorpoBusca).
@@ -31,6 +32,8 @@ export default function PopupBusca({ aberto, aoFechar }) {
   const { solicitacoes } = useSolicitacoes();
   const resumo = useResumoConta();
   const tela = useRef(null);
+  const lista = useRef(null);
+  const entrada = useRef(null);
 
   const buscando = texto.trim().length > 0;
   const achados = buscando
@@ -53,14 +56,9 @@ export default function PopupBusca({ aberto, aoFechar }) {
     fechar();
   }
 
-  // Seta para baixo no campo leva ao primeiro resultado (depois, Tab percorre a lista)
+  // Setas: do campo para os resultados e entre eles (Enter abre o item focado)
   function teclar(evento) {
-    if (evento.key !== 'ArrowDown') return;
-    const primeiro = document.querySelector(`.${classes.item}`);
-    if (primeiro) {
-      evento.preventDefault();
-      primeiro.focus();
-    }
+    moverComSetas(evento, lista.current, entrada.current);
   }
 
   const fim = buscando && (
@@ -78,6 +76,7 @@ export default function PopupBusca({ aberto, aoFechar }) {
   const campo = (
     <div className={classes.campo}>
       <CampoBusca
+        ref={entrada}
         id="busca-topo"
         rotulo="Buscar serviços e pedidos"
         placeholder="Serviço, pedido ou protocolo"
@@ -95,7 +94,7 @@ export default function PopupBusca({ aberto, aoFechar }) {
       <p className={classes.oculto} role="status">
         {buscando && (achados.total === 0 ? 'Nenhum resultado.' : `${achados.total} resultados.`)}
       </p>
-      <div className={classes.corpo}>
+      <div className={classes.corpo} ref={lista} onKeyDown={teclar}>
         <CorpoBusca
           texto={texto}
           achados={achados}
@@ -135,7 +134,14 @@ export default function PopupBusca({ aberto, aoFechar }) {
   }
 
   return (
-    <Popup aberto={aberto} aoFechar={fechar} titulo="Buscar" largura={720} botoes={fim}>
+    <Popup
+      aberto={aberto}
+      aoFechar={fechar}
+      titulo="Buscar"
+      largura={720}
+      botoes={fim}
+      extras={{ caixa: classes.caixa, corpo: classes.corpoPopup }}
+    >
       {campo}
       {conteudo}
     </Popup>

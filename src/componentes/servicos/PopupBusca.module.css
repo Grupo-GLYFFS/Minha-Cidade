@@ -1,24 +1,45 @@
-/* Popup de busca: campo no topo do corpo, grupos com título pequeno, linhas de 52 e
-   a faixa "Quer abrir um pedido?" embaixo. */
+/* Busca (popup do topo e painel da página Serviços): campo preso no alto, só os resultados rolam.
+   Grupos com título pequeno; "Ações rápidas" em cards no padrão "Para onde ir" (borda, raio 20);
+   resultados em linhas com divisória de borda a borda; "Mais buscados" com o Chip do app.
+   --pad-lateral vem de quem usa: 32 no popup, 20 no painel de Serviços, 16 no celular. */
+
+/* Computador: a caixa do popup é uma coluna (cabeçalho, campo, resultados que rolam, faixa
+   de baixo) e nunca passa da altura da tela */
+/* O Mantine põe a classe também no "inner": por isso o seletor exige a caixa */
+.caixa:global(.mantine-Modal-content) {
+  display: flex;
+  flex-direction: column;
+}
+
+.corpoPopup.corpoPopup {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0;
+}
 
 .campo {
-  padding-bottom: rem(24px);
-  margin-inline: calc(var(--pad-lateral) * -1);
-  padding-inline: var(--pad-lateral);
+  flex: none;
+  padding: rem(24px) var(--pad-lateral);
   border-bottom: var(--espessura-borda) solid var(--cor-borda);
 }
 
 .corpo {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: rem(24px);
-  padding-top: rem(24px);
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: rem(24px) var(--pad-lateral);
 }
 
 .grupo {
   display: flex;
   flex-direction: column;
-  gap: rem(8px);
+  gap: rem(12px);
 }
 
 .tituloGrupo {
@@ -27,40 +48,54 @@
   gap: rem(8px);
   margin: 0;
   font-size: rem(16px);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--cor-texto-2);
 }
 
+/* Contagem no mesmo formato da do Chip */
 .contagem {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: rem(22px);
-  height: rem(22px);
-  padding: 0 rem(6px);
+  min-width: rem(24px);
+  height: rem(24px);
+  padding: 0 rem(8px);
   border-radius: var(--raio-selo);
   background: var(--cor-status-cinza-fundo);
-  font-size: rem(12px);
+  font-size: rem(13px);
   font-weight: 700;
   color: var(--cor-texto-2);
 }
 
 .lista {
   display: flex;
-  flex-wrap: wrap;
-  gap: rem(4px);
+  flex-direction: column;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.lista > li {
-  flex: 1 1 100%;
+/* Resultados: linhas com divisória de borda a borda da caixa */
+.listaLinhas {
+  margin-inline: calc(var(--pad-lateral) * -1);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
 }
 
-/* Os chips "Mais buscados" ficam lado a lado */
-.lista > .itemChip {
-  flex: none;
+.listaLinhas > li + li {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+/* Ações rápidas: cards um embaixo do outro */
+.listaCartoes {
+  gap: rem(8px);
+}
+
+/* Mais buscados: chips lado a lado, com o espaço dos chips do app */
+.listaChips {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: rem(8px);
 }
 
 .item {
@@ -68,27 +103,54 @@
   display: flex;
   align-items: center;
   gap: rem(12px);
-  min-height: rem(56px);
-  padding: rem(6px) rem(12px) rem(6px) rem(8px);
-  border: var(--espessura-borda) solid transparent;
-  border-radius: var(--raio-controle);
+  min-height: rem(64px);
+  padding: rem(10px) var(--pad-lateral);
+  background: var(--cor-superficie);
   color: var(--cor-texto);
   text-decoration: none;
 }
 
-.item:hover,
+.item:hover {
+  background: var(--cor-fundo);
+}
+
 .item:focus-visible {
-  border-color: var(--cor-azul);
+  outline: var(--foco-contorno);
+  outline-offset: -3px;
   background: var(--cor-faixa);
 }
 
 /* Sobre o fundo azul-claro, o ícone fica em quadrado branco */
-.item:is(:hover, :focus-visible) > span:first-child {
+.item:focus-visible > span:first-child {
   background: var(--cor-superficie);
 }
 
-.item:focus-visible {
-  outline: none;
+/* Card de ação rápida (padrão "Para onde ir"): borda, raio 20, ícone de 48, seta azul */
+.itemCartao {
+  gap: rem(16px);
+  min-height: rem(80px);
+  padding: rem(16px) rem(20px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+}
+
+.itemCartao:hover {
+  border-color: var(--cor-borda-forte);
+  background: var(--cor-fundo-card);
+}
+
+.itemCartao:focus-visible {
+  outline-offset: 1px;
+}
+
+.itemCartao .itemTitulo {
+  font-size: rem(17px);
+  font-weight: 800;
+}
+
+.itemCartao .itemMeta {
+  font-size: rem(14px);
+  font-weight: 600;
 }
 
 .itemTexto {
@@ -116,14 +178,21 @@
 }
 
 .itemMeta {
+  overflow: hidden;
   font-size: rem(13px);
   font-weight: 500;
   color: var(--cor-texto-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .chevron {
   flex: none;
   color: var(--cor-texto-2);
+}
+
+.seta {
+  color: var(--cor-azul-escuro);
 }
 
 /* Sem resultado */
@@ -215,6 +284,24 @@
     align-self: center;
   }
 
+  /* Card de ação rápida no celular: 76 de altura, ícone de 44, como o "Para onde ir" */
+  .itemCartao {
+    column-gap: rem(14px);
+    min-height: rem(76px);
+    padding: rem(14px) rem(16px);
+  }
+
+  .itemCartao > :first-child {
+    width: rem(44px);
+    height: rem(44px);
+  }
+
+  .itemCartao .itemTitulo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .fim {
     flex-wrap: wrap;
   }
@@ -229,8 +316,7 @@
 }
 
 /* Celular: busca em tela cheia branca, até em cima da barra de abas (só existe no celular).
-   "Buscar" 24 + X de 44 e o campo ficam presos no alto; só o conteúdo rola.
-   Linhas de resultado com divisórias e o selo embaixo do título. */
+   "Buscar" 24 + X de 44 e o campo ficam presos no alto; só o conteúdo rola. */
 .telaFundo.telaFundo {
   bottom: var(--altura-abas);
   padding: 0;
@@ -268,11 +354,11 @@
 
 .telaCampo {
   flex: none;
-  padding-inline: var(--pad-lateral);
 }
 
+/* 4 em cima para o contorno de foco do campo não ser cortado */
 .telaCampo .campo {
-  padding-bottom: rem(16px);
+  padding: rem(4px) var(--pad-lateral) rem(16px);
 }
 
 .telaCorpo {
@@ -280,18 +366,20 @@
   flex: 1 1 auto;
   flex-direction: column;
   min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
-  padding: rem(20px) var(--pad-lateral) 0;
+  padding: 0;
 }
 
 .telaCorpo .corpo {
-  padding-top: 0;
-  padding-bottom: rem(24px);
+  flex: none;
+  overflow: visible;
+  padding: rem(20px) var(--pad-lateral) rem(24px);
 }
 
 /* "Quer abrir um pedido?" no fim do conteúdo (encostado embaixo quando sobra espaço) */
 .telaFim {
-  margin: auto calc(var(--pad-lateral) * -1) 0;
+  margin-top: auto;
   padding: rem(16px) var(--pad-lateral);
   border-top: var(--espessura-borda) solid var(--cor-borda);
 }
@@ -310,24 +398,6 @@
   width: auto;
 }
 
-.telaCorpo .lista {
-  gap: 0;
-  margin-inline: rem(-12px);
-}
-
-.telaCorpo .lista > li:not(.itemChip) + li {
-  border-top: var(--espessura-borda) solid var(--cor-borda);
-}
-
-.telaCorpo .lista:has(.itemChip) {
-  gap: rem(8px);
-  margin-inline: 0;
-}
-
-.telaCorpo .item {
-  padding: rem(8px) rem(12px);
-}
-
 /* Sem resultado: os dois botões empilham, o principal (Ouvidoria) em cima */
 .telaCorpo .nadaTitulo {
   font-size: rem(22px);
@@ -336,4 +406,45 @@
 .telaCorpo .nadaAcoes {
   flex-direction: column-reverse;
   gap: rem(8px);
+}
+
+/* Painel suspenso da busca de Serviços (computador): logo abaixo do campo, mesma lista do
+   popup; raio 20, borda única e a faixa "Ver todos" embaixo */
+.painel {
+  --pad-lateral: rem(20px);
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + rem(8px));
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: min(rem(520px), calc(100dvh - rem(220px)));
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-aviso);
+  text-align: left;
+}
+
+.painel .corpo {
+  padding-block: rem(20px);
+}
+
+.painelFim {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12px);
+  padding: rem(12px) var(--pad-lateral);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.painelFimTexto {
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
 }
