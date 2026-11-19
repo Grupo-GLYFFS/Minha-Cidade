@@ -1,29 +1,36 @@
-/* Rodapé provisório: faixa azul-clara com três colunas de links. */
+/* Rodapé: fundo cinza-claro, container de 1200.
+   Computador: 88 em cima, logo → 56 → 6 grupos (vão de 32) → 64 → créditos, 64 embaixo.
+   Celular: 64 em cima, logo → 40 → 2 colunas (vãos de 40 e 24) → 48 → créditos, 48 embaixo. */
 
 .rodape {
   margin-top: auto;
-  background: var(--cor-faixa);
-  border-top: var(--espessura-borda) solid var(--cor-azul-borda);
+  background: var(--cor-fundo-card);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  color: var(--cor-texto);
 }
 
 .miolo {
   box-sizing: border-box;
   width: min(var(--largura-topo), calc(100% - rem(64px)));
   margin-inline: auto;
-  padding: rem(48px) 0 rem(32px);
+  padding: rem(88px) 0 rem(64px);
+}
+
+.logo {
+  margin-bottom: rem(56px);
 }
 
 .grade {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: rem(32px);
 }
 
 .titulo {
   margin: 0 0 rem(8px);
-  font-size: rem(14px);
+  font-size: rem(15px);
   font-weight: 800;
-  line-height: 1.4;
+  line-height: rem(20px);
   color: var(--cor-azul-tinta);
 }
 
@@ -33,11 +40,13 @@
   list-style: none;
 }
 
+/* Área de toque de 44 em cada link */
 .link {
   display: inline-flex;
   align-items: center;
   min-height: rem(44px);
   font-size: rem(15px);
+  font-weight: 500;
   color: var(--cor-texto-2);
   text-decoration: none;
 }
@@ -49,20 +58,35 @@
 }
 
 .base {
-  margin: rem(32px) 0 0;
-  padding-top: rem(24px);
-  border-top: var(--espessura-borda) solid var(--cor-azul-borda);
-  font-size: rem(13px);
+  margin-top: rem(64px);
+  padding-top: rem(32px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.creditos {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  line-height: rem(20px);
   color: var(--cor-texto-2);
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
   .miolo {
-    width: calc(100% - rem(32px));
+    padding: rem(64px) 0 rem(48px);
+  }
+
+  .logo {
+    margin-bottom: rem(40px);
   }
 
   .grade {
-    grid-template-columns: 1fr;
-    gap: rem(16px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: rem(40px) rem(24px);
+  }
+
+  .base {
+    margin-top: rem(48px);
+    padding-top: rem(24px);
   }
 }
