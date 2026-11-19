@@ -19,6 +19,11 @@
   border-color: var(--cor-borda-forte);
 }
 
+/* Destaque (ex.: próximo agendamento): só a borda fica azul, sem sombra */
+.cartao.destaque {
+  border-color: var(--cor-azul);
+}
+
 /* Seta arrow_forward no canto de cima à direita */
 .comSeta {
   padding-right: rem(64px);

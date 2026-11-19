@@ -4,6 +4,7 @@
 .card {
   position: relative;
   box-sizing: border-box;
+  padding: 0;
   border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: var(--raio-card);
   background: var(--cor-superficie);
@@ -12,11 +13,6 @@
 .card:has(.link:hover) {
   border-color: var(--cor-borda-forte);
   background: var(--cor-fundo-card);
-}
-
-/* O próximo agendamento tem a borda azul */
-.cardProxima {
-  border-color: var(--cor-azul);
 }
 
 .linha,

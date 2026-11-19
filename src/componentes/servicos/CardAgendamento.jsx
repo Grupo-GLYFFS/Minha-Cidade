@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Botao from '../Botao';
+import Cartao from '../Cartao';
 import Icone from '../Icone';
 import SeloSituacao from '../SeloSituacao';
 import IconeServico from './IconeServico';
@@ -19,7 +20,7 @@ export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar
   const caminho = `/servicos/minhas-solicitacoes/${solicitacao.id}`;
 
   return (
-    <article className={`${classes.card} ${proxima ? classes.cardProxima : ''}`}>
+    <Cartao component="article" destaque={proxima} className={classes.card}>
       <div className={classes.linha}>
         <p className={classes.hora}>
           {formatarHora(agendamento.hora)}
@@ -69,6 +70,6 @@ export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar
           </Botao>
         </div>
       )}
-    </article>
+    </Cartao>
   );
 }
