@@ -41,7 +41,9 @@ export default function CardSolicitacao({ solicitacao }) {
   return (
     <article className={classes.card}>
       <div className={classes.linhaSemHora}>
-        <IconeServico nome={servico?.icone ?? 'event'} tamanho={72} />
+        <span className={classes.iconeCard}>
+          <IconeServico nome={servico?.icone ?? 'event'} tamanho={72} />
+        </span>
         <div className={classes.conteudo}>
           <h3 className={classes.titulo}>
             <Link to={`/servicos/minhas-solicitacoes/${solicitacao.id}`} className={classes.link}>

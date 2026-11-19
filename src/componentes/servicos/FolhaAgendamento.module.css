@@ -1,0 +1,42 @@
+/* Remarcar e Cancelar no celular (pranchas 07 e NV-cancelar-solicitacao): a folha empilha os
+   botões em largura total, com o principal (ou o vermelho) em cima; os horários ficam em 3 colunas.
+   No computador o grupo dos botões não muda nada (display: contents). */
+
+.botoes {
+  display: contents;
+}
+
+/* Data no botão "Remarcar para 21 de novembro, 10h": só no celular, onde a linha de cima some */
+.dataNoBotao {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .botoes {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: rem(8px);
+  }
+
+  .botoes > * {
+    width: 100%;
+  }
+
+  .escolhida {
+    display: none;
+  }
+
+  .dataNoBotao {
+    display: inline;
+  }
+
+  .horas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .horas > * {
+    min-width: 0;
+    width: 100%;
+  }
+}

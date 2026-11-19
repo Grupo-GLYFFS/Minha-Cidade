@@ -43,19 +43,25 @@
   color: var(--cor-texto-2);
 }
 
+/* Celular (prancha 07): a hora (ou a data) à esquerda e o texto ao lado, numa linha só */
 @media (max-width: $mantine-breakpoint-sm) {
   .cartao {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: rem(8px);
+    justify-content: flex-start;
+    gap: rem(16px);
     padding: rem(16px);
   }
 
   .grande {
-    font-size: rem(36px);
+    font-size: rem(34px);
   }
 
   .linha {
-    font-size: rem(17px);
+    font-size: rem(16px);
+    line-height: 1.35;
+  }
+
+  .nota {
+    font-size: rem(14px);
+    line-height: 1.4;
   }
 }

@@ -38,13 +38,23 @@
   overflow-wrap: anywhere;
 }
 
+/* Celular: rótulo inteiro à esquerda e o valor no resto da linha, à direita (quebra se for longo) */
 @media (max-width: $mantine-breakpoint-sm) {
   .linha {
-    flex-direction: column;
-    gap: rem(2px);
+    align-items: flex-start;
+    min-height: 0;
+    padding-block: rem(14px);
+  }
+
+  .rotulo {
+    flex: none;
+    max-width: 45%;
+    font-size: rem(15px);
   }
 
   .valor {
-    text-align: left;
+    flex: 1 1 auto;
+    font-size: rem(15px);
+    overflow-wrap: break-word;
   }
 }

@@ -17,3 +17,25 @@
   flex-direction: column;
   gap: rem(16px);
 }
+
+/* Texto das instruções: quebra em quantas linhas precisar (é conteúdo, não metadado) */
+.instrucao {
+  white-space: normal;
+}
+
+/* Celular (prancha 07): protocolo mais perto da situação e 12 entre os cards */
+@media (max-width: $mantine-breakpoint-sm) {
+  .protocolo {
+    margin-top: rem(8px);
+  }
+
+  .pilha {
+    gap: rem(12px);
+  }
+
+  /* "O que você enviou": as linhas encostam na faixa do título, com 8 em cima e embaixo,
+     como as listas de linhas do card (o corpo do card tem 20 em cima e 24 embaixo) */
+  .enviadas {
+    margin: rem(-12px) 0 rem(-16px);
+  }
+}

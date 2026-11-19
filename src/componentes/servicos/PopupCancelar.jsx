@@ -2,6 +2,7 @@ import Popup from '../Popup';
 import Botao from '../Botao';
 import { formatarDataDetalhe, formatarHora } from '../../logica/datasExtenso';
 import classes from './PopupsAgendamento.module.css';
+import folha from './FolhaAgendamento.module.css';
 
 // Primeira letra em maiúscula. Recebe "sábado, 14…"; devolve "Sábado, 14…".
 function capitalizar(texto) {
@@ -11,6 +12,7 @@ function capitalizar(texto) {
 // Popup "Cancelar": confirma o cancelamento.
 // Agendada: diz o dia e o lugar e o que acontece com o horário ("Manter agendamento").
 // Solicitada (ainda sem dia): diz o serviço e o protocolo ("Manter solicitação").
+// No celular (folha), os botões empilham com o vermelho em cima.
 // Recebe a solicitação, aberto, aoFechar() e aoCancelar().
 export default function PopupCancelar({ solicitacao, aberto, aoFechar, aoCancelar }) {
   const { agendamento, local } = solicitacao;
@@ -22,14 +24,14 @@ export default function PopupCancelar({ solicitacao, aberto, aoFechar, aoCancela
         aoFechar={aoFechar}
         titulo="Cancelar a solicitação?"
         botoes={
-          <>
+          <div className={folha.botoes}>
             <Botao variante="secundario" onClick={aoFechar}>
               Manter solicitação
             </Botao>
             <Botao variante="perigo" icone="cancel" onClick={aoCancelar}>
               Cancelar solicitação
             </Botao>
-          </>
+          </div>
         }
       >
         <p className={classes.destaque}>
@@ -51,14 +53,14 @@ export default function PopupCancelar({ solicitacao, aberto, aoFechar, aoCancela
       aoFechar={aoFechar}
       titulo={`Cancelar ${nome}?`}
       botoes={
-        <>
+        <div className={folha.botoes}>
           <Botao variante="secundario" onClick={aoFechar}>
             Manter agendamento
           </Botao>
           <Botao variante="perigo" icone="event_busy" onClick={aoCancelar}>
             Cancelar agendamento
           </Botao>
-        </>
+        </div>
       }
     >
       <p className={classes.destaque}>{local ? `${quando} · ${local.nome}` : quando}</p>

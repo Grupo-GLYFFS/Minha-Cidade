@@ -135,7 +135,11 @@ export default function DetalheSolicitacao() {
         {instrucoes.length > 0 && (
           <SecaoCard titulo="Instruções" lista>
             {instrucoes.map((instrucao) => (
-              <LinhaDado key={instrucao.texto} icone={instrucao.icone} rotulo={instrucao.texto} />
+              <LinhaDado
+                key={instrucao.texto}
+                icone={instrucao.icone}
+                rotulo={<span className={classes.instrucao}>{instrucao.texto}</span>}
+              />
             ))}
           </SecaoCard>
         )}
@@ -143,7 +147,9 @@ export default function DetalheSolicitacao() {
         {solicitacao.local && <SecaoOnde local={solicitacao.local} comoChegar={agendada} />}
 
         <SecaoCard titulo="O que você enviou">
-          <ListaRespostas itens={enviadas} />
+          <div className={classes.enviadas}>
+            <ListaRespostas itens={enviadas} />
+          </div>
         </SecaoCard>
       </div>
 

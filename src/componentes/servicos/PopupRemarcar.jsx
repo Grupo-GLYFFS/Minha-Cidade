@@ -2,13 +2,21 @@ import { useState } from 'react';
 import Popup from '../Popup';
 import Botao from '../Botao';
 import Chip from '../Chip';
-import { formatarDataDetalhe, formatarHora, horarioPorExtenso } from '../../logica/datasExtenso';
+import {
+  formatarDataDetalhe,
+  formatarDiaMesExtenso,
+  formatarHora,
+  horarioPorExtenso,
+} from '../../logica/datasExtenso';
 import { agendamentoRemarcado } from '../../logica/solicitacoes';
 import classes from './PopupsAgendamento.module.css';
+import folha from './FolhaAgendamento.module.css';
 
 // Popup "Remarcar": mostra o horário marcado e os horários livres, dia por dia.
 // O botão principal só confirma depois de escolher um horário; o horário escolhido aparece numa
 // linha acima dos botões, no mesmo formato do aviso ("quinta, 26 de novembro, das 7h às 13h").
+// No celular (folha), os horários ficam em 3 colunas, a data escolhida vai no botão principal
+// ("Remarcar para 21 de novembro, 10h") e os botões empilham com o principal em cima.
 // Recebe a solicitação, aberto, aoFechar() e aoRemarcar(data, hora).
 export default function PopupRemarcar({ solicitacao, aberto, aoFechar, aoRemarcar }) {
   const [escolha, setEscolha] = useState(null);
@@ -37,9 +45,9 @@ export default function PopupRemarcar({ solicitacao, aberto, aoFechar, aoRemarca
       aoFechar={fechar}
       titulo={`Remarcar ${nome}`}
       botoes={
-        <>
+        <div className={folha.botoes}>
           {novo && (
-            <p className={classes.escolhida} aria-live="polite">
+            <p className={`${classes.escolhida} ${folha.escolhida}`} aria-live="polite">
               Remarcar para {formatarDataDetalhe(novo.data)},{' '}
               {horarioPorExtenso(novo.hora, novo.horaFim)}
             </p>
@@ -48,9 +56,19 @@ export default function PopupRemarcar({ solicitacao, aberto, aoFechar, aoRemarca
             Voltar
           </Botao>
           <Botao variante="principal" desabilitado={!escolha} onClick={confirmar}>
-            {escolha ? 'Remarcar' : 'Escolha um horário'}
+            {escolha ? (
+              <span>
+                Remarcar
+                <span className={folha.dataNoBotao}>
+                  {' '}
+                  para {formatarDiaMesExtenso(escolha.data)}, {formatarHora(escolha.hora)}
+                </span>
+              </span>
+            ) : (
+              'Escolha um horário'
+            )}
           </Botao>
-        </>
+        </div>
       }
     >
       <p className={classes.destaque}>
@@ -66,7 +84,7 @@ export default function PopupRemarcar({ solicitacao, aberto, aoFechar, aoRemarca
           return (
             <div key={dia.data} className={classes.dia} role="group" aria-label={titulo}>
               <p className={classes.tituloDia}>{titulo}</p>
-              <div className={classes.horas}>
+              <div className={`${classes.horas} ${folha.horas}`}>
                 {dia.horas.map((hora) => (
                   <Chip
                     key={hora}

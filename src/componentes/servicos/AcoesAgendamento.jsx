@@ -8,8 +8,16 @@ import { agendamentoRemarcado, textoRemarcado } from '../../logica/solicitacoes'
 // Botões "Remarcar" e "Cancelar" de um agendamento, com os popups de cada um.
 // Depois de remarcar ou cancelar, avisa a página com a frase do que aconteceu.
 // Recebe a solicitação agendada, compacto (44, dentro de cards), aoAvisar(texto, link) e
-// linkDoAviso: o "Ver" do aviso (o detalhe da solicitação, quando as ações estão numa lista).
-export default function AcoesAgendamento({ solicitacao, compacto = false, aoAvisar, linkDoAviso }) {
+// linkDoAviso: o "Ver" do aviso (o detalhe da solicitação, quando as ações estão numa lista) e,
+// se preciso, classeRemarcar e classeCancelar (lugar de cada botão na grade do card, no celular).
+export default function AcoesAgendamento({
+  solicitacao,
+  compacto = false,
+  aoAvisar,
+  linkDoAviso,
+  classeRemarcar,
+  classeCancelar,
+}) {
   const { remarcar, cancelar } = useSolicitacoes();
   const [aberto, setAberto] = useState(null);
 
@@ -36,6 +44,7 @@ export default function AcoesAgendamento({ solicitacao, compacto = false, aoAvis
         variante="secundario"
         compacto={compacto}
         icone="event_repeat"
+        className={classeRemarcar}
         onClick={() => setAberto('remarcar')}
         aria-haspopup="dialog"
       >
@@ -45,6 +54,7 @@ export default function AcoesAgendamento({ solicitacao, compacto = false, aoAvis
         variante="perigo"
         compacto={compacto}
         icone="event_busy"
+        className={classeCancelar}
         onClick={() => setAberto('cancelar')}
         aria-haspopup="dialog"
       >

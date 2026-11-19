@@ -28,6 +28,17 @@
   margin-top: rem(16px);
 }
 
+/* Celular (prancha 07): mapa de 160 e "Como chegar" em largura total */
+@media (max-width: $mantine-breakpoint-sm) {
+  .mapa {
+    height: rem(160px);
+  }
+
+  .acao > * {
+    width: 100%;
+  }
+}
+
 .oculto {
   position: absolute;
   width: 1px;

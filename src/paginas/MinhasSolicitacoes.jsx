@@ -3,6 +3,7 @@ import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import Botao from '../componentes/Botao';
 import TituloGrupo from '../componentes/TituloGrupo';
 import ParaOndeIr from '../componentes/ParaOndeIr';
+import BotaoFlutuante from '../componentes/pedidos/BotaoFlutuante';
 import EstadoVazio from '../componentes/EstadoVazio';
 import EstadoCarregando from '../componentes/EstadoCarregando';
 import EstadoErro from '../componentes/EstadoErro';
@@ -20,6 +21,7 @@ import classes from './MinhasSolicitacoes.module.css';
 // em grupos (Agendadas, Solicitadas, Concluídas e, se houver, Canceladas).
 // As agendadas ficam por dia; o próximo agendamento tem os botões Como chegar, Remarcar,
 // Cancelar e Ver agendamento. Tem os estados vazio, carregando e erro.
+// No celular, o "+" flutuante aparece quando o "Solicitar serviço" sai da tela.
 export default function MinhasSolicitacoes() {
   const { solicitacoes } = useSolicitacoes();
   const { carregando, erro, tentarDeNovo } = useCarregamento();
@@ -90,6 +92,8 @@ export default function MinhasSolicitacoes() {
         />
       }
     >
+      {/* Celular: "+" flutuante quando o "Solicitar serviço" do cabeçalho sai da tela */}
+      <BotaoFlutuante para="/servicos" rotulo="Solicitar serviço" />
       <div className={classes.grupos}>{conteudo}</div>
 
       <ParaOndeIr

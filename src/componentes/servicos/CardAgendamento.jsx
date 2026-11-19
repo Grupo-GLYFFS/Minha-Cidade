@@ -12,7 +12,8 @@ import classes from './CardsSolicitacao.module.css';
 
 // Card de um agendamento em Minhas solicitações: hora, ícone, nome do serviço (link para
 // o detalhe), o que foi pedido e o local. O próximo agendamento ganha o selo "Próxima"
-// e a faixa com 4 botões: Como chegar, Remarcar, Cancelar e Ver agendamento.
+// e a faixa com 4 botões: Como chegar, Remarcar, Cancelar e Ver agendamento (no celular, Como
+// chegar fica só com o ícone ao lado de Ver agendamento, e Remarcar | Cancelar embaixo, 50/50).
 // Recebe a solicitação, proxima (true no primeiro da lista) e aoAvisar(texto, link); o aviso
 // de Remarcar e Cancelar ganha o "Ver" para o detalhe.
 export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar }) {
@@ -29,7 +30,9 @@ export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar
             <span className={classes.horaFim}>até {formatarHora(agendamento.horaFim)}</span>
           )}
         </p>
-        <IconeServico nome={servico?.icone ?? 'event'} tamanho={72} />
+        <span className={classes.iconeCard}>
+          <IconeServico nome={servico?.icone ?? 'event'} tamanho={72} />
+        </span>
         <div className={classes.conteudo}>
           <h4 className={classes.titulo}>
             <Link to={caminho} className={classes.link}>
@@ -58,11 +61,13 @@ export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar
               variante="secundario"
               compacto
               icone="directions"
+              className={classes.chegar}
               href={linkComoChegar(local)}
               target="_blank"
               rel="noreferrer"
             >
-              Como chegar<span className={classes.oculto}> a {local.nome} (abre o mapa)</span>
+              <span className={classes.textoChegar}>Como chegar</span>
+              <span className={classes.oculto}> a {local.nome} (abre o mapa)</span>
             </Botao>
           )}
           <AcoesAgendamento
@@ -70,8 +75,10 @@ export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar
             compacto
             aoAvisar={aoAvisar}
             linkDoAviso={caminho}
+            classeRemarcar={classes.remarcar}
+            classeCancelar={classes.cancelar}
           />
-          <Botao variante="principal" compacto para={caminho}>
+          <Botao variante="principal" compacto para={caminho} className={classes.ver}>
             Ver agendamento
           </Botao>
         </div>
