@@ -69,4 +69,9 @@
   .secao {
     --pad-lateral: rem(16px);
   }
+
+  /* No celular, o botão desce para baixo do título quando não cabe */
+  .cab {
+    flex-wrap: wrap;
+  }
 }
