@@ -2,15 +2,13 @@ import { useState } from 'react';
 import Popup from '../Popup';
 import Botao from '../Botao';
 import Chip from '../Chip';
-import {
-  formatarDataDetalhe,
-  formatarDiaMesExtenso,
-  formatarHora,
-} from '../../logica/datasExtenso';
+import { formatarDataDetalhe, formatarHora, horarioPorExtenso } from '../../logica/datasExtenso';
+import { agendamentoRemarcado } from '../../logica/solicitacoes';
 import classes from './PopupsAgendamento.module.css';
 
 // Popup "Remarcar": mostra o horário marcado e os horários livres, dia por dia.
-// O botão principal só confirma depois de escolher um horário e diz para quando vai remarcar.
+// O botão principal só confirma depois de escolher um horário; o horário escolhido aparece numa
+// linha acima dos botões, no mesmo formato do aviso ("quinta, 26 de novembro, das 7h às 13h").
 // Recebe a solicitação, aberto, aoFechar() e aoRemarcar(data, hora).
 export default function PopupRemarcar({ solicitacao, aberto, aoFechar, aoRemarcar }) {
   const [escolha, setEscolha] = useState(null);
@@ -30,9 +28,8 @@ export default function PopupRemarcar({ solicitacao, aberto, aoFechar, aoRemarca
     setEscolha(null);
   }
 
-  const rotuloConfirmar = escolha
-    ? `Remarcar para ${formatarDiaMesExtenso(escolha.data)}, ${formatarHora(escolha.hora)}`
-    : 'Escolha um horário';
+  // Horário novo com a mesma duração do marcado (hora de fim, quando houver)
+  const novo = escolha ? agendamentoRemarcado(solicitacao, escolha.data, escolha.hora) : null;
 
   return (
     <Popup
@@ -41,11 +38,17 @@ export default function PopupRemarcar({ solicitacao, aberto, aoFechar, aoRemarca
       titulo={`Remarcar ${nome}`}
       botoes={
         <>
+          {novo && (
+            <p className={classes.escolhida} aria-live="polite">
+              Remarcar para {formatarDataDetalhe(novo.data)},{' '}
+              {horarioPorExtenso(novo.hora, novo.horaFim)}
+            </p>
+          )}
           <Botao variante="secundario" onClick={fechar}>
             Voltar
           </Botao>
           <Botao variante="principal" desabilitado={!escolha} onClick={confirmar}>
-            {rotuloConfirmar}
+            {escolha ? 'Remarcar' : 'Escolha um horário'}
           </Botao>
         </>
       }

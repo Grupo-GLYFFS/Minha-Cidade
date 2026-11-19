@@ -34,3 +34,12 @@
   flex-wrap: wrap;
   gap: rem(8px);
 }
+
+/* Horário escolhido no Remarcar: linha inteira acima dos botões */
+.escolhida {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
