@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams, useSearchParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import Botao from '../componentes/Botao';
@@ -18,12 +18,13 @@ import {
 
 // Solicitar serviço (/servicos/:idServico/solicitar, só com conta): formulário em 3 etapas
 // e, depois do envio, a tela "Solicitação enviada" no mesmo endereço.
+// A etapa fica no endereço (?etapa=2), então o voltar e o avançar do navegador funcionam.
 // Serviço sem formulário online volta para a ficha dele.
 export default function SolicitarServico() {
   const { idServico } = useParams();
   const { usuario } = useSessao();
   const { adicionarSolicitacao } = useSolicitacoes();
-  const [etapa, setEtapa] = useState(1);
+  const [parametros, setParametros] = useSearchParams();
   const [enviada, setEnviada] = useState(null);
   const servico = buscarServico(idServico);
 
@@ -48,6 +49,12 @@ export default function SolicitarServico() {
 
   const categoria = buscarCategoriaServico(servico.categoria);
   const etapas = etapasDoFormulario(servico);
+  const etapa = Math.min(etapas.length + 1, Math.max(1, Number(parametros.get('etapa')) || 1));
+
+  // Troca de etapa pelo endereço (cada etapa vira uma entrada no histórico do navegador)
+  function mudarEtapa(numero) {
+    setParametros(numero === 1 ? {} : { etapa: String(numero) });
+  }
 
   // Salva a solicitação e mostra a confirmação no topo da tela
   function enviar(respostas) {
@@ -76,7 +83,7 @@ export default function SolicitarServico() {
         servico={servico}
         etapas={etapas}
         etapa={etapa}
-        aoMudarEtapa={setEtapa}
+        aoMudarEtapa={mudarEtapa}
         usuario={usuario}
         aoEnviar={enviar}
       />

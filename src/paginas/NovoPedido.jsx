@@ -21,30 +21,47 @@ import { prepararDadosDoFormulario, valoresIniciaisComCategoria } from '../logic
 import { montarTitulo, sugerirCategoria } from '../logica/sugestaoPedido';
 import { buscarDuplicado } from '../logica/duplicados';
 import { buscarPedido } from '../logica/pedidos';
+import {
+  apagarRascunho,
+  foiEnviadoNaAba,
+  lerRascunho,
+  marcarEnviadoNaAba,
+  salvarRascunho,
+} from '../logica/rascunhos';
 import classes from '../componentes/novoPedido/NovoPedido.module.css';
 
 // Esquema de validação de cada etapa (as Fotos são opcionais e conferidas na hora)
 const ESQUEMAS = { 1: esquemaDescreva, 2: esquemaOnde };
 // Tempo do "Enviando…" (no protótipo o pedido é salvo no aparelho)
 const ESPERA_ENVIO_MS = 600;
+// Nome do rascunho guardado na aba (recarregar a página não apaga o que já foi preenchido)
+const RASCUNHO = 'novo-pedido';
 
 // Abrir pedido (/pedidos/novo), em 4 etapas: Descreva o problema → Onde fica → Fotos → Revisar.
 // A pessoa descreve primeiro; o app sugere a categoria, monta o título e estima a gravidade.
 // A etapa fica no endereço (?etapa=2), então o voltar do navegador e os links "Alterar" funcionam.
 // Pedido repetido (mesma categoria, bairro e rua de um aberto) não é criado.
-// Depois de enviar, a página mostra "Pedido enviado".
+// O que a pessoa preenche fica num rascunho da aba: recarregar volta à mesma etapa, preenchida.
+// Depois de enviar, a página mostra "Pedido enviado" (só para pedido enviado nesta aba;
+// outro ?enviado= leva ao detalhe do pedido). Voltar do navegador depois do envio sai do formulário.
 export default function NovoPedido() {
   const { pedidos, adicionarPedido } = usePedidos();
   const { usuario } = useSessao();
   const [parametros, setParametros] = useSearchParams();
   const local = useLocation();
-  const [valores, setValores] = useState(() =>
-    valoresIniciaisComCategoria(parametros.get('categoria')),
-  );
+  // Rascunho da aba (lido uma vez só, ao abrir a página)
+  const [rascunho] = useState(() => lerRascunho(RASCUNHO));
+  const [valores, setValores] = useState(() => {
+    const iniciais = valoresIniciaisComCategoria(parametros.get('categoria'));
+    if (!rascunho?.valores) return iniciais;
+    return { ...iniciais, ...rascunho.valores, fotos: [] };
+  });
   const [erros, setErros] = useState({});
   const [listaAberta, setListaAberta] = useState(false);
-  const [categoriaEscolhida, setCategoriaEscolhida] = useState(Boolean(valores.categoria));
-  const [tituloEditado, setTituloEditado] = useState(false);
+  const [categoriaEscolhida, setCategoriaEscolhida] = useState(
+    rascunho?.categoriaEscolhida ?? Boolean(valores.categoria),
+  );
+  const [tituloEditado, setTituloEditado] = useState(rascunho?.tituloEditado ?? false);
   const [enviando, setEnviando] = useState(false);
   // Pedido que acabou de ser criado aqui e o endereço em que ele foi enviado. Fica guardado
   // na tela porque a lista de pedidos e o endereço (?enviado=) não se atualizam juntos: sem ele,
@@ -76,6 +93,12 @@ export default function NovoPedido() {
     window.scrollTo(0, 0);
     cartao.current?.focus();
   }, [etapa]);
+
+  // Guarda o rascunho a cada mudança (depois do envio, ele já foi apagado)
+  useEffect(() => {
+    if (recemCriado) return;
+    salvarRascunho(RASCUNHO, { valores, categoriaEscolhida, tituloEditado });
+  }, [valores, categoriaEscolhida, tituloEditado, recemCriado]);
 
   // Ao sair da página, libera a memória das miniaturas das fotos
   useEffect(() => {
@@ -154,6 +177,8 @@ export default function NovoPedido() {
     setEnviando(true);
     setTimeout(() => {
       const novo = adicionarPedido(prepararDadosDoFormulario(valores));
+      apagarRascunho(RASCUNHO);
+      marcarEnviadoNaAba(novo.id);
       setRecemCriado({ pedido: novo, chave: local.key });
       // O pedido enviado fica no endereço: recarregar a página continua mostrando a confirmação
       setParametros({ enviado: novo.id }, { replace: true });
@@ -171,7 +196,14 @@ export default function NovoPedido() {
     idEnviado &&
     (buscarPedido(pedidos, idEnviado) ??
       (recemCriado?.pedido.id === idEnviado ? recemCriado.pedido : null));
+  // "Pedido enviado" só para o pedido enviado nesta aba; outro ?enviado= abre o detalhe
+  const daAba = criadoAqui?.id === idEnviado || (idEnviado && foiEnviadoNaAba(idEnviado));
+  if (idEnviado && !daAba) return <Navigate to={`/pedidos/${idEnviado}`} replace />;
   if (enviado && enviado.autorId === usuario?.id) return <PedidoEnviado pedido={enviado} />;
+  // Voltar do navegador depois do envio: sai do formulário e abre o pedido enviado
+  if (recemCriado && !idEnviado) {
+    return <Navigate to={`/pedidos/${recemCriado.pedido.id}`} replace />;
+  }
   if (etapa > liberada) {
     return (
       <Navigate to={liberada === 1 ? '/pedidos/novo' : `/pedidos/novo?etapa=${liberada}`} replace />
