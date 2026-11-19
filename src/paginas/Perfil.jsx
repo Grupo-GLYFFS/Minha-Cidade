@@ -100,42 +100,45 @@ export default function Perfil() {
         <CardEndereco usuario={usuario} aoEditar={() => abrir('endereco')} />
 
         <SecaoCard titulo="Participação" lista>
-          <LinhaDado
-            icone="assignment"
-            rotulo="Meus pedidos"
-            valor={feitos > 0 ? contar(feitos, 'feito', 'feitos') : 'Nenhum ainda'}
-            para="/perfil/pedidos"
-          />
-          <LinhaDado
-            icone="event_available"
-            rotulo="Minhas solicitações"
-            valor={
-              solicitacoes.length > 0
-                ? contar(solicitacoes.length, 'solicitação', 'solicitações')
-                : 'Nenhuma ainda'
-            }
-            para="/servicos/minhas-solicitacoes"
-          />
-          <LinhaDado
-            icone="how_to_vote"
-            rotulo="Meus votos"
-            valor={votos > 0 ? contar(votos, 'voto', 'votos') : 'Nenhum ainda'}
-            para="/perfil/votos"
-          />
-          <LinhaDado
-            icone="bookmark"
-            rotulo="O que você segue"
-            valor={
-              seguidos.total > 0
-                ? [
-                    contar(seguidos.votacoes.length, 'votação', 'votações'),
-                    contar(seguidos.obras.length, 'obra', 'obras'),
-                    contar(seguidos.pedidos.length, 'pedido', 'pedidos'),
-                  ].join(' · ')
-                : 'Nada ainda'
-            }
-            para="/perfil/seguindo"
-          />
+          {/* O div deixa o celular pôr o resumo embaixo do nome (Perfil.module.css) */}
+          <div className={classes.participacao}>
+            <LinhaDado
+              icone="assignment"
+              rotulo="Meus pedidos"
+              valor={feitos > 0 ? contar(feitos, 'feito', 'feitos') : 'Nenhum ainda'}
+              para="/perfil/pedidos"
+            />
+            <LinhaDado
+              icone="event_available"
+              rotulo="Minhas solicitações"
+              valor={
+                solicitacoes.length > 0
+                  ? contar(solicitacoes.length, 'solicitação', 'solicitações')
+                  : 'Nenhuma ainda'
+              }
+              para="/servicos/minhas-solicitacoes"
+            />
+            <LinhaDado
+              icone="how_to_vote"
+              rotulo="Meus votos"
+              valor={votos > 0 ? contar(votos, 'voto', 'votos') : 'Nenhum ainda'}
+              para="/perfil/votos"
+            />
+            <LinhaDado
+              icone="bookmark"
+              rotulo="O que você segue"
+              valor={
+                seguidos.total > 0
+                  ? [
+                      contar(seguidos.votacoes.length, 'votação', 'votações'),
+                      contar(seguidos.obras.length, 'obra', 'obras'),
+                      contar(seguidos.pedidos.length, 'pedido', 'pedidos'),
+                    ].join(' · ')
+                  : 'Nada ainda'
+              }
+              para="/perfil/seguindo"
+            />
+          </div>
         </SecaoCard>
 
         <div className={classes.sair}>
