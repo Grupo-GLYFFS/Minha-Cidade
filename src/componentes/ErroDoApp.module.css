@@ -8,3 +8,25 @@
   padding: rem(64px) rem(16px);
   background: var(--cor-fundo);
 }
+
+/* No celular: 48 em cima, título de 30 e os botões empilhados na largura toda (Recarregar em cima) */
+@media (max-width: $mantine-breakpoint-sm) {
+  .tela {
+    padding: rem(48px) rem(16px);
+  }
+
+  .tela h1 {
+    font-size: rem(30px);
+  }
+
+  .tela > div > div:last-child {
+    flex-direction: column;
+    align-items: stretch;
+    align-self: stretch;
+    gap: rem(8px);
+  }
+
+  .tela > div > div:last-child > * {
+    width: 100%;
+  }
+}

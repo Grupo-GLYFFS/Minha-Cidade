@@ -56,3 +56,36 @@
   font-weight: 600;
   color: var(--cor-texto);
 }
+
+/* Celular: sem a faixa; avatar de 56 à esquerda do nome e o papel embaixo, depois de uma linha */
+@media (max-width: $mantine-breakpoint-sm) {
+  .card {
+    display: grid;
+    grid-template-columns: rem(56px) minmax(0, 1fr);
+    column-gap: rem(14px);
+    align-items: center;
+    padding: rem(16px) rem(16px) 0;
+  }
+
+  .faixa {
+    display: none;
+  }
+
+  .avatar {
+    width: rem(56px);
+    height: rem(56px);
+    margin: 0;
+    background: var(--cor-faixa);
+  }
+
+  .texto {
+    min-width: 0;
+    padding: 0;
+  }
+
+  .papel {
+    grid-column: 1 / -1;
+    margin: rem(14px) rem(-16px) 0;
+    padding: rem(12px) rem(16px) rem(14px);
+  }
+}

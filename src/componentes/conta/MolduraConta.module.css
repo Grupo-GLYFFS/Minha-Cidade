@@ -28,6 +28,12 @@
   flex: none;
 }
 
+/* A seta "‹" e o "Início" curto só aparecem no celular */
+.seta,
+.soCelular {
+  display: none;
+}
+
 /* Logo (componente Logo): só aparece no celular, empurrando "Voltar ao início" para a direita */
 .barra .logo {
   display: none;
@@ -96,5 +102,52 @@
 
   .titulo {
     font-size: rem(32px);
+  }
+}
+
+/* Celular: barra "‹ Início" de 64 no alto, sem o logo, e o formulário com 24 em cima */
+@media (max-width: $mantine-breakpoint-sm) {
+  .lado {
+    padding: 0 0 rem(40px);
+  }
+
+  .barra {
+    justify-content: flex-start;
+    min-height: rem(64px);
+    padding: 0 rem(8px);
+    border-bottom: var(--espessura-borda) solid var(--cor-borda);
+  }
+
+  .barra .logo {
+    display: none;
+  }
+
+  .voltar > :first-child {
+    display: none;
+  }
+
+  .voltar {
+    gap: rem(2px);
+    padding-inline: rem(8px);
+  }
+
+  .voltar .seta {
+    display: inline-block;
+  }
+
+  .soComputador {
+    display: none;
+  }
+
+  .soCelular {
+    display: inline;
+  }
+
+  .coluna {
+    padding: rem(24px) rem(16px) 0;
+  }
+
+  .titulo {
+    font-size: rem(30px);
   }
 }

@@ -169,41 +169,45 @@ export default function PopupEditarEndereco({ usuario, aoSalvar, aoFechar }) {
           erro={erros.rua}
           onChange={(evento) => mudar('rua', evento.currentTarget.value)}
         />
-        <CamposLado>
-          <CampoTexto
-            id="endereco-numero"
-            rotulo="Número"
-            value={valores.numero}
-            erro={erros.numero}
-            onChange={(evento) => mudar('numero', evento.currentTarget.value)}
-          />
-          <CampoTexto
-            id="endereco-complemento"
-            rotulo="Complemento"
-            autoComplete="address-line2"
-            value={valores.complemento}
-            erro={erros.complemento}
-            onChange={(evento) => mudar('complemento', evento.currentTarget.value)}
-          />
-        </CamposLado>
-        <CamposLado>
-          <CampoTexto
-            id="endereco-bairro"
-            rotulo="Bairro"
-            value={valores.bairro}
-            erro={erros.bairro}
-            readOnly={!bairroLivre}
-            variant={bairroLivre ? 'default' : 'filled'}
-            onChange={(evento) => mudar('bairro', evento.currentTarget.value)}
-          />
-          <CampoTexto
-            id="endereco-cidade"
-            rotulo="Cidade"
-            value={cidade}
-            variant="filled"
-            readOnly
-          />
-        </CamposLado>
+        <div className={classes.lado}>
+          <CamposLado>
+            <CampoTexto
+              id="endereco-numero"
+              rotulo="Número"
+              value={valores.numero}
+              erro={erros.numero}
+              onChange={(evento) => mudar('numero', evento.currentTarget.value)}
+            />
+            <CampoTexto
+              id="endereco-complemento"
+              rotulo="Complemento"
+              autoComplete="address-line2"
+              value={valores.complemento}
+              erro={erros.complemento}
+              onChange={(evento) => mudar('complemento', evento.currentTarget.value)}
+            />
+          </CamposLado>
+        </div>
+        <div className={classes.lado}>
+          <CamposLado>
+            <CampoTexto
+              id="endereco-bairro"
+              rotulo="Bairro"
+              value={valores.bairro}
+              erro={erros.bairro}
+              readOnly={!bairroLivre}
+              variant={bairroLivre ? 'default' : 'filled'}
+              onChange={(evento) => mudar('bairro', evento.currentTarget.value)}
+            />
+            <CampoTexto
+              id="endereco-cidade"
+              rotulo="Cidade"
+              value={cidade}
+              variant="filled"
+              readOnly
+            />
+          </CamposLado>
+        </div>
         {pedirDistrito && (
           <CampoDistrito
             id="endereco-distrito"

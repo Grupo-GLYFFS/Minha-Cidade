@@ -19,8 +19,12 @@
   list-style: none;
 }
 
-@media (max-width: $mantine-breakpoint-xs) {
+@media (max-width: $mantine-breakpoint-sm) {
   .dias {
     gap: rem(40px);
+  }
+
+  .lista {
+    gap: rem(12px);
   }
 }

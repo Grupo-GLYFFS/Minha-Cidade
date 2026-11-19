@@ -9,3 +9,43 @@
 .sair {
   margin-top: rem(16px);
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .sair {
+    margin-top: rem(24px);
+  }
+
+  /* Participação no celular: o resumo vai embaixo do nome e a seta fica à direita, no meio */
+  .participacao > a {
+    position: relative;
+    display: grid;
+    grid-template-columns: rem(20px) minmax(0, 1fr);
+    column-gap: rem(12px);
+    row-gap: rem(2px);
+    padding-right: rem(48px);
+  }
+
+  .participacao > a > :first-child {
+    grid-row: 1 / 3;
+  }
+
+  .participacao > a > :nth-child(2),
+  .participacao > a > :nth-child(3) {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .participacao > a > :nth-child(3) {
+    overflow: hidden;
+    font-size: rem(14px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .participacao > a > :last-child {
+    position: absolute;
+    top: 50%;
+    right: rem(16px);
+    margin-top: rem(-11px);
+  }
+}

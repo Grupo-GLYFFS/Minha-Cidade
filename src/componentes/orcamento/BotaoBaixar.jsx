@@ -1,9 +1,10 @@
 import Botao from '../Botao';
+import classes from './BotaoBaixar.module.css';
 
 // Botão "Baixar" do extrato: monta uma planilha (CSV, que abre no Excel) com as linhas da conta
 // e baixa no aparelho da pessoa.
 // Recebe o nome do arquivo (sem extensão), o cabeçalho (lista de colunas) e as linhas
-// (listas de valores, na ordem do cabeçalho).
+// (listas de valores, na ordem do cabeçalho). No celular, o botão fica só com o ícone.
 export default function BotaoBaixar({ arquivo, cabecalho, linhas }) {
   // Monta o CSV com ponto e vírgula (o Excel em português abre certo) e baixa
   function baixar() {
@@ -20,8 +21,14 @@ export default function BotaoBaixar({ arquivo, cabecalho, linhas }) {
   }
 
   return (
-    <Botao variante="secundario" compacto icone="download" onClick={baixar}>
-      Baixar
+    <Botao
+      variante="secundario"
+      compacto
+      icone="download"
+      onClick={baixar}
+      className={classes.baixar}
+    >
+      <span className={classes.rotulo}>Baixar</span>
     </Botao>
   );
 }

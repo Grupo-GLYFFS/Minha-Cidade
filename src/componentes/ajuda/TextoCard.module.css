@@ -17,3 +17,13 @@
   padding: rem(24px) var(--pad-lateral, 0px);
   border-bottom: var(--espessura-borda) solid var(--cor-borda);
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .texto p {
+    font-size: rem(15px);
+  }
+
+  .antesDaLista {
+    padding-block: rem(16px);
+  }
+}

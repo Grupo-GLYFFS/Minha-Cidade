@@ -3,3 +3,9 @@
   flex-direction: column;
   gap: rem(16px);
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .pilha {
+    gap: rem(12px);
+  }
+}

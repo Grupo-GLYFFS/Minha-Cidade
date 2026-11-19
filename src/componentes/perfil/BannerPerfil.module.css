@@ -90,23 +90,31 @@
   overflow-wrap: anywhere;
 }
 
-@media (max-width: $mantine-breakpoint-xs) {
+@media (max-width: $mantine-breakpoint-sm) {
+  /* No celular: foto de 72, nome e e-mail numa linha com reticências */
   .banner {
     gap: rem(16px);
-    padding: rem(16px);
+    padding: rem(20px) rem(16px);
   }
 
   .foto {
-    width: rem(80px);
-    height: rem(80px);
-    font-size: rem(30px);
+    width: rem(72px);
+    height: rem(72px);
+    border-radius: rem(16px);
+    font-size: rem(28px);
   }
 
   .nome {
+    overflow: hidden;
     font-size: rem(26px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .email {
+    overflow: hidden;
     font-size: rem(15px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

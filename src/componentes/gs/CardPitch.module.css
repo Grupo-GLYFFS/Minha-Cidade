@@ -34,11 +34,17 @@
 
 @media (max-width: $mantine-breakpoint-sm) {
   .pitch {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: rem(16px);
   }
 
+  /* Botões empilhados na largura toda, o principal (Assistir ao pitch) em cima */
+  .botoes {
+    flex-direction: column-reverse;
+    gap: rem(8px);
+  }
+
   .botoes > * {
-    flex: 1 1 auto;
+    width: 100%;
   }
 }

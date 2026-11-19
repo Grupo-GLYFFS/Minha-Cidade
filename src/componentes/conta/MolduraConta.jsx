@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Botao from '../Botao';
+import Icone from '../Icone';
 import Logo from '../Logo';
 import PainelConta from './PainelConta';
 import { useCaminhoConta } from '../../contexto/useCaminhoConta';
@@ -15,6 +16,7 @@ import classes from './MolduraConta.module.css';
 // - titulo (h1) e texto (linha embaixo do título, pode ter link);
 // - children: o formulário e o que vem depois dele.
 // O botão de voltar leva ao ?voltar= do endereço, se houver ("Voltar"); senão, ao Início.
+// No celular, ele vira o "‹ Início" (ou "‹ Voltar") da barra de cima, sem o logo.
 export default function MolduraConta({ painel = 'entrar', bairro, titulo, texto, children }) {
   const destino = destinoSeguro(useCaminhoConta().voltar);
 
@@ -28,7 +30,15 @@ export default function MolduraConta({ painel = 'entrar', bairro, titulo, texto,
         <div className={classes.barra}>
           <Logo className={classes.logo} />
           <Botao variante="texto" icone="arrow_back" para={destino} className={classes.voltar}>
-            {destino === '/inicio' ? 'Voltar ao início' : 'Voltar'}
+            <Icone nome="chevron_left" tamanho={22} className={classes.seta} />
+            {destino === '/inicio' ? (
+              <>
+                <span className={classes.soComputador}>Voltar ao início</span>
+                <span className={classes.soCelular}>Início</span>
+              </>
+            ) : (
+              'Voltar'
+            )}
           </Botao>
         </div>
 
