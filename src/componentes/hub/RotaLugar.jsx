@@ -22,7 +22,7 @@ export default function RotaLugar() {
         <NaoEncontrado
           titulo={idBairro ? 'Não encontramos este bairro' : 'Não encontramos esta subprefeitura'}
           texto="O link pode estar incompleto. Os bairros e as subprefeituras estão na página da cidade."
-          icone="home_pin"
+          icone={idBairro ? 'home_pin' : 'account_balance'}
         >
           <Botao variante="principal" para="/minha-cidade">
             Ver a cidade de São Paulo
