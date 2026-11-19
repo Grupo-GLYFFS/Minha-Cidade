@@ -7,9 +7,10 @@ import { PAGINAS_EM_CONSTRUCAO } from './dados/paginasEmConstrucao';
 import Inicio from './paginas/Inicio';
 import Busca from './paginas/Busca';
 import Servicos from './paginas/Servicos';
-import CategoriaServicos from './paginas/CategoriaServicos';
 import Servico from './paginas/Servico';
 import SolicitarServico from './paginas/SolicitarServico';
+import MinhasSolicitacoes from './paginas/MinhasSolicitacoes';
+import DetalheSolicitacao from './paginas/DetalheSolicitacao';
 import Pedidos from './paginas/Pedidos';
 import NovoPedido from './paginas/NovoPedido';
 import DetalhePedido from './paginas/DetalhePedido';
@@ -58,12 +59,19 @@ export default function App() {
         />
       ))}
 
+      {/* Serviços: catálogo, ficha, formulário e Minhas solicitações (as 3 últimas pedem conta) */}
+      <Route path="/busca" element={<Busca />} />
+      <Route path="/servicos" element={<Servicos />} />
+      <Route path="/servicos/categoria/:idCategoria" element={<Servicos />} />
+      <Route path="/servicos/:idServico" element={<Servico />} />
+      <Route element={<RotaProtegida />}>
+        <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
+        <Route path="/servicos/minhas-solicitacoes" element={<MinhasSolicitacoes />} />
+        <Route path="/servicos/minhas-solicitacoes/:id" element={<DetalheSolicitacao />} />
+      </Route>
+
       <Route element={<LayoutAntigo />}>
         <Route path="/inicio" element={<Inicio />} />
-        <Route path="/busca" element={<Busca />} />
-        <Route path="/servicos" element={<Servicos />} />
-        <Route path="/servicos/categoria/:idCategoria" element={<CategoriaServicos />} />
-        <Route path="/servicos/:idServico" element={<Servico />} />
         <Route path="/minha-cidade" element={<CidadeAberta />} />
         <Route path="/minha-cidade/pedidos" element={<Pedidos />} />
         <Route path="/minha-cidade/obras" element={<ObrasCidade />} />
@@ -81,7 +89,6 @@ export default function App() {
         <Route path="/ajuda/privacidade" element={<Privacidade />} />
         <Route element={<RotaProtegida />}>
           <Route path="/pedidos/novo" element={<NovoPedido />} />
-          <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
           <Route path="/minha-cidade/alertas" element={<Alertas />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/perfil/pedidos" element={<MeusPedidos />} />

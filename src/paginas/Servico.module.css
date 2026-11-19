@@ -1,0 +1,63 @@
+/* Ficha do serviço: cards empilhados com 16 entre eles, relacionados a 96 do bloco acima. */
+
+.pilha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}
+
+.texto {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.conta {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.documentos {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+  margin: 0;
+  padding-left: rem(20px);
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.documentos li::marker {
+  color: var(--cor-azul);
+}
+
+.relacionados {
+  margin-top: rem(96px);
+}
+
+.tituloSecao {
+  margin: 0 0 rem(16px);
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .relacionados {
+    margin-top: rem(48px);
+  }
+}

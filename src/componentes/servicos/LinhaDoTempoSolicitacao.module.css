@@ -1,0 +1,121 @@
+/* Linha do tempo vertical: marcas de 28 ligadas por uma linha (cheia entre as etapas feitas,
+   tracejada até a próxima). */
+
+.linha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(20px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.etapa {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: rem(16px);
+}
+
+/* Linha até a marca da etapa seguinte */
+.etapa:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: rem(30px);
+  bottom: rem(-18px);
+  left: rem(13px);
+  width: rem(2px);
+  background: var(--cor-azul);
+}
+
+.etapa:has(.atual)::after {
+  background: none;
+  border-left: rem(2px) dashed var(--cor-borda);
+}
+
+.marca {
+  box-sizing: border-box;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: rem(28px);
+  height: rem(28px);
+  border-radius: var(--raio-selo);
+}
+
+.feita {
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+.atual {
+  border: rem(2px) solid var(--cor-azul);
+  background: var(--cor-superficie);
+}
+
+.atual::before {
+  content: '';
+  width: rem(10px);
+  height: rem(10px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-azul);
+}
+
+.futura {
+  border: rem(2px) solid var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: rem(2px);
+  min-width: 0;
+  padding-top: rem(2px);
+}
+
+.rotulo,
+.rotuloFuturo {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(10px);
+  font-size: rem(17px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.rotuloFuturo {
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.agora {
+  padding: rem(2px) rem(8px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-faixa);
+  font-size: rem(12px);
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}
+
+.data {
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.detalhe {
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

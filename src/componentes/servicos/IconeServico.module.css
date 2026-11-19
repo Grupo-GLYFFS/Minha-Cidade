@@ -1,0 +1,35 @@
+/* Quadrado azul-claro do ícone do serviço, raio 12, ícone azul. */
+
+.quadro {
+  box-sizing: border-box;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.q40 {
+  width: rem(40px);
+  height: rem(40px);
+}
+
+.q48 {
+  width: rem(48px);
+  height: rem(48px);
+}
+
+.q72 {
+  width: rem(72px);
+  height: rem(72px);
+  border-radius: var(--raio-icone);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .q72 {
+    width: rem(48px);
+    height: rem(48px);
+    border-radius: var(--raio-controle);
+  }
+}

@@ -1,0 +1,33 @@
+/* Aviso de ação feita: fundo verde-claro, borda verde, raio 12, X à direita. */
+
+.lugar {
+  margin-bottom: rem(24px);
+}
+
+/* Vazia, a região continua na página (para o leitor de tela), mas sem ocupar espaço */
+.lugar:empty {
+  margin: 0;
+}
+
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  padding: rem(4px) rem(4px) rem(4px) rem(16px);
+  border: var(--espessura-borda) solid var(--cor-sucesso-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-status-verde-fundo);
+}
+
+.icone {
+  flex: none;
+  color: var(--cor-sucesso);
+}
+
+.texto {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-status-verde-texto);
+}

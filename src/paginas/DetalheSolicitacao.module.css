@@ -1,0 +1,19 @@
+/* Detalhe da solicitação: protocolo embaixo da linha de situação e cards com 16 entre eles. */
+
+.protocolo {
+  margin: rem(12px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.protocolo b {
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+.pilha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}

@@ -1,0 +1,18 @@
+/* Confirmação: cards empilhados com 16 entre eles e os botões no fim. */
+
+.pilha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}
+
+.prazo {
+  margin: 0 0 rem(24px);
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.prazo:last-child {
+  margin-bottom: 0;
+}

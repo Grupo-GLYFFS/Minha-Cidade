@@ -1,0 +1,180 @@
+/* Formulário de solicitação: card de raio 20 com os campos (24 entre eles),
+   barra presa embaixo, revisão com grupos e endereço da conta. */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.cartao {
+  --pad-lateral: rem(32px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+  padding: rem(32px) var(--pad-lateral);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.tituloCard {
+  margin: 0;
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+/* Endereço da conta: ícone em quadrado azul-claro e o texto em 3 linhas */
+.endereco {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(16px);
+  padding: rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-fundo-card);
+}
+
+.enderecoIcone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: rem(40px);
+  height: rem(40px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.enderecoRotulo,
+.enderecoLocal {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.enderecoRua {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+/* Revisão: cada grupo com o título h3 e o "Alterar" na mesma linha */
+.grupoRevisao + .grupoRevisao {
+  padding-top: rem(8px);
+}
+
+.cabRevisao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(16px);
+  min-height: rem(44px);
+}
+
+.tituloRevisao {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.confirmacao {
+  padding-top: rem(16px);
+  border-top: var(--espessura-borda) solid var(--cor-linha);
+  margin-inline: calc(var(--pad-lateral) * -1);
+  padding-inline: var(--pad-lateral);
+}
+
+.confirmacao label {
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.erroConfirmacao {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: rem(6px);
+  font-size: rem(14px);
+  font-weight: 700;
+  color: var(--cor-erro);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Barra presa embaixo: fundo branco, linha fina em cima, sem sombra */
+.barra {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(16px);
+  margin-top: rem(24px);
+  padding: rem(16px) 0;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+.barraTexto {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: rem(16px);
+  line-height: 1.35;
+  color: var(--cor-texto);
+}
+
+.barraTexto small {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.barraBotoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: rem(12px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .cartao {
+    --pad-lateral: rem(16px);
+    padding-block: rem(24px);
+  }
+
+  .barra {
+    flex-direction: column;
+    align-items: stretch;
+    gap: rem(12px);
+  }
+
+  .barraTexto {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .barraBotoes {
+    flex-wrap: nowrap;
+  }
+
+  .barraBotoes > * {
+    flex: 1 1 0;
+  }
+}

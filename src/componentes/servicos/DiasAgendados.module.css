@@ -1,0 +1,34 @@
+/* Dias dos agendamentos: data em 18/800 com a distância em cinza, 32 entre os dias. */
+
+.dias,
+.cards {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dias {
+  gap: rem(32px);
+}
+
+.cards {
+  gap: rem(12px);
+}
+
+.data {
+  display: flex;
+  align-items: baseline;
+  gap: rem(10px);
+  margin: 0 0 rem(12px);
+  font-size: rem(18px);
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+.relativa {
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
