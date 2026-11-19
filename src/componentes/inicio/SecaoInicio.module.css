@@ -47,15 +47,29 @@
     margin-top: rem(32px);
   }
 
-  /* No celular o título pode quebrar a linha */
+  /* No celular o título é de 20 */
   .cabecalho > h2 {
     font-size: rem(20px);
   }
 
-  /* O texto do título (2º item: depois da bolinha) encolhe e quebra */
+  /* O texto do título (2º item: depois da bolinha) fica numa linha e encolhe com reticências */
   .cabecalho > h2 > span:nth-child(2) {
     flex: 0 1 auto;
     min-width: 0;
-    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* A linha cinza encolhe até sumir antes do texto do título */
+  .cabecalho > h2 > span:last-child {
+    flex: 1 1 0;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .cabecalho > a {
+    margin-right: 0;
+    padding-inline: rem(4px);
   }
 }
