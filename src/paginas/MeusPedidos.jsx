@@ -1,65 +1,92 @@
 import { useSearchParams } from 'react-router-dom';
-import { Stack, Tabs } from '@mantine/core';
-import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
-import LinkVoltar from '../componentes/LinkVoltar';
-import TextoResponsivo from '../componentes/TextoResponsivo';
-import AbaPedidos from '../componentes/perfil/AbaPedidos';
-import AbaServicos from '../componentes/perfil/AbaServicos';
-import { useSessao } from '../contexto/useSessao';
+import Pagina from '../componentes/Pagina';
+import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import Abas from '../componentes/Abas';
+import Botao from '../componentes/Botao';
+import EstadoVazio from '../componentes/EstadoVazio';
+import ParaOndeIr from '../componentes/ParaOndeIr';
+import ListaPedidos from '../componentes/pedidos/ListaPedidos';
+import { useCarregamentoSimulado } from '../componentes/pedidos/useCarregamentoSimulado';
+import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
-import { useSolicitacoes } from '../contexto/useSolicitacoes';
-import { pedidosDaPessoa } from '../logica/pedidos';
-import { ordenarSolicitacoes } from '../logica/solicitacoes';
+import { useSessao } from '../contexto/useSessao';
+import { pedidosSeguidosDaPessoa } from '../logica/acompanhamento';
 import classes from './MeusPedidos.module.css';
 
-// Meus pedidos e protocolos: duas abas, uma com os pedidos de melhoria da pessoa
-// e outra com os serviços que ela solicitou pelo catálogo.
-// A aba escolhida fica no endereço (?aba=servicos), então o link e o "voltar" do navegador mantêm a aba.
+// Meus pedidos (/perfil/pedidos), página da conta: abas "Meus pedidos" (os que a pessoa abriu)
+// e "Pedidos seguidos" (de outras pessoas, que ela apoia ou segue), agrupados por situação.
+// A aba escolhida fica no endereço (?aba=seguidos), para o link e o voltar funcionarem.
 export default function MeusPedidos() {
+  const { pedidos, apoiados, seguidos } = usePedidos();
   const { usuario } = useSessao();
-  const { pedidos } = usePedidos();
-  const { solicitacoes } = useSolicitacoes();
+  const { estado, tentarDeNovo } = useCarregamentoSimulado();
+  const destinos = useDestinosPedidos();
   const [parametros, setParametros] = useSearchParams();
-  const aba = parametros.get('aba') === 'servicos' ? 'servicos' : 'pedidos';
+  const aba = parametros.get('aba') === 'seguidos' ? 'seguidos' : 'meus';
 
-  const meusPedidos = pedidosDaPessoa(pedidos, usuario.id);
-  const minhasSolicitacoes = ordenarSolicitacoes(solicitacoes);
+  const meus = pedidos.filter((pedido) => pedido.autorId === usuario?.id);
+  const acompanhados = pedidosSeguidosDaPessoa(pedidos, apoiados, seguidos, usuario?.id);
 
-  // Troca de aba guardando a escolha no endereço (sem criar um passo novo no histórico)
-  function trocarAba(nova) {
-    setParametros(nova === 'servicos' ? { aba: 'servicos' } : {}, { replace: true });
+  // Troca a aba sem criar uma página nova no histórico
+  function mudarAba(id) {
+    setParametros(id === 'seguidos' ? { aba: 'seguidos' } : {}, { replace: true });
   }
 
+  const vazioMeus = (
+    <EstadoVazio
+      titulo="Você ainda não abriu nenhum pedido"
+      texto="Quando você avisar um problema na rua, ele aparece aqui com o protocolo e o andamento."
+    >
+      <Botao variante="principal" icone="add" para="/pedidos/novo">
+        Abrir pedido
+      </Botao>
+    </EstadoVazio>
+  );
+  const vazioSeguidos = (
+    <EstadoVazio
+      titulo="Você ainda não segue nenhum pedido"
+      texto="Apoie ou siga um pedido de outra pessoa para acompanhar o andamento dele aqui."
+    >
+      <Botao variante="secundario" para="/meu-bairro/pedidos">
+        Ver os pedidos do bairro
+      </Botao>
+    </EstadoVazio>
+  );
+
   return (
-    <Stack gap="lg">
-      <div>
-        <LinkVoltar caminho="/perfil" rotulo="Perfil" />
-        <CabecalhoAntigo titulo="Meus pedidos e protocolos" />
+    <Pagina
+      cabecalho={
+        <CabecalhoPagina
+          tipo="lista"
+          titulo="Meus pedidos"
+          subtitulo="Os pedidos que você abriu e os que você acompanha."
+          icone="assignment"
+        />
+      }
+    >
+      <div className={classes.abas}>
+        <Abas
+          abas={[
+            { id: 'meus', rotulo: 'Meus pedidos', contagem: meus.length },
+            { id: 'seguidos', rotulo: 'Pedidos seguidos', contagem: acompanhados.length },
+          ]}
+          ativa={aba}
+          aoMudar={mudarAba}
+          rotulo="Quais pedidos"
+          prefixo="meus"
+        />
       </div>
-
-      <Tabs value={aba} onChange={trocarAba} classNames={{ tab: classes.aba }}>
-        <Tabs.List grow>
-          <Tabs.Tab value="pedidos">
-            <TextoResponsivo
-              longo={`Pedidos de melhoria (${meusPedidos.length})`}
-              curto={`Pedidos (${meusPedidos.length})`}
-            />
-          </Tabs.Tab>
-          <Tabs.Tab value="servicos">
-            <TextoResponsivo
-              longo={`Serviços solicitados (${minhasSolicitacoes.length})`}
-              curto={`Serviços (${minhasSolicitacoes.length})`}
-            />
-          </Tabs.Tab>
-        </Tabs.List>
-
-        <Tabs.Panel value="pedidos" pt="lg">
-          <AbaPedidos pedidos={meusPedidos} />
-        </Tabs.Panel>
-        <Tabs.Panel value="servicos" pt="lg">
-          <AbaServicos solicitacoes={minhasSolicitacoes} />
-        </Tabs.Panel>
-      </Tabs>
-    </Stack>
+      <div role="tabpanel" id={`meus-painel-${aba}`} aria-labelledby={`meus-aba-${aba}`}>
+        <ListaPedidos
+          key={aba}
+          pedidos={aba === 'meus' ? meus : acompanhados}
+          estado={estado}
+          aoTentarDeNovo={tentarDeNovo}
+          prefixo={aba}
+          vazio={aba === 'meus' ? vazioMeus : vazioSeguidos}
+        />
+      </div>
+      <ParaOndeIr destinos={[destinos.bairro, destinos.cidade]} />
+    </Pagina>
   );
 }

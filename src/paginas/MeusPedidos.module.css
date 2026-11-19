@@ -1,6 +1,11 @@
-/* Abas com 48 px de altura e texto em negrito */
-.aba {
-  min-height: 48px;
-  font-size: rem(15px);
-  font-weight: 600;
+/* Meus pedidos: 32 entre as abas e o primeiro grupo. */
+
+.abas {
+  margin-bottom: rem(32px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .abas {
+    margin-bottom: rem(24px);
+  }
 }

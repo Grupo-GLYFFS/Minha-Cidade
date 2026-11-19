@@ -10,7 +10,9 @@ import Servicos from './paginas/Servicos';
 import CategoriaServicos from './paginas/CategoriaServicos';
 import Servico from './paginas/Servico';
 import SolicitarServico from './paginas/SolicitarServico';
-import Pedidos from './paginas/Pedidos';
+import PedidosCidade from './paginas/PedidosCidade';
+import PedidosBairro from './paginas/PedidosBairro';
+import RedirecionarPedido from './paginas/RedirecionarPedido';
 import NovoPedido from './paginas/NovoPedido';
 import DetalhePedido from './paginas/DetalhePedido';
 import CidadeAberta from './paginas/CidadeAberta';
@@ -65,14 +67,12 @@ export default function App() {
         <Route path="/servicos/categoria/:idCategoria" element={<CategoriaServicos />} />
         <Route path="/servicos/:idServico" element={<Servico />} />
         <Route path="/minha-cidade" element={<CidadeAberta />} />
-        <Route path="/minha-cidade/pedidos" element={<Pedidos />} />
         <Route path="/minha-cidade/obras" element={<ObrasCidade />} />
         <Route path="/minha-cidade/votacoes" element={<ProjetosCidade />} />
         <Route path="/minha-cidade/votacoes/:id" element={<ProjetoCidade />} />
         <Route path="/minha-cidade/orcamento" element={<OrcamentoCidade />} />
         <Route path="/meu-bairro" element={<MeuBairro />} />
         <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
-        <Route path="/pedidos/:id" element={<DetalhePedido />} />
         <Route path="/entrar" element={<Entrar />} />
         <Route path="/criar-conta" element={<CriarConta />} />
         <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
@@ -80,13 +80,22 @@ export default function App() {
         <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />
         <Route path="/ajuda/privacidade" element={<Privacidade />} />
         <Route element={<RotaProtegida />}>
-          <Route path="/pedidos/novo" element={<NovoPedido />} />
           <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
           <Route path="/minha-cidade/alertas" element={<Alertas />} />
           <Route path="/perfil" element={<Perfil />} />
-          <Route path="/perfil/pedidos" element={<MeusPedidos />} />
           <Route path="/perfil/dados" element={<MeusDados />} />
         </Route>
+      </Route>
+
+      {/* Pedidos (zeladoria) */}
+      <Route path="/minha-cidade/pedidos" element={<PedidosCidade />} />
+      <Route path="/minha-cidade/pedidos/:id" element={<DetalhePedido />} />
+      <Route path="/meu-bairro/pedidos" element={<PedidosBairro />} />
+      <Route path="/meu-bairro/pedidos/:id" element={<RedirecionarPedido />} />
+      <Route path="/pedidos/:id" element={<RedirecionarPedido />} />
+      <Route element={<RotaProtegida />}>
+        <Route path="/pedidos/novo" element={<NovoPedido />} />
+        <Route path="/perfil/pedidos" element={<MeusPedidos />} />
       </Route>
 
       {/* A Ouvidoria já é um serviço do catálogo: o link antigo leva para a ficha dela */}
