@@ -24,6 +24,7 @@ import classes from './Servico.module.css';
 // Ficha de um serviço (/servicos/:idServico): cabeçalho com o botão principal,
 // fatos (prazo, custo, onde ir), seções em card, faixa do fim, relacionados e "Para onde ir".
 // Serviço só de informação não tem botão; o que leva a outra tela do app tem o botão dela.
+// No celular, o "‹ Serviços" do topo volta ao catálogo (como na prancha da ficha).
 export default function Servico() {
   const { idServico } = useParams();
   const resumo = useResumoConta();
@@ -54,6 +55,7 @@ export default function Servico() {
 
   return (
     <Pagina
+      voltar={{ rotulo: 'Serviços', para: '/servicos' }}
       cabecalho={
         <CabecalhoPagina
           tipo="detalhe"

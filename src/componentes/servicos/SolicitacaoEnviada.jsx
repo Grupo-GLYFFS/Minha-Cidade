@@ -11,6 +11,7 @@ import classes from './SolicitacaoEnviada.module.css';
 
 // Tela "Solicitação enviada": cabeçalho de confirmação com o protocolo, o que acontece
 // agora (o prazo e os passos depois do envio) e o que a pessoa enviou.
+// No celular, os dois botões do fim empilham em largura total, com o principal em cima.
 // Recebe o serviço e a solicitação salva.
 export default function SolicitacaoEnviada({ servico, solicitacao }) {
   // O 1º passo do "como fazer" é o próprio formulário; os outros vêm depois do envio
@@ -37,19 +38,21 @@ export default function SolicitacaoEnviada({ servico, solicitacao }) {
           <ListaRespostas itens={solicitacao.respostas} />
         </SecaoCard>
 
-        <GrupoBotoes>
-          <Botao variante="secundario" icone="arrow_back" para="/servicos">
-            Voltar para Serviços
-          </Botao>
-          <Botao
-            variante="principal"
-            icone="arrow_forward"
-            iconeDireita
-            para={`/servicos/minhas-solicitacoes/${solicitacao.id}`}
-          >
-            Ver em Minhas solicitações
-          </Botao>
-        </GrupoBotoes>
+        <div className={classes.fim}>
+          <GrupoBotoes>
+            <Botao variante="secundario" icone="arrow_back" para="/servicos">
+              Voltar para Serviços
+            </Botao>
+            <Botao
+              variante="principal"
+              icone="arrow_forward"
+              iconeDireita
+              para={`/servicos/minhas-solicitacoes/${solicitacao.id}`}
+            >
+              Ver em Minhas solicitações
+            </Botao>
+          </GrupoBotoes>
+        </div>
       </div>
     </Pagina>
   );

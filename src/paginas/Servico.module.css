@@ -51,6 +51,14 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  .pilha {
+    gap: rem(12px);
+  }
+
+  .documentos li {
+    font-size: rem(15px);
+  }
+
   .relacionados {
     margin-top: rem(48px);
   }

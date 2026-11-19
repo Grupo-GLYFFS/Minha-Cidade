@@ -130,5 +130,19 @@
 @media (max-width: $mantine-breakpoint-sm) {
   .opcoes {
     grid-template-columns: minmax(0, 1fr);
+    gap: rem(8px);
+  }
+
+  .opcao {
+    min-height: rem(52px);
+  }
+
+  /* CPF e datas na largura da coluna; o número fica curto */
+  .estreito input {
+    max-width: none;
+  }
+
+  .numero input {
+    max-width: rem(160px);
   }
 }

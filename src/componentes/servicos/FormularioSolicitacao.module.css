@@ -155,35 +155,20 @@
 @media (max-width: $mantine-breakpoint-sm) {
   .cartao {
     --pad-lateral: rem(16px);
-    padding-block: rem(24px);
+    gap: rem(20px);
+    padding: rem(20px) var(--pad-lateral) rem(24px);
   }
 
-  /* Barra do pé: presa acima da barra de abas, de borda a borda, etapa e "Passo x de N" à
-     esquerda e só o botão de avançar à direita (o Voltar fica no alto da página) */
-  .barra {
-    bottom: var(--altura-abas);
-    gap: rem(12px);
-    margin: rem(32px) rem(-16px) rem(-48px);
-    padding: rem(16px);
-  }
-
-  .barraTexto {
-    flex: 1 1 auto;
+  .cartao > * {
     min-width: 0;
   }
 
-  .barraTexto > * {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .tituloCard {
+    font-size: rem(22px);
   }
 
-  .barraBotoes {
-    flex: none;
-    flex-wrap: nowrap;
-  }
-
-  .barraBotoes > :not(:last-child) {
+  /* No celular, a barra do fim dá lugar à BarraPe (componentes/celular) */
+  .barra {
     display: none;
   }
 }

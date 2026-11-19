@@ -37,9 +37,15 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  /* Ícone e nome na mesma linha; o botão desce e ocupa a largura toda */
   .fim {
     flex-wrap: wrap;
+    gap: rem(14px);
     padding: rem(16px);
+  }
+
+  .texto {
+    flex: 1 1 0;
   }
 
   .fim > :last-child:is(a, button) {

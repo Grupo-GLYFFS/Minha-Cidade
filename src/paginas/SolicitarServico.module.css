@@ -1,0 +1,13 @@
+/* Solicitar serviço: no celular, o cabeçalho azul (h1 e etapas) sai da tela e fica só para o
+   leitor de tela; o nome vai na barra "‹ Voltar" e o passo na faixa logo abaixo dela. */
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .cabecalho {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}

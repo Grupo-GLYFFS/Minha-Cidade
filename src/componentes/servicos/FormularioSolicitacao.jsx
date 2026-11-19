@@ -6,6 +6,7 @@ import CampoSolicitacao from './CampoSolicitacao';
 import EnderecoAtendimento from './EnderecoAtendimento';
 import RevisaoSolicitacao from './RevisaoSolicitacao';
 import BarraEtapa from './BarraEtapa';
+import BarraPe from '../celular/BarraPe';
 import { montarEsquemaServico, validarCampos, valoresIniciais } from '../../logica/esquemaServico';
 import { prepararRespostas } from '../../logica/solicitacoes';
 import { apagarRascunho, lerRascunho, salvarRascunho } from '../../logica/rascunhos';
@@ -123,6 +124,17 @@ export default function FormularioSolicitacao({
       ? 'Corrija o campo marcado para continuar.'
       : `Corrija os ${quantos} campos marcados para continuar.`;
 
+  // Continuar ou Enviar (vai na barra do computador e na barra do pé do celular)
+  const botaoPrincipal = ehRevisao ? (
+    <Botao variante="principal" type="submit" icone="send" iconeDireita carregando={enviando}>
+      {enviando ? 'Enviando…' : 'Enviar solicitação'}
+    </Botao>
+  ) : (
+    <Botao variante="principal" type="submit" icone="arrow_forward" iconeDireita>
+      Continuar
+    </Botao>
+  );
+
   if (etapa > liberada) {
     return <Navigate to={{ search: liberada === 1 ? '' : `?etapa=${liberada}` }} replace />;
   }
@@ -162,22 +174,19 @@ export default function FormularioSolicitacao({
         )}
       </div>
 
+      {/* Computador: barra presa no fim do formulário, com Voltar e o botão principal */}
       <BarraEtapa nome={nomeEtapa} numero={etapa} total={total}>
         {etapa > 1 && (
           <Botao variante="secundario" icone="arrow_back" onClick={() => irPara(etapa - 1)}>
             Voltar
           </Botao>
         )}
-        {ehRevisao ? (
-          <Botao variante="principal" type="submit" icone="send" iconeDireita carregando={enviando}>
-            {enviando ? 'Enviando…' : 'Enviar solicitação'}
-          </Botao>
-        ) : (
-          <Botao variante="principal" type="submit" icone="arrow_forward" iconeDireita>
-            Continuar
-          </Botao>
-        )}
+        {botaoPrincipal}
       </BarraEtapa>
+      {/* Celular: barra do pé acima da barra de abas, só com o botão principal (o Voltar fica no alto) */}
+      <BarraPe passo={{ nome: nomeEtapa, rotulo: `Passo ${etapa} de ${total}` }}>
+        {botaoPrincipal}
+      </BarraPe>
     </form>
   );
 }

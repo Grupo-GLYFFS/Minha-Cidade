@@ -1,5 +1,5 @@
 /* Fatos da ficha: card de raio 20, linhas de 56 com divisória de borda a borda,
-   rótulo numa coluna de 160 e o valor ao lado. No celular, o valor vai embaixo. */
+   rótulo numa coluna de 160 e o valor ao lado. No celular, a coluna do rótulo fica com 92. */
 
 .fatos {
   margin: 0;
@@ -42,8 +42,20 @@
 
 @media (max-width: $mantine-breakpoint-sm) {
   .linha {
-    grid-template-columns: minmax(0, 1fr);
-    gap: rem(4px);
-    padding: rem(16px);
+    grid-template-columns: rem(92px) minmax(0, 1fr);
+    gap: rem(12px);
+    align-items: start;
+    min-height: rem(52px);
+    padding: rem(14px) rem(16px);
+  }
+
+  .rotulo {
+    gap: rem(6px);
+    font-size: rem(15px);
+  }
+
+  .valor {
+    font-size: rem(15px);
+    line-height: 1.45;
   }
 }

@@ -52,13 +52,21 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  /* Número em cima, numa linha; embaixo, o selo à esquerda e o "Copiar" à direita */
   .cartao {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: rem(12px);
     padding: rem(16px);
   }
 
   .protocolo {
-    font-size: rem(22px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lado {
+    justify-content: space-between;
   }
 }

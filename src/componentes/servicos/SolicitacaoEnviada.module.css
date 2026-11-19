@@ -16,3 +16,23 @@
 .prazo:last-child {
   margin-bottom: 0;
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .pilha {
+    gap: rem(12px);
+  }
+
+  .fim {
+    margin-top: rem(12px);
+  }
+
+  .fim > * {
+    flex-direction: column-reverse;
+    gap: rem(8px);
+  }
+
+  .fim > * > * {
+    flex: none;
+    width: 100%;
+  }
+}

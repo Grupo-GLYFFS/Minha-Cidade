@@ -227,3 +227,113 @@
     width: 100%;
   }
 }
+
+/* Celular: busca em tela cheia branca, até em cima da barra de abas (só existe no celular).
+   "Buscar" 24 + X de 44 e o campo ficam presos no alto; só o conteúdo rola.
+   Linhas de resultado com divisórias e o selo embaixo do título. */
+.telaFundo.telaFundo {
+  bottom: var(--altura-abas);
+  padding: 0;
+}
+
+.tela.tela {
+  --pad-lateral: rem(16px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: none;
+  border-radius: 0;
+  background: var(--cor-superficie);
+}
+
+.telaCab {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12px);
+  min-height: rem(48px);
+  margin: 0;
+  padding: rem(16px) rem(6px) rem(12px) var(--pad-lateral);
+}
+
+.telaTitulo {
+  margin: 0;
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+.telaCampo {
+  flex: none;
+  padding-inline: var(--pad-lateral);
+}
+
+.telaCampo .campo {
+  padding-bottom: rem(16px);
+}
+
+.telaCorpo {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding: rem(20px) var(--pad-lateral) 0;
+}
+
+.telaCorpo .corpo {
+  padding-top: 0;
+  padding-bottom: rem(24px);
+}
+
+/* "Quer abrir um pedido?" no fim do conteúdo (encostado embaixo quando sobra espaço) */
+.telaFim {
+  margin: auto calc(var(--pad-lateral) * -1) 0;
+  padding: rem(16px) var(--pad-lateral);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.telaFim .fim {
+  flex-wrap: nowrap;
+  gap: rem(12px);
+}
+
+.telaFim .fimTexto {
+  line-height: 1.3;
+}
+
+.telaFim .fim > :last-child {
+  flex: none;
+  width: auto;
+}
+
+.telaCorpo .lista {
+  gap: 0;
+  margin-inline: rem(-12px);
+}
+
+.telaCorpo .lista > li:not(.itemChip) + li {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.telaCorpo .lista:has(.itemChip) {
+  gap: rem(8px);
+  margin-inline: 0;
+}
+
+.telaCorpo .item {
+  padding: rem(8px) rem(12px);
+}
+
+/* Sem resultado: os dois botões empilham, o principal (Ouvidoria) em cima */
+.telaCorpo .nadaTitulo {
+  font-size: rem(22px);
+}
+
+.telaCorpo .nadaAcoes {
+  flex-direction: column-reverse;
+  gap: rem(8px);
+}
