@@ -158,3 +158,16 @@
   font-weight: 500;
   color: var(--cor-texto-2);
 }
+
+/* A folha Mais acaba no topo da barra de abas (as outras folhas vão até o fim da tela):
+   o véu e a folha param em --altura-abas, e a aba Mais fica visível e clicável. */
+@media (max-width: $mantine-breakpoint-sm) {
+  .inner.inner,
+  .veu.veu {
+    bottom: var(--altura-abas);
+  }
+
+  .inner.inner > .caixa {
+    max-height: calc(100dvh - var(--altura-abas) - rem(48px));
+  }
+}

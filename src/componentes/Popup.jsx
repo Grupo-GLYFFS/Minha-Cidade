@@ -19,7 +19,13 @@ import classes from './Popup.module.css';
 // - botoes: os botões de 48 da faixa de baixo; secundário primeiro, principal por último
 //   (o principal fica à direita);
 // - largura em px (padrão 560);
-// - semPadding: o corpo fica sem padding (listas de linhas de borda a borda, como a folha Mais).
+// - semPadding: o corpo fica sem padding (listas de linhas de borda a borda, como a folha Mais);
+// - extras: classes a mais para { inner, veu, caixa } (a folha Mais acaba no topo das abas).
+// Junta a classe do Popup com a classe a mais, deixando de fora a que não existir
+function juntar(classe, extra) {
+  return [classe, extra].filter(Boolean).join(' ') || undefined;
+}
+
 export default function Popup({
   aberto,
   aoFechar,
@@ -28,6 +34,7 @@ export default function Popup({
   botoes,
   largura = 560,
   semPadding = false,
+  extras = {},
 }) {
   const celular = useMediaQuery(CONSULTA_CELULAR);
   const caixa = useRef(null);
@@ -40,11 +47,11 @@ export default function Popup({
       size={largura}
       centered
       closeOnEscape={false}
-      classNames={{ inner: classes.inner }}
+      classNames={{ inner: juntar(classes.inner, extras.inner) }}
       transitionProps={celular ? { transition: 'slide-up', duration: 200 } : undefined}
     >
-      <Modal.Overlay className={classes.veu} />
-      <Modal.Content ref={caixa} className={classes.caixa}>
+      <Modal.Overlay className={juntar(classes.veu, extras.veu)} />
+      <Modal.Content ref={caixa} className={juntar(classes.caixa, extras.caixa)}>
         <span className={classes.alca} aria-hidden="true" />
         <Modal.Header className={classes.cab}>
           <Modal.Title className={classes.titulo}>{titulo}</Modal.Title>

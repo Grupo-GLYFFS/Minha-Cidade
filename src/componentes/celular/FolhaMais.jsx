@@ -60,6 +60,8 @@ function LinhaMais({ caminho, icone, rotulo, contagem, aoIr }) {
 // O que você segue, Notificações (com o número de não lidas) e Configurações;
 // sem conta, a frase e o botão "Entrar ou criar conta".
 // Depois, os grupos Global Solution e Ajuda e, para quem entrou, Sair no fim.
+// Diferente das outras folhas, ela acaba no topo da barra de abas: a aba Mais fica marcada e
+// clicável por cima, e tocar nela de novo fecha a folha.
 // Recebe aberto e aoFechar().
 export default function FolhaMais({ aberto, aoFechar }) {
   const { usuario } = useSessao();
@@ -82,7 +84,13 @@ export default function FolhaMais({ aberto, aoFechar }) {
   }
 
   return (
-    <Popup aberto={aberto} aoFechar={aoFechar} titulo="Mais" semPadding>
+    <Popup
+      aberto={aberto}
+      aoFechar={aoFechar}
+      titulo="Mais"
+      semPadding
+      extras={{ inner: classes.inner, veu: classes.veu, caixa: classes.caixa }}
+    >
       {usuario ? (
         <>
           <Link
