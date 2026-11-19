@@ -1,102 +1,159 @@
-import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
-import Cartao from '../Cartao';
-import EtiquetaStatus from '../EtiquetaStatus';
+import { useState } from 'react';
+import Pagina from '../Pagina';
+import CabecalhoPagina from '../CabecalhoPagina';
+import SecaoCard from '../SecaoCard';
+import LinhaDado from '../LinhaDado';
+import SeloSituacao from '../SeloSituacao';
+import Botao from '../Botao';
+import GrupoBotoes from '../GrupoBotoes';
 import Icone from '../Icone';
-import AvisoEmAnalise from './AvisoEmAnalise';
-import classes from './PedidoEnviado.module.css';
+import AndamentoPedido from '../pedidos/AndamentoPedido';
+import { buscarCategoria, buscarStatus } from '../../logica/pedidos';
+import { PROXIMOS_PASSOS, etapasDoPedido } from '../../logica/linhaDoTempo';
+import { formatarHora } from '../../logica/datasPedido';
+import { enderecoDoPedido, nomeSubprefeitura } from '../../logica/localPedido';
+import { GRAVIDADES } from '../../dados/gravidades';
+import { pluralizar } from '../../logica/formatos';
+import classes from './NovoPedido.module.css';
 
-// O que acontece depois do envio, em três passos curtos
-const PROXIMOS_PASSOS = [
-  { titulo: 'Análise', texto: 'A equipe confere o local e o tipo de problema.' },
-  { titulo: 'Aprovação', texto: 'A prefeitura define a prioridade e quem vai fazer o serviço.' },
-  { titulo: 'Execução', texto: 'A equipe faz o conserto e você avalia o resultado.' },
-];
+// Próximo passo mostrado no topo do Andamento, conforme a situação do pedido
+const PROXIMO = {
+  enviada: { nome: 'Análise', texto: PROXIMOS_PASSOS['em-analise'] },
+  'em-analise': { nome: 'Aprovação', texto: PROXIMOS_PASSOS.aprovada },
+};
 
-// Tela de sucesso depois de enviar o pedido: protocolo em destaque, status ao vivo,
-// próximos passos e os caminhos para acompanhar ou voltar à lista.
-// O foco vai para o título assim que a tela aparece. Recebe o pedido recém-criado.
+// Página "Pedido enviado", depois do Abrir pedido. Cabeçalho de confirmação com o protocolo
+// (e Copiar), o andamento com o próximo passo e o resumo do que foi enviado.
+// Uns 5 segundos depois, a análise simulada passa o pedido para "Em análise" e um aviso aparece.
+// Recebe o pedido (lido do contexto, então muda sozinho quando entra em análise).
 export default function PedidoEnviado({ pedido }) {
-  const tituloRef = useRef(null);
+  const [copiado, setCopiado] = useState(false);
+  const status = buscarStatus(pedido.status);
+  const categoria = buscarCategoria(pedido.categoria);
+  const gravidade = GRAVIDADES.find((item) => Number(item.valor) === pedido.gravidade);
+  const emAnalise = pedido.status === 'em-analise';
+  const proximo = PROXIMO[pedido.status];
 
-  useEffect(() => {
-    tituloRef.current?.focus();
-  }, []);
+  // Etapas: a atual aparece como feita (com check); as próximas dizem o que vem
+  const etapas = etapasDoPedido(pedido).map((etapa) => ({
+    ...etapa,
+    estado: etapa.estado === 'atual' ? 'feita' : etapa.estado,
+    proximo: PROXIMOS_PASSOS[etapa.id],
+  }));
+
+  // Só o envio mostra a hora; as outras etapas mostram o que acontece nelas
+  function textoData(etapa) {
+    return etapa.id === 'enviada' ? `Hoje, ${formatarHora(pedido.criadoEm)}` : '';
+  }
+
+  async function copiar() {
+    try {
+      await navigator.clipboard.writeText(pedido.protocolo);
+      setCopiado(true);
+    } catch {
+      // Navegador bloqueou a área de transferência: o número continua visível na tela
+    }
+  }
 
   return (
-    <Cartao component="section" aria-labelledby="enviado-titulo" className={classes.tela}>
-      <Stack gap="lg">
-        <Stack gap="sm" align="center" ta="center">
-          <span className={classes.icone}>
-            <Icone nome="check" tamanho={28} />
-          </span>
-          <Title
-            order={1}
-            id="enviado-titulo"
-            ref={tituloRef}
-            tabIndex={-1}
-            fz={{ base: 28, md: 32 }}
-            lh={1.15}
-            className={classes.titulo}
-          >
-            Pedido enviado
-          </Title>
-          <Text c="var(--cor-texto-suave)" maw={480}>
-            A prefeitura recebeu o seu pedido “{pedido.titulo}”. Guarde o número do protocolo para
-            acompanhar.
-          </Text>
-        </Stack>
-
-        <div className={classes.protocolo}>
-          <Text fz="sm" fw={600} c="var(--cor-texto-suave)">
-            Número do protocolo
-          </Text>
-          <Text fz={{ base: 28, md: 36 }} fw={800} lts="0.02em" className={classes.numero}>
-            {pedido.protocolo}
-          </Text>
-          <Group gap="sm" justify="center">
-            <Text component="span" fz="sm" c="var(--cor-texto-suave)">
-              Status agora:
-            </Text>
-            <EtiquetaStatus status={pedido.status} />
-          </Group>
+    <Pagina
+      cabecalho={
+        <CabecalhoPagina tipo="confirmacao" titulo="Pedido enviado" subtitulo={pedido.titulo}>
+          <div className={classes.protocolo}>
+            <div>
+              <p className={classes.protocoloRotulo}>Número do protocolo</p>
+              <p className={classes.protocoloNumero}>{pedido.protocolo}</p>
+            </div>
+            <div className={classes.protocoloLado}>
+              {status && <SeloSituacao cor={status.cor}>{status.rotulo}</SeloSituacao>}
+              <Botao
+                variante="secundario"
+                compacto
+                icone={copiado ? 'check' : 'content_copy'}
+                aria-label="Copiar o número do protocolo"
+                onClick={copiar}
+              >
+                {copiado ? 'Copiado' : 'Copiar'}
+              </Botao>
+            </div>
+          </div>
+        </CabecalhoPagina>
+      }
+    >
+      <div className={classes.enviado}>
+        <div role="status" aria-live="polite">
+          {emAnalise && (
+            <div className={classes.analise}>
+              <Icone nome="manage_search" tamanho={24} />
+              <div>
+                <p className={classes.analiseTitulo}>Seu pedido entrou em análise</p>
+                <p className={classes.analiseTexto}>
+                  A equipe da prefeitura está conferindo o local e o tipo de problema. Você recebe a
+                  próxima novidade aqui no app.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
-
-        <AvisoEmAnalise pedido={pedido} />
-
-        <div>
-          <Title order={2} fz={18} fw={700}>
-            O que acontece agora
-          </Title>
-          <ol className={classes.passos}>
-            {PROXIMOS_PASSOS.map((passo, posicao) => (
-              <li key={passo.titulo} className={classes.passo}>
-                <span className={classes.numeroPasso} aria-hidden="true">
-                  {posicao + 1}
-                </span>
-                <Text fz="sm">
-                  <strong>{passo.titulo}:</strong> {passo.texto}
-                </Text>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <SimpleGrid cols={{ base: 1, md: 2 }} spacing="sm">
-          <Button
-            component={Link}
-            to={`/pedidos/${pedido.id}`}
-            size="md"
-            leftSection={<Icone nome="visibility" tamanho={20} />}
+        <SecaoCard titulo="Andamento">
+          {proximo && (
+            <div className={classes.proximo}>
+              <span className={classes.proximoIcone} aria-hidden="true">
+                <Icone nome="manage_search" tamanho={22} />
+              </span>
+              <div>
+                <p className={classes.proximoRotulo}>Próximo passo</p>
+                <p className={classes.proximoTexto}>
+                  <b>{proximo.nome}:</b> {proximo.texto.charAt(0).toLowerCase()}
+                  {proximo.texto.slice(1)}
+                </p>
+              </div>
+            </div>
+          )}
+          <AndamentoPedido etapas={etapas} textoData={textoData} />
+        </SecaoCard>
+        <SecaoCard titulo="O que você enviou" lista>
+          <LinhaDado icone="category" rotulo="Categoria" valor={categoria?.rotulo} />
+          <LinhaDado icone="title" rotulo="Título" valor={pedido.titulo} />
+          <LinhaDado
+            icone="signal_cellular_alt"
+            rotulo="Gravidade estimada"
+            valor={`${gravidade?.rotulo} · ${pedido.gravidade} de 5`}
+          />
+          <LinhaDado
+            icone="location_on"
+            rotulo="Onde"
+            valor={`${enderecoDoPedido(pedido)} · ${pedido.bairro}`}
+          />
+          {pedido.subprefeitura && (
+            <LinhaDado
+              icone="account_balance"
+              rotulo="Subprefeitura"
+              valor={nomeSubprefeitura(pedido.subprefeitura)}
+            />
+          )}
+          <LinhaDado
+            icone="photo_library"
+            rotulo="Fotos"
+            valor={
+              pedido.fotos?.length ? pluralizar(pedido.fotos.length, 'foto', 'fotos') : 'Nenhuma'
+            }
+          />
+        </SecaoCard>
+        <GrupoBotoes>
+          <Botao variante="secundario" para="/perfil/pedidos">
+            Ver meus pedidos
+          </Botao>
+          <Botao
+            variante="principal"
+            icone="arrow_forward"
+            iconeDireita
+            para={`/minha-cidade/pedidos/${pedido.id}`}
           >
-            Acompanhar pedido
-          </Button>
-          <Button component={Link} to="/minha-cidade/pedidos" size="md" variant="default">
-            Voltar para pedidos
-          </Button>
-        </SimpleGrid>
-      </Stack>
-    </Cartao>
+            Ver o pedido
+          </Botao>
+        </GrupoBotoes>
+      </div>
+    </Pagina>
   );
 }

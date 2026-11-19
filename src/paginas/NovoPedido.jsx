@@ -1,86 +1,211 @@
-import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { Anchor, Group, Stack } from '@mantine/core';
-import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
-import Icone from '../componentes/Icone';
-import FormularioPedido from '../componentes/novoPedido/FormularioPedido';
-import AvisoDuplicado from '../componentes/novoPedido/AvisoDuplicado';
+import { useEffect, useRef, useState } from 'react';
+import { Navigate, useSearchParams } from 'react-router-dom';
+import Pagina from '../componentes/Pagina';
+import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import SecaoCard from '../componentes/SecaoCard';
+import EtapaDescreva from '../componentes/novoPedido/EtapaDescreva';
+import EtapaOnde from '../componentes/novoPedido/EtapaOnde';
+import EtapaFotos from '../componentes/novoPedido/EtapaFotos';
+import EtapaRevisar from '../componentes/novoPedido/EtapaRevisar';
+import BarraEtapas from '../componentes/novoPedido/BarraEtapas';
 import PedidoEnviado from '../componentes/novoPedido/PedidoEnviado';
 import { usePedidos } from '../contexto/usePedidos';
-import { buscarPedido } from '../logica/pedidos';
+import { useSessao } from '../contexto/useSessao';
+import {
+  ETAPAS_NOVO_PEDIDO,
+  esquemaDescreva,
+  esquemaOnde,
+  validarEtapa,
+} from '../logica/esquemaNovoPedido';
 import { prepararDadosDoFormulario, valoresIniciaisComCategoria } from '../logica/novoPedido';
+import { montarTitulo, sugerirCategoria } from '../logica/sugestaoPedido';
 import { buscarDuplicado } from '../logica/duplicados';
+import { buscarPedido } from '../logica/pedidos';
+import classes from '../componentes/novoPedido/NovoPedido.module.css';
 
-// Novo pedido: formulário para a pessoa relatar um problema na rua ou no bairro.
-// A tela tem três momentos: o formulário; o aviso de pedido repetido (quando já existe
-// um igual aberto) e a confirmação de envio, com o protocolo.
+// Esquema de validação de cada etapa (as Fotos são opcionais e conferidas na hora)
+const ESQUEMAS = { 1: esquemaDescreva, 2: esquemaOnde };
+// Tempo do "Enviando…" (no protótipo o pedido é salvo no aparelho)
+const ESPERA_ENVIO_MS = 600;
+
+// Abrir pedido (/pedidos/novo), em 4 etapas: Descreva o problema → Onde fica → Fotos → Revisar.
+// A pessoa descreve primeiro; o app sugere a categoria, monta o título e estima a gravidade.
+// A etapa fica no endereço (?etapa=2), então o voltar do navegador e os links "Alterar" funcionam.
+// Pedido repetido (mesma categoria, bairro e rua de um aberto) não é criado.
+// Depois de enviar, a página mostra "Pedido enviado".
 export default function NovoPedido() {
   const { pedidos, adicionarPedido } = usePedidos();
-  // Categoria já escolhida quando a pessoa vem de um serviço (?categoria=iluminacao)
-  const [parametros] = useSearchParams();
-  // { tipo: 'formulario' | 'duplicado' | 'enviado', valores?, idPedido? }
-  const [etapa, setEtapa] = useState({ tipo: 'formulario' });
+  const { usuario } = useSessao();
+  const [parametros, setParametros] = useSearchParams();
+  const [valores, setValores] = useState(() =>
+    valoresIniciaisComCategoria(parametros.get('categoria')),
+  );
+  const [erros, setErros] = useState({});
+  const [listaAberta, setListaAberta] = useState(false);
+  const [categoriaEscolhida, setCategoriaEscolhida] = useState(Boolean(valores.categoria));
+  const [tituloEditado, setTituloEditado] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [idEnviado, setIdEnviado] = useState(null);
+  const cartao = useRef(null);
+  const fotosAtuais = useRef(valores.fotos);
 
-  // Recebe os valores já validados. Se houver pedido igual aberto, mostra o aviso;
-  // senão, salva o pedido e mostra a confirmação.
-  function enviar(valores) {
-    const dados = prepararDadosDoFormulario(valores);
-    const duplicado = buscarDuplicado(dados, pedidos);
-    if (duplicado) {
-      setEtapa({ tipo: 'duplicado', valores, idPedido: duplicado.id });
+  const etapa = Math.min(4, Math.max(1, Number(parametros.get('etapa')) || 1));
+  const repetido =
+    valores.rua.trim().length >= 3 && valores.bairro.trim()
+      ? buscarDuplicado(valores, pedidos)
+      : undefined;
+
+  // Última etapa que a pessoa pode abrir: a primeira que ainda tem erro (ou um repetido)
+  let liberada = 4;
+  if (Object.keys(validarEtapa(esquemaOnde, valores)).length > 0 || repetido) liberada = 2;
+  if (Object.keys(validarEtapa(esquemaDescreva, valores)).length > 0) liberada = 1;
+
+  // Ao trocar de etapa, a tela volta ao topo e o foco vai para o cartão da etapa
+  const primeiraVez = useRef(true);
+  useEffect(() => {
+    if (primeiraVez.current) {
+      primeiraVez.current = false;
       return;
     }
-    const novo = adicionarPedido(dados);
-    setEtapa({ tipo: 'enviado', idPedido: novo.id });
+    window.scrollTo(0, 0);
+    cartao.current?.focus();
+  }, [etapa]);
+
+  // Ao sair da página, libera a memória das miniaturas das fotos
+  useEffect(() => {
+    fotosAtuais.current = valores.fotos;
+  }, [valores.fotos]);
+  useEffect(() => () => fotosAtuais.current.forEach((foto) => URL.revokeObjectURL(foto.url)), []);
+
+  // Muda um campo. A descrição também atualiza a categoria sugerida e o título,
+  // enquanto a pessoa não escolheu a categoria nem editou o título.
+  function mudar(campo, valor) {
+    setValores((atual) => {
+      const novo = { ...atual, [campo]: valor };
+      if (campo === 'descricao') {
+        if (!categoriaEscolhida) novo.categoria = sugerirCategoria(valor);
+        if (!tituloEditado) novo.titulo = montarTitulo(valor);
+      }
+      return novo;
+    });
+    setErros((atual) => ({ ...atual, [campo]: undefined }));
   }
 
-  // O pedido vem sempre da lista, para o status aparecer atualizado ao vivo
-  const pedidoDaEtapa = etapa.idPedido ? buscarPedido(pedidos, etapa.idPedido) : null;
+  // Muda vários campos de uma vez (ex.: rua e bairro vindos do CEP)
+  function mudarVarios(campos) {
+    setValores((atual) => ({ ...atual, ...campos }));
+  }
 
-  if (etapa.tipo === 'enviado' && pedidoDaEtapa) {
+  function escolherCategoria(id) {
+    setCategoriaEscolhida(true);
+    setListaAberta(false);
+    mudar('categoria', id);
+  }
+
+  // Vai para uma etapa (Voltar, Alterar). Com abrirLista, já abre "Trocar categoria".
+  function irPara(numero, { abrirLista = false } = {}) {
+    setErros({});
+    if (abrirLista) setListaAberta(true);
+    setParametros(numero === 1 ? {} : { etapa: String(numero) });
+  }
+
+  // Botão de avançar: confere a etapa e segue, ou envia na última
+  function aoEnviar(evento) {
+    evento.preventDefault();
+    if (enviando) return;
+    const problemas = ESQUEMAS[etapa] ? validarEtapa(ESQUEMAS[etapa], valores) : {};
+    setErros(problemas);
+    if (Object.keys(problemas).length > 0) return;
+    if (etapa === 2 && repetido) {
+      document.getElementById('aviso-repetido')?.focus();
+      return;
+    }
+    if (etapa < 4) {
+      irPara(etapa + 1);
+      return;
+    }
+    setEnviando(true);
+    setTimeout(() => {
+      const novo = adicionarPedido(prepararDadosDoFormulario(valores));
+      setIdEnviado(novo.id);
+      setEnviando(false);
+      window.scrollTo(0, 0);
+    }, ESPERA_ENVIO_MS);
+  }
+
+  const enviado = idEnviado && buscarPedido(pedidos, idEnviado);
+  if (enviado) return <PedidoEnviado pedido={enviado} />;
+  if (etapa > liberada) {
     return (
-      <Stack gap="lg" maw={720}>
-        <PedidoEnviado pedido={pedidoDaEtapa} />
-      </Stack>
+      <Navigate to={liberada === 1 ? '/pedidos/novo' : `/pedidos/novo?etapa=${liberada}`} replace />
     );
   }
 
-  return (
-    <Stack gap="lg" maw={720}>
-      <div>
-        <Anchor
-          component={Link}
-          to="/minha-cidade/pedidos"
-          fw={600}
-          fz={14}
-          c="var(--cor-link)"
-          display="inline-flex"
-          mih={44}
-        >
-          <Group gap={4} wrap="nowrap">
-            <Icone nome="arrow_back" tamanho={20} />
-            Voltar para pedidos
-          </Group>
-        </Anchor>
-        <CabecalhoAntigo
-          titulo="Abrir pedido"
-          descricao="Conte o que precisa de conserto na sua rua. A prefeitura analisa e você acompanha cada etapa."
-        />
-      </div>
+  const nomeEtapa = ETAPAS_NOVO_PEDIDO[etapa - 1];
 
-      {etapa.tipo === 'duplicado' && pedidoDaEtapa ? (
-        <AvisoDuplicado
-          existente={pedidoDaEtapa}
-          aoEditar={() => setEtapa({ tipo: 'formulario', valores: etapa.valores })}
+  return (
+    <Pagina
+      cabecalho={
+        <CabecalhoPagina
+          tipo="formulario"
+          titulo="Abrir pedido"
+          trilha={[
+            { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
+            { rotulo: 'Pedidos', para: '/minha-cidade/pedidos' },
+            { rotulo: 'Abrir pedido' },
+          ]}
+          etapas={ETAPAS_NOVO_PEDIDO}
+          etapaAtual={etapa}
         />
-      ) : (
-        <FormularioPedido
-          aoEnviar={enviar}
-          valoresIniciais={
-            etapa.valores ?? valoresIniciaisComCategoria(parametros.get('categoria'))
-          }
+      }
+    >
+      <form className={classes.formulario} noValidate onSubmit={aoEnviar}>
+        <div className={classes.cartao} ref={cartao} tabIndex={-1}>
+          <SecaoCard titulo={nomeEtapa}>
+            {etapa === 1 && (
+              <EtapaDescreva
+                valores={valores}
+                erros={erros}
+                mudar={mudar}
+                escolherCategoria={escolherCategoria}
+                listaAberta={listaAberta}
+                aoAbrirLista={setListaAberta}
+              />
+            )}
+            {etapa === 2 && (
+              <EtapaOnde
+                valores={valores}
+                erros={erros}
+                mudar={mudar}
+                mudarVarios={mudarVarios}
+                repetido={repetido}
+                repetidoEhSeu={Boolean(repetido && repetido.autorId === usuario?.id)}
+                aoEditar={() => irPara(1)}
+              />
+            )}
+            {etapa === 3 && (
+              <EtapaFotos fotos={valores.fotos} aoMudar={(fotos) => mudarVarios({ fotos })} />
+            )}
+            {etapa === 4 && (
+              <EtapaRevisar
+                valores={valores}
+                irPara={irPara}
+                aoMudarTitulo={(titulo) => {
+                  setTituloEditado(true);
+                  mudarVarios({ titulo });
+                }}
+              />
+            )}
+          </SecaoCard>
+        </div>
+        <BarraEtapas
+          nome={nomeEtapa}
+          etapa={etapa}
+          total={ETAPAS_NOVO_PEDIDO.length}
+          aoVoltar={() => irPara(etapa - 1)}
+          enviando={enviando}
         />
-      )}
-    </Stack>
+      </form>
+    </Pagina>
   );
 }
