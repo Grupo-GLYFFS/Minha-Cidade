@@ -34,9 +34,12 @@
 
 .linha1 {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: rem(6px);
+  column-gap: rem(16px);
+  row-gap: rem(2px);
   margin: 0;
+  overflow: hidden;
   font-size: rem(13px);
   font-weight: 700;
   color: var(--cor-texto-2);
@@ -44,16 +47,30 @@
   white-space: nowrap;
 }
 
-/* Só o tipo encolhe, com reticências; "Não lida" e a hora ficam inteiros */
-.linha1 > * {
-  flex: none;
-}
-
+/* O tipo é o texto principal e fica inteiro. "Não lida · data" vai junto, ao lado dele ou,
+   se não couber, na linha de baixo. Só um tipo maior que a caixa toda ganha reticências. */
 .linha1 > .tipo {
   flex: 0 1 auto;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.meta {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: rem(6px);
+}
+
+/* O "·" entre o tipo e o resto fica no vão à esquerda do grupo: quando o grupo desce para
+   a linha de baixo, ele cai fora da caixa e o overflow: hidden o esconde. */
+.separador {
+  position: absolute;
+  left: rem(-16px);
+  width: rem(16px);
+  text-align: center;
 }
 
 .ponto {

@@ -6,6 +6,8 @@ import { dataHoraIso, horaNaCaixa } from '../../logica/notificacoes';
 import classes from './ItemCaixaSino.module.css';
 
 // Uma notificação na caixa do sino: miniatura de 56, "Tipo · Não lida · hora" e o título.
+// O tipo nunca corta: quando "Não lida · data" não cabe ao lado dele, desce inteiro para a
+// linha de baixo (e o "·" do começo some).
 // Não lida tem fundo azul-claro. A linha inteira é clicável; abrir marca como lida e fecha a caixa.
 // Recebe a notificação e aoAbrir(id).
 export default function ItemCaixaSino({ notificacao, aoAbrir }) {
@@ -17,15 +19,24 @@ export default function ItemCaixaSino({ notificacao, aoAbrir }) {
       <div className={classes.texto}>
         <p className={classes.linha1}>
           <span className={classes.tipo}>{tipo}</span>
-          <span aria-hidden="true">·</span>
-          {!lida && (
-            <>
-              <Icone nome="fiber_manual_record" tamanho={18} preenchido className={classes.ponto} />
-              <span className={classes.naoLida}>Não lida</span>
-              <span aria-hidden="true">·</span>
-            </>
-          )}
-          <time dateTime={dataHoraIso(notificacao)}>{horaNaCaixa(notificacao)}</time>
+          <span className={classes.meta}>
+            <span className={classes.separador} aria-hidden="true">
+              ·
+            </span>
+            {!lida && (
+              <>
+                <Icone
+                  nome="fiber_manual_record"
+                  tamanho={18}
+                  preenchido
+                  className={classes.ponto}
+                />
+                <span className={classes.naoLida}>Não lida</span>
+                <span aria-hidden="true">·</span>
+              </>
+            )}
+            <time dateTime={dataHoraIso(notificacao)}>{horaNaCaixa(notificacao)}</time>
+          </span>
         </p>
         <p className={classes.titulo}>
           <Link to={para} className={classes.link} onClick={() => aoAbrir(id)}>
