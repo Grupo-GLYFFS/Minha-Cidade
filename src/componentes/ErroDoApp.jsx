@@ -25,11 +25,26 @@ export default class ErroDoApp extends Component {
   constructor(props) {
     super(props);
     this.state = { quebrou: false };
+    this.voltarAoNormal = this.voltarAoNormal.bind(this);
   }
 
   // Marca que alguma tela quebrou (o React chama isto quando um filho dá erro)
   static getDerivedStateFromError() {
     return { quebrou: true };
+  }
+
+  // Quando a rota muda (o # do endereço), tenta mostrar a tela nova em vez do erro
+  componentDidMount() {
+    window.addEventListener('hashchange', this.voltarAoNormal);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.voltarAoNormal);
+  }
+
+  // Tira o "Algo deu errado" para a tela da rota nova aparecer
+  voltarAoNormal() {
+    if (this.state.quebrou) this.setState({ quebrou: false });
   }
 
   render() {

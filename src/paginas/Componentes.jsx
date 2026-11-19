@@ -21,6 +21,13 @@ const INDICE = [
   ['estados', 'Estados'],
 ];
 
+// Rola até a seção da âncora sem mexer no # do endereço (no HashRouter o # é a rota).
+// Recebe o clique e o id da seção.
+function rolarAte(evento, ancora) {
+  evento.preventDefault();
+  document.getElementById(ancora)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 // Página de desenvolvimento /componentes: os componentes da base ao vivo, com as variantes.
 // É a referência para quem constrói as páginas (junto com src/componentes/LEIA-ME.md).
 // O topo e o rodapé da própria página também são os componentes Topo e Rodape.
@@ -39,7 +46,9 @@ export default function Componentes() {
       <ul className={classes.indice}>
         {INDICE.map(([ancora, rotulo]) => (
           <li key={ancora}>
-            <Chip href={`#${ancora}`}>{rotulo}</Chip>
+            <Chip href={`#${ancora}`} onClick={(evento) => rolarAte(evento, ancora)}>
+              {rotulo}
+            </Chip>
           </li>
         ))}
       </ul>

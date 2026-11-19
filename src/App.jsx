@@ -1,4 +1,4 @@
-import { Fragment, lazy, Suspense } from 'react';
+import { Fragment } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import RotaProtegida from './componentes/RotaProtegida';
 import { useConferirAcaoPendente } from './contexto/useConferirAcaoPendente';
@@ -49,12 +49,11 @@ import Apresentacao from './paginas/Apresentacao';
 import ComoFunciona from './paginas/ComoFunciona';
 import Impacto from './paginas/Impacto';
 import Equipe from './paginas/Equipe';
+// Página de desenvolvimento /componentes (import estático: o build abre pelo file://, sem divisão do código)
+import Componentes from './paginas/Componentes';
 
 // Início das rotas de outro bairro e de uma subprefeitura (as subpáginas vêm depois)
 const LUGARES = ['/minha-cidade/bairros/:idBairro', '/minha-cidade/subprefeituras/:idSub'];
-
-// Página de desenvolvimento: só é baixada quando alguém abre /componentes
-const Componentes = lazy(() => import('./paginas/Componentes'));
 
 // Rotas do app, no mapa de 18/11 (ver .claude/visao-do-projeto.md).
 // - Cada página usa <Pagina> por conta própria (topo, cabeçalho, coluna de 880 e rodapé).
@@ -172,14 +171,7 @@ export default function App() {
       <Route path="/ajuda/ouvidoria" element={<Navigate to="/servicos/ouvidoria" replace />} />
 
       {/* Página de desenvolvimento: os componentes da base ao vivo (fora do menu) */}
-      <Route
-        path="/componentes"
-        element={
-          <Suspense fallback={null}>
-            <Componentes />
-          </Suspense>
-        }
-      />
+      <Route path="/componentes" element={<Componentes />} />
       <Route path="*" element={<NaoEncontrada />} />
     </Routes>
   );
