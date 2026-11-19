@@ -34,3 +34,21 @@
   background: var(--cor-status-vermelho-fundo);
   color: var(--cor-status-vermelho-texto);
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+  /* No celular, os selos dos mínimos empilham na largura toda */
+  .minimos {
+    flex-direction: column;
+    gap: rem(8px);
+  }
+
+  .minimos li {
+    min-height: rem(40px);
+    padding: rem(8px) rem(12px);
+    line-height: 1.35;
+  }
+
+  .minimos li > :first-child {
+    flex: none;
+  }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Chip from '../Chip';
 import CardServico from './CardServico';
+import FiltroAssunto from './FiltroAssunto';
 import { CATEGORIAS_SERVICOS } from '../../dados/categoriasServicos';
 import { servicosDaCategoria } from '../../logica/servicos';
 import classes from './CatalogoServicos.module.css';
@@ -17,6 +18,8 @@ function idAssunto(idCategoria) {
 // Recebe a categoria que abre marcada (ex.: vinda de /servicos?categoria=saude).
 export default function CatalogoServicos({ categoriaInicial }) {
   const [ativa, setAtiva] = useState(categoriaInicial ?? CATEGORIAS_SERVICOS[0].id);
+  // Assunto do filtro do celular ("todos" ou o id): os outros grupos somem só no celular
+  const [filtro, setFiltro] = useState(categoriaInicial ?? 'todos');
   const area = useRef(null);
 
   // Leva a área (ou a página, no celular) até o bloco do assunto
@@ -64,6 +67,7 @@ export default function CatalogoServicos({ categoriaInicial }) {
 
   return (
     <div className={classes.bloco}>
+      <FiltroAssunto escolhido={filtro} aoEscolher={setFiltro} />
       <nav className={classes.assuntos} aria-label="Assuntos">
         <ul className={classes.chips}>
           {CATEGORIAS_SERVICOS.map((categoria) => (
@@ -94,16 +98,25 @@ export default function CatalogoServicos({ categoriaInicial }) {
           <section
             key={categoria.id}
             id={idAssunto(categoria.id)}
-            className={classes.grupo}
+            className={
+              filtro === 'todos' || filtro === categoria.id
+                ? classes.grupo
+                : `${classes.grupo} ${classes.foraDoFiltro}`
+            }
             aria-labelledby={`${idAssunto(categoria.id)}-t`}
           >
             <h3 className={classes.tituloGrupo} id={`${idAssunto(categoria.id)}-t`}>
-              {categoria.nome}
+              <span className={classes.bolinha} aria-hidden="true" />
+              <span className={classes.nomeGrupo}>{categoria.nome}</span>
+              <span className={classes.contagem}>
+                {servicosDaCategoria(categoria.id).length}
+              </span>
+              <span className={classes.linhaGrupo} aria-hidden="true" />
             </h3>
             <ul className={classes.cards}>
               {servicosDaCategoria(categoria.id).map((servico) => (
                 <li key={servico.id}>
-                  <CardServico servico={servico} />
+                  <CardServico servico={servico} emLista />
                 </li>
               ))}
             </ul>

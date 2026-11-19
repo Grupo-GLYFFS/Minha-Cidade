@@ -35,8 +35,16 @@
   color: var(--cor-texto);
 }
 
-@media (max-width: $mantine-breakpoint-xs) {
+@media (max-width: $mantine-breakpoint-sm) {
+  /* No celular, bairro e subprefeitura continuam lado a lado, com reticências */
   .local {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: rem(12px);
+  }
+
+  .local dd {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

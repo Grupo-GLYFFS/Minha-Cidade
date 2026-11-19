@@ -29,3 +29,20 @@
 .naoSei:hover {
   color: var(--cor-azul-tinta);
 }
+
+/* Envolve um CamposLado. */
+.lado {
+  display: contents;
+}
+
+/* Celular (folha): Número | Complemento e Bairro | Cidade continuam lado a lado, como na prancha */
+@media (max-width: $mantine-breakpoint-sm) {
+  .lado > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: rem(12px);
+  }
+
+  .linhaCep {
+    column-gap: rem(12px);
+  }
+}

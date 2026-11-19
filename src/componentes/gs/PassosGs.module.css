@@ -142,25 +142,39 @@
   white-space: nowrap;
 }
 
-/* Celular: os nomes saem da tela (continuam para o leitor de tela) e ficam só as bolinhas,
-   cada uma com área de toque de 44 */
+/* Celular: os 4 passos dividem a largura, com a bolinha em cima e o nome de 12 embaixo */
 @media (max-width: $mantine-breakpoint-sm) {
   .passos,
   .azul {
-    flex-wrap: nowrap;
-    gap: rem(4px);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 0;
   }
 
+  .passo {
+    position: relative;
+    display: block;
+    min-width: 0;
+    text-align: center;
+  }
+
+  /* Linha entre as bolinhas: do fim da bolinha anterior ao começo desta */
   .passo + .passo::before,
   .azul .passo + .passo::before {
-    width: rem(24px);
+    position: absolute;
+    top: rem(21px);
+    right: calc(50% + rem(24px));
+    width: calc(100% - rem(48px));
   }
 
   .link {
-    justify-content: center;
-    min-width: rem(44px);
-    padding: 0;
-    font-size: 0;
-    gap: 0;
+    flex-direction: column;
+    gap: rem(6px);
+    min-height: rem(44px);
+    padding: rem(4px) rem(2px) 0;
+    font-size: rem(12px);
+    line-height: 1.25;
+    text-wrap: balance;
   }
 }

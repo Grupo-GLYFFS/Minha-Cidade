@@ -81,3 +81,25 @@
   line-height: 1.6;
   color: var(--cor-texto-2);
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .pergunta {
+    gap: rem(12px);
+    min-height: rem(56px);
+    padding: rem(14px) rem(12px) rem(14px) rem(16px);
+    font-size: rem(16px);
+  }
+
+  .texto {
+    min-width: 0;
+  }
+
+  .resposta {
+    padding: 0 rem(16px) rem(20px);
+  }
+
+  .resposta p {
+    font-size: rem(15px);
+    line-height: 1.55;
+  }
+}

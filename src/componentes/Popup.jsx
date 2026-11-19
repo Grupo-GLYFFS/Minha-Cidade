@@ -44,7 +44,9 @@ export default function Popup({
           <Modal.Title className={classes.titulo}>{titulo}</Modal.Title>
           <Botao variante="fechar" aria-label="Fechar" onClick={aoFechar} />
         </Modal.Header>
-        <Modal.Body className={semPadding ? `${classes.corpo} ${classes.semPadding}` : classes.corpo}>
+        <Modal.Body
+          className={semPadding ? `${classes.corpo} ${classes.semPadding}` : classes.corpo}
+        >
           {children}
         </Modal.Body>
         {botoes && <div className={classes.botoes}>{botoes}</div>}

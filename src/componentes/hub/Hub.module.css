@@ -552,22 +552,33 @@ a.sua:hover {
 
   .tituloSecao {
     margin-bottom: rem(24px);
+    font-size: rem(22px);
   }
 
+  .subtituloGrupo {
+    margin: rem(24px) 0 rem(12px);
+  }
+
+  /* Endereço e horário: rótulo inteiro à esquerda e o valor numa linha, com reticências */
   .ficha {
     margin-bottom: rem(48px);
+    padding: rem(4px) 0;
   }
 
   .fichaLinha {
-    flex-wrap: wrap;
-    gap: rem(4px) rem(16px);
-    padding: rem(12px) rem(16px);
+    gap: rem(12px);
+    min-height: rem(56px);
+    padding: rem(10px) rem(16px);
+  }
+
+  .fichaLinha dt {
+    font-size: rem(15px);
   }
 
   .fichaLinha dd {
-    flex-basis: 100%;
-    padding-left: rem(40px);
-    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .grade,
@@ -575,25 +586,218 @@ a.sua:hover {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .grade > li {
+    min-width: 0;
+  }
+
   /* "O que acontece" e números ficam em 2 colunas no celular */
   .gradeDupla {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Números: o primeiro ocupa a linha toda */
+  .gradeDupla:has(.numero) > li:first-child {
+    grid-column: 1 / -1;
+  }
+
   .acontece {
-    min-height: rem(128px);
+    gap: rem(2px);
+    min-height: rem(132px);
+    padding: rem(16px) rem(16px) rem(18px);
+  }
+
+  .acontece .iconeCaixa {
+    margin-bottom: rem(14px);
+  }
+
+  .acontece .seta {
+    top: rem(16px);
+    right: rem(14px);
+  }
+
+  .aconteceNome {
+    display: -webkit-box;
+    max-width: 100%;
+    overflow: hidden;
+    font-size: rem(17px);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .aconteceMeta {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    font-size: rem(14px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Cards de lugar (subprefeituras, "Ver todas", bairros): seta no meio, nome numa linha */
+  .lugar {
+    justify-content: center;
+    min-height: rem(76px);
+    padding: rem(14px) rem(48px) rem(14px) rem(16px);
+  }
+
+  .lugar .seta,
+  .bairro .seta,
+  .quemCuida .seta {
+    top: 50%;
+    right: rem(16px);
+    margin-top: rem(-11px);
+  }
+
+  .lugarNome {
+    flex-wrap: nowrap;
+    max-width: 100%;
+    font-size: rem(17px);
+  }
+
+  .lugarNomeTexto {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lugarNome .selo {
+    flex: none;
+  }
+
+  .bairro {
+    gap: rem(4px);
+    padding: rem(16px) rem(48px) rem(16px) rem(16px);
+  }
+
+  .bairro .iconeCaixa {
+    margin-bottom: rem(8px);
+  }
+
+  .bairro .lugarNome {
+    margin-top: rem(4px);
+  }
+
+  .numero {
     padding: rem(16px);
   }
 
+  .numero :global(.icone) {
+    margin-bottom: rem(6px);
+  }
+
   .numeroValor {
-    font-size: rem(24px);
+    font-size: rem(26px);
   }
 
+  /* Pessoas e secretarias: uma coluna, nome e cargo numa linha */
+  .pessoa {
+    padding: rem(16px);
+  }
+
+  .pessoa > div {
+    min-width: 0;
+  }
+
+  .pessoaPequena {
+    gap: rem(14px);
+    padding: rem(12px) rem(16px);
+  }
+
+  .pessoaNome {
+    font-size: rem(17px);
+  }
+
+  .pessoaCargo,
+  .pessoaPequena .pessoaCargo {
+    font-size: rem(14px);
+  }
+
+  .pessoaNome,
+  .pessoaCargo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pessoaPequena .pessoaNome {
+    font-size: rem(16px);
+  }
+
+  /* Telefone: número em cima, nome e descrição embaixo, ligar à direita */
   .telefone {
-    padding-left: rem(16px);
+    display: grid;
+    grid-template-areas:
+      'numero icone'
+      'texto icone';
+    grid-template-columns: minmax(0, 1fr) rem(44px);
+    gap: rem(2px) rem(12px);
+    padding: rem(14px) rem(16px);
   }
 
+  .telefoneNumero {
+    grid-area: numero;
+    min-width: 0;
+    font-size: rem(24px);
+    line-height: 1.2;
+  }
+
+  .telefoneTexto {
+    grid-area: texto;
+  }
+
+  .telefoneIcone {
+    grid-area: icone;
+  }
+
+  /* Serviços perto: uma coluna, sem o quadradinho do ícone */
+  .servico {
+    display: block;
+    padding: rem(14px) rem(16px);
+  }
+
+  .servico .iconeCaixa {
+    display: none;
+  }
+
+  .servicoLinha {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Quem cuida: card de destino com ícone de 44 e seta */
   .quemCuida {
-    padding: rem(16px) rem(56px) rem(16px) rem(16px);
+    gap: rem(14px);
+    min-height: rem(76px);
+    padding: rem(14px) rem(52px) rem(14px) rem(16px);
+  }
+
+  .quemCuidaTexto {
+    min-width: 0;
+  }
+
+  .quemCuidaTexto b {
+    font-size: rem(17px);
+  }
+
+  .quemCuidaTexto span {
+    font-size: rem(14px);
+  }
+
+  .quemCuidaTexto b,
+  .quemCuidaTexto span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .seloCabecalho {
+    margin-bottom: rem(8px);
+  }
+
+  .esqueleto {
+    min-height: rem(132px);
+    padding: rem(16px);
   }
 }

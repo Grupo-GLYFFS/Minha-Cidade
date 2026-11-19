@@ -80,7 +80,25 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  /* Visitante: cadeado de 48 ao lado do texto e os dois botões dividindo a linha embaixo */
   .entrar {
+    display: grid;
+    grid-template-columns: rem(48px) minmax(0, 1fr);
+    gap: rem(16px) rem(14px);
     padding: rem(16px);
+  }
+
+  .cadeado {
+    width: rem(48px);
+    height: rem(48px);
+  }
+
+  .entrarBotoes {
+    grid-column: 1 / -1;
+    gap: rem(8px);
+  }
+
+  .entrarBotoes > * {
+    flex: 1 1 0;
   }
 }

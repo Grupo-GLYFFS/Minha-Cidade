@@ -123,3 +123,21 @@
   font-weight: 500;
   color: var(--cor-texto-2);
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+  /* Na folha do celular: linhas de 60, nome e bairros numa linha com reticências */
+  .item {
+    min-height: rem(60px);
+  }
+
+  .texto b,
+  .texto small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .selo {
+    flex: none;
+  }
+}

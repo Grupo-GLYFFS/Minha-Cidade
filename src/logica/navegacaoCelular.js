@@ -23,7 +23,9 @@ export const PAGINAS_PRIMEIRO_NIVEL = ['/inicio', '/servicos', '/minha-cidade', 
 // Diz se o caminho é igual a um dos itens ou fica dentro dele.
 // Recebe o caminho e a lista; devolve true ou false.
 function comecaCom(caminho, lista) {
-  return lista.some((item) => caminho === item || caminho.startsWith(item.endsWith('/') ? item : `${item}/`));
+  return lista.some(
+    (item) => caminho === item || caminho.startsWith(item.endsWith('/') ? item : `${item}/`),
+  );
 }
 
 // Diz qual aba da barra do celular fica marcada.

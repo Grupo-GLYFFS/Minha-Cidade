@@ -1,0 +1,32 @@
+/* Barra do pé do detalhe: some no computador; no celular fica presa acima da barra de abas,
+   fundo branco, linha fina em cima, sem sombra, padding 16 e o botão na largura toda. */
+
+.espaco {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  /* Altura da barra (16 + 48 + 16 + 1 de borda), para o fim da página não ficar embaixo dela */
+  .espaco {
+    display: block;
+    height: rem(81px);
+  }
+
+  .barra {
+    box-sizing: border-box;
+    position: fixed;
+    right: 0;
+    bottom: var(--altura-abas);
+    left: 0;
+    z-index: 40;
+    display: flex;
+    padding: rem(16px);
+    border-top: var(--espessura-borda) solid var(--cor-borda);
+    background: var(--cor-superficie);
+  }
+
+  .barra > * {
+    flex: 1 1 0;
+    width: 100%;
+  }
+}

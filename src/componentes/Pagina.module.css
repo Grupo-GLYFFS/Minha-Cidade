@@ -45,8 +45,8 @@
     display: none;
   }
 
-  /* Espaço embaixo para a barra de abas (e a barra do pé, quando houver) não cobrir o fim */
+  /* Espaço embaixo para a barra de abas não cobrir o fim (a barra do pé traz o espaço dela) */
   .pagina {
-    padding-bottom: calc(var(--altura-abas) + var(--altura-pe));
+    padding-bottom: var(--altura-abas);
   }
 }

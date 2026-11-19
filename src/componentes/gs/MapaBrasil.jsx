@@ -1,4 +1,5 @@
 import { PONTOS_MAPA_BRASIL, PONTO_SAO_PAULO } from '../../dados/mapaBrasil';
+import { FONTE_IBGE } from '../../dados/pesquisaTic';
 import classes from './MapaBrasil.module.css';
 
 // Parte dos pontos que conta como município de até 10 mil habitantes (ex.: "44,8")
@@ -9,7 +10,7 @@ const PORCENTAGEM = ((PONTOS_PEQUENOS / PONTOS_MAPA_BRASIL.length) * 100).toLoca
 
 // Mapa do Brasil em pontos da Apresentação: cada ponto é cerca de 10 municípios, em azul os de
 // até 10 mil habitantes. O desenho é decorativo: o leitor de tela lê o texto alternativo,
-// que traz a informação. Embaixo, a legenda e a fonte (IBGE, Censo 2022).
+// que traz a informação. Embaixo, a legenda numa linha e a fonte (IBGE, Censo 2022).
 export default function MapaBrasil() {
   const textoAlternativo = `Mapa do Brasil em pontos: ${PORCENTAGEM}% dos municípios têm até 10 mil habitantes. São Paulo, cidade da demonstração, está marcada.`;
 
@@ -47,22 +48,16 @@ export default function MapaBrasil() {
           />
         </svg>
         <span className={classes.saoPaulo} aria-hidden="true">
-          São Paulo, cidade da demonstração
+          São Paulo
         </span>
       </div>
-      <ul className={classes.legenda} aria-hidden="true">
-        <li>
-          <i className={classes.corPequeno} />
-          Até 10 mil habitantes ({PORCENTAGEM}%)
-        </li>
-        <li>
-          <i className={classes.corOutros} />
-          Mais de 10 mil
-        </li>
-      </ul>
+      <p className={classes.legenda} aria-hidden="true">
+        <i className={classes.corPequeno} />
+        Quase metade dos 5.570 municípios do Brasil tem até 10 mil habitantes (em azul)
+      </p>
       <figcaption className={classes.fonte}>
-        Cada ponto representa cerca de 10 dos 5.570 municípios; a posição é ilustrativa. Fonte:{' '}
-        <a href="https://censo2022.ibge.gov.br/">IBGE, Censo 2022</a>
+        Cada ponto representa cerca de 10 municípios; a posição é ilustrativa. Fonte:{' '}
+        <a href={FONTE_IBGE.link}>{FONTE_IBGE.texto}</a>
       </figcaption>
     </figure>
   );

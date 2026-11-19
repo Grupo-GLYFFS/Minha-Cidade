@@ -51,35 +51,25 @@
 
 .legenda {
   display: flex;
-  flex-wrap: wrap;
-  gap: rem(8px) rem(24px);
+  align-items: flex-start;
+  gap: rem(10px);
   margin: rem(16px) 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: rem(14px);
-  font-weight: 600;
+  font-size: rem(15px);
+  font-weight: 700;
+  line-height: 1.4;
   color: var(--cor-texto);
-}
-
-.legenda li {
-  display: flex;
-  align-items: center;
-  gap: rem(8px);
 }
 
 .legenda i {
   flex: none;
   width: rem(12px);
   height: rem(12px);
+  margin-top: rem(4px);
   border-radius: var(--raio-selo);
 }
 
 .corPequeno {
   background: var(--cor-azul);
-}
-
-.corOutros {
-  background: var(--cor-azul-borda);
 }
 
 .fonte {
@@ -101,5 +91,9 @@
   .saoPaulo {
     font-size: rem(12px);
     padding: rem(2px) rem(8px);
+  }
+
+  .legenda {
+    font-size: rem(14px);
   }
 }

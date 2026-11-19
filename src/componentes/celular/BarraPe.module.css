@@ -1,11 +1,17 @@
 /* Barra do pé (celular): presa acima da barra de abas, 16 de padding, linha fina em cima,
    sem sombra. No computador ela não aparece. */
 
-.barra {
+.barra,
+.espaco {
   display: none;
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  .espaco {
+    display: block;
+    height: var(--altura-pe);
+  }
+
   .barra {
     position: fixed;
     left: 0;

@@ -43,7 +43,7 @@
 
 @media (max-width: $mantine-breakpoint-sm) {
   .heroi {
-    padding: rem(40px) 0 rem(32px);
+    padding: rem(56px) 0 rem(48px);
   }
 
   .miolo {
@@ -51,14 +51,10 @@
   }
 
   .titulo {
-    font-size: rem(40px);
+    font-size: rem(48px);
   }
 
   .subtitulo {
-    font-size: rem(16px);
-  }
-
-  .busca {
-    margin-top: rem(24px);
+    font-size: rem(17px);
   }
 }

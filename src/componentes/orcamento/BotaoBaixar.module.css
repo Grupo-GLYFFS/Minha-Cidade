@@ -1,0 +1,18 @@
+/* No celular, o "Baixar" fica só com o ícone (quadrado de 44); o texto continua para o leitor de tela. */
+
+@media (max-width: $mantine-breakpoint-sm) {
+  button.baixar {
+    width: rem(44px);
+    padding: 0;
+    gap: 0;
+  }
+
+  .rotulo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

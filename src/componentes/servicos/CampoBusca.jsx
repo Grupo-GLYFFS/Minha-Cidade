@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { useMediaQuery } from '@mantine/hooks';
 import Botao from '../Botao';
 import Icone from '../Icone';
 import classes from './CampoBusca.module.css';
@@ -13,6 +14,10 @@ const CampoBusca = forwardRef(function CampoBusca(
   { id, rotulo, placeholder, valor, aoMudar, aoEnviar, grande = false, aoTeclar, ...props },
   ref,
 ) {
+  // No celular o texto de exemplo fica curto: sai a parte do "Ex.: …"
+  const celular = useMediaQuery('(max-width: 48em)');
+  const textoExemplo = celular ? placeholder?.split(' Ex.:')[0] : placeholder;
+
   // Envia sem recarregar a página
   function enviar(evento) {
     evento.preventDefault();
@@ -34,7 +39,7 @@ const CampoBusca = forwardRef(function CampoBusca(
         id={id}
         type="search"
         className={classes.entrada}
-        placeholder={placeholder}
+        placeholder={textoExemplo}
         value={valor}
         onChange={(evento) => aoMudar(evento.target.value)}
         onKeyDown={aoTeclar}

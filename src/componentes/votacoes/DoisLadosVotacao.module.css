@@ -61,4 +61,9 @@
   .contra {
     padding: rem(16px);
   }
+
+  .lista li {
+    gap: rem(12px);
+    font-size: rem(15px);
+  }
 }

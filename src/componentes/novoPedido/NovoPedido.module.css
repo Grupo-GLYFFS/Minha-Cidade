@@ -685,16 +685,31 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
+  /* Barra do pé: presa acima da barra de abas, etapa e "Passo x de N" à esquerda e só o
+     botão de avançar à direita (o Voltar fica no alto da página) */
+  .barra {
+    bottom: var(--altura-abas);
+    flex-wrap: nowrap;
+    margin: rem(32px) 0 rem(-48px);
+  }
+
   .barraTexto {
-    display: none;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .barraTexto > * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .barraBotoes {
-    flex: 1 1 auto;
+    flex: none;
   }
 
-  .barraBotoes > * {
-    flex: 1 1 0;
+  .barraBotoes > :not(:last-child) {
+    display: none;
   }
 
   .protocoloNumero {

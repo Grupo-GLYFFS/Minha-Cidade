@@ -90,3 +90,8 @@
   align-items: center;
   min-width: 0;
 }
+
+/* Compartilhar só com o ícone, sem borda, como nas pranchas */
+.direita [data-variante='icone-acao'] {
+  border-color: transparent;
+}

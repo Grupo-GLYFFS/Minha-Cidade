@@ -8,21 +8,30 @@ import classes from './BarraPe.module.css';
 //   "Passo x de N" embaixo; à direita, o children (o botão principal).
 // Com ela na página, o aviso do rodapé sobe para ficar 16 acima dela.
 export default function BarraPe({ children, passo }) {
+  // O espaço do tamanho da barra, no fim da página, para nada ficar embaixo dela
+  const espaco = <div className={classes.espaco} aria-hidden="true" />;
+
   if (passo) {
     return (
-      <div className={`${classes.barra} ${classes.passo}`} data-barra-pe="">
-        <div className={classes.etapa}>
-          <strong className={classes.etapaNome}>{passo.nome}</strong>
-          <small className={classes.etapaRotulo}>{passo.rotulo}</small>
+      <>
+        {espaco}
+        <div className={`${classes.barra} ${classes.passo}`} data-barra-pe="">
+          <div className={classes.etapa}>
+            <strong className={classes.etapaNome}>{passo.nome}</strong>
+            <small className={classes.etapaRotulo}>{passo.rotulo}</small>
+          </div>
+          {children}
         </div>
-        {children}
-      </div>
+      </>
     );
   }
 
   return (
-    <div className={`${classes.barra} ${classes.botoes}`} data-barra-pe="">
-      {children}
-    </div>
+    <>
+      {espaco}
+      <div className={`${classes.barra} ${classes.botoes}`} data-barra-pe="">
+        {children}
+      </div>
+    </>
   );
 }

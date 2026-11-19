@@ -49,10 +49,22 @@
 
 @media (max-width: $mantine-breakpoint-sm) {
   .titulo {
-    padding: rem(12px) rem(16px);
+    overflow: hidden;
+    padding: rem(12px) rem(14px);
+    font-size: rem(14px);
+    white-space: nowrap;
   }
 
   .corpo {
-    padding: rem(12px) rem(16px) rem(16px);
+    padding: rem(12px) rem(14px) rem(14px);
+  }
+
+  .numero {
+    font-size: rem(30px);
+  }
+
+  .detalhe {
+    font-size: rem(13px);
+    line-height: 1.35;
   }
 }

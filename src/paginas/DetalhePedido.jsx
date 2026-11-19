@@ -12,6 +12,7 @@ import ParaOndeIr from '../componentes/ParaOndeIr';
 import EstadoCarregando from '../componentes/EstadoCarregando';
 import EstadoErro from '../componentes/EstadoErro';
 import IlustracaoPedido from '../componentes/pedidos/IlustracaoPedido';
+import CompartilharTopo from '../componentes/celular/CompartilharTopo';
 import AcoesPedido from '../componentes/pedidos/AcoesPedido';
 import FotosRelatadas from '../componentes/pedidos/FotosRelatadas';
 import SecaoPrioridade from '../componentes/pedidos/SecaoPrioridade';
@@ -165,9 +166,14 @@ export default function DetalhePedido({ escopo = 'cidade' }) {
   }
 
   return (
-    <Pagina cabecalho={cabecalho}>
+    <Pagina
+      tituloTopo={`Pedido ${pedido.protocolo}`}
+      acaoTopo={<CompartilharTopo titulo={pedido.titulo} rotulo="Compartilhar pedido" />}
+      cabecalho={cabecalho}
+    >
       {conteudo}
       <ParaOndeIr destinos={[destinos.bairro, destinos.meus, destinos.obras]} />
+      <AcoesPedido pedido={pedido} pe />
     </Pagina>
   );
 }

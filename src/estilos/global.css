@@ -136,13 +136,14 @@
 }
 
 /* Celular (até 768 px): a barra de abas tem 85 (14 + 56 + 14 + 1 de borda).
-   A barra do pé (<BarraPe>) tem 81 (16 + 48 + 16 + 1) e só conta quando está na página. */
+   A barra do pé tem 81 (16 + 48 + 16 + 1) e só conta quando está na página: a <BarraPe> põe
+   data-barra-pe; uma barra própria de uma área põe data-pe-preso (o aviso do rodapé sobe junto). */
 @media (max-width: 48em) {
   :root {
     --altura-abas: 85px;
   }
 
-  :root:has([data-barra-pe]) {
+  :root:has([data-barra-pe], [data-pe-preso]) {
     --altura-pe: 81px;
   }
 }

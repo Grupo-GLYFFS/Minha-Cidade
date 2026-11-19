@@ -7,6 +7,7 @@ import MetaCabecalho from '../componentes/MetaCabecalho';
 import NaoEncontrado from '../componentes/NaoEncontrado';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import SeloSituacao from '../componentes/SeloSituacao';
+import CompartilharTopo from '../componentes/celular/CompartilharTopo';
 import BotaoCompartilhar from '../componentes/avisos/BotaoCompartilhar';
 import CardAviso from '../componentes/avisos/CardAviso';
 import SeloCidadeToda from '../componentes/SeloCidadeToda';
@@ -67,6 +68,7 @@ export default function DetalheAviso({ doBairro = false }) {
 
   return (
     <Pagina
+      acaoTopo={<CompartilharTopo titulo={aviso.titulo} rotulo="Compartilhar aviso" />}
       cabecalho={
         <CabecalhoPagina
           tipo="detalhe"

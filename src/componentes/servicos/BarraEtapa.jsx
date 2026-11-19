@@ -5,7 +5,7 @@ import classes from './FormularioSolicitacao.module.css';
 // Recebe o nome da etapa, o número, o total e os botões (children).
 export default function BarraEtapa({ nome, numero, total, children }) {
   return (
-    <div className={classes.barra}>
+    <div className={classes.barra} data-pe-preso="">
       <p className={classes.barraTexto}>
         <strong>{nome}</strong>
         <small>

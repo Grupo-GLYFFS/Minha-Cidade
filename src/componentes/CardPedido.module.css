@@ -124,3 +124,49 @@
     max-height: rem(128px);
   }
 }
+
+/* Card de pedido no celular: sem miniatura, categoria e selo numa linha (a categoria encolhe
+   com reticências), título até 2 linhas, endereço e data numa linha e a seta no meio. */
+@media (max-width: $mantine-breakpoint-sm) {
+  .pedido {
+    padding: rem(16px) rem(56px) rem(16px) rem(16px);
+  }
+
+  .pedido .midia {
+    display: none;
+  }
+
+  .pedido .topo {
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+
+  .pedido .topo > * {
+    flex: none;
+  }
+
+  .pedido .topo > .categoria {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pedido .titulo {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .metaPedido {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pedido .seta {
+    right: rem(16px);
+  }
+}

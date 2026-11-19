@@ -61,15 +61,29 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  /* No celular, pago e previsto continuam lado a lado, menores */
+  .resumo {
+    margin-top: rem(24px);
+  }
+
+  .valores {
+    flex-wrap: nowrap;
+    gap: rem(12px);
+  }
+
+  .valores p {
+    font-size: rem(14px);
+  }
+
   .pago {
-    font-size: rem(40px);
+    font-size: rem(36px);
   }
 
   .previsto {
-    font-size: rem(26px);
+    font-size: rem(24px);
   }
 
-  .direita {
-    text-align: left;
+  .rodape {
+    font-size: rem(14px);
   }
 }

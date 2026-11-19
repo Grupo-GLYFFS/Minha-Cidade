@@ -245,6 +245,12 @@
     flex: none;
   }
 
+  /* O compartilhar dos detalhes vai para a barra "‹ Voltar" (acaoTopo do Pagina) */
+  .acoes > [aria-label^='Compartilhar'],
+  .acoes > :has(> [aria-label^='Compartilhar']) {
+    display: none;
+  }
+
   .etapas {
     display: none;
   }

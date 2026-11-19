@@ -1,20 +1,49 @@
-// Dados da pesquisa TIC Governo Eletrônico 2023 (Cetic.br/NIC.br) usados em "Por que o app existe".
-// Cada item é a porcentagem de prefeituras com site que permitem agendar atendimento pela internet.
-// "destaque" marca a barra que mostra o problema (aparece em vermelho).
-export const AGENDAMENTO_ONLINE = [
+// Dados da pesquisa TIC Governo 2025 (Cetic.br/NIC.br) usados no herói da Apresentação.
+// Cada número é a porcentagem de prefeituras (base: prefeituras com acesso à internet)
+// que ofereceram o recurso nos últimos 12 meses. Coleta de julho de 2025 a abril de 2026.
+// Campos de cada número:
+// - lado: em que lado do mapa o card fica no computador ("esquerda" ou "direita");
+// - icone: ícone do Material Symbols do card;
+// - fonte e link: a tabela da pesquisa de onde o número saiu.
+
+// Fonte geral, mostrada embaixo dos cards
+export const FONTE_TIC = {
+  texto: 'TIC Governo 2025, Cetic.br/NIC.br',
+  link: 'https://cetic.br/pt/pesquisa/governo/indicadores/',
+};
+
+export const NUMEROS_TIC = [
   {
-    id: 'ate-10-mil',
-    rotulo: 'Cidades com até 10 mil habitantes',
+    id: 'votacao',
+    lado: 'esquerda',
+    icone: 'how_to_vote',
     porcentagem: 27,
-    destaque: true,
+    texto: 'deixaram votar pela internet',
+    fonte: 'TIC Governo 2025, tabela E4A (votação online)',
+    link: 'https://cetic.br/pt/tics/governo/2025/prefeituras/E4A/',
   },
   {
-    id: 'mais-500-mil',
-    rotulo: 'Cidades com mais de 500 mil habitantes',
-    porcentagem: 88,
-    destaque: false,
+    id: 'forum',
+    lado: 'esquerda',
+    icone: 'forum',
+    porcentagem: 14,
+    texto: 'têm fórum para discutir a cidade',
+    fonte: 'TIC Governo 2025, tabela E4A (fóruns ou comunidades de discussão)',
+    link: 'https://cetic.br/pt/tics/governo/2025/prefeituras/E4A/',
+  },
+  {
+    id: 'app',
+    lado: 'direita',
+    icone: 'smartphone',
+    porcentagem: 24,
+    texto: 'têm app próprio',
+    fonte: 'TIC Governo 2025, tabela C6B (aplicativos criados pela prefeitura)',
+    link: 'https://cetic.br/pt/tics/governo/2025/prefeituras/C6B/',
   },
 ];
 
-// Média geral: porcentagem de todas as prefeituras com site que permitem agendar pela internet
-export const AGENDAMENTO_ONLINE_GERAL = 33;
+// Mapa em pontos: municípios com até 10 mil habitantes (IBGE, Censo 2022)
+export const FONTE_IBGE = {
+  texto: 'IBGE, Censo 2022',
+  link: 'https://censo2022.ibge.gov.br/',
+};

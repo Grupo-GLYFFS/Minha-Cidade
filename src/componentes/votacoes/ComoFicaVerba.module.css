@@ -73,11 +73,15 @@
 
 @media (max-width: $mantine-breakpoint-sm) {
   .lados {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .lado,
   .ladoPara {
     padding: rem(16px);
+  }
+
+  .diferenca {
+    font-size: rem(22px);
   }
 }

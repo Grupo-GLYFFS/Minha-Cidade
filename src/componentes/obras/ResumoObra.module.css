@@ -100,21 +100,76 @@
   color: var(--cor-texto-2);
 }
 
+/* Celular: número de 48; início e entrega em linhas (rótulo à esquerda, data à direita)
+   com divisória; valor total e já pago em duas colunas. */
 @media (max-width: $mantine-breakpoint-sm) {
   .topo {
-    padding: rem(24px) rem(16px) rem(20px);
+    gap: rem(16px);
+    padding: rem(20px) rem(16px) 0;
   }
 
   .numero b {
     font-size: rem(48px);
   }
 
-  .valores {
-    padding: rem(16px) rem(16px) rem(20px);
+  .numero span {
+    font-size: rem(17px);
   }
 
-  .fim {
-    align-items: flex-start;
+  .pontas {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0;
+    margin-top: rem(-8px);
+  }
+
+  .pontas p,
+  .pontas p.fim {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: rem(2px) rem(12px);
+    padding: rem(12px) 0;
     text-align: left;
+  }
+
+  .pontas p + p {
+    border-top: var(--espessura-borda) solid var(--cor-borda);
+  }
+
+  .rotulo {
+    font-size: rem(15px);
+  }
+
+  .pontas b {
+    font-size: rem(16px);
+    white-space: nowrap;
+  }
+
+  .era {
+    flex: 1 1 100%;
+    font-size: rem(13px);
+    text-align: right;
+  }
+
+  .valores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: rem(12px);
+    padding: rem(16px);
+  }
+
+  .valores dt {
+    font-size: rem(14px);
+  }
+
+  .valores dd {
+    font-size: rem(20px);
+    white-space: nowrap;
+  }
+
+  .valores dd span {
+    font-size: rem(14px);
   }
 }

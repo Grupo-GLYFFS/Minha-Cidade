@@ -22,12 +22,15 @@ export default function CardAndamento({
   return (
     <article className={classes.card}>
       <Link to={caminho} className={classes.link}>
-        <span className={`${miniatura.midia} ${miniatura.midiaIcone}`} aria-hidden="true">
+        <span
+          className={`${miniatura.midia} ${miniatura.midiaIcone} ${classes.midiaAndamento}`}
+          aria-hidden="true"
+        >
           <Icone nome={icone} tamanho={32} />
         </span>
         <span className={classes.texto}>
           <span className={classes.topo}>
-            {categoria}
+            <span className={classes.categoria}>{categoria}</span>
             {selo && <SeloSituacao cor={selo.cor}>{selo.rotulo}</SeloSituacao>}
           </span>
           <h3 className={classes.titulo}>{titulo}</h3>

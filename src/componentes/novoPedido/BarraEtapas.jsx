@@ -15,7 +15,7 @@ export default function BarraEtapas({ nome, etapa, total, aoVoltar, enviando }) 
   }
 
   return (
-    <div className={classes.barra}>
+    <div className={classes.barra} data-pe-preso="">
       <div className={classes.barraTexto}>
         <strong>{nome}</strong>
         <small>

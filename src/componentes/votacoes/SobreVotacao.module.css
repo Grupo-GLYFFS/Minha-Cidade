@@ -51,3 +51,20 @@
   text-decoration: underline;
   text-underline-offset: rem(3px);
 }
+
+/* Celular: faixa de quem abriu com o ícone de 44, alinhada em cima */
+@media (max-width: $mantine-breakpoint-sm) {
+  .quem {
+    align-items: flex-start;
+    gap: rem(12px);
+  }
+
+  .icone {
+    width: rem(44px);
+    height: rem(44px);
+  }
+
+  .link {
+    font-size: rem(16px);
+  }
+}

@@ -1,0 +1,43 @@
+/* Barra do pé no celular: presa acima da barra de abas (85), de borda a borda, sem sombra.
+   No computador ela não aparece. */
+
+.pe {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .pe {
+    position: sticky;
+    bottom: var(--altura-abas);
+    z-index: 5;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: rem(12px);
+    /* Sai da coluna (16 de cada lado) e encosta no fim da página */
+    margin: rem(48px) rem(-16px) rem(-48px);
+    padding: rem(16px);
+    border-top: var(--espessura-borda) solid var(--cor-borda);
+    background: var(--cor-superficie);
+  }
+
+  /* Dois botões de ação: metade cada um */
+  .dois > * {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* Formulário: nome da etapa e "Passo x de N" à esquerda, botão principal à direita */
+  .passo {
+    justify-content: space-between;
+  }
+
+  .passo > :first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .passo > :last-child {
+    flex: none;
+  }
+}

@@ -6,8 +6,28 @@
   gap: rem(40px);
 }
 
+/* Seguir do cabeçalho: no computador fica lá (a caixa não muda o layout); no celular vai para a barra do pé */
+.soComputador {
+  display: contents;
+}
+
+/* Celular: cards a 12 um do outro e a linha de lugar e data numa linha só, com reticências */
 @media (max-width: $mantine-breakpoint-sm) {
   .pilha {
-    gap: rem(24px);
+    gap: rem(12px);
+  }
+
+  .soComputador {
+    display: none;
+  }
+
+  /* O cabeçalho centraliza pelo tamanho do conteúdo: o limite é a coluna (tela menos 16 de cada lado) */
+  .linhaMeta.linhaMeta {
+    display: block;
+    min-width: 0;
+    max-width: calc(100vw - rem(32px));
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

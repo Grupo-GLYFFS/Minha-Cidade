@@ -285,3 +285,125 @@
     flex: 1 1 auto;
   }
 }
+
+/* Celular (prancha IN-celular): sem miniatura nos cards de andamento, textos secundários numa
+   linha com reticências, "Como chegar" só com o ícone ao lado de "Ver agendamento". */
+@media (max-width: $mantine-breakpoint-sm) {
+  .faixa {
+    flex-wrap: nowrap;
+    padding-block: rem(12px);
+    white-space: nowrap;
+  }
+
+  .faixa > * {
+    flex: none;
+  }
+
+  .faixa > .faixaData {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .agenda {
+    padding: rem(16px);
+  }
+
+  .hora {
+    width: auto;
+    min-width: rem(48px);
+    font-size: rem(18px);
+  }
+
+  .agenda .titulo {
+    font-size: rem(17px);
+  }
+
+  .descricao,
+  .onde,
+  .link .meta,
+  .linha .meta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .descricao {
+    font-size: rem(14px);
+  }
+
+  .onde > :global(.icone) {
+    flex: none;
+  }
+
+  .pe {
+    flex-wrap: nowrap;
+    gap: rem(8px);
+    padding: rem(12px) rem(16px);
+  }
+
+  .pe > * {
+    padding-inline: rem(12px);
+  }
+
+  /* "Como chegar" fica só com o ícone (o nome continua para o leitor de tela) */
+  .pe > :first-child:not(:only-child) {
+    flex: none;
+    width: rem(44px);
+    padding: 0;
+  }
+
+  .textoComoChegar {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .linha {
+    padding: rem(12px) rem(44px) rem(12px) rem(16px);
+  }
+
+  .linha .seta {
+    right: rem(12px);
+  }
+
+  .data {
+    width: rem(48px);
+    font-size: rem(15px);
+  }
+
+  .link .midiaAndamento {
+    display: none;
+  }
+
+  .link {
+    padding: rem(16px) rem(48px) rem(16px) rem(16px);
+  }
+
+  .link .topo {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .link .topo > * {
+    flex: none;
+  }
+
+  .link .topo > .categoria {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .link .titulo {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}

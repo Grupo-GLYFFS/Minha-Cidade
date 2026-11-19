@@ -8,7 +8,7 @@ function linkComoChegar(endereco) {
 }
 
 // Linhas dos pontos de apoio de um alerta (dentro de um SecaoCard), de borda a borda:
-// ícone, nome, endereço · bairro e o botão "Como chegar".
+// ícone, nome, endereço · bairro e o botão "Como chegar" (no celular, só o ícone).
 // Recebe os pontos [{ icone, nome, endereco, bairro }].
 export default function PontosApoio({ pontos }) {
   return (
@@ -33,7 +33,7 @@ export default function PontosApoio({ pontos }) {
             href={linkComoChegar(ponto.endereco)}
             aria-label={`Como chegar a ${ponto.nome}`}
           >
-            Como chegar
+            <span className={classes.comoChegarTexto}>Como chegar</span>
           </Botao>
         </li>
       ))}

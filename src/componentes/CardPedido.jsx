@@ -11,6 +11,7 @@ import classes from './CardPedido.module.css';
 // Recebe o pedido (de dados/pedidos.js), uma ilustração <svg> opcional (midia)
 // o nível do título (3 por padrão) e um selo opcional no começo da primeira linha
 // (o selo de tipo "Pedido" nas listas do que a pessoa segue).
+// No celular o card fica sem a miniatura e com o texto secundário numa linha só.
 // base: início da rota do detalhe (ex.: "/meu-bairro/pedidos"); sem ela, /pedidos/:id.
 export default function CardPedido({ pedido, midia, nivelTitulo = 3, selo, base = '/pedidos' }) {
   const categoria = buscarCategoria(pedido.categoria);
@@ -24,7 +25,7 @@ export default function CardPedido({ pedido, midia, nivelTitulo = 3, selo, base 
   const semImagem = !midia && !pedido.foto;
 
   return (
-    <Link to={`${base}/${pedido.id}`} className={classes.card}>
+    <Link to={`${base}/${pedido.id}`} className={`${classes.card} ${classes.pedido}`}>
       <span
         className={semImagem ? `${classes.midia} ${classes.midiaIcone}` : classes.midia}
         aria-hidden="true"
@@ -34,11 +35,11 @@ export default function CardPedido({ pedido, midia, nivelTitulo = 3, selo, base 
       <div className={classes.texto}>
         <span className={classes.topo}>
           {selo}
-          {categoria?.rotulo}
+          <span className={classes.categoria}>{categoria?.rotulo}</span>
           {status && <SeloSituacao cor={status.cor}>{status.rotulo}</SeloSituacao>}
         </span>
         <Titulo className={classes.titulo}>{pedido.titulo}</Titulo>
-        <span className={classes.meta}>
+        <span className={`${classes.meta} ${classes.metaPedido}`}>
           <Icone nome="location_on" tamanho={18} />
           {pedido.rua}, {pedido.bairro}
           <span aria-hidden="true">·</span>
