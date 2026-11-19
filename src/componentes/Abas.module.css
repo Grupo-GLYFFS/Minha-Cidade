@@ -4,15 +4,16 @@
   display: flex;
   gap: rem(4px);
   overflow-x: auto;
+  overflow-y: hidden;
   border-bottom: var(--espessura-borda) solid var(--cor-borda);
 }
 
 .aba {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   gap: rem(8px);
   height: rem(48px);
-  margin-bottom: -1px;
   padding: 0 rem(14px);
   border: 0;
   border-bottom: 3px solid transparent;
