@@ -9,6 +9,7 @@ import NaoEncontrado from '../componentes/NaoEncontrado';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import SecaoCard from '../componentes/SecaoCard';
 import SeloSituacao from '../componentes/SeloSituacao';
+import CompartilharTopo from '../componentes/celular/CompartilharTopo';
 import AtualizacoesAlerta from '../componentes/alertas/AtualizacoesAlerta';
 import BarraAlerta from '../componentes/alertas/BarraAlerta';
 import NiveisAlerta from '../componentes/alertas/NiveisAlerta';
@@ -18,7 +19,7 @@ import SeloCidadeToda from '../componentes/SeloCidadeToda';
 import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
 import { useRecorte } from '../contexto/useRecorte';
 import { ALERTAS } from '../dados/alertas';
-import { alertasDoLugar, buscarNivel } from '../logica/alertas';
+import { alertasDoLugar, buscarNivel, temLigar199 } from '../logica/alertas';
 import { juntarNomes } from '../logica/avisos';
 import { buscarSubprefeitura } from '../logica/lugares';
 import { contar } from '../logica/resumoLugar';
@@ -86,6 +87,7 @@ export default function DetalheAlerta({ doBairro = false }) {
 
   return (
     <Pagina
+      acaoTopo={<CompartilharTopo titulo={alerta.manchete} rotulo="Compartilhar alerta" />}
       cabecalho={
         <CabecalhoPagina
           tipo="detalhe"
@@ -180,6 +182,8 @@ export default function DetalheAlerta({ doBairro = false }) {
           },
         ]}
       />
+      {/* Celular: espaço do tamanho da barra do "Ligar 199", que fica fixa no pé */}
+      {temLigar199(alerta) && <div className={classes.barraEspaco} aria-hidden="true" />}
     </Pagina>
   );
 }

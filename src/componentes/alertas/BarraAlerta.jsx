@@ -1,50 +1,49 @@
 import Botao from '../Botao';
 import SeloSituacao from '../SeloSituacao';
 import BotaoCompartilhar from '../avisos/BotaoCompartilhar';
-import { buscarNivel } from '../../logica/alertas';
+import { buscarNivel, temLigar199 } from '../../logica/alertas';
 import classes from './Alertas.module.css';
 
 // Barra presa no pé do detalhe do alerta: selo do nível (ou "Encerrado") com o fim,
 // Compartilhar e, nos alertas ativos da Defesa Civil, "Ligar 199 · Defesa Civil".
+// No celular, fica só o "Ligar 199", fixo acima da barra de abas (o compartilhar vai para a
+// barra "‹ Voltar"); sem ele, a barra some. O espaço dela no fim da página fica no
+// DetalheAlerta.
 // Recebe o alerta e o caminho do detalhe (para compartilhar).
 export default function BarraAlerta({ alerta, caminho }) {
   const nivel = buscarNivel(alerta.nivel);
-  const ligar = alerta.ativo && alerta.tipo === 'defesa-civil';
+  const ligar = temLigar199(alerta);
 
   return (
-    <div className={classes.barra} data-pe-preso="">
-      <p className={classes.barraInfo}>
-        {alerta.ativo ? (
-          <SeloSituacao cor={nivel.cor}>{nivel.rotulo}</SeloSituacao>
-        ) : (
-          <SeloSituacao cor="cinza">Encerrado</SeloSituacao>
-        )}
-        <span>{alerta.ativo ? alerta.fim : alerta.periodo}</span>
-      </p>
-      <div className={classes.barraAcoes}>
-        {/* No celular, o compartilhar fica só com o ícone, ao lado do "Ligar 199" */}
-        <span className={classes.soComputador}>
-          <BotaoCompartilhar titulo={alerta.manchete} caminho={caminho} />
-        </span>
-        <span className={classes.soCelular}>
-          <BotaoCompartilhar
-            soIcone
-            titulo={alerta.manchete}
-            caminho={caminho}
-            rotulo="Compartilhar alerta"
-          />
-        </span>
-        {ligar && (
-          <Botao
-            variante="principal"
-            icone="call"
-            href="tel:199"
-            aria-label="Ligar para a Defesa Civil, 199"
-          >
-            Ligar 199 · Defesa Civil
-          </Botao>
-        )}
+    <>
+      <div
+        className={ligar ? classes.barra : `${classes.barra} ${classes.barraSemLigar}`}
+        {...(ligar ? { 'data-pe-preso': '' } : {})}
+      >
+        <p className={classes.barraInfo}>
+          {alerta.ativo ? (
+            <SeloSituacao cor={nivel.cor}>{nivel.rotulo}</SeloSituacao>
+          ) : (
+            <SeloSituacao cor="cinza">Encerrado</SeloSituacao>
+          )}
+          <span>{alerta.ativo ? alerta.fim : alerta.periodo}</span>
+        </p>
+        <div className={classes.barraAcoes}>
+          <span className={classes.soComputador}>
+            <BotaoCompartilhar titulo={alerta.manchete} caminho={caminho} />
+          </span>
+          {ligar && (
+            <Botao
+              variante="principal"
+              icone="call"
+              href="tel:199"
+              aria-label="Ligar para a Defesa Civil, 199"
+            >
+              Ligar 199 · Defesa Civil
+            </Botao>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

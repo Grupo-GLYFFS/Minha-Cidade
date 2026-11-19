@@ -423,8 +423,8 @@
   border: 0;
 }
 
-/* Compartilhar da barra do pé: um para o computador e outro, só com o ícone, para o celular */
-.soCelular {
+/* Espaço da barra do pé no fim da página: só no celular, onde ela fica fixa */
+.barraEspaco {
   display: none;
 }
 
@@ -596,12 +596,28 @@
     display: none;
   }
 
-  /* Barra do pé: só o "Ligar 199" (e o compartilhar com ícone), presa acima da barra de abas */
+  /* Barra do pé: só o "Ligar 199", fixa acima da barra de abas, como as barras de obra,
+     votação e pedido (o compartilhar vai para a barra "‹ Voltar") */
   .barra {
+    position: fixed;
+    right: 0;
     bottom: var(--altura-abas);
+    left: 0;
+    z-index: 40;
+    box-sizing: border-box;
     flex-wrap: nowrap;
-    margin-inline: rem(-16px);
     padding: rem(16px);
+  }
+
+  /* Sem o "Ligar 199", a barra não aparece */
+  .barraSemLigar {
+    display: none;
+  }
+
+  /* Espaço do tamanho da barra (16 + 48 + 16 + 1 de borda) no fim da página */
+  .barraEspaco {
+    display: block;
+    height: var(--altura-pe);
   }
 
   .barraInfo,
@@ -609,23 +625,11 @@
     display: none;
   }
 
-  .soCelular {
-    display: contents;
-  }
-
   .barraAcoes {
-    flex-direction: row-reverse;
-    flex-wrap: nowrap;
-    gap: rem(8px);
     width: 100%;
   }
 
   .barraAcoes > a {
     flex: 1 1 auto;
-  }
-
-  /* Alerta sem o "Ligar 199": a barra fica só com o compartilhar, à direita */
-  .barraAcoes:not(:has(> a)) {
-    justify-content: flex-start;
   }
 }
