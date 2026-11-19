@@ -1,0 +1,104 @@
+/* Filtro "Assunto" (só no celular): botão de 48 de largura total, preso no alto ao rolar.
+   A lista aberta tem linhas de borda a borda e o escolhido em azul claro com check. */
+
+.filtro {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .filtro {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    display: block;
+    margin: 0 rem(-16px);
+    padding: rem(8px) rem(16px);
+    background: var(--cor-superficie);
+  }
+
+  .botao,
+  .opcao {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: rem(10px);
+    width: 100%;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    color: var(--cor-texto);
+    cursor: pointer;
+  }
+
+  .botao {
+    min-height: rem(48px);
+    padding: 0 rem(16px);
+    border: var(--espessura-borda) solid var(--cor-borda);
+    border-radius: var(--raio-controle);
+    background: var(--cor-superficie);
+    font-size: rem(16px);
+    font-weight: 600;
+  }
+
+  .botao[aria-expanded='true'],
+  .ativo {
+    border-color: var(--cor-azul);
+    background: var(--cor-faixa);
+    color: var(--cor-azul-escuro);
+  }
+
+  .rotulo {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lista {
+    margin: rem(8px) 0 0;
+    padding: 0;
+    overflow: hidden;
+    list-style: none;
+    border: var(--espessura-borda) solid var(--cor-borda);
+    border-radius: var(--raio-card);
+    background: var(--cor-superficie);
+  }
+
+  .lista > li + li {
+    border-top: var(--espessura-borda) solid var(--cor-borda);
+  }
+
+  .opcao {
+    min-height: rem(48px);
+    padding: 0 rem(16px);
+    border: 0;
+    background: none;
+    font-size: rem(16px);
+    font-weight: 500;
+  }
+
+  .opcao > :global(.icone):first-child {
+    color: var(--cor-azul-escuro);
+  }
+
+  .marcado {
+    background: var(--cor-faixa);
+    font-weight: 700;
+    color: var(--cor-azul-escuro);
+  }
+
+  .contagem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: rem(24px);
+    height: rem(24px);
+    padding: 0 rem(8px);
+    border-radius: var(--raio-selo);
+    background: var(--cor-status-cinza-fundo);
+    font-size: rem(13px);
+    font-weight: 700;
+    color: var(--cor-texto-2);
+  }
+}

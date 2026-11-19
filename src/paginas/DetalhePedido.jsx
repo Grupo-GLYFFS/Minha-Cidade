@@ -168,6 +168,7 @@ export default function DetalhePedido({ escopo = 'cidade' }) {
     <Pagina cabecalho={cabecalho}>
       {conteudo}
       <ParaOndeIr destinos={[destinos.bairro, destinos.meus, destinos.obras]} />
+      <AcoesPedido pedido={pedido} pe />
     </Pagina>
   );
 }

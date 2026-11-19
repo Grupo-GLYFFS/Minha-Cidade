@@ -5,6 +5,7 @@ import { useSessao } from '../../contexto/useSessao';
 import { useAcaoPendente } from '../../contexto/useAcaoPendente';
 import { useAvisoTemporario } from '../../contexto/useAvisoTemporario';
 import { motivoSemAcompanhar } from '../../logica/acompanhamento';
+import BarraPe from './BarraPe';
 import classes from './DetalhePedido.module.css';
 
 // Por que Apoiar e Seguir ficam desativados (vai no aria-label, depois do nome do botão)
@@ -26,8 +27,8 @@ const AVISO_PROPRIO = 'Este pedido é seu. Você já acompanha ele.';
 // e Compartilhar. Apoiar e Seguir ligam e desligam e ficam salvos no navegador.
 // Ficam desativados (cinza, mesmo tamanho) no pedido da própria pessoa e nos encerrados.
 // Sem conta, Apoiar e Seguir levam para "Entrar", voltam para o pedido e já apoiam ou seguem.
-// Recebe o pedido.
-export default function AcoesPedido({ pedido }) {
+// Recebe o pedido e, se quiser, pe: true desenha só Seguir | Apoiar na barra do pé do celular.
+export default function AcoesPedido({ pedido, pe = false }) {
   const { apoiados, seguidos, alternarApoio, alternarSeguir } = usePedidos();
   const { usuario } = useSessao();
   const mostrarAviso = useAvisoTemporario();
@@ -83,29 +84,49 @@ export default function AcoesPedido({ pedido }) {
     }
   }
 
+  const botaoApoiar = (
+    <Botao
+      variante="secundario"
+      icone="volunteer_activism"
+      pressionado={motivo ? undefined : apoia}
+      contagem={pedido.apoios}
+      desabilitado={Boolean(motivo)}
+      aria-label={motivo ? `Apoiar. ${MOTIVOS[motivo].apoiar}` : undefined}
+      onClick={() => aoClicar(alternarApoio, apoiarDepois)}
+    >
+      {apoia ? 'Apoiado' : 'Apoiar'}
+    </Botao>
+  );
+  const botaoSeguir = (
+    <Botao
+      variante="secundario"
+      icone="add"
+      pressionado={motivo ? undefined : segue}
+      desabilitado={Boolean(motivo)}
+      aria-label={motivo ? `Seguir. ${MOTIVOS[motivo].seguir}` : undefined}
+      onClick={() => aoClicar(alternarSeguir, seguirDepois)}
+    >
+      {segue ? 'Seguindo' : 'Seguir'}
+    </Botao>
+  );
+
+  // Barra do pé no celular: Seguir | Apoiar, metade cada um
+  if (pe) {
+    return (
+      <BarraPe>
+        {botaoSeguir}
+        {botaoApoiar}
+      </BarraPe>
+    );
+  }
+
   return (
     <>
-      <Botao
-        variante="secundario"
-        icone="volunteer_activism"
-        pressionado={motivo ? undefined : apoia}
-        contagem={pedido.apoios}
-        desabilitado={Boolean(motivo)}
-        aria-label={motivo ? `Apoiar. ${MOTIVOS[motivo].apoiar}` : undefined}
-        onClick={() => aoClicar(alternarApoio, apoiarDepois)}
-      >
-        {apoia ? 'Apoiado' : 'Apoiar'}
-      </Botao>
-      <Botao
-        variante="secundario"
-        icone="add"
-        pressionado={motivo ? undefined : segue}
-        desabilitado={Boolean(motivo)}
-        aria-label={motivo ? `Seguir. ${MOTIVOS[motivo].seguir}` : undefined}
-        onClick={() => aoClicar(alternarSeguir, seguirDepois)}
-      >
-        {segue ? 'Seguindo' : 'Seguir'}
-      </Botao>
+      {/* No celular, Apoiar e Seguir saem do cabeçalho e vão para a barra do pé */}
+      <span className={classes.acoesCabecalho}>
+        {botaoApoiar}
+        {botaoSeguir}
+      </span>
       <Botao
         variante="icone-acao"
         icone="share"

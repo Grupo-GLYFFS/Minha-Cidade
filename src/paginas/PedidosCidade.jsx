@@ -4,6 +4,7 @@ import Botao from '../componentes/Botao';
 import EstadoVazio from '../componentes/EstadoVazio';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import ListaPedidos from '../componentes/pedidos/ListaPedidos';
+import BotaoFlutuante from '../componentes/pedidos/BotaoFlutuante';
 import { useCarregamentoSimulado } from '../componentes/pedidos/useCarregamentoSimulado';
 import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
@@ -32,6 +33,7 @@ export default function PedidosCidade() {
         />
       }
     >
+      <BotaoFlutuante para="/pedidos/novo" rotulo="Abrir pedido" />
       <ListaPedidos
         pedidos={pedidos}
         estado={estado}

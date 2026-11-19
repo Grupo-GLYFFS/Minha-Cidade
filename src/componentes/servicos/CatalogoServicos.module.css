@@ -117,3 +117,87 @@
     scroll-margin-top: rem(16px);
   }
 }
+
+/* Bolinha, contagem e linha do título do grupo: só no celular */
+.bolinha,
+.contagem,
+.linhaGrupo {
+  display: none;
+}
+
+/* Celular (prancha 03): filtro "Assunto" no lugar dos chips; cada grupo com título de grupo
+   (bolinha, nome 20/700, contagem e linha até a borda) e os serviços em linhas num card só */
+@media (max-width: $mantine-breakpoint-sm) {
+  .bloco {
+    gap: rem(16px);
+  }
+
+  .assuntos,
+  .foraDoFiltro {
+    display: none;
+  }
+
+  .grupo {
+    scroll-margin-top: rem(72px);
+  }
+
+  .tituloGrupo {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+    margin-bottom: rem(12px);
+    font-size: rem(20px);
+  }
+
+  .bolinha {
+    display: block;
+    flex: none;
+    width: rem(10px);
+    height: rem(10px);
+    border-radius: 50%;
+    background: var(--cor-status-cinza-bolinha);
+  }
+
+  .nomeGrupo {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .contagem {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    min-width: rem(24px);
+    height: rem(24px);
+    padding: 0 rem(8px);
+    border-radius: var(--raio-selo);
+    background: var(--cor-status-cinza-fundo);
+    font-size: rem(13px);
+    font-weight: 700;
+    color: var(--cor-texto-2);
+  }
+
+  .linhaGrupo {
+    display: block;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 1px;
+    margin-left: rem(6px);
+    background: var(--cor-borda);
+  }
+
+  .cards {
+    gap: 0;
+    overflow: hidden;
+    border: var(--espessura-borda) solid var(--cor-borda);
+    border-radius: var(--raio-card);
+  }
+
+  .cards > li + li {
+    border-top: var(--espessura-borda) solid var(--cor-borda);
+  }
+}

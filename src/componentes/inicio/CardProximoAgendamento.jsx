@@ -24,7 +24,7 @@ export default function CardProximoAgendamento({ solicitacao }) {
       <p className={classes.faixa}>
         <Icone nome="event" tamanho={20} className={classes.icone} />
         {dia.perto && <strong>{dia.perto}</strong>}
-        <span>
+        <span className={classes.faixaData}>
           {dia.perto && '· '}
           {dia.data}
         </span>
@@ -60,7 +60,8 @@ export default function CardProximoAgendamento({ solicitacao }) {
             target="_blank"
             rel="noreferrer"
           >
-            Como chegar<span className={classes.oculto}> a {local.nome} (abre o mapa)</span>
+            <span className={classes.textoComoChegar}>Como chegar</span>
+            <span className={classes.oculto}> a {local.nome} (abre o mapa)</span>
           </Botao>
         )}
         <Botao

@@ -16,6 +16,18 @@
   color: var(--cor-azul-escuro);
 }
 
+/* Apoiar e Seguir no cabeçalho: o invólucro não muda o layout no computador */
+.acoesCabecalho {
+  display: contents;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  /* No celular eles ficam na barra do pé */
+  .acoesCabecalho {
+    display: none;
+  }
+}
+
 /* Aviso "Link do pedido copiado" embaixo das ações (vazio, não ocupa espaço) */
 .avisoAcao {
   flex-basis: 100%;
