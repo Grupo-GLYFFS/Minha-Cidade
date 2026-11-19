@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ContextoVotos } from './ContextoVotos';
-import { lerDado, salvarDado } from '../armazenamento';
+import { ehMapaDeObjetos, lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
 import { PROJETOS } from '../dados/projetos';
 import { VOTOS_DEMONSTRACAO } from '../dados/votosDemonstracao';
@@ -19,7 +19,7 @@ export default function VotosProvider({ children }) {
   const { usuario } = useSessao();
   const idPessoa = usuario?.id ?? null;
   const [votosPorPessoa, setVotosPorPessoa] = useState(() =>
-    lerDado(CHAVE_VOTOS, VOTOS_DEMONSTRACAO),
+    lerDado(CHAVE_VOTOS, VOTOS_DEMONSTRACAO, ehMapaDeObjetos),
   );
 
   // Salva sempre que muda (só depois do primeiro voto, para não criar a chave à toa)

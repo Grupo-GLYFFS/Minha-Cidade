@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { lerDado, salvarDado } from '../armazenamento';
+import { ehMapaDeListas, lerDado, salvarDado } from '../armazenamento';
 import { SEGUIDOS_DEMONSTRACAO } from '../dados/seguidosDemonstracao';
 import { useSessao } from './useSessao';
 
@@ -12,7 +12,7 @@ export function useSeguidos(tipo) {
   const idPessoa = usuario?.id ?? null;
   const chave = `seguidos-${tipo}`;
   const [porPessoa, setPorPessoa] = useState(() =>
-    lerDado(chave, SEGUIDOS_DEMONSTRACAO[tipo] ?? {}),
+    lerDado(chave, SEGUIDOS_DEMONSTRACAO[tipo] ?? {}, ehMapaDeListas),
   );
 
   // Ids seguidos pela pessoa logada (vazio para visitante)

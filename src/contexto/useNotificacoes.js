@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
-import { lerDado, salvarDado } from '../armazenamento';
+import { ehMapaDeListas, lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
 import { USUARIO } from '../dados/usuario';
 import { NOTIFICACOES } from '../dados/notificacoes';
@@ -9,7 +9,7 @@ const CHAVE_LIDAS = 'notificacoes-lidas';
 
 // Estado compartilhado entre a página Notificações e a caixa do sino do topo
 // (as duas marcam como lidas e precisam mudar juntas, sem um Provider a mais).
-let lidasPorPessoa = lerDado(CHAVE_LIDAS, {});
+let lidasPorPessoa = lerDado(CHAVE_LIDAS, {}, ehMapaDeListas);
 const ouvintes = new Set();
 
 // Avisa os componentes que usam o hook. Recebe uma função que chamamos a cada mudança.

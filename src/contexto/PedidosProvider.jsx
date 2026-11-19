@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ContextoPedidos } from './ContextoPedidos';
 import { PEDIDOS } from '../dados/pedidos';
 import { PEDIDOS_ACOMPANHADOS } from '../dados/pedidosAcompanhados';
-import { lerDado, salvarDado } from '../armazenamento';
+import { ehListaDeRegistros, ehMapaDeObjetos, lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
 import { motivoSemApoio } from '../logica/apoios';
 import {
@@ -21,6 +21,18 @@ const CHAVE_CRIADOS = 'pedidos-criados';
 const CHAVE_ACOMPANHADOS = 'pedidos-acompanhados';
 const CHAVE_MUDANCAS = 'pedidos-mudancas-status';
 
+// Confere o formato dos acompanhamentos salvos: { idPessoa: { apoia: [ids], segue: [ids] } }.
+function acompanhamentosValidos(valor) {
+  return (
+    ehMapaDeObjetos(valor) &&
+    Object.values(valor).every(
+      (daPessoa) =>
+        (daPessoa.apoia === undefined || Array.isArray(daPessoa.apoia)) &&
+        (daPessoa.segue === undefined || Array.isArray(daPessoa.segue)),
+    )
+  );
+}
+
 // Lista vazia usada para visitante (fica fora do componente para não mudar a cada tela)
 const NENHUM = [];
 
@@ -32,11 +44,16 @@ const NENHUM = [];
 export default function PedidosProvider({ children }) {
   const { usuario } = useSessao();
   const idPessoa = usuario?.id ?? null;
-  const [criados, setCriados] = useState(() => lerDado(CHAVE_CRIADOS, []));
+  // Cada leitura confere o formato: dado mexido à mão volta ao padrão (sem tela branca)
+  const [criados, setCriados] = useState(() => lerDado(CHAVE_CRIADOS, [], ehListaDeRegistros));
   const [acompanhamentos, setAcompanhamentos] = useState(() =>
-    lerDado(CHAVE_ACOMPANHADOS, acompanhamentosIniciais(PEDIDOS_ACOMPANHADOS)),
+    lerDado(
+      CHAVE_ACOMPANHADOS,
+      acompanhamentosIniciais(PEDIDOS_ACOMPANHADOS),
+      acompanhamentosValidos,
+    ),
   );
-  const [mudancas, setMudancas] = useState(() => lerDado(CHAVE_MUDANCAS, {}));
+  const [mudancas, setMudancas] = useState(() => lerDado(CHAVE_MUDANCAS, {}, ehMapaDeObjetos));
   // Pedidos que entraram em análise nesta visita (para mostrar o aviso); não fica salvo
   const [recemAnalisados, setRecemAnalisados] = useState([]);
 

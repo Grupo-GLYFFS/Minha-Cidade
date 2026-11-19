@@ -4,6 +4,9 @@ import { SENHA_DEMONSTRACAO, USUARIO } from '../dados/usuario';
 import {
   apagarDado,
   apagarDadoDaAba,
+  ehListaDeRegistros,
+  ehObjeto,
+  ehTexto,
   lerDado,
   lerDadoDaAba,
   salvarDado,
@@ -34,9 +37,9 @@ const CHAVE_AJUSTES_DEMO = 'conta-demo-ajustes';
 // Lê a sessão salva: primeiro a que fica no aparelho ("Manter conectado"), depois a que
 // vale só enquanto a aba está aberta. Devolve { id, manter } (id null para visitante).
 function lerSessaoSalva() {
-  const fixa = lerDado(CHAVE_SESSAO, null);
+  const fixa = lerDado(CHAVE_SESSAO, null, ehTexto);
   if (fixa) return { id: fixa, manter: true };
-  return { id: lerDadoDaAba(CHAVE_SESSAO, null), manter: false };
+  return { id: lerDadoDaAba(CHAVE_SESSAO, null, ehTexto), manter: false };
 }
 
 // Guarda quem está usando o app: as contas criadas neste aparelho e a pessoa logada.
@@ -45,11 +48,11 @@ function lerSessaoSalva() {
 // ("Manter conectado") ou só na aba; recarregar a página mantém a pessoa dentro da conta.
 // Recebe as telas do app (children), que leem os dados com useSessao().
 export default function SessaoProvider({ children }) {
-  const [contas, setContas] = useState(() => lerDado(CHAVE_CONTAS, []));
+  const [contas, setContas] = useState(() => lerDado(CHAVE_CONTAS, [], ehListaDeRegistros));
   const [sessaoSalva] = useState(lerSessaoSalva);
   const [idLogado, setIdLogado] = useState(sessaoSalva.id);
   const [manter, setManter] = useState(sessaoSalva.manter);
-  const [ajustesDemo, setAjustesDemo] = useState(() => lerDado(CHAVE_AJUSTES_DEMO, null));
+  const [ajustesDemo, setAjustesDemo] = useState(() => lerDado(CHAVE_AJUSTES_DEMO, null, ehObjeto));
 
   // Salva as contas sempre que mudam (só depois da primeira conta, para não criar a chave à toa)
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ContextoSolicitacoes } from './ContextoSolicitacoes';
-import { lerDado, salvarDado } from '../armazenamento';
+import { ehListaDeRegistros, lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
 import { SOLICITACOES } from '../dados/solicitacoes';
 import {
@@ -20,7 +20,9 @@ const CHAVE_SOLICITACOES = 'solicitacoes-servicos-v2';
 export default function SolicitacoesProvider({ children }) {
   const { usuario } = useSessao();
   const idPessoa = usuario?.id ?? null;
-  const [todas, setTodas] = useState(() => lerDado(CHAVE_SOLICITACOES, SOLICITACOES));
+  const [todas, setTodas] = useState(() =>
+    lerDado(CHAVE_SOLICITACOES, SOLICITACOES, ehListaDeRegistros),
+  );
 
   // Salva sempre que alguma muda
   useEffect(() => {

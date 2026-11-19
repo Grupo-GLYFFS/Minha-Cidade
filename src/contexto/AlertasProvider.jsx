@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ContextoAlertas } from './ContextoAlertas';
-import { lerDado, salvarDado } from '../armazenamento';
+import { ehMapaDeListas, lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
 import { usePedidos } from './usePedidos';
 import { useSolicitacoes } from './useSolicitacoes';
@@ -23,7 +23,9 @@ export default function AlertasProvider({ children }) {
   const { solicitacoes } = useSolicitacoes();
   const { votosDaPessoa } = useVotos();
   const idPessoa = usuario?.id ?? null;
-  const [lidosPorPessoa, setLidosPorPessoa] = useState(() => lerDado(CHAVE_LIDOS, {}));
+  const [lidosPorPessoa, setLidosPorPessoa] = useState(() =>
+    lerDado(CHAVE_LIDOS, {}, ehMapaDeListas),
+  );
 
   // Salva sempre que muda (só depois do primeiro alerta lido, para não criar a chave à toa)
   useEffect(() => {
