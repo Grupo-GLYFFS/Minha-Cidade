@@ -1,0 +1,53 @@
+/* "O que muda": parágrafos e a faixa de quem abriu, separada por linha de borda a borda. */
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+}
+
+.texto p {
+  margin: 0;
+  font-size: rem(17px);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--cor-texto);
+}
+
+.quem {
+  display: flex;
+  align-items: center;
+  gap: rem(14px);
+  margin: rem(24px) calc(var(--pad-lateral) * -1) rem(-32px);
+  padding: rem(20px) var(--pad-lateral) rem(24px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.icone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: rem(48px);
+  height: rem(48px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul);
+}
+
+.quem p {
+  display: flex;
+  flex-direction: column;
+  gap: rem(2px);
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.link {
+  font-size: rem(17px);
+  font-weight: 700;
+  color: var(--cor-link);
+  text-decoration: underline;
+  text-underline-offset: rem(3px);
+}

@@ -1,0 +1,17 @@
+/* O aviso "Link copiado" aparece embaixo do botão, sem empurrar os outros. */
+
+.caixa {
+  position: relative;
+  display: inline-flex;
+}
+
+.aviso {
+  position: absolute;
+  top: calc(100% + rem(6px));
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: rem(13px);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--cor-azul-tinta);
+}

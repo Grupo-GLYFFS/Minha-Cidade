@@ -1,0 +1,9 @@
+/* Trilho da barra: cinza-claro no conteúdo, azul mais forte sobre a faixa do cabeçalho. */
+
+.trilho {
+  background: var(--cor-linha);
+}
+
+.trilhoClaro {
+  background: var(--cor-azul-borda);
+}

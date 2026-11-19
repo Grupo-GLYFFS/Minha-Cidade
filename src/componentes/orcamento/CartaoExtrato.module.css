@@ -1,0 +1,51 @@
+/* Card de extrato: faixa do título e blocos separados por linha tracejada de borda a borda. */
+
+.cartao {
+  --pad-lateral: rem(32px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(16px);
+  padding: rem(24px) var(--pad-lateral);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+.subtitulo {
+  margin: rem(4px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.corpo > * {
+  padding: rem(28px) var(--pad-lateral);
+}
+
+.corpo > * + * {
+  border-top: var(--espessura-borda) dashed var(--cor-borda-forte);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .cartao {
+    --pad-lateral: rem(16px);
+  }
+
+  .cab {
+    flex-wrap: wrap;
+  }
+}

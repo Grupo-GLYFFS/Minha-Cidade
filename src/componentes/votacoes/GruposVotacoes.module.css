@@ -1,0 +1,22 @@
+/* Grupos da lista: 40 entre os grupos, 16 entre os cards. */
+
+.grupos {
+  display: flex;
+  flex-direction: column;
+  gap: rem(40px);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .grupos {
+    gap: rem(32px);
+  }
+}

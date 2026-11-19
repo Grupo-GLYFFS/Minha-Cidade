@@ -1,0 +1,36 @@
+/* Botão das fontes e os selos verdes dos mínimos. */
+
+.mais {
+  margin-top: rem(16px);
+}
+
+.minimos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.minimos li {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(8px);
+  min-height: rem(40px);
+  padding: rem(6px) rem(14px);
+  border: var(--espessura-borda) solid var(--cor-sucesso-borda);
+  border-radius: var(--raio-controle);
+  font-size: rem(15px);
+  font-weight: 700;
+}
+
+.ok {
+  background: var(--cor-status-verde-fundo);
+  color: var(--cor-status-verde-texto);
+}
+
+.falta {
+  background: var(--cor-status-vermelho-fundo);
+  color: var(--cor-status-vermelho-texto);
+}

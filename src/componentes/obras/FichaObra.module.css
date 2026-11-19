@@ -1,0 +1,38 @@
+/* Linha longa da ficha (motivo): ícone, rótulo e o texto embaixo, com divisória
+   de borda a borda, igual às linhas de LinhaDado. */
+
+.longa {
+  box-sizing: border-box;
+  display: flex;
+  gap: rem(12px);
+  margin-inline: calc(var(--pad-lateral, 0px) * -1);
+  padding: rem(18px) var(--pad-lateral, 0px);
+  border-bottom: var(--espessura-borda) solid var(--cor-linha);
+}
+
+.icone {
+  flex: none;
+  margin-top: rem(2px);
+  color: var(--cor-texto-2);
+}
+
+.rotulo {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.texto {
+  margin: rem(4px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.link {
+  font-weight: 600;
+  color: var(--cor-link);
+  text-decoration: underline;
+  text-underline-offset: rem(3px);
+}

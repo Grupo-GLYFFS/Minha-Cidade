@@ -16,9 +16,11 @@ import MinhasSolicitacoes from './paginas/MinhasSolicitacoes';
 import DetalheSolicitacao from './paginas/DetalheSolicitacao';
 import NovoPedido from './paginas/NovoPedido';
 import DetalhePedido from './paginas/DetalhePedido';
-import ProjetosCidade from './paginas/ProjetosCidade';
-import ProjetoCidade from './paginas/ProjetoCidade';
-import ObrasCidade from './paginas/ObrasCidade';
+import Votacoes from './paginas/Votacoes';
+import Votacao from './paginas/Votacao';
+import MeusVotos from './paginas/MeusVotos';
+import Obras from './paginas/Obras';
+import DetalheObra from './paginas/DetalheObra';
 import OrcamentoCidade from './paginas/OrcamentoCidade';
 import OrcamentoBairro from './paginas/OrcamentoBairro';
 import Perfil from './paginas/Perfil';
@@ -102,12 +104,22 @@ export default function App() {
       <Route path="/meu-bairro/avisos" element={<Avisos doBairro />} />
       <Route path="/meu-bairro/avisos/:id" element={<DetalheAviso doBairro />} />
 
+      {/* Obras, votações e orçamento da cidade e do bairro */}
+      <Route path="/minha-cidade/obras" element={<Obras escopo="cidade" />} />
+      <Route path="/minha-cidade/obras/:id" element={<DetalheObra escopo="cidade" />} />
+      <Route path="/meu-bairro/obras" element={<Obras escopo="bairro" />} />
+      <Route path="/meu-bairro/obras/:id" element={<DetalheObra escopo="bairro" />} />
+      <Route path="/minha-cidade/votacoes" element={<Votacoes escopo="cidade" />} />
+      <Route path="/minha-cidade/votacoes/:id" element={<Votacao escopo="cidade" />} />
+      <Route path="/meu-bairro/votacoes" element={<Votacoes escopo="bairro" />} />
+      <Route path="/meu-bairro/votacoes/:id" element={<Votacao escopo="bairro" />} />
+      <Route path="/minha-cidade/orcamento" element={<OrcamentoCidade />} />
+      <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
+      <Route element={<RotaProtegida />}>
+        <Route path="/perfil/votos" element={<MeusVotos />} />
+      </Route>
+
       <Route element={<LayoutAntigo />}>
-        <Route path="/minha-cidade/obras" element={<ObrasCidade />} />
-        <Route path="/minha-cidade/votacoes" element={<ProjetosCidade />} />
-        <Route path="/minha-cidade/votacoes/:id" element={<ProjetoCidade />} />
-        <Route path="/minha-cidade/orcamento" element={<OrcamentoCidade />} />
-        <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
         <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
         <Route element={<RotaProtegida />}>
           <Route path="/perfil/dados" element={<MeusDados />} />

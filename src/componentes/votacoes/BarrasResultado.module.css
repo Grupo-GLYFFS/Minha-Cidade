@@ -1,0 +1,59 @@
+/* Barras do resultado: nome e % na mesma linha, barra de 10, votos embaixo. */
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: rem(20px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista li {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12px);
+  margin: 0;
+}
+
+.topo b {
+  font-size: rem(18px);
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+.nome {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(10px);
+  font-size: rem(17px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.seu {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(4px);
+  height: rem(24px);
+  padding: 0 rem(8px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-faixa);
+  font-size: rem(12px);
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}
+
+.votos {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}

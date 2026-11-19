@@ -1,0 +1,21 @@
+/* Etiqueta da origem: pílula cinza de 28, do tamanho do selo de situação. */
+
+.origem {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: rem(4px);
+  height: rem(28px);
+  padding: 0 rem(10px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-status-cinza-fundo);
+  font-size: rem(13px);
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--cor-azul-tinta);
+}
+
+.origem :global(.icone) {
+  font-size: rem(18px);
+}

@@ -1,9 +1,11 @@
 // Situações de uma obra (semáforo). A etiqueta sempre mostra ícone e texto, nunca só a cor.
 // As cores são variáveis do global.css, que mudam sozinhas no alto contraste:
 // "corFundo" e "corTexto" pintam a etiqueta; "corBarra" pinta a barra de % executado.
+// "cor" é uma das 5 cores de status da regra 7 (SeloSituacao e TituloGrupo).
 export const SITUACOES_OBRA = [
   {
     id: 'no-prazo',
+    cor: 'verde',
     rotulo: 'No prazo',
     rotuloPlural: 'No prazo',
     icone: 'check_circle',
@@ -13,6 +15,7 @@ export const SITUACOES_OBRA = [
   },
   {
     id: 'atrasada',
+    cor: 'ambar',
     rotulo: 'Atrasada',
     rotuloPlural: 'Atrasadas',
     icone: 'schedule',
@@ -22,6 +25,7 @@ export const SITUACOES_OBRA = [
   },
   {
     id: 'parada',
+    cor: 'vermelho',
     rotulo: 'Parada',
     rotuloPlural: 'Paradas',
     icone: 'pause_circle',
@@ -31,11 +35,12 @@ export const SITUACOES_OBRA = [
   },
   {
     id: 'concluida',
+    cor: 'verde',
     rotulo: 'Concluída',
     rotuloPlural: 'Concluídas',
     icone: 'task_alt',
     corFundo: 'var(--cor-azul-suave)',
     corTexto: 'var(--cor-link)',
-    corBarra: 'var(--cor-link)',
+    corBarra: 'var(--cor-sucesso-texto)',
   },
 ];

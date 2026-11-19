@@ -1,0 +1,112 @@
+/* Linha do extrato: nome · pontilhado · valor em negrito · coluna de 128 à direita. */
+
+.linha {
+  display: flex;
+  align-items: baseline;
+  gap: rem(8px);
+  min-height: rem(34px);
+  margin: 0;
+  padding: rem(4px) 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.nome {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.nome small {
+  font-size: rem(13px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.pontos {
+  flex: 1 1 rem(24px);
+  min-width: rem(24px);
+  border-bottom: 2px dotted var(--cor-borda-forte);
+  transform: translateY(rem(-4px));
+}
+
+.valor {
+  flex: none;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.segundo {
+  flex: none;
+  width: rem(128px);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--cor-texto-2);
+}
+
+/* Linha de total: nome em negrito e linha cheia */
+.total {
+  margin-top: rem(8px);
+  font-weight: 800;
+}
+
+.total .pontos {
+  border-bottom: var(--espessura-borda) solid var(--cor-borda-forte);
+}
+
+/* Linha filha, um passo para dentro */
+.recuo .nome {
+  padding-left: rem(20px);
+  color: var(--cor-texto-2);
+}
+
+.link {
+  font-weight: 600;
+  color: var(--cor-link);
+  text-decoration: underline;
+  text-underline-offset: rem(3px);
+}
+
+.comLink .segundo {
+  width: rem(104px);
+}
+
+.chevron {
+  flex: none;
+  align-self: center;
+  color: var(--cor-texto-2);
+}
+
+.destaque {
+  margin-inline: rem(-12px);
+  padding-inline: rem(12px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .linha {
+    flex-wrap: wrap;
+    row-gap: 0;
+    font-size: rem(15px);
+  }
+
+  .nome {
+    flex-basis: 100%;
+  }
+
+  .pontos {
+    display: none;
+  }
+
+  .valor {
+    margin-right: auto;
+  }
+
+  .segundo,
+  .comLink .segundo {
+    width: auto;
+  }
+}

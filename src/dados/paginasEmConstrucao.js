@@ -52,7 +52,6 @@ export const PAGINAS_EM_CONSTRUCAO = [
   { caminho: '/impacto', titulo: 'Impacto', icone: 'insights' },
   { caminho: '/equipe', titulo: 'Equipe', icone: 'groups' },
   // Conta (sem trilha)
-  { caminho: '/perfil/votos', titulo: 'Meus votos', icone: 'how_to_vote' },
   // Cidade, subprefeitura e bairro
   ...subpaginas('/minha-cidade', [CIDADE], 'da cidade de São Paulo', [
     '/minha-cidade/alertas',
@@ -62,6 +61,7 @@ export const PAGINAS_EM_CONSTRUCAO = [
     '/minha-cidade/pedidos',
     '/minha-cidade/pedidos/:id',
     '/minha-cidade/obras',
+    '/minha-cidade/obras/:id',
     '/minha-cidade/votacoes',
     '/minha-cidade/votacoes/:id',
     '/minha-cidade/orcamento',
@@ -73,6 +73,10 @@ export const PAGINAS_EM_CONSTRUCAO = [
     '/meu-bairro/avisos/:id',
     '/meu-bairro/pedidos',
     '/meu-bairro/pedidos/:id',
+    '/meu-bairro/obras',
+    '/meu-bairro/obras/:id',
+    '/meu-bairro/votacoes',
+    '/meu-bairro/votacoes/:id',
     '/meu-bairro/orcamento',
   ]),
 ];

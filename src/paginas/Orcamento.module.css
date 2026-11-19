@@ -1,0 +1,13 @@
+/* Cards do orçamento empilhados, 96 entre eles (48 no celular). */
+
+.pilha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(96px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .pilha {
+    gap: rem(48px);
+  }
+}
