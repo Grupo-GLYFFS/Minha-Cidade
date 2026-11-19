@@ -26,7 +26,9 @@ export default function CartaoObraLista({ obra, para, seguindo, aoAlternarSeguir
       <div className={classes.corpo}>
         <span
           className={
-            obra.miniatura ? miniatura.midia : `${miniatura.midia} ${miniatura.midiaIcone}`
+            obra.miniatura
+              ? `${miniatura.midia} ${classes.midia}`
+              : `${miniatura.midia} ${miniatura.midiaIcone} ${classes.midia}`
           }
           aria-hidden="true"
         >
@@ -69,7 +71,9 @@ export default function CartaoObraLista({ obra, para, seguindo, aoAlternarSeguir
         <p className={classes.progresso}>
           <b>{obra.percentual}% feita</b>
           <span aria-hidden="true">·</span>
-          {textoPrevisao(obra, { dataPrevisao, dataLista })}
+          <span className={classes.previsao}>
+            {textoPrevisao(obra, { dataPrevisao, dataLista })}
+          </span>
         </p>
         {!concluida && (
           <div className={classes.acao}>

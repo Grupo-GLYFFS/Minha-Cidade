@@ -111,3 +111,13 @@
   font-weight: 500;
   color: var(--cor-texto-2);
 }
+
+/* Celular: data e descrição da etapa numa linha só, com reticências */
+@media (max-width: $mantine-breakpoint-sm) {
+  .data,
+  .descricao {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}

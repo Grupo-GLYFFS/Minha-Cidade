@@ -10,6 +10,7 @@ import Botao from '../componentes/Botao';
 import Icone from '../componentes/Icone';
 import BotaoSeguir from '../componentes/obras/BotaoSeguir';
 import BotaoCompartilhar from '../componentes/obras/BotaoCompartilhar';
+import BarraSeguirPe from '../componentes/obras/BarraSeguirPe';
 import SobreVotacao from '../componentes/votacoes/SobreVotacao';
 import ComoFicaVerba from '../componentes/votacoes/ComoFicaVerba';
 import DoisLadosVotacao from '../componentes/votacoes/DoisLadosVotacao';
@@ -84,6 +85,16 @@ export default function Votacao({ escopo = 'cidade' }) {
     ? `Termina ${dataDetalhe(projeto.fimVotacao)} · ${dias === 0 ? 'termina hoje' : `faltam ${pluralizar(dias, 'dia', 'dias')}`}`
     : `Encerrada ${dataDetalhe(projeto.fimVotacao)}`;
   const ehVerba = projeto.tipo === 'Mudança de verba';
+  // Seguir: no cabeçalho no computador e na barra do pé no celular
+  const seguir = (
+    <BotaoSeguir
+      chave={`votacao:${projeto.id}`}
+      seguindo={segue(projeto.id)}
+      aoAlternar={() => alternar(projeto.id)}
+      logado={logado}
+      nome={`a votação ${projeto.titulo}`}
+    />
+  );
 
   const secoesDaProposta = (
     <>
@@ -111,15 +122,7 @@ export default function Votacao({ escopo = 'cidade' }) {
           ]}
           acoes={
             <>
-              {aberta && (
-                <BotaoSeguir
-                  chave={`votacao:${projeto.id}`}
-                  seguindo={segue(projeto.id)}
-                  aoAlternar={() => alternar(projeto.id)}
-                  logado={logado}
-                  nome={`a votação ${projeto.titulo}`}
-                />
-              )}
+              {aberta && <span className={classes.soComputador}>{seguir}</span>}
               <BotaoCompartilhar oque="votação" titulo={projeto.titulo} />
             </>
           }
@@ -172,6 +175,7 @@ export default function Votacao({ escopo = 'cidade' }) {
         )}
       </div>
       <ParaOndeIr destinos={[destinoVotacoes(recorte), destinoOrcamento(recorte)]} />
+      {aberta && <BarraSeguirPe>{seguir}</BarraSeguirPe>}
     </Pagina>
   );
 }

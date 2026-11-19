@@ -10,6 +10,7 @@ import Botao from '../componentes/Botao';
 import OrigemObra from '../componentes/obras/OrigemObra';
 import BotaoSeguir from '../componentes/obras/BotaoSeguir';
 import BotaoCompartilhar from '../componentes/obras/BotaoCompartilhar';
+import BarraSeguirPe from '../componentes/obras/BarraSeguirPe';
 import ResumoObra from '../componentes/obras/ResumoObra';
 import FichaObra from '../componentes/obras/FichaObra';
 import LinhaEtapas from '../componentes/obras/LinhaEtapas';
@@ -56,6 +57,16 @@ export default function DetalheObra({ escopo = 'cidade' }) {
 
   const situacao = buscarSituacaoObra(obra.situacao);
   const concluida = obra.situacao === 'concluida';
+  // Seguir: no cabeçalho no computador e na barra do pé no celular
+  const seguir = (
+    <BotaoSeguir
+      chave={`obra:${obra.id}`}
+      seguindo={segue(obra.id)}
+      aoAlternar={() => alternar(obra.id)}
+      logado={logado}
+      nome={`a obra ${obra.titulo}`}
+    />
+  );
 
   return (
     <Pagina
@@ -73,15 +84,7 @@ export default function DetalheObra({ escopo = 'cidade' }) {
           categoria={{ icone: obra.icone, rotulo: obra.tipo }}
           acoes={
             <>
-              {!concluida && (
-                <BotaoSeguir
-                  chave={`obra:${obra.id}`}
-                  seguindo={segue(obra.id)}
-                  aoAlternar={() => alternar(obra.id)}
-                  logado={logado}
-                  nome={`a obra ${obra.titulo}`}
-                />
-              )}
+              {!concluida && <span className={classes.soComputador}>{seguir}</span>}
               <BotaoCompartilhar oque="obra" titulo={obra.titulo} />
             </>
           }
@@ -91,7 +94,7 @@ export default function DetalheObra({ escopo = 'cidade' }) {
             <OrigemObra obra={obra} />
           </MetaCabecalho>
           <MetaCabecalho>
-            <span>
+            <span className={classes.linhaMeta}>
               {obra.bairro} · Subprefeitura {obra.subprefeitura} · atualizada{' '}
               {quandoMudouDetalhe(dataAtualizacao(obra))}
             </span>
@@ -113,6 +116,7 @@ export default function DetalheObra({ escopo = 'cidade' }) {
       <ParaOndeIr
         destinos={[destinoObras(recorte), destinoVotacoes(recorte), destinoOrcamento(recorte)]}
       />
+      {!concluida && <BarraSeguirPe>{seguir}</BarraSeguirPe>}
     </Pagina>
   );
 }
