@@ -56,4 +56,5 @@ export const NOMES_CAMPOS_ENDERECO = {
   numero: 'Número',
   complemento: 'Complemento',
   bairro: 'Bairro',
+  distrito: 'Distrito',
 };

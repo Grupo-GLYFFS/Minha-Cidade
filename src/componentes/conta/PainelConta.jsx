@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Icone from '../Icone';
-import { BAIRRO_EXEMPLO, subprefeituraDe } from '../../logica/enderecoConta';
+import { subprefeituraDe } from '../../logica/enderecoConta';
 import classes from './PainelConta.module.css';
 
 // O que a conta permite fazer (painel do Entrar e do Esqueci minha senha)
@@ -13,10 +13,9 @@ const VANTAGENS = [
 
 // Painel azul à esquerda das páginas de conta: logo, mensagem no meio e rodapé curto.
 // Recebe o tipo ("entrar" mostra o que a conta permite; "endereco" mostra o bairro e quem cuida dele)
-// e o bairro achado pelo CEP (sem ele, mostra a Vila Mariana como exemplo).
+// e o bairro (distrito) achado pelo CEP. Sem um CEP válido de São Paulo, não mostra bairro nenhum.
 export default function PainelConta({ tipo = 'entrar', bairro }) {
-  const nomeBairro = bairro || BAIRRO_EXEMPLO;
-  const subprefeitura = subprefeituraDe(nomeBairro);
+  const subprefeitura = bairro ? subprefeituraDe(bairro) : null;
 
   return (
     <aside className={classes.painel} aria-label="Sobre a conta">
@@ -57,7 +56,7 @@ export default function PainelConta({ tipo = 'entrar', bairro }) {
               <Icone nome="home_pin" />
               <div>
                 <dt>Seu bairro</dt>
-                <dd>{nomeBairro}</dd>
+                <dd>{bairro || 'Aparece quando você digitar o CEP'}</dd>
               </div>
             </div>
             {subprefeitura && (

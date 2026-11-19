@@ -117,6 +117,7 @@ export const CAMPOS_CRIAR_CONTA = [
   'senha',
   'cep',
   'numero',
+  'distrito',
   'complemento',
   'termos',
 ];
@@ -130,11 +131,13 @@ export const NOMES_CRIAR_CONTA = {
   senha: 'Senha',
   cep: 'CEP',
   numero: 'Número',
+  distrito: 'Distrito',
   complemento: 'Complemento',
   termos: 'Termos de uso',
 };
 
-// Formulário vazio. "situacaoCep", "rua", "bairro" e "cidadeDoCep" vêm da busca no ViaCEP.
+// Formulário vazio. "situacaoCep", "rua", "bairro", "cidadeDoCep" e "distrito" vêm da busca
+// no ViaCEP (o distrito a pessoa escolhe quando o app não reconhece o bairro do CEP).
 export const VALORES_CRIAR_CONTA = {
   nome: '',
   cpf: '',
@@ -149,6 +152,8 @@ export const VALORES_CRIAR_CONTA = {
   rua: '',
   bairro: '',
   cidadeDoCep: '',
+  distrito: '',
+  distritoAutomatico: false,
 };
 
 // O que falta no CEP depois da busca, conforme a situação devolvida pelo ViaCEP
@@ -190,6 +195,11 @@ export const esquemaCriarConta = esquemaPassoVoce.pick(['nome', 'celular', 'emai
       .required('Digite o número da casa ou s/n se não houver.')
       .matches(FORMATO_NUMERO, 'Use só números (ex.: 120) ou s/n se a casa não tiver número.'),
     complemento: string().trim().max(60, 'Encurte o complemento para até 60 caracteres.'),
+    // Distrito (um dos 96): só é pedido depois de um CEP de São Paulo achado
+    distrito: string().when('situacaoCep', {
+      is: 'encontrado',
+      then: (regra) => regra.required('Escolha o distrito onde fica o seu endereço.'),
+    }),
     termos: boolean().oneOf([true], 'Marque a caixa para aceitar os termos e criar a conta.'),
   }),
 );

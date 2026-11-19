@@ -34,9 +34,14 @@ export default function CriarConta() {
     window.scrollTo(0, 0);
   }
 
-  // Código certo: cria a conta (a região vem do bairro do CEP) e vai para o destino
+  // Código certo: cria a conta e vai para o destino. O bairro da conta é o distrito
+  // (um dos 96, achado pelo CEP ou escolhido pela pessoa); a região vem dele.
   async function aoConfirmar() {
-    const resultado = await criarConta({ ...valores, regiao: regiaoDe(valores.bairro) });
+    const resultado = await criarConta({
+      ...valores,
+      bairro: valores.distrito,
+      regiao: regiaoDe(valores.distrito),
+    });
     if (resultado.ok) {
       navigate(destino, {
         replace: true,

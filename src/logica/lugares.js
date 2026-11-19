@@ -1,6 +1,7 @@
 import { SUBPREFEITURAS } from '../dados/subprefeituras';
 import { BAIRROS_CIDADE } from '../dados/bairrosCidade';
 import { PERFIS_BAIRROS } from '../dados/perfisBairros';
+import { APELIDOS_BAIRROS } from '../dados/apelidosBairros';
 import { normalizarTexto } from './enderecos';
 
 // Bairro usado quando ninguém entrou na conta (o mesmo da conta de demonstração)
@@ -37,6 +38,45 @@ export function buscarBairro(id) {
 export function bairroPorNome(nome) {
   const procurado = normalizarTexto(nome);
   return BAIRROS_CIDADE.find((bairro) => normalizarTexto(bairro.nome) === procurado);
+}
+
+// Acha o distrito oficial (um dos 96) de um bairro como o ViaCEP devolve ou a pessoa digita:
+// o próprio distrito, um apelido de dados/bairrosCidade.js ou um da tabela APELIDOS_BAIRROS.
+// Recebe o nome; devolve o bairro de BAIRROS_CIDADE ou undefined (aí a pessoa escolhe).
+export function distritoDoBairro(nome) {
+  const procurado = normalizarTexto(nome ?? '');
+  if (!procurado) return undefined;
+  const direto = BAIRROS_CIDADE.find(
+    (bairro) =>
+      normalizarTexto(bairro.nome) === procurado ||
+      (bairro.apelidos ?? []).some((apelido) => normalizarTexto(apelido) === procurado),
+  );
+  if (direto) return direto;
+  const apelido = APELIDOS_BAIRROS.find((item) => normalizarTexto(item.apelido) === procurado);
+  return apelido ? bairroPorNome(apelido.distrito) : undefined;
+}
+
+// Sugere um distrito quando o bairro não está na tabela: o distrito cujo nome aparece dentro
+// do bairro (ex.: "Jardim Vila Formosa" sugere Vila Formosa); vale o nome mais longo.
+// Recebe o nome; devolve o bairro de BAIRROS_CIDADE ou undefined.
+export function sugerirDistrito(nome) {
+  const procurado = normalizarTexto(nome ?? '');
+  if (!procurado) return undefined;
+  let sugestao;
+  let tamanho = 0;
+  BAIRROS_CIDADE.forEach((bairro) => {
+    const nomeDistrito = normalizarTexto(bairro.nome);
+    if (procurado.includes(nomeDistrito) && nomeDistrito.length > tamanho) {
+      sugestao = bairro;
+      tamanho = nomeDistrito.length;
+    }
+  });
+  return sugestao;
+}
+
+// Nomes dos 96 distritos de A a Z, para as opções do campo "Distrito".
+export function nomesDistritos() {
+  return ordenarPorNome(BAIRROS_CIDADE).map((bairro) => bairro.nome);
 }
 
 // Lista os bairros de uma subprefeitura, de A a Z. Recebe o id da subprefeitura.

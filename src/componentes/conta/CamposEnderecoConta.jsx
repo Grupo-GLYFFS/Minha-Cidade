@@ -5,14 +5,18 @@ import Botao from '../Botao';
 import CampoTexto from '../CampoTexto';
 import CamposLado from '../CamposLado';
 import EnderecoEncontrado from './EnderecoEncontrado';
+import CampoDistrito from './CampoDistrito';
 import { buscarCep } from '../../logica/buscarCep';
+import { distritoDoBairro, sugerirDistrito } from '../../logica/lugares';
 import { formatarCep, limparCep } from '../../logica/enderecos';
 import classes from './FormularioConta.module.css';
 
 // Endereço do cadastro: CEP e número lado a lado, o endereço achado no ViaCEP e o complemento.
 // Com os 8 números do CEP, busca a rua e o bairro (o bairro da pessoa no app vem daqui;
-// cada pessoa tem um endereço só). Grava "situacaoCep", "rua", "bairro" e "cidadeDoCep"
-// no formulário compartilhado (useFormContext). Avisa o bairro achado em aoMudarBairro(bairro).
+// cada pessoa tem um endereço só). Grava "situacaoCep", "rua", "bairro", "cidadeDoCep",
+// "distrito" (um dos 96) e "distritoAutomatico" no formulário compartilhado (useFormContext).
+// Quando o bairro do CEP não é um distrito conhecido, mostra o campo "Distrito" para a pessoa
+// escolher (já com a sugestão, se houver). Avisa o distrito em aoMudarBairro(distrito).
 export default function CamposEnderecoConta({ aoMudarBairro }) {
   const {
     register,
@@ -22,9 +26,9 @@ export default function CamposEnderecoConta({ aoMudarBairro }) {
     getValues,
     formState: { errors, isSubmitted },
   } = useFormContext();
-  const [cep, situacao, rua, bairro] = useWatch({
+  const [cep, situacao, rua, bairro, distrito, distritoAutomatico] = useWatch({
     control,
-    name: ['cep', 'situacaoCep', 'rua', 'bairro'],
+    name: ['cep', 'situacaoCep', 'rua', 'bairro', 'distrito', 'distritoAutomatico'],
   });
   // Conta as buscas para ignorar a resposta de uma busca antiga (se o CEP mudou no meio)
   const ultimaBusca = useRef(0);
@@ -37,6 +41,11 @@ export default function CamposEnderecoConta({ aoMudarBairro }) {
     setValue('cidadeDoCep', resposta.cidade ?? '');
     setValue('rua', resposta.situacao === 'encontrado' ? resposta.rua : '');
     setValue('bairro', resposta.situacao === 'encontrado' ? resposta.bairro : '');
+    // O bairro do app é um dos 96 distritos: achado pela tabela ou escolhido pela pessoa
+    const achado = resposta.situacao === 'encontrado' ? distritoDoBairro(resposta.bairro) : null;
+    const sugestao = resposta.situacao === 'encontrado' ? sugerirDistrito(resposta.bairro) : null;
+    setValue('distrito', (achado ?? sugestao)?.nome ?? '');
+    setValue('distritoAutomatico', Boolean(achado));
   }
 
   // Busca o endereço do CEP no ViaCEP. Recebe o CEP só com números.
@@ -69,10 +78,10 @@ export default function CamposEnderecoConta({ aoMudarBairro }) {
     aoMudarCep(limparCep(cep));
   }, [cep]);
 
-  // Avisa o painel azul do bairro achado
+  // Avisa o painel azul do distrito (só depois de um CEP de São Paulo achado)
   useEffect(() => {
-    aoMudarBairro?.(situacao === 'encontrado' ? bairro : '');
-  }, [situacao, bairro, aoMudarBairro]);
+    aoMudarBairro?.(situacao === 'encontrado' ? distrito : '');
+  }, [situacao, distrito, aoMudarBairro]);
 
   const campoCep = register('cep', {
     onChange: (evento) => setValue('cep', formatarCep(evento.target.value)),
@@ -113,7 +122,22 @@ export default function CamposEnderecoConta({ aoMudarBairro }) {
           Buscar o CEP de novo
         </Botao>
       )}
-      {situacao === 'encontrado' && <EnderecoEncontrado rua={rua} bairro={bairro} cep={cep} />}
+      {situacao === 'encontrado' && (
+        <EnderecoEncontrado
+          rua={rua}
+          bairro={bairro}
+          distrito={distritoAutomatico ? distrito : ''}
+          cep={cep}
+        />
+      )}
+      {situacao === 'encontrado' && !distritoAutomatico && (
+        <CampoDistrito
+          id="distrito"
+          ajuda={`Escolha o distrito onde fica ${bairro || 'o seu endereço'}.`}
+          erro={errors.distrito?.message}
+          {...register('distrito')}
+        />
+      )}
 
       <CampoTexto
         id="complemento"
