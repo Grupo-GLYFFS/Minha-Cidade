@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import Icone from '../Icone';
 import { usePainelAberto } from './usePainelAberto';
-import { estadoItemMenu } from '../../dados/navegacao';
+import { caminhoDoMenu, estadoItemMenu } from '../../dados/navegacao';
 import classes from './GrupoMenu.module.css';
 import painel from './PainelMenu.module.css';
 
@@ -13,10 +13,10 @@ import painel from './PainelMenu.module.css';
 // O item da página atual fica marcado com aria-current ("page" na página, "true" nas subpáginas).
 // Recebe o item de MENU_PRINCIPAL (dados/navegacao.js).
 export default function GrupoMenu({ item }) {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const { aberto, abrirPassagem, fecharPassagem, fechar, alternar, refContorno, aoTeclar } =
     usePainelAberto();
-  const atual = estadoItemMenu(item, pathname);
+  const atual = estadoItemMenu(item, caminhoDoMenu(pathname, search));
 
   if (!item.painel) {
     return (

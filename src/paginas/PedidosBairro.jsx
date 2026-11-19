@@ -9,6 +9,7 @@ import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
 import { useRecorte } from '../contexto/useRecorte';
 import { pedidosDoLugar } from '../logica/gruposPedidos';
+import { origemDoRecorte } from '../logica/recorte';
 import { noLugar } from '../logica/lugares';
 
 // Pedidos de um lugar, agrupados por situação:
@@ -23,9 +24,8 @@ export default function PedidosBairro() {
   const recorte = useRecorte('bairro');
   const { lugar } = recorte;
   const doLugar = pedidosDoLugar(pedidos, recorte.bairros);
-  const doMeuBairro = recorte.base === '/meu-bairro';
-  // No Meu bairro, o Abrir pedido usa a trilha do bairro
-  const novoPedido = doMeuBairro ? '/pedidos/novo?de=bairro' : '/pedidos/novo';
+  // O Abrir pedido leva o lugar (?de=) para usar a trilha dele
+  const novoPedido = `/pedidos/novo?de=${origemDoRecorte(recorte)}`;
 
   return (
     <Pagina

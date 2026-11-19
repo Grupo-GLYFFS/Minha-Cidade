@@ -95,6 +95,26 @@ export function montarRecorteLugar({ idBairro, idSub }) {
   };
 }
 
+// Valor do ?de= do Abrir pedido aberto por uma lista de pedidos, para a trilha voltar ao lugar.
+// Recebe o recorte da lista; devolve "bairro" (Meu bairro), "bairro:santana" (outro bairro)
+// ou "subprefeitura:lapa" (uma subprefeitura).
+export function origemDoRecorte(recorte) {
+  if (recorte.base === '/meu-bairro') return 'bairro';
+  return `${recorte.tipo}:${recorte.base.split('/').pop()}`;
+}
+
+// Recorte do lugar de onde o Abrir pedido foi aberto. Recebe o valor do ?de= e o recorte do
+// bairro da pessoa; devolve o recorte do lugar ou null (aberto de outra página ou lugar que
+// não existe).
+export function recorteDaOrigem(de, recorteDaPessoa) {
+  if (de === 'bairro') return recorteDaPessoa;
+  const [tipo, id] = (de ?? '').split(':');
+  if (!id) return null;
+  if (tipo === 'bairro') return montarRecorteLugar({ idBairro: id });
+  if (tipo === 'subprefeitura') return montarRecorteLugar({ idSub: id });
+  return null;
+}
+
 // Situações de obra que contam como "em andamento" (parada e concluída não contam)
 const OBRA_EM_ANDAMENTO = ['no-prazo', 'atrasada'];
 

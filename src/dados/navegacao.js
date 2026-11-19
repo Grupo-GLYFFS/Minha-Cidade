@@ -108,6 +108,17 @@ export const LINKS_RODAPE = [
   },
 ];
 
+// Caminho que o menu usa para marcar o item. O Abrir pedido aberto pelos Pedidos de um lugar
+// (?de=) conta como página desse lugar: Meu bairro (?de=bairro) ou Minha cidade (outro bairro
+// ou subprefeitura). Recebe o caminho e a busca (location.search); devolve o caminho.
+export function caminhoDoMenu(caminho, busca = '') {
+  if (caminho !== '/pedidos/novo') return caminho;
+  const de = new URLSearchParams(busca).get('de');
+  if (de === 'bairro') return '/meu-bairro/pedidos';
+  if (de?.includes(':')) return '/minha-cidade/pedidos';
+  return caminho;
+}
+
 // Diz como um item do menu aparece no caminho atual.
 // Recebe o item e o caminho da página (ex.: "/minha-cidade/obras");
 // devolve "page" (é a própria página do item), "true" (é uma subpágina) ou undefined.
