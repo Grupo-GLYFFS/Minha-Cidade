@@ -69,4 +69,10 @@
     width: calc(100% - rem(32px));
     gap: rem(12px);
   }
+
+  /* Celular: só o ícone do logo, para caber a busca, o sino e o menu da conta.
+     TODO: rever quando o topo do celular for desenhado */
+  .logo > span {
+    display: none;
+  }
 }

@@ -22,7 +22,7 @@ export default function Topo() {
 
       <div className={classes.topo}>
         <div className={classes.miolo}>
-          <Logo />
+          <Logo className={classes.logo} />
 
           <nav className={classes.menu} aria-label="Menu principal">
             <ul className={classes.lista}>
