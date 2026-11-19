@@ -92,6 +92,27 @@ export function aplicarMudancasStatus(pedidos, mudancas) {
   );
 }
 
+// Situações em que quem abriu o pedido ainda pode cancelar
+const STATUS_CANCELAVEIS = ['enviada', 'em-analise'];
+
+// Diz se a pessoa pode cancelar o pedido: só o próprio, enquanto Enviado ou Em análise.
+// Recebe o pedido e o id da pessoa logada; devolve true ou false.
+export function podeCancelar(pedido, idPessoa) {
+  return (
+    Boolean(idPessoa) && pedido.autorId === idPessoa && STATUS_CANCELAVEIS.includes(pedido.status)
+  );
+}
+
+// Diz se a seção "Avalie o serviço" aparece: pedido da pessoa, Concluído ou já Avaliado.
+// Recebe o pedido e o id da pessoa logada; devolve true ou false.
+export function mostraAvaliacao(pedido, idPessoa) {
+  return (
+    Boolean(idPessoa) &&
+    pedido.autorId === idPessoa &&
+    (pedido.status === 'concluida' || pedido.status === 'avaliada')
+  );
+}
+
 // Procura um pedido pelo id. Recebe a lista e o id; devolve o pedido ou undefined.
 export function buscarPedido(pedidos, idPedido) {
   return pedidos.find((pedido) => pedido.id === idPedido);

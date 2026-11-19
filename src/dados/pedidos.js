@@ -13,6 +13,7 @@
 // - ilustracao (opcional): desenho do pedido no card e no cabeçalho (poste, buraco, arvore, calcada)
 // - fotos (opcional): nomes das fotos enviadas por quem relatou
 // - datasEtapas (opcional): dia em que o pedido entrou em cada etapa (as que faltam são estimadas)
+// - avaliacao (só nos "avaliada"): { nota de 1 a 5, comentario, em } dada por quem abriu
 export const PEDIDOS = [
   {
     id: 'p-001',
@@ -175,9 +176,10 @@ export const PEDIDOS = [
     urgencia: 2,
     tendencia: 2,
     apoios: 8,
-    criadoEm: '2026-10-10T21:00:00-03:00',
-    atualizadoEm: '2026-10-28T14:30:00-03:00',
-    autorId: 'u-027',
+    criadoEm: '2026-10-28T21:00:00-03:00',
+    atualizadoEm: '2026-11-11T14:30:00-03:00',
+    autorId: 'u-001',
+    ilustracao: 'poste',
   },
   {
     id: 'p-009',
@@ -198,6 +200,11 @@ export const PEDIDOS = [
     atualizadoEm: '2026-10-21T17:00:00-03:00',
     autorId: 'u-001',
     ilustracao: 'arvore',
+    avaliacao: {
+      nota: 5,
+      comentario: 'A equipe veio no dia marcado e deixou a calçada limpa.',
+      em: '2026-10-21T17:00:00-03:00',
+    },
     datasEtapas: {
       enviada: '2026-10-02',
       'em-analise': '2026-10-03',

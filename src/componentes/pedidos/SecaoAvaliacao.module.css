@@ -1,0 +1,125 @@
+/* Avalie o serviço: estrelas de 44 (radio), comentário e botão à direita. */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+}
+
+.grupo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.rotulo {
+  margin-bottom: rem(8px);
+  padding: 0;
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.estrelas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(4px);
+}
+
+.estrela {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(44px);
+  height: rem(44px);
+  border-radius: var(--raio-controle);
+  cursor: pointer;
+}
+
+.estrela:hover {
+  background: var(--cor-faixa);
+}
+
+/* O radio fica invisível em cima da estrela; o foco aparece na estrela */
+.radio {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.estrela:has(.radio:focus-visible) {
+  outline: var(--foco-contorno);
+  outline-offset: rem(2px);
+}
+
+.cheia {
+  color: var(--cor-barra-ambar);
+}
+
+.vazia {
+  color: var(--cor-texto-placeholder);
+}
+
+.notaEscolhida {
+  margin-left: rem(8px);
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.erro {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(6px);
+  margin: rem(6px) 0 0;
+  font-size: rem(14px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--cor-erro);
+}
+
+/* Avaliação feita */
+.feita {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+}
+
+.estrelasLeitura {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(8px);
+  margin: 0;
+  font-size: rem(16px);
+  color: var(--cor-texto);
+}
+
+.comentario {
+  margin: 0;
+  font-size: rem(17px);
+  line-height: 1.6;
+  color: var(--cor-texto);
+}
+
+.meta {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

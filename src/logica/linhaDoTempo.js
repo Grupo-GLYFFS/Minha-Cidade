@@ -41,7 +41,7 @@ function montarEtapa(id, estado, data, explicacao = EXPLICACOES[id]) {
 
 // Monta as etapas da linha do tempo de um pedido.
 // Recebe o pedido; devolve uma lista de { id, rotulo, explicacao, estado, data }, em que
-// estado é "feita", "atual", "futura" ou "recusada". Etapas futuras não têm data.
+// estado é "feita", "atual", "futura" ou "recusada" (recusado ou cancelado). Etapas futuras não têm data.
 // As datas vêm de pedido.datasEtapas; as que faltam são estimadas.
 export function etapasDoPedido(pedido) {
   const datas = pedido.datasEtapas ?? {};
@@ -56,6 +56,25 @@ export function etapasDoPedido(pedido) {
         'recusada',
         datas.recusada ?? estimarData(pedido, 2, 2),
         pedido.motivoRecusa ?? 'A prefeitura não vai atender este pedido.',
+      ),
+    ];
+  }
+
+  // Pedido cancelado por quem abriu: as etapas que ele passou e o cancelamento
+  // (canceladoDe diz se ele já estava em análise quando foi cancelado)
+  if (pedido.status === 'cancelada') {
+    const passouAnalise = pedido.canceladoDe === 'em-analise';
+    const fim = passouAnalise ? 2 : 1;
+    return [
+      montarEtapa('enviada', 'feita', datas.enviada ?? estimarData(pedido, 0, fim)),
+      ...(passouAnalise
+        ? [montarEtapa('em-analise', 'feita', datas['em-analise'] ?? estimarData(pedido, 1, fim))]
+        : []),
+      montarEtapa(
+        'cancelada',
+        'recusada',
+        pedido.atualizadoEm.slice(0, 10),
+        'Você cancelou este pedido.',
       ),
     ];
   }
