@@ -8,6 +8,8 @@ export const USUARIO = {
   iniciais: 'MS',
   email: 'maria@exemplo.com',
   celular: '(11) 91234-5678',
+  // CPF de exemplo (válido pelo cálculo, mas não é de ninguém); o Perfil mostra mascarado
+  cpf: '123.456.789-09',
   cep: '04015-001',
   rua: 'Rua Joaquim Távora',
   numero: '120',

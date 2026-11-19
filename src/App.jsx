@@ -31,6 +31,8 @@ import TelefonesUteis from './paginas/TelefonesUteis';
 import PerguntasFrequentes from './paginas/PerguntasFrequentes';
 import Privacidade from './paginas/Privacidade';
 import NaoEncontrada from './paginas/NaoEncontrada';
+import Notificacoes from './paginas/Notificacoes';
+import Configuracoes from './paginas/Configuracoes';
 
 // Página de desenvolvimento: só é baixada quando alguém abre /componentes
 const Componentes = lazy(() => import('./paginas/Componentes'));
@@ -80,10 +82,16 @@ export default function App() {
           <Route path="/pedidos/novo" element={<NovoPedido />} />
           <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
           <Route path="/minha-cidade/alertas" element={<Alertas />} />
-          <Route path="/perfil" element={<Perfil />} />
           <Route path="/perfil/pedidos" element={<MeusPedidos />} />
           <Route path="/perfil/dados" element={<MeusDados />} />
         </Route>
+      </Route>
+
+      {/* Conta (páginas novas, fora do LayoutAntigo; precisam de conta) */}
+      <Route element={<RotaProtegida />}>
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/notificacoes" element={<Notificacoes />} />
+        <Route path="/configuracoes" element={<Configuracoes />} />
       </Route>
 
       {/* Ajuda (páginas novas, fora do LayoutAntigo) */}

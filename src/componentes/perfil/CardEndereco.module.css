@@ -1,0 +1,42 @@
+.rua {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.cep {
+  margin: rem(4px) 0 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+/* Faixa do bairro e da subprefeitura: linha de borda a borda em cima, duas colunas */
+.local {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: rem(16px);
+  margin: rem(24px) calc(var(--pad-lateral, 0px) * -1) rem(-8px);
+  padding: rem(20px) var(--pad-lateral, 0px) 0;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.local dt {
+  font-size: rem(13px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.local dd {
+  margin: rem(2px) 0 0;
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .local {
+    grid-template-columns: 1fr;
+  }
+}

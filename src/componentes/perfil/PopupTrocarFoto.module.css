@@ -1,0 +1,62 @@
+/* Opções do Trocar foto: linhas de 64 de borda a borda do popup; o corpo do popup tem
+   24 em cima e embaixo, que a lista come para encostar nas faixas de cima e de baixo. */
+
+.lista {
+  margin: rem(-24px) calc(var(--pad-lateral, 0px) * -1);
+  padding: 0;
+  list-style: none;
+}
+
+.lista > li + li {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.opcao {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  width: 100%;
+  min-height: rem(64px);
+  padding: rem(10px) var(--pad-lateral, 0px);
+  border: 0;
+  background: none;
+  font-family: var(--fonte);
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+  text-align: left;
+  cursor: pointer;
+}
+
+.opcao:hover {
+  background: var(--cor-fundo-card);
+}
+
+.opcao:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: -3px;
+}
+
+.icone {
+  color: var(--cor-texto-2);
+}
+
+.remover {
+  color: var(--cor-perigo);
+}
+
+.opcao:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.erro {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(8px);
+  margin: 0 0 rem(48px);
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-erro);
+}
