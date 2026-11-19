@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import './estilos/global.css';
@@ -19,6 +19,8 @@ import App from './App';
 // e o tema do Mantine, compartilha a sessão (quem está logado), os pedidos, as solicitações
 // de serviço, os votos nos grandes projetos e os alertas, liga as rotas e mostra o App
 // (com o aviso temporário do rodapé, que confirma as ações).
+// As rotas ficam depois do # (ex.: index.html#/servicos) para o site abrir até direto do
+// arquivo, com dois cliques no dist/index.html, sem servidor.
 // Se alguma tela quebrar, o ErroDoApp mostra "Algo deu errado" no lugar da tela branca.
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -30,11 +32,11 @@ createRoot(document.getElementById('root')).render(
               <SolicitacoesProvider>
                 <VotosProvider>
                   <AlertasProvider>
-                    <BrowserRouter>
+                    <HashRouter>
                       <AvisoTemporarioProvider>
                         <App />
                       </AvisoTemporarioProvider>
-                    </BrowserRouter>
+                    </HashRouter>
                   </AlertasProvider>
                 </VotosProvider>
               </SolicitacoesProvider>

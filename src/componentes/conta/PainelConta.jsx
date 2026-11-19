@@ -23,7 +23,7 @@ export default function PainelConta({ tipo = 'entrar', bairro }) {
       <Link to="/inicio" className={classes.marca} aria-label="Minha Prefeitura, ir para o início">
         <img
           className={classes.marcaIcone}
-          src="/img/logo-icone.png"
+          src="img/logo-icone.png"
           alt=""
           width="40"
           height="40"

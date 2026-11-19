@@ -2,7 +2,8 @@
 // no computador, copia o link. Recebe { titulo, caminho } (caminho = rota, ex.: "/minha-cidade/avisos/x").
 // Devolve uma promessa com "compartilhado", "copiado", "cancelado" ou "erro".
 export async function compartilharLink({ titulo, caminho }) {
-  const url = `${window.location.origin}${caminho}`;
+  // Endereço da página sem a rota atual + a rota depois do # (ex.: .../index.html#/pedidos/12)
+  const url = `${window.location.href.split('#')[0]}#${caminho}`;
 
   if (navigator.share) {
     try {

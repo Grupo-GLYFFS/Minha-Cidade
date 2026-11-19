@@ -8,7 +8,7 @@ export const AREAS_SOLUCAO = [
     texto: 'serviços por assunto, com busca',
     link: 'Ver os serviços',
     para: '/servicos',
-    imagem: '/img/gs/celular-servicos.png',
+    imagem: 'img/gs/celular-servicos.png',
     alt: 'Tela de Serviços no celular: busca e serviços de saúde, como agendar consulta na UBS e tomar vacina.',
   },
   {
@@ -16,7 +16,7 @@ export const AREAS_SOLUCAO = [
     texto: 'Buraco, poste, poda: do pedido até a entrega',
     link: 'Ver os pedidos',
     para: '/minha-cidade/pedidos',
-    imagem: '/img/gs/celular-pedidos.png',
+    imagem: 'img/gs/celular-pedidos.png',
     alt: 'Tela de Pedidos da cidade no celular: três pedidos com a etapa de cada um e o botão Abrir pedido.',
   },
   {
@@ -24,7 +24,7 @@ export const AREAS_SOLUCAO = [
     texto: 'Orçamento, votações e obras',
     link: 'Ver a cidade',
     para: '/minha-cidade',
-    imagem: '/img/gs/celular-cidade.png',
+    imagem: 'img/gs/celular-cidade.png',
     alt: 'Tela da Cidade de São Paulo no celular: uma votação aberta, o orçamento pago e as obras.',
   },
   {
@@ -32,7 +32,7 @@ export const AREAS_SOLUCAO = [
     texto: 'Tudo o que acontece perto de casa',
     link: 'Ver o meu bairro',
     para: '/meu-bairro',
-    imagem: '/img/gs/celular-bairro.png',
+    imagem: 'img/gs/celular-bairro.png',
     alt: 'Tela da Vila Mariana no celular: alerta de chuva, mapa do bairro, um pedido, uma obra e um aviso.',
   },
 ];

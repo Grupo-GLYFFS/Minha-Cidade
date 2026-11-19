@@ -97,7 +97,7 @@ export default function Subprefeitura() {
             { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
             { rotulo: nomeCompleto },
           ]}
-          midia={<img src="/img/mapas/subprefeitura.svg" alt="" />}
+          midia={<img src="img/mapas/subprefeitura.svg" alt="" />}
         />
       }
     >

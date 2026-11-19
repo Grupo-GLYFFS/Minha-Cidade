@@ -25,7 +25,7 @@ export const AVISOS = [
     validoAte: '2026-11-30',
     publicado: 'Publicado em 3 de novembro, atualizado há 2 h',
     bairros: [],
-    imagem: '/img/avisos/vacina.svg',
+    imagem: 'img/avisos/vacina.svg',
     link: {
       icone: 'vaccines',
       titulo: 'Onde e quando vacinar',
@@ -45,7 +45,7 @@ export const AVISOS = [
     validoAte: '2026-11-20',
     publicado: 'Publicado em 11 de novembro',
     bairros: [],
-    imagem: '/img/avisos/feriados-novembro.svg',
+    imagem: 'img/avisos/feriados-novembro.svg',
   },
   {
     id: 'av-show-ibirapuera',
@@ -59,7 +59,7 @@ export const AVISOS = [
     validoAte: '2026-11-21',
     publicado: 'Publicado em 9 de novembro',
     bairros: [],
-    imagem: '/img/avisos/show-ibirapuera.svg',
+    imagem: 'img/avisos/show-ibirapuera.svg',
   },
   {
     id: 'av-matricula-2027',
@@ -74,7 +74,7 @@ export const AVISOS = [
     validoAte: '2026-12-11',
     publicado: 'Publicado em 4 de novembro',
     bairros: [],
-    imagem: '/img/avisos/matricula-2027.svg',
+    imagem: 'img/avisos/matricula-2027.svg',
     link: {
       icone: 'school',
       titulo: 'Pedir vaga na escola',
@@ -95,7 +95,7 @@ export const AVISOS = [
     validoAte: '2026-12-31',
     publicado: 'Publicado em 12 de novembro',
     bairros: ['Vila Mariana'],
-    imagem: '/img/avisos/coleta.svg',
+    imagem: 'img/avisos/coleta.svg',
   },
   {
     id: 'av-audiencia-vm-2027',
@@ -110,7 +110,7 @@ export const AVISOS = [
     validoAte: '2026-11-25',
     publicado: 'Publicado em 11 de novembro',
     bairros: ['Vila Mariana', 'Moema', 'Saúde'],
-    imagem: '/img/avisos/audiencia-obras-2027.svg',
+    imagem: 'img/avisos/audiencia-obras-2027.svg',
   },
   {
     id: 'av-farmacia-ubs-vm',
@@ -125,7 +125,7 @@ export const AVISOS = [
     validoAte: '2026-12-18',
     publicado: 'Publicado em 11 de novembro',
     bairros: ['Vila Mariana'],
-    imagem: '/img/avisos/farmacia-ubs.svg',
+    imagem: 'img/avisos/farmacia-ubs.svg',
     link: {
       icone: 'construction',
       titulo: 'Ver a obra',
@@ -146,7 +146,7 @@ export const AVISOS = [
     validoAte: '2026-11-22',
     publicado: 'Publicado em 10 de novembro',
     bairros: ['Moema', 'Vila Mariana'],
-    imagem: '/img/avisos/asfalto.svg',
+    imagem: 'img/avisos/asfalto.svg',
     link: {
       icone: 'construction',
       titulo: 'Ver a obra',

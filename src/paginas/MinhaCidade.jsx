@@ -64,7 +64,7 @@ export default function MinhaCidade() {
           tipo="hub"
           titulo="Cidade de São Paulo"
           subtitulo="Prefeitura de São Paulo · SP"
-          midia={<img src="/img/mapas/cidade.svg" alt="" />}
+          midia={<img src="img/mapas/cidade.svg" alt="" />}
         />
       }
     >

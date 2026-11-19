@@ -11,7 +11,7 @@ export default function Logo({ className }) {
       className={className ? `${classes.logo} ${className}` : classes.logo}
       aria-label="Minha Prefeitura, ir para o início"
     >
-      <img className={classes.icone} src="/img/logo-icone.png" alt="" width="40" height="40" />
+      <img className={classes.icone} src="img/logo-icone.png" alt="" width="40" height="40" />
       <span className={classes.nome} aria-hidden="true">
         <span>Minha</span>
         <span>Prefeitura</span>

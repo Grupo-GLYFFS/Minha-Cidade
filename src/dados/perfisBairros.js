@@ -7,7 +7,7 @@
 export const PERFIS_BAIRROS = [
   {
     id: 'vila-mariana',
-    mapa: '/img/mapas/bairro-vila-mariana.svg',
+    mapa: 'img/mapas/bairro-vila-mariana.svg',
     numeros: [
       { icone: 'groups', valor: '130 mil', rotulo: 'moradores' },
       { icone: 'straighten', valor: '8,6 km²', rotulo: 'de área' },
@@ -46,7 +46,7 @@ export const PERFIS_BAIRROS = [
   },
   {
     id: 'moema',
-    mapa: '/img/mapas/bairro-moema.svg',
+    mapa: 'img/mapas/bairro-moema.svg',
     numeros: [
       { icone: 'groups', valor: '83 mil', rotulo: 'moradores' },
       { icone: 'straighten', valor: '9 km²', rotulo: 'de área' },

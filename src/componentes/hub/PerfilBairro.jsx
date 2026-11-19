@@ -82,7 +82,7 @@ export default function PerfilBairro({ bairro, seu = false }) {
             { rotulo: `Subprefeitura ${sub.nome}`, para: `/minha-cidade/subprefeituras/${sub.id}` },
             { rotulo: bairro.nome },
           ]}
-          midia={<img src={perfil?.mapa ?? '/img/mapas/subprefeitura.svg'} alt="" />}
+          midia={<img src={perfil?.mapa ?? 'img/mapas/subprefeitura.svg'} alt="" />}
           categoria={
             comSelo
               ? { rotulo: <span className={classes.seloCabecalho}>Seu bairro</span> }

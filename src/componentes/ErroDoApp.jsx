@@ -13,7 +13,8 @@ function recarregar() {
 // Apaga os dados do app neste navegador (contas, pedidos, sessão…) e abre o início de novo
 function limparDados() {
   apagarTudo({ aba: true });
-  window.location.assign('/inicio');
+  window.location.hash = '#/inicio';
+  window.location.reload();
 }
 
 // Rede de segurança do app: se alguma tela quebrar (ex.: dado do navegador num formato

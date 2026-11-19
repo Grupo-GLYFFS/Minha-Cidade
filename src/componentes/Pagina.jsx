@@ -44,9 +44,15 @@ export default function Pagina({ cabecalho, children, semFaixaAlerta = false, la
   const mostrarFaixa =
     mostrarFaixasAlerta && alertaFaixa && !semFaixaAlerta && !pathname.includes('/alertas');
 
+  // Leva o foco ao conteúdo sem mudar o endereço (a rota fica depois do #)
+  function pularParaConteudo(evento) {
+    evento.preventDefault();
+    document.getElementById('conteudo')?.focus();
+  }
+
   return (
     <div className={classes.pagina}>
-      <a className="pular-conteudo" href="#conteudo">
+      <a className="pular-conteudo" href="#conteudo" onClick={pularParaConteudo}>
         Pular para o conteúdo
       </a>
       <Topo />
