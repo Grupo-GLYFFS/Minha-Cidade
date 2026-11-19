@@ -1,31 +1,65 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Topo from './Topo';
 import FaixaAlerta from './FaixaAlerta';
 import Rodape from './Rodape';
 import AvisoDaConta from './conta/AvisoDaConta';
+import BarraVoltar from './celular/BarraVoltar';
+import BarraAbas from './celular/BarraAbas';
+import FolhaMais from './celular/FolhaMais';
 import { useAcessibilidade } from '../contexto/useAcessibilidade';
 import { useBairroDaPessoa } from '../contexto/useBairroDaPessoa';
 import { ALERTAS } from '../dados/alertas';
 import { alertaDaFaixa } from '../logica/alertas';
+import {
+  PAGINAS_PRIMEIRO_NIVEL,
+  ehPaginaDaConta,
+  voltarDaTrilha,
+} from '../logica/navegacaoCelular';
 import classes from './Pagina.module.css';
 
 // Moldura de toda página: topo, faixa de alerta, cabeçalho da página, conteúdo e rodapé.
+// No celular (até 768 px), o topo e o rodapé somem; entram a barra "‹ Voltar" (páginas internas),
+// a barra de abas presa embaixo e a folha Mais (veja src/componentes/LEIA-ME.md, "Celular").
 // Recebe:
 // - cabecalho: o <CabecalhoPagina> da página (faixa azul-clara de largura total);
 // - children: o conteúdo, que fica na coluna de 880 com 48 px de respiro em cima;
 // - semFaixaAlerta: esconde a faixa amarela (ela já some sozinha nas páginas de alertas
 //   e quando "Faixas de alerta" está desligado em Configurações, que é o padrão);
-// - larga: coluna de 1088 em vez de 880 (só para as telas antigas, até serem refeitas).
+// - larga: coluna de 1088 em vez de 880 (só para as telas antigas, até serem refeitas);
+// - voltar (celular): { rotulo, para } no lugar do que vem da trilha, ou false para tirar a barra
+//   "‹ Voltar". Sem ele, o "‹ Voltar" é o penúltimo item da trilha do cabeçalho;
+// - tituloTopo (celular): nome curto no meio da barra "‹ Voltar" (só quando é diferente do h1);
+// - acaoTopo (celular): botão da direita da barra "‹ Voltar" (compartilhar só com ícone, Cancelar);
+// - aba (celular): marca outra aba ("inicio", "servicos", "cidade", "bairro", "mais") no lugar
+//   da que vem da rota.
 // Ao trocar de página, a tela volta para o topo. O título da aba do navegador acompanha o h1
 // ("<h1> · Minha Prefeitura"; na Apresentação, "Minha Prefeitura · Global Solution").
 // Os avisos da conta ("Conta criada!", "Você saiu da sua conta") aparecem no alto da coluna.
-export default function Pagina({ cabecalho, children, semFaixaAlerta = false, larga = false }) {
+export default function Pagina({
+  cabecalho,
+  children,
+  semFaixaAlerta = false,
+  larga = false,
+  voltar,
+  tituloTopo,
+  acaoTopo,
+  aba,
+}) {
   const { pathname } = useLocation();
   const { mostrarFaixasAlerta } = useAcessibilidade();
   // Alerta da faixa amarela: o que vale no bairro da pessoa (ou no escolhido) ou na cidade toda
   const { nome, temConta, definido } = useBairroDaPessoa();
   const alertaFaixa = alertaDaFaixa(ALERTAS, temConta || definido ? nome : null);
+  // Folha Mais do celular (aberta pela aba Mais ou pelo "‹ Mais" das páginas da conta)
+  const [maisAberto, setMaisAberto] = useState(false);
+  const [caminhoDoMais, setCaminhoDoMais] = useState(pathname);
+
+  // Fecha a folha Mais ao trocar de página (ajuste durante o desenho, sem efeito)
+  if (caminhoDoMais !== pathname) {
+    setCaminhoDoMais(pathname);
+    setMaisAberto(false);
+  }
 
   // Volta ao topo a cada página nova
   useEffect(() => {
@@ -44,6 +78,15 @@ export default function Pagina({ cabecalho, children, semFaixaAlerta = false, la
   const mostrarFaixa =
     mostrarFaixasAlerta && alertaFaixa && !semFaixaAlerta && !pathname.includes('/alertas');
 
+  // Barra "‹ Voltar" do celular: some nas páginas de 1º nível e nas confirmações
+  const propsCabecalho = cabecalho?.props ?? {};
+  const contaSemTrilha = ehPaginaDaConta(pathname) && !(propsCabecalho.trilha?.length >= 2);
+  const mostrarVoltar =
+    voltar !== false &&
+    !PAGINAS_PRIMEIRO_NIVEL.includes(pathname) &&
+    propsCabecalho.tipo !== 'confirmacao';
+  const destinoVoltar = voltar || voltarDaTrilha(propsCabecalho.trilha, pathname);
+
   // Leva o foco ao conteúdo sem mudar o endereço (a rota fica depois do #)
   function pularParaConteudo(evento) {
     evento.preventDefault();
@@ -55,12 +98,22 @@ export default function Pagina({ cabecalho, children, semFaixaAlerta = false, la
       <a className="pular-conteudo" href="#conteudo" onClick={pularParaConteudo}>
         Pular para o conteúdo
       </a>
-      <Topo />
+      <div className={classes.soComputador}>
+        <Topo />
+      </div>
       {mostrarFaixa && (
         <FaixaAlerta
           titulo={alertaFaixa.titulo}
           texto={alertaFaixa.mensagem}
           para={`/minha-cidade/alertas/${alertaFaixa.id}`}
+        />
+      )}
+      {mostrarVoltar && (
+        <BarraVoltar
+          voltar={!voltar && contaSemTrilha ? { rotulo: 'Mais' } : destinoVoltar}
+          aoVoltar={!voltar && contaSemTrilha ? () => setMaisAberto(true) : undefined}
+          titulo={tituloTopo}
+          acao={acaoTopo}
         />
       )}
       <main id="conteudo" className={classes.principal} tabIndex={-1}>
@@ -70,7 +123,15 @@ export default function Pagina({ cabecalho, children, semFaixaAlerta = false, la
           {children}
         </div>
       </main>
-      <Rodape />
+      <div className={classes.soComputador}>
+        <Rodape />
+      </div>
+      <BarraAbas
+        maisAberto={maisAberto}
+        aoAbrirMais={() => setMaisAberto((aberto) => !aberto)}
+        aba={aba}
+      />
+      <FolhaMais aberto={maisAberto} aoFechar={() => setMaisAberto(false)} />
     </div>
   );
 }

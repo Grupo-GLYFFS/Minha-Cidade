@@ -33,3 +33,20 @@
     padding: rem(24px) 0 rem(48px);
   }
 }
+
+/* Topo e rodapé do computador: no celular eles somem (a barra de abas e a folha Mais
+   fazem o papel deles). No computador o invólucro não cria caixa nenhuma. */
+.soComputador {
+  display: contents;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .soComputador {
+    display: none;
+  }
+
+  /* Espaço embaixo para a barra de abas (e a barra do pé, quando houver) não cobrir o fim */
+  .pagina {
+    padding-bottom: calc(var(--altura-abas) + var(--altura-pe));
+  }
+}

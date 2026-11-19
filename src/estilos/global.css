@@ -130,7 +130,72 @@
   --sombra-destaque: none;
   /* Sombra leve do aviso temporário do rodapé da tela */
   --sombra-aviso: 0 4px 16px rgb(15 23 42 / 12%);
+  /* Celular: altura da barra de abas e da barra do pé presas embaixo (0 no computador) */
   --altura-abas: 0px;
+  --altura-pe: 0px;
+}
+
+/* Celular (até 768 px): a barra de abas tem 85 (14 + 56 + 14 + 1 de borda).
+   A barra do pé (<BarraPe>) tem 81 (16 + 48 + 16 + 1) e só conta quando está na página. */
+@media (max-width: 48em) {
+  :root {
+    --altura-abas: 85px;
+  }
+
+  :root:has([data-barra-pe]) {
+    --altura-pe: 81px;
+  }
+}
+
+/* ---------- Texto que não quebra o layout (celular e computador) ----------
+   .m-1l: uma linha só, com reticências (metadados, datas, endereços, protocolos, rótulos).
+   .m-2l: no máximo 2 linhas (título de card, h1 de lista e hub, subtítulo, resumo).
+   .m-3l: no máximo 3 linhas (h1 de detalhe).
+   .m-1l-cel, .m-2l-cel, .m-3l-cel: o mesmo, só no celular. */
+.m-1l {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-2l,
+.m-3l {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.m-3l {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+@media (max-width: 48em) {
+  .m-1l-cel {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .m-2l-cel,
+  .m-3l-cel {
+    display: -webkit-box;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .m-3l-cel {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
 }
 
 /* Texto "dimmed" do Mantine igual ao texto secundário */

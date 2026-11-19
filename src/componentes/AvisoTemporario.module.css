@@ -1,9 +1,10 @@
-/* Aviso temporário: preso embaixo e no centro da tela, fundo branco, borda, raio 12 e sombra leve. */
+/* Aviso temporário: preso embaixo e no centro da tela, fundo branco, borda, raio 12 e sombra leve.
+   No celular, fica 16 acima da barra de abas (ou da barra do pé, quando a página tem uma). */
 
 .lugar {
   position: fixed;
   left: 50%;
-  bottom: calc(var(--pad) + var(--altura-abas));
+  bottom: calc(var(--pad) + var(--altura-abas) + var(--altura-pe));
   z-index: 400;
   width: min(rem(560px), calc(100% - 2 * var(--pad)));
   transform: translateX(-50%);

@@ -1,0 +1,92 @@
+/* Barra "‹ Voltar" (celular): 64 de altura, grade minmax(0,1fr) auto minmax(0,1fr) com 8 dos
+   dois lados, para o título ficar no centro exato da tela. No computador ela não aparece. */
+
+.barra {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .barra {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: rem(8px);
+    box-sizing: border-box;
+    min-height: rem(64px);
+    padding: 0 rem(8px);
+    border-bottom: var(--espessura-borda) solid var(--cor-borda);
+    background: var(--cor-superficie);
+  }
+}
+
+/* Link azul da esquerda: chevron + nome de onde veio, numa linha com reticências */
+.voltar {
+  grid-column: 1;
+  justify-self: start;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: rem(2px);
+  max-width: 100%;
+  min-width: 0;
+  min-height: rem(44px);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: none;
+  font-family: inherit;
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-azul-escuro);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.voltar:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: rem(2px);
+}
+
+.seta {
+  flex: none;
+}
+
+.rotulo {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Sem título, o link usa as colunas 1 e 2 */
+.semTitulo .voltar {
+  grid-column: 1 / 3;
+}
+
+/* Título no meio: uma linha, no máximo 184 de largura */
+.titulo {
+  grid-column: 2;
+  max-width: var(--voltar-t-max, rem(184px));
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: rem(16px);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cor-texto);
+}
+
+/* Ação da direita (compartilhar, Cancelar) */
+.direita {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}

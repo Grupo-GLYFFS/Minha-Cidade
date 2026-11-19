@@ -1,0 +1,100 @@
+/* Barra de abas do celular: presa embaixo, 85 de altura (14 + 56 + 14 + 1 de borda).
+   No computador ela não aparece. */
+
+.barra {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .barra {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 300;
+    display: block;
+    box-sizing: border-box;
+    padding: rem(14px) rem(6px);
+    border-top: var(--espessura-borda) solid var(--cor-borda);
+    background: var(--cor-superficie);
+  }
+}
+
+.lista {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  min-width: 0;
+  padding: 0 rem(1px);
+}
+
+/* Aba: ícone em cima, nome de 12/600 embaixo */
+.aba {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: rem(2px);
+  width: 100%;
+  min-height: rem(56px);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: none;
+  font-family: inherit;
+  font-size: rem(12px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto-2);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Aba marcada (ou Mais aberto): fundo azul-claro, texto azul 700 */
+.aba[aria-current],
+.aba[aria-expanded='true'] {
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+  font-weight: 700;
+}
+
+.aba:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: rem(-3px);
+}
+
+.pilula {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: rem(28px);
+}
+
+/* Selo vermelho das notificações não lidas, no canto do ícone do Mais */
+.selo {
+  position: absolute;
+  top: rem(-6px);
+  right: rem(-12px);
+  box-sizing: border-box;
+  min-width: rem(20px);
+  height: rem(20px);
+  padding: 0 rem(5px);
+  border: 2px solid var(--cor-superficie);
+  border-radius: var(--raio-selo);
+  background: var(--cor-contador);
+  color: var(--cor-sobre-primaria);
+  font-size: rem(11px);
+  font-weight: 800;
+  line-height: rem(16px);
+  text-align: center;
+}

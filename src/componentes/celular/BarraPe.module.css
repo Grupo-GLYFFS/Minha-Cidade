@@ -1,0 +1,65 @@
+/* Barra do pé (celular): presa acima da barra de abas, 16 de padding, linha fina em cima,
+   sem sombra. No computador ela não aparece. */
+
+.barra {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .barra {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: var(--altura-abas);
+    z-index: 290;
+    box-sizing: border-box;
+    padding: rem(16px);
+    border-top: var(--espessura-borda) solid var(--cor-borda);
+    background: var(--cor-superficie);
+  }
+
+  /* Dois botões: 50/50 */
+  .botoes {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: rem(8px);
+  }
+
+  .botoes > * {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .passo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(12px);
+  }
+}
+
+.etapa {
+  min-width: 0;
+}
+
+.etapaNome,
+.etapaRotulo {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.etapaNome {
+  font-size: rem(16px);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--cor-texto);
+}
+
+.etapaRotulo {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
