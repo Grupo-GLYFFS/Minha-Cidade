@@ -22,7 +22,18 @@ export default function BarraAlerta({ alerta, caminho }) {
         <span>{alerta.ativo ? alerta.fim : alerta.periodo}</span>
       </p>
       <div className={classes.barraAcoes}>
-        <BotaoCompartilhar titulo={alerta.manchete} caminho={caminho} />
+        {/* No celular, o compartilhar fica só com o ícone, ao lado do "Ligar 199" */}
+        <span className={classes.soComputador}>
+          <BotaoCompartilhar titulo={alerta.manchete} caminho={caminho} />
+        </span>
+        <span className={classes.soCelular}>
+          <BotaoCompartilhar
+            soIcone
+            titulo={alerta.manchete}
+            caminho={caminho}
+            rotulo="Compartilhar alerta"
+          />
+        </span>
         {ligar && (
           <Botao
             variante="principal"

@@ -94,7 +94,120 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  /* Uma coluna que não alarga com o texto de uma linha */
+  .lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lista > li {
+    min-width: 0;
+  }
+
+  /* ---------- Card do aviso: fica com a miniatura de 96 na altura do texto ---------- */
+  a.cardAviso {
+    gap: rem(14px);
+    padding: rem(16px) rem(48px) rem(16px) rem(16px);
+  }
+
+  a.cardAviso .avisoMidia {
+    display: block;
+    width: rem(96px);
+    min-height: rem(96px);
+    max-height: none;
+    aspect-ratio: auto;
+    align-self: stretch;
+  }
+
+  a.cardAviso .avisoMidia:not(:has(img)) {
+    display: inline-flex;
+  }
+
+  .avisoTexto {
+    min-width: 0;
+  }
+
+  /* Órgão · data numa linha; o selo "Toda a cidade" vai na linha de baixo */
+  a.cardAviso .avisoTopo {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: rem(4px);
+    min-width: 0;
+  }
+
+  .avisoOrgao {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .avisoTopo > :not(.avisoOrgao) {
+    order: 1;
+  }
+
+  a.cardAviso .avisoTitulo {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: rem(16px);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  a.cardAviso .avisoMeta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  a.cardAviso .avisoSeta {
+    right: rem(16px);
+  }
+
+  /* ---------- Detalhe ---------- */
+  .corpoTexto {
+    font-size: rem(17px);
+  }
+
+  .link {
+    gap: rem(14px);
+    margin-top: rem(24px);
+    padding: rem(14px) rem(48px) rem(14px) rem(16px);
+  }
+
+  .linkIcone {
+    width: rem(44px);
+    height: rem(44px);
+  }
+
+  .linkTexto {
+    min-width: 0;
+  }
+
+  .linkTitulo {
+    font-size: rem(17px);
+  }
+
+  .linkTitulo,
+  .linkMeta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .seta {
+    right: rem(16px);
+  }
+
   .secao {
     margin-top: rem(48px);
+  }
+
+  .tituloSecao {
+    font-size: rem(22px);
+  }
+
+  .mais > * {
+    width: 100%;
   }
 }

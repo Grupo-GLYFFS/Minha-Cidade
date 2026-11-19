@@ -16,7 +16,7 @@ export default function CardLugar({ nome, selo, linha, para, aoClicar, sua = fal
   const conteudo = (
     <>
       <span className={classes.lugarNome}>
-        {nome}
+        <span className={classes.lugarNomeTexto}>{nome}</span>
         {selo && <span className={classes.selo}>{selo}</span>}
       </span>
       {linha && <small className={classes.lugarLinha}>{linha}</small>}
