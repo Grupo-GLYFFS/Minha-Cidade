@@ -3,18 +3,13 @@
 
 .card {
   box-sizing: border-box;
+  padding: 0;
   position: relative;
   overflow: hidden;
   border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: var(--raio-card);
   background: var(--cor-superficie);
   color: var(--cor-texto);
-}
-
-/* Próximo agendamento: borda azul com anel de 1 px */
-.proximo {
-  border-color: var(--cor-azul);
-  box-shadow: 0 0 0 1px var(--cor-azul);
 }
 
 /* Faixa de cima: ícone azul, texto 14/600 cinza, destaque em 700 e selo à direita */

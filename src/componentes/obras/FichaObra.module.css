@@ -7,7 +7,7 @@
   gap: rem(12px);
   margin-inline: calc(var(--pad-lateral, 0px) * -1);
   padding: rem(18px) var(--pad-lateral, 0px);
-  border-bottom: var(--espessura-borda) solid var(--cor-linha);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
 }
 
 .icone {

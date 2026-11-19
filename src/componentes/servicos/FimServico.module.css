@@ -6,7 +6,7 @@
   align-items: center;
   gap: rem(16px);
   padding: rem(20px) rem(24px);
-  border: var(--espessura-borda) solid var(--cor-azul-borda);
+  border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: var(--raio-card);
   background: var(--cor-faixa);
 }

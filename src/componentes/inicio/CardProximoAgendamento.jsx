@@ -1,4 +1,5 @@
 import Botao from '../Botao';
+import Cartao from '../Cartao';
 import Icone from '../Icone';
 import SeloSituacao from '../SeloSituacao';
 import IconeServico from '../servicos/IconeServico';
@@ -19,7 +20,7 @@ export default function CardProximoAgendamento({ solicitacao }) {
   const idTitulo = `proximo-${solicitacao.id}`;
 
   return (
-    <article className={`${classes.card} ${classes.proximo}`} aria-labelledby={idTitulo}>
+    <Cartao component="article" destaque className={classes.card} aria-labelledby={idTitulo}>
       <p className={classes.faixa}>
         <Icone nome="event" tamanho={20} className={classes.icone} />
         {dia.perto && <strong>{dia.perto}</strong>}
@@ -72,6 +73,6 @@ export default function CardProximoAgendamento({ solicitacao }) {
           Ver agendamento
         </Botao>
       </div>
-    </article>
+    </Cartao>
   );
 }

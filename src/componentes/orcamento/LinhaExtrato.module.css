@@ -26,7 +26,7 @@
 .pontos {
   flex: 1 1 rem(24px);
   min-width: rem(24px);
-  border-bottom: 2px dotted var(--cor-borda-forte);
+  border-bottom: 2px dotted var(--cor-borda);
   transform: translateY(rem(-4px));
 }
 
@@ -53,7 +53,7 @@
 }
 
 .total .pontos {
-  border-bottom: var(--espessura-borda) solid var(--cor-borda-forte);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
 }
 
 /* Linha filha, um passo para dentro */

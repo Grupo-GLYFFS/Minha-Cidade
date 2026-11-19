@@ -88,6 +88,8 @@ export default function Botao({
 
   const comuns = {
     className: lista.join(' '),
+    // A variante fica marcada no elemento para quem precisa alinhar pelo tipo (ex.: SecaoCard)
+    'data-variante': variante,
     'aria-pressed': ehToggle ? pressionado : undefined,
     'aria-busy': carregando || undefined,
     'aria-disabled': desabilitado || undefined,

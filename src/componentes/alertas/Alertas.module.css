@@ -293,7 +293,7 @@
   justify-content: center;
   gap: rem(8px);
   height: rem(52px);
-  border: var(--espessura-borda) solid var(--cor-linha);
+  border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: var(--raio-controle);
   background: var(--cor-fundo);
   color: var(--cor-texto-2);

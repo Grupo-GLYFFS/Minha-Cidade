@@ -62,7 +62,7 @@
 }
 
 .itens li + li .item {
-  border-top: var(--espessura-borda) solid var(--cor-linha);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
 }
 
 .item {

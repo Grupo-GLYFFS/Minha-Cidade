@@ -8,12 +8,14 @@ import classes from './Cartao.module.css';
 // - children: o corpo do card;
 // - para: rota; o card inteiro vira o link (use um título <h3> dentro);
 // - seta: mostra arrow_forward no canto (card que leva a outra página);
+// - destaque: borda azul de 1 px, sem sombra (ex.: o próximo agendamento);
 // - topo e rodape: faixas de cima e de baixo, separadas do corpo por linha de borda a borda;
 // - className e qualquer prop do Box do Mantine (ex.: component="article").
 export default function Cartao({
   children,
   para,
   seta = false,
+  destaque = false,
   topo,
   rodape,
   className,
@@ -23,6 +25,7 @@ export default function Cartao({
   const lista = [classes.cartao];
   if (para) lista.push(classes.link);
   if (seta) lista.push(classes.comSeta);
+  if (destaque) lista.push(classes.destaque);
   if (comFaixas) lista.push(classes.comFaixas);
   if (className) lista.push(className);
 

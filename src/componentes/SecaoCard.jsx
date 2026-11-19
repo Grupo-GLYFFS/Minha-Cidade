@@ -8,11 +8,22 @@ import classes from './SecaoCard.module.css';
 // - contagem: número numa pílula ao lado do título (opcional);
 // - acao: um botão à direita na mesma faixa (ex.: <Botao variante="texto" compacto …>Ver todos</Botao>);
 // - lista: o corpo vira uma lista de LinhaDado, sem respiro em volta (as linhas trazem o seu);
+// - semRespiro: o corpo fica sem padding (os blocos de dentro trazem o seu, ex.: extrato);
 // - children: o corpo.
-export default function SecaoCard({ titulo, contagem, acao, lista = false, children }) {
+export default function SecaoCard({
+  titulo,
+  contagem,
+  acao,
+  lista = false,
+  semRespiro = false,
+  children,
+}) {
   const idTitulo = useId();
   const classesCab = [classes.cab];
   if (acao) classesCab.push(classes.cabComAcao);
+  let classeCorpo = classes.corpo;
+  if (lista) classeCorpo = classes.corpoLista;
+  if (semRespiro) classeCorpo = undefined;
 
   return (
     <section className={classes.secao} aria-labelledby={idTitulo}>
@@ -23,7 +34,7 @@ export default function SecaoCard({ titulo, contagem, acao, lista = false, child
         </h2>
         {acao}
       </div>
-      <div className={lista ? classes.corpoLista : classes.corpo}>{children}</div>
+      <div className={classeCorpo}>{children}</div>
     </section>
   );
 }

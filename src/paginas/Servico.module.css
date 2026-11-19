@@ -13,12 +13,6 @@
   color: var(--cor-texto);
 }
 
-.conta {
-  font-size: rem(14px);
-  font-weight: 600;
-  color: var(--cor-texto-2);
-}
-
 .documentos {
   display: flex;
   flex-direction: column;

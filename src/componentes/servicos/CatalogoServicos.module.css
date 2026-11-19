@@ -11,7 +11,7 @@
 .assuntos {
   box-sizing: border-box;
   padding: rem(12px);
-  border: var(--espessura-borda) solid var(--cor-azul-borda);
+  border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: var(--raio-card);
   background: var(--cor-faixa);
 }

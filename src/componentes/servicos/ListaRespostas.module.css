@@ -17,7 +17,7 @@
 }
 
 .linha + .linha {
-  border-top: var(--espessura-borda) solid var(--cor-linha);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
 }
 
 .rotulo {
