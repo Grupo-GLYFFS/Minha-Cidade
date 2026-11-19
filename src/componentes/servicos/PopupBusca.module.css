@@ -191,6 +191,30 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  /* No celular, o selo desce para baixo do texto */
+  .item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: rem(12px);
+    row-gap: rem(4px);
+  }
+
+  .item > :first-child {
+    grid-row: 1 / span 2;
+  }
+
+  .selo {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .chevron {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
   .fim {
     flex-wrap: wrap;
   }

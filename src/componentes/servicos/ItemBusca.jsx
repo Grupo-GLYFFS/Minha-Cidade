@@ -31,7 +31,11 @@ export default function ItemBusca({ icone, titulo, meta, selo, para, busca = '',
         </strong>
         {meta && <small className={classes.itemMeta}>{meta}</small>}
       </span>
-      {selo && <SeloSituacao cor={selo.cor}>{selo.rotulo}</SeloSituacao>}
+      {selo && (
+        <span className={classes.selo}>
+          <SeloSituacao cor={selo.cor}>{selo.rotulo}</SeloSituacao>
+        </span>
+      )}
       <Icone nome="chevron_right" tamanho={22} className={classes.chevron} />
     </Link>
   );
