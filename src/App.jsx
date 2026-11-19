@@ -19,6 +19,7 @@ import DetalhePedido from './paginas/DetalhePedido';
 import Votacoes from './paginas/Votacoes';
 import Votacao from './paginas/Votacao';
 import MeusVotos from './paginas/MeusVotos';
+import OQueVoceSegue from './paginas/OQueVoceSegue';
 import Obras from './paginas/Obras';
 import DetalheObra from './paginas/DetalheObra';
 import OrcamentoCidade from './paginas/OrcamentoCidade';
@@ -117,6 +118,7 @@ export default function App() {
       <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
       <Route element={<RotaProtegida />}>
         <Route path="/perfil/votos" element={<MeusVotos />} />
+        <Route path="/perfil/seguindo" element={<OQueVoceSegue />} />
       </Route>
 
       <Route element={<LayoutAntigo />}>

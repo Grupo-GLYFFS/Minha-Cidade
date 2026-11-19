@@ -1,0 +1,13 @@
+/* Grupos de pedidos seguidos: 40 entre um grupo e outro (igual às outras abas). */
+
+.grupos {
+  display: flex;
+  flex-direction: column;
+  gap: rem(40px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .grupos {
+    gap: rem(32px);
+  }
+}

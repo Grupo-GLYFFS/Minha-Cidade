@@ -9,8 +9,9 @@ import classes from './CardPedido.module.css';
 // Ordem: miniatura (foto, ilustração ou ícone da categoria) · categoria e situação ·
 // título · rua e bairro · data · seta arrow_forward.
 // Recebe o pedido (de dados/pedidos.js), uma ilustração <svg> opcional (midia)
-// e o nível do título (3 por padrão).
-export default function CardPedido({ pedido, midia, nivelTitulo = 3 }) {
+// o nível do título (3 por padrão) e um selo opcional no começo da primeira linha
+// (o selo de tipo "Pedido" nas listas do que a pessoa segue).
+export default function CardPedido({ pedido, midia, nivelTitulo = 3, selo }) {
   const categoria = buscarCategoria(pedido.categoria);
   const status = buscarStatus(pedido.status);
   const Titulo = `h${nivelTitulo}`;
@@ -31,6 +32,7 @@ export default function CardPedido({ pedido, midia, nivelTitulo = 3 }) {
       </span>
       <div className={classes.texto}>
         <span className={classes.topo}>
+          {selo}
           {categoria?.rotulo}
           {status && <SeloSituacao cor={status.cor}>{status.rotulo}</SeloSituacao>}
         </span>

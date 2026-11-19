@@ -9,8 +9,8 @@ import classes from './ListaPedidos.module.css';
 // Um grupo da lista de pedidos (ex.: "Em execução"): título com bolinha e contagem,
 // os cards e, quando há mais que o limite, o botão "Mostrar mais n pedidos …".
 // Recebe o grupo ({ id, titulo, cor, pedidos, singular, plural }), o prefixo dos ids
-// e o limite (sem limite, mostra todos).
-export default function GrupoPedidos({ grupo, prefixo, limite = PEDIDOS_POR_GRUPO }) {
+// o limite (sem limite, mostra todos) e um selo opcional para o começo de cada card.
+export default function GrupoPedidos({ grupo, prefixo, limite = PEDIDOS_POR_GRUPO, selo }) {
   const [aberto, setAberto] = useState(false);
   const idTitulo = `${prefixo}-${grupo.id}`;
   const idLista = `${idTitulo}-lista`;
@@ -30,6 +30,7 @@ export default function GrupoPedidos({ grupo, prefixo, limite = PEDIDOS_POR_GRUP
           <li key={pedido.id}>
             <CardPedido
               pedido={pedido}
+              selo={selo}
               midia={pedido.ilustracao && <IlustracaoPedido nome={pedido.ilustracao} />}
             />
           </li>

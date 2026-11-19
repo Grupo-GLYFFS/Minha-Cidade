@@ -12,7 +12,7 @@ import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
 import { ALERTAS } from '../dados/alertas';
 import { AVISOS } from '../dados/avisos';
 import { alertasDoLugar } from '../logica/alertas';
-import { avisosDoLugar, dataCurta, diaDaLinhaDoTempo } from '../logica/avisos';
+import { avisosDoLugar } from '../logica/avisos';
 import { doLugar, noLugar } from '../logica/lugares';
 import { contar } from '../logica/resumoLugar';
 import classes from '../componentes/avisos/Avisos.module.css';
@@ -22,8 +22,8 @@ const POR_PAGINA_CIDADE = 6;
 const POR_PAGINA_BAIRRO = 3;
 
 // Avisos da cidade (/minha-cidade/avisos: só os da cidade toda) ou do bairro da pessoa
-// (/meu-bairro/avisos: os que citam o bairro), prancha 19. Linha do tempo com a data à
-// esquerda (mais novos primeiro), "Mostrar mais" no fim e "Para onde ir".
+// (/meu-bairro/avisos: os que citam o bairro), prancha 19. Lista de cards com a ilustração
+// (mais novos primeiro), "Mostrar mais" no fim e "Para onde ir".
 // Recebe doBairro (true na versão do bairro).
 export default function Avisos({ doBairro = false }) {
   const { bairro, trilhaDoBairro } = useLugarDaPessoa();
@@ -99,27 +99,13 @@ export default function Avisos({ doBairro = false }) {
   } else {
     conteudo = (
       <>
-        <ol className={classes.linhaTempo}>
-          {visiveis.map((aviso, indice) => {
-            // A data só aparece no primeiro aviso de cada dia
-            const novoDia = indice === 0 || visiveis[indice - 1].data !== aviso.data;
-            return (
-              <li key={aviso.id} className={classes.dia}>
-                <div className={classes.data}>
-                  {novoDia && (
-                    <>
-                      <time className={classes.dataDia} dateTime={aviso.data}>
-                        {dataCurta(aviso.data)}
-                      </time>
-                      <span className={classes.dataSemana}>{diaDaLinhaDoTempo(aviso.data)}</span>
-                    </>
-                  )}
-                </div>
-                <CardAviso aviso={aviso} caminho={`${base}/${aviso.id}`} mostrarOnde={doBairro} />
-              </li>
-            );
-          })}
-        </ol>
+        <ul className={classes.lista}>
+          {visiveis.map((aviso) => (
+            <li key={aviso.id}>
+              <CardAviso aviso={aviso} caminho={`${base}/${aviso.id}`} nivelTitulo={2} />
+            </li>
+          ))}
+        </ul>
         {faltam > 0 && (
           <div className={classes.mais}>
             <Botao

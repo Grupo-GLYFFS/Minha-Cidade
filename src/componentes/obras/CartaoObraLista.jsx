@@ -7,15 +7,17 @@ import OrigemObra from './OrigemObra';
 import { buscarSituacaoObra, dataAtualizacao, textoPrevisao } from '../../logica/obras';
 import { dataLista, dataPrevisao } from '../../logica/datasTexto';
 import { tempoRelativo } from '../../logica/datas';
+import miniatura from '../CardPedido.module.css';
 import classes from './CartaoObraLista.module.css';
 
 // Card de uma obra na lista de Obras (cidade ou bairro).
-// Em cima: miniatura (ilustração ou ícone do tipo), tipo e data da última atualização, título
+// Em cima: miniatura (ilustração ou ícone do tipo, com a regra de altura do CardPedido), tipo e data da última atualização, título
 // (link para o detalhe, que cobre o card todo), situação, origem e onde fica.
 // Embaixo, numa faixa separada por linha: barra de % feita, previsão e o botão Seguir
 // (a obra concluída não tem Seguir).
-// Recebe a obra, o caminho do detalhe (para), seguindo, aoAlternarSeguir e logado.
-export default function CartaoObraLista({ obra, para, seguindo, aoAlternarSeguir, logado }) {
+// Recebe a obra, o caminho do detalhe (para), seguindo, aoAlternarSeguir, logado e um selo
+// opcional no começo da primeira linha (o selo de tipo "Obra" em O que você segue).
+export default function CartaoObraLista({ obra, para, seguindo, aoAlternarSeguir, logado, selo }) {
   const situacao = buscarSituacaoObra(obra.situacao);
   const concluida = obra.situacao === 'concluida';
 
@@ -23,17 +25,20 @@ export default function CartaoObraLista({ obra, para, seguindo, aoAlternarSeguir
     <article className={classes.cartao}>
       <div className={classes.corpo}>
         <span
-          className={obra.miniatura ? classes.midia : `${classes.midia} ${classes.midiaIcone}`}
+          className={
+            obra.miniatura ? miniatura.midia : `${miniatura.midia} ${miniatura.midiaIcone}`
+          }
           aria-hidden="true"
         >
           {obra.miniatura ? (
             <img src={obra.imagem} alt="" />
           ) : (
-            <Icone nome={obra.icone} tamanho={28} />
+            <Icone nome={obra.icone} tamanho={32} />
           )}
         </span>
         <div className={classes.texto}>
           <p className={classes.meta}>
+            {selo}
             {obra.tipo}
             <span aria-hidden="true">·</span>
             Atualizada {tempoRelativo(dataAtualizacao(obra))}

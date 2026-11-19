@@ -13,7 +13,7 @@ import painel from './PainelMenu.module.css';
 // Visitante: botões "Entrar" e "Criar conta" (voltam para a página atual depois).
 // Logado: botão com avatar e primeiro nome que abre o menu da conta. O resumo (avatar, nome
 // e e-mail) leva a Meu perfil; depois vêm Minhas solicitações, Meus pedidos, Meus votos,
-// Configurações e Sair. Linhas de separação de borda a borda do painel.
+// O que você segue, Configurações e Sair. Linhas de separação de borda a borda do painel.
 export default function MenuConta() {
   const { usuario } = useSessao();
   const caminhos = useCaminhoConta();

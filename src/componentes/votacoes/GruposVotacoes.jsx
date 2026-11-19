@@ -11,8 +11,9 @@ import classes from './GruposVotacoes.module.css';
 // - recorte (opcional): o recorte da página, para escrever "Cidade toda · inclui a …";
 // - seguir: { segue(id), alternar(id), logado } do useSeguidos("votacoes");
 // - semAbertas (opcional): o que mostrar no lugar do grupo Abertas quando ele está vazio
-//   (sem ele, o grupo vazio some).
-export default function GruposVotacoes({ projetos, prefixo, recorte, seguir, semAbertas }) {
+//   (sem ele, o grupo vazio some);
+// - selo (opcional): selo no começo da faixa de cima de cada card.
+export default function GruposVotacoes({ projetos, prefixo, recorte, seguir, semAbertas, selo }) {
   const { votoDe, resultado } = useVotos();
   const { abertas, encerradas } = separarVotacoes(projetos);
 
@@ -30,6 +31,7 @@ export default function GruposVotacoes({ projetos, prefixo, recorte, seguir, sem
               seguindo={seguir.segue(projeto.id)}
               aoAlternarSeguir={() => seguir.alternar(projeto.id)}
               logado={seguir.logado}
+              selo={selo}
             />
           </li>
         ))}

@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import Icone from '../Icone';
 import SeloSituacao from '../SeloSituacao';
-import IconeServico from '../servicos/IconeServico';
 import BarraEtapas from './BarraEtapas';
+import miniatura from '../CardPedido.module.css';
 import classes from './CardsInicio.module.css';
 
-// Card de algo em andamento (pedido ou solicitação): em cima, o link com ícone, "categoria +
+// Card de algo em andamento (pedido ou solicitação): em cima, o link com o quadrado do ícone
+// (mesma regra de altura da miniatura do CardPedido), "categoria +
 // selo", título, a linha de meta e a seta; embaixo, a barra de etapas.
 // Recebe o caminho do detalhe, o ícone, a categoria, o selo { cor, rotulo }, o título,
 // a meta (children) e as etapas da barra.
@@ -21,7 +22,9 @@ export default function CardAndamento({
   return (
     <article className={classes.card}>
       <Link to={caminho} className={classes.link}>
-        <IconeServico nome={icone} />
+        <span className={`${miniatura.midia} ${miniatura.midiaIcone}`} aria-hidden="true">
+          <Icone nome={icone} tamanho={32} />
+        </span>
         <span className={classes.texto}>
           <span className={classes.topo}>
             {categoria}

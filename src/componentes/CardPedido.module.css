@@ -1,10 +1,11 @@
-/* Card simples de pedido: miniatura 96 × 72, texto e seta no meio da altura. */
+/* Card simples de pedido (molde também do aviso e da obra seguida): miniatura, texto e seta
+   no meio da altura. A miniatura estica até a altura do texto (no mínimo 96 × 96). */
 
 .card {
   box-sizing: border-box;
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: rem(16px);
   padding: rem(16px) rem(64px) rem(16px) rem(16px);
   border: var(--espessura-borda) solid var(--cor-borda);
@@ -19,29 +20,45 @@
   border-color: var(--cor-borda-forte);
 }
 
+/* Miniatura (imagem ou ícone): acompanha a altura do texto ao lado (3 linhas: selos, título e
+   endereço/data), com largura proporcional (4:3) e no mínimo 96 × 96. Exportada para os
+   outros cards com miniatura usarem a mesma regra. */
 .midia {
+  position: relative;
   display: block;
   flex: none;
-  width: rem(96px);
-  height: rem(72px);
+  align-self: stretch;
+  aspect-ratio: 4 / 3;
+  min-width: rem(96px);
+  min-height: rem(96px);
+  /* Texto muito alto (card de obra no celular) não vira uma faixa comprida */
+  max-height: rem(160px);
   overflow: hidden;
   border-radius: var(--raio-controle);
   background: var(--cor-fundo);
 }
 
 .midia > :is(img, svg) {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Quadrado com o ícone no lugar da imagem: mesma altura, ícone de 40 */
 .midiaIcone {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  aspect-ratio: 1;
   background: var(--cor-faixa);
   color: var(--cor-azul-escuro);
+}
+
+.midiaIcone > :global(.icone) {
+  font-size: rem(40px);
 }
 
 .texto {
@@ -101,8 +118,9 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  /* No celular a miniatura fica quadrada, para sobrar espaço para o texto */
   .midia {
-    width: rem(72px);
-    height: rem(56px);
+    aspect-ratio: 1;
+    max-height: rem(128px);
   }
 }

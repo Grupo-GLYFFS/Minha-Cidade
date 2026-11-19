@@ -1,0 +1,27 @@
+/* Selo de tipo: pílula azul-tinta de 26 com ícone de 16 e texto brancos. */
+
+.selo {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: rem(4px);
+  height: rem(26px);
+  padding: 0 rem(10px) 0 rem(8px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-azul-tinta);
+  color: var(--cor-sobre-primaria);
+  font-size: rem(13px);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.selo :global(.icone) {
+  font-size: rem(16px);
+  color: var(--cor-sobre-primaria);
+}
+
+:global(html[data-contraste='alto']) .selo {
+  border: 2px solid currentColor;
+}

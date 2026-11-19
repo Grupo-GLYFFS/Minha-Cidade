@@ -15,9 +15,11 @@ import { dataLista, dataListaComDia } from '../../logica/datasTexto';
 import { formatarNumero, formatarValorCurto } from '../../logica/formatos';
 import classes from './CartaoVotacaoLista.module.css';
 
-// Card de uma votação nas listas (Votações da cidade, do bairro e Meus votos).
-// Faixa de cima: prazo (ou "Encerrada" e a data) e o selo "Você votou".
-// Meio: tipo e lugar, título (link), resumo e a miniatura.
+// Card de uma votação em todo lugar (Votações da cidade e do bairro, Meus votos, Início e
+// O que você segue).
+// Faixa de cima: selo opcional (ex.: o tipo "Votação"), prazo (ou "Encerrada" e a data)
+// e o selo "Você votou".
+// Meio: tipo e lugar, título (link), resumo e a ilustração de 160 × 112 à direita.
 // Faixa de baixo: os números (votos, custo e prazo; ou votos, resultado e o que veio depois)
 // e as ações: Seguir e "Avaliar e votar" (ou "Ver o seu voto") nas abertas;
 // "Ver a obra" ou "Ver o resultado" nas encerradas.
@@ -32,6 +34,7 @@ export default function CartaoVotacaoLista({
   seguindo,
   aoAlternarSeguir,
   logado,
+  selo,
 }) {
   const aberta = votacaoAberta(projeto);
   const caminho = caminhoVotacao(projeto);
@@ -89,6 +92,7 @@ export default function CartaoVotacaoLista({
     <article className={classes.cartao}>
       <div className={classes.faixaTopo}>
         <p className={classes.prazo}>
+          {selo}
           <Icone nome={aberta ? 'hourglass_bottom' : 'event_available'} tamanho={20} />
           <b className={aberta ? classes.prazoAberta : undefined}>
             {aberta ? textoFaltam(projeto.fimVotacao) : 'Encerrada'}

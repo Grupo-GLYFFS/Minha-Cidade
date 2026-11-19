@@ -1,18 +1,11 @@
 import { HOJE } from './datas';
 import { distanciaEmPalavras, formatarDataDetalhe, formatarDiaMes } from './datasExtenso';
-import { dataLista, dataListaComDia, dataPrevisao } from './datasTexto';
 import { etapasDoPedido } from './linhaDoTempo';
-import { avisoValendo, juntarNomes } from './avisos';
-import { buscarCategoria, buscarStatus, estaAberto, textoUltimaMudanca } from './pedidos';
-import { buscarSituacaoObra, textoPrevisao } from './obras';
+import { avisoValendo } from './avisos';
+import { estaAberto } from './pedidos';
 import { buscarStatusSolicitacao, textoContagemSolicitacoes } from './solicitacoes';
 import { contar, resumirLugar } from './resumoLugar';
-import {
-  caminhoVotacao,
-  lugarDaVotacao,
-  projetosEmVotacao,
-  textoFaltam as textoFaltamVotacao,
-} from './votacao';
+import { projetosEmVotacao } from './votacao';
 import { subprefeituraDoBairro } from './recorte';
 
 // Funções de leitura da página Início: juntam os dados que já existem (solicitações, pedidos,
@@ -102,46 +95,28 @@ export function etapasDoPedidoInicio(pedido) {
 
 // Separa os avisos que valem para a pessoa: os da cidade toda e os que citam o bairro dela,
 // do mais novo para o mais antigo. Recebe os avisos, o bairro (null para visitante: só os da
-// cidade) e o hoje. Devolve os avisos com { caminho, onde } prontos para o card.
+// cidade) e o hoje. Devolve os avisos com o caminho do detalhe (cidade ou bairro).
 export function avisosDoInicio(avisos, bairro = null, hoje = HOJE) {
   return avisos
     .filter((aviso) => avisoValendo(aviso, hoje))
     .filter((aviso) => aviso.bairros.length === 0 || (bairro && aviso.bairros.includes(bairro)))
     .sort((a, b) => b.data.localeCompare(a.data))
-    .map((aviso) => {
-      const daCidade = aviso.bairros.length === 0;
-      return {
-        ...aviso,
-        caminho: `${daCidade ? '/minha-cidade' : '/meu-bairro'}/avisos/${aviso.id}`,
-        onde: daCidade ? 'Cidade toda' : juntarNomes(aviso.bairros),
-      };
-    });
+    .map((aviso) => ({
+      ...aviso,
+      caminho: `${aviso.bairros.length === 0 ? '/minha-cidade' : '/meu-bairro'}/avisos/${aviso.id}`,
+    }));
 }
 
 // Separa as votações abertas para a pessoa: as da cidade toda e as da subprefeitura do bairro
 // dela, da que termina antes para a que termina depois. Recebe os projetos, o bairro (null para
-// visitante: só as da cidade) e o hoje. Devolve as votações com { caminho, lugar, faltam, termina }.
+// visitante: só as da cidade) e o hoje. Devolve uma nova lista de projetos.
 export function votacoesDoInicio(projetos, bairro = null, hoje = HOJE) {
   const sub = bairro ? subprefeituraDoBairro(bairro).nome : null;
-  return projetosEmVotacao(projetos, hoje)
-    .filter(
-      (projeto) =>
-        projeto.escopo === 'cidade' ||
-        (projeto.escopo === 'subprefeitura' && projeto.subprefeitura === sub),
-    )
-    .map(descreverVotacao);
-}
-
-// Junta os textos que os cards mostram de uma votação aberta.
-// Recebe o projeto; devolve o projeto com { caminho, lugar, faltam, termina }.
-function descreverVotacao(projeto) {
-  return {
-    ...projeto,
-    caminho: caminhoVotacao(projeto),
-    lugar: lugarDaVotacao(projeto),
-    faltam: textoFaltamVotacao(projeto.fimVotacao),
-    termina: `termina ${dataListaComDia(projeto.fimVotacao)}`,
-  };
+  return projetosEmVotacao(projetos, hoje).filter(
+    (projeto) =>
+      projeto.escopo === 'cidade' ||
+      (projeto.escopo === 'subprefeitura' && projeto.subprefeitura === sub),
+  );
 }
 
 // Monta os cards do "Para onde ir" do Início, cada um com um número real.
@@ -185,56 +160,22 @@ export function destinosDoInicio({ usuario, pedidos, solicitacoes }) {
   ];
 }
 
-// Monta a lista "O que você segue": obras, depois pedidos, depois votações abertas.
+// Junta o que a pessoa segue para a seção "O que você segue" do Início: obras, pedidos ainda
+// abertos e votações abertas, nessa ordem.
 // Recebe { obras, idsObras, pedidos, idsPedidos, projetos, idsVotacoes } (listas completas e os
-// ids seguidos). Devolve [{ id, tipo, icone, lugar, titulo, caminho, selo, meta, percentual }].
-export function itensSeguidos({ obras, idsObras, pedidos, idsPedidos, projetos, idsVotacoes }) {
-  const deObras = obras
-    .filter((obra) => idsObras.includes(obra.id))
-    .map((obra) => {
-      const situacao = buscarSituacaoObra(obra.situacao);
-      const previsao = textoPrevisao(obra, { dataPrevisao, dataLista });
-      return {
-        id: `obra-${obra.id}`,
-        tipo: 'Obra',
-        icone: obra.icone,
-        lugar: obra.bairro ?? `Subprefeitura ${obra.subprefeitura}`,
-        titulo: obra.titulo,
-        caminho: `/minha-cidade/obras/${obra.id}`,
-        selo: situacao && { cor: situacao.cor, rotulo: situacao.rotulo },
-        meta: { destaque: `${obra.percentual}%`, texto: ` feita · ${previsao}` },
-        percentual: obra.percentual,
-      };
-    });
-
-  const dePedidos = pedidos
-    .filter((pedido) => idsPedidos.includes(pedido.id) && estaAberto(pedido))
-    .map((pedido) => {
-      const status = buscarStatus(pedido.status);
-      return {
-        id: `pedido-${pedido.id}`,
-        tipo: 'Pedido',
-        icone: buscarCategoria(pedido.categoria)?.icone ?? 'assignment',
-        lugar: `${pedido.rua}, ${pedido.bairro}`,
-        titulo: pedido.titulo,
-        caminho: `/pedidos/${pedido.id}`,
-        selo: status && { cor: status.cor, rotulo: status.rotulo },
-        meta: { texto: textoUltimaMudanca(pedido) },
-      };
-    });
-
-  const deVotacoes = projetosEmVotacao(projetos)
-    .filter((projeto) => idsVotacoes.includes(projeto.id))
-    .map(descreverVotacao)
-    .map((votacao) => ({
-      id: `votacao-${votacao.id}`,
-      tipo: 'Votação',
-      icone: votacao.icone,
-      lugar: votacao.lugar,
-      titulo: votacao.titulo,
-      caminho: votacao.caminho,
-      meta: { texto: `${votacao.faltam} · termina ${dataLista(votacao.fimVotacao)}` },
-    }));
-
-  return [...deObras, ...dePedidos, ...deVotacoes];
+// ids seguidos). Devolve { obras, pedidos, votacoes, total }.
+export function seguidosDoInicio({ obras, idsObras, pedidos, idsPedidos, projetos, idsVotacoes }) {
+  const obrasSeguidas = obras.filter((obra) => idsObras.includes(obra.id));
+  const pedidosSeguidos = pedidos.filter(
+    (pedido) => idsPedidos.includes(pedido.id) && estaAberto(pedido),
+  );
+  const votacoesSeguidas = projetosEmVotacao(projetos).filter((projeto) =>
+    idsVotacoes.includes(projeto.id),
+  );
+  return {
+    obras: obrasSeguidas,
+    pedidos: pedidosSeguidos,
+    votacoes: votacoesSeguidas,
+    total: obrasSeguidas.length + pedidosSeguidos.length + votacoesSeguidas.length,
+  };
 }

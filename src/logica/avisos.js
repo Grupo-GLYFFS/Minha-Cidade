@@ -1,4 +1,4 @@
-import { HOJE, diaDaSemana, diasEntre } from './datas';
+import { HOJE, diasEntre } from './datas';
 
 const MESES_CURTOS = [
   'jan',
@@ -14,21 +14,11 @@ const MESES_CURTOS = [
   'nov',
   'dez',
 ];
-const DIAS_CURTOS = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
 
 // Escreve a data curta das listas. Recebe "2026-11-09"; devolve "9 nov".
 export function dataCurta(data) {
   const [, mes, dia] = data.slice(0, 10).split('-').map(Number);
   return `${dia} ${MESES_CURTOS[mes - 1]}`;
-}
-
-// Escreve o dia ao lado da data na linha do tempo: "hoje", "ontem" ou o dia da semana.
-// Recebe a data e o hoje; devolve o texto.
-export function diaDaLinhaDoTempo(data, hoje = HOJE) {
-  const dias = diasEntre(data, hoje);
-  if (dias === 0) return 'hoje';
-  if (dias === 1) return 'ontem';
-  return DIAS_CURTOS[diaDaSemana(data)];
 }
 
 // Diz se um aviso ainda vale. Recebe o aviso e o hoje; devolve true ou false.

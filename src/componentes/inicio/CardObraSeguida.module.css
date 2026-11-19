@@ -1,0 +1,19 @@
+/* Partes só da obra seguida no Início: "62% feita" e a barra de 8 px (até 420 de largura).
+   O resto do card vem do CardPedido.module.css. */
+
+.percentual {
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.percentual b {
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.barra {
+  display: block;
+  max-width: rem(420px);
+  margin-top: rem(2px);
+}

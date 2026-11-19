@@ -8,7 +8,7 @@ import NaoEncontrado from '../componentes/NaoEncontrado';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import SeloSituacao from '../componentes/SeloSituacao';
 import BotaoCompartilhar from '../componentes/avisos/BotaoCompartilhar';
-import CardAvisoParecido from '../componentes/avisos/CardAvisoParecido';
+import CardAviso from '../componentes/avisos/CardAviso';
 import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
 import { AVISOS } from '../dados/avisos';
 import {
@@ -114,7 +114,7 @@ export default function DetalheAviso({ doBairro = false }) {
           <ul className={classes.lista}>
             {parecidos.map((outro) => (
               <li key={outro.id}>
-                <CardAvisoParecido aviso={outro} caminho={`${base}/${outro.id}`} />
+                <CardAviso aviso={outro} caminho={`${base}/${outro.id}`} />
               </li>
             ))}
           </ul>

@@ -30,7 +30,7 @@
   color: var(--cor-texto-2);
 }
 
-.prazo :global(.icone) {
+.prazo > :global(.icone) {
   color: var(--cor-texto-2);
 }
 
@@ -43,7 +43,7 @@
   color: var(--cor-azul-tinta);
 }
 
-.prazo:has(.prazoAberta) :global(.icone) {
+.prazo:has(.prazoAberta) > :global(.icone) {
   color: var(--cor-azul);
 }
 
@@ -98,8 +98,8 @@
 .midia {
   display: block;
   flex: none;
-  width: rem(120px);
-  height: rem(90px);
+  width: rem(160px);
+  height: rem(112px);
   overflow: hidden;
   border-radius: var(--raio-controle);
   background: var(--cor-fundo);
@@ -182,8 +182,8 @@
   }
 
   .midia {
-    width: rem(72px);
-    height: rem(56px);
+    width: rem(96px);
+    height: rem(68px);
   }
 
   .numeros > div {

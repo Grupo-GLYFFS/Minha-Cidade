@@ -1,38 +1,39 @@
 import { Link } from 'react-router-dom';
 import Icone from '../Icone';
-import BotaoCompartilhar from './BotaoCompartilhar';
-import QuemPublicou from './QuemPublicou';
 import { dataCurta, juntarNomes } from '../../logica/avisos';
-import classes from './Avisos.module.css';
+import classes from '../CardPedido.module.css';
 
-// Card de um aviso na lista: quem publicou e o assunto, título (link que cobre o card), resumo,
-// ilustração (se houver) e, embaixo, onde vale (só na lista do bairro), até quando e Compartilhar.
-// Recebe o aviso, o caminho do detalhe e mostrarOnde.
-export default function CardAviso({ aviso, caminho, mostrarOnde = false }) {
+// Card de um aviso em todo lugar (avisos da cidade e do bairro, avisos parecidos e Início).
+// Mesmo molde do CardPedido: o card inteiro é o link, sem botões dentro.
+// Ordem: miniatura 96 × 72 (ilustração do aviso ou ícone do assunto) · "órgão · data" ·
+// título · "Até … · onde vale" · seta arrow_forward.
+// Recebe o aviso, o caminho do detalhe e o nível do título (3 por padrão).
+export default function CardAviso({ aviso, caminho, nivelTitulo = 3 }) {
+  const Titulo = `h${nivelTitulo}`;
+  const onde = aviso.bairros.length === 0 ? 'Cidade toda' : juntarNomes(aviso.bairros);
+
   return (
-    <article className={classes.card}>
-      <div className={classes.corpo}>
-        <QuemPublicou aviso={aviso} />
-        <h2 className={classes.titulo}>
-          <Link to={caminho}>{aviso.titulo}</Link>
-        </h2>
-        <p className={classes.resumo}>{aviso.resumo}</p>
-        {aviso.imagem && <img className={classes.imagem} src={aviso.imagem} alt="" />}
+    <Link to={caminho} className={classes.card}>
+      <span
+        className={aviso.imagem ? classes.midia : `${classes.midia} ${classes.midiaIcone}`}
+        aria-hidden="true"
+      >
+        {aviso.imagem ? (
+          <img src={aviso.imagem} alt="" />
+        ) : (
+          <Icone nome={aviso.assunto?.icone ?? 'campaign'} tamanho={32} />
+        )}
+      </span>
+      <div className={classes.texto}>
+        <span className={classes.topo}>
+          {aviso.orgao.nome} · {dataCurta(aviso.data)}
+        </span>
+        <Titulo className={classes.titulo}>{aviso.titulo}</Titulo>
+        <span className={classes.meta}>
+          Até {dataCurta(aviso.validoAte)} · {onde}
+        </span>
       </div>
       <Icone nome="arrow_forward" tamanho={22} className={classes.seta} />
-      <div className={classes.rodape}>
-        <p className={classes.onde}>
-          {mostrarOnde && aviso.bairros.length > 0 && (
-            <>
-              <Icone nome="location_on" tamanho={18} />
-              {juntarNomes(aviso.bairros)}
-              <span aria-hidden="true">·</span>
-            </>
-          )}
-          Até {dataCurta(aviso.validoAte)}
-        </p>
-        <BotaoCompartilhar compacto titulo={aviso.titulo} caminho={caminho} />
-      </div>
-    </article>
+    </Link>
   );
 }

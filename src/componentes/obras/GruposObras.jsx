@@ -6,8 +6,8 @@ import classes from './GruposObras.module.css';
 // Lista de obras agrupada pela situação (Atrasadas, Paradas, No prazo, Concluídas).
 // Cada grupo tem o título com bolinha e contagem e a lista de cards.
 // Recebe as obras, a base das rotas ("/minha-cidade" ou "/meu-bairro"), o prefixo dos ids
-// e o estado do Seguir: segue(id), alternar(id) e logado.
-export default function GruposObras({ obras, base, prefixo, segue, alternar, logado }) {
+// o estado do Seguir (segue(id), alternar(id) e logado) e um selo opcional para cada card.
+export default function GruposObras({ obras, base, prefixo, segue, alternar, logado, selo }) {
   return (
     <div className={classes.grupos}>
       {agruparObras(obras).map(({ situacao, obras: doGrupo }) => {
@@ -29,6 +29,7 @@ export default function GruposObras({ obras, base, prefixo, segue, alternar, log
                     seguindo={segue(obra.id)}
                     aoAlternarSeguir={() => alternar(obra.id)}
                     logado={logado}
+                    selo={selo}
                   />
                 </li>
               ))}

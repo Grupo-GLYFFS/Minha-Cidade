@@ -67,6 +67,7 @@ export const MENU_CONTA = [
   },
   { rotulo: 'Meus pedidos', caminho: '/perfil/pedidos', icone: 'assignment' },
   { rotulo: 'Meus votos', caminho: '/perfil/votos', icone: 'how_to_vote' },
+  { rotulo: 'O que você segue', caminho: '/perfil/seguindo', icone: 'bookmark' },
   { rotulo: 'Configurações', caminho: '/configuracoes', icone: 'settings' },
 ];
 

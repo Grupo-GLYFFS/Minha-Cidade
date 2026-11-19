@@ -40,10 +40,6 @@
   color: var(--cor-texto);
 }
 
-.faixaVotacao strong {
-  color: var(--cor-azul-tinta);
-}
-
 .faixaDireita {
   margin-left: auto;
 }
@@ -237,123 +233,8 @@
 }
 
 .link:hover .seta,
-.linha:hover .seta,
-.cardLink:hover .seta {
+.linha:hover .seta {
   color: var(--cor-azul-escuro);
-}
-
-/* Card inteiro como link (avisos e "O que você segue") */
-.cardLink {
-  display: flex;
-  gap: rem(16px);
-  padding: rem(20px) rem(64px) rem(20px) rem(24px);
-  text-decoration: none;
-}
-
-.cardLink:hover {
-  background: var(--cor-fundo-card);
-  border-color: var(--cor-borda-forte);
-}
-
-/* Miniatura do aviso: 96 × 72, raio 12, igual à do card de pedido */
-.miniatura {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: rem(96px);
-  height: rem(72px);
-  overflow: hidden;
-  border-radius: var(--raio-controle);
-  background: var(--cor-faixa);
-  color: var(--cor-azul-escuro);
-}
-
-.miniatura img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Barra de quanto da obra já foi feito */
-.barra {
-  display: block;
-  width: 100%;
-  height: rem(8px);
-  margin-top: rem(4px);
-  overflow: hidden;
-  border: 0;
-  border-radius: var(--raio-selo);
-  background: var(--cor-linha);
-  color: var(--cor-azul);
-  appearance: none;
-}
-
-.barra::-webkit-progress-bar {
-  border-radius: var(--raio-selo);
-  background: var(--cor-linha);
-}
-
-.barra::-webkit-progress-value {
-  border-radius: var(--raio-selo);
-  background: var(--cor-azul);
-}
-
-.barra::-moz-progress-bar {
-  border-radius: var(--raio-selo);
-  background: var(--cor-azul);
-}
-
-/* Votação: corpo com ícone e números no pé */
-.corpo {
-  display: flex;
-  gap: rem(16px);
-  padding: rem(18px) rem(24px);
-}
-
-.peVotacao {
-  justify-content: space-between;
-  padding-block: rem(14px);
-}
-
-.numeros {
-  display: flex;
-  gap: rem(28px);
-  margin: 0;
-}
-
-.numeros dt {
-  font-size: rem(13px);
-  font-weight: 600;
-  color: var(--cor-texto-2);
-}
-
-.numeros dd {
-  margin: 0;
-  font-size: rem(15px);
-  font-weight: 700;
-}
-
-.botoes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: rem(12px);
-  margin-left: auto;
-}
-
-.votou {
-  display: inline-flex;
-  align-items: center;
-  gap: rem(4px);
-  height: rem(28px);
-  margin-left: auto;
-  padding: 0 rem(10px);
-  border-radius: var(--raio-selo);
-  background: var(--cor-status-verde-fundo);
-  font-size: rem(13px);
-  font-weight: 700;
-  color: var(--cor-status-verde-texto);
 }
 
 .oculto {
@@ -373,8 +254,7 @@
 @media (max-width: $mantine-breakpoint-sm) {
   .faixa,
   .pe,
-  .agenda,
-  .corpo {
+  .agenda {
     padding-inline: rem(16px);
   }
 
@@ -392,8 +272,7 @@
     display: none;
   }
 
-  .link,
-  .cardLink {
+  .link {
     padding: rem(16px) rem(52px) rem(16px) rem(16px);
   }
 
@@ -407,17 +286,7 @@
     right: rem(16px);
   }
 
-  .miniatura {
-    width: rem(64px);
-    height: rem(56px);
-  }
-
-  .pe > *,
-  .botoes > * {
+  .pe > * {
     flex: 1 1 auto;
-  }
-
-  .botoes {
-    width: 100%;
   }
 }
