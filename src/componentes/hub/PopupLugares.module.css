@@ -1,0 +1,125 @@
+/* Popup de lugares (prancha 13, quadro 2): busca cinza, contagem e linhas de borda a borda. */
+
+.busca {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  height: var(--altura-campo);
+  padding: 0 rem(12px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-2);
+}
+
+.busca:focus-within {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.campo {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: rem(16px);
+  color: var(--cor-texto);
+}
+
+.campo::placeholder {
+  color: var(--cor-texto-2);
+  opacity: 1;
+}
+
+.contagem {
+  margin: rem(14px) 0 0;
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+/* A lista vai de borda a borda do popup */
+.lista {
+  margin: rem(16px) calc(-1 * var(--pad-lateral)) rem(-24px);
+  padding-bottom: rem(16px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.grupo {
+  margin: rem(16px) var(--pad-lateral) rem(4px);
+  font-size: rem(14px);
+  font-weight: 800;
+  color: var(--cor-texto-2);
+}
+
+.itens {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.itens li + li .item {
+  border-top: var(--espessura-borda) solid var(--cor-linha);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  min-height: rem(56px);
+  padding: rem(8px) var(--pad-lateral);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.item:hover {
+  background: var(--cor-fundo);
+}
+
+.item:focus-visible {
+  outline-offset: -3px;
+}
+
+.texto {
+  display: grid;
+  flex: 1 1 auto;
+  gap: rem(2px);
+  min-width: 0;
+}
+
+.texto b {
+  font-size: rem(16px);
+  font-weight: 700;
+}
+
+.texto small {
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.selo {
+  display: inline-flex;
+  align-items: center;
+  height: rem(26px);
+  padding: 0 rem(10px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-tinta);
+  font-size: rem(13px);
+  font-weight: 800;
+}
+
+.chevron {
+  color: var(--cor-texto-2);
+}
+
+.nenhum {
+  margin: rem(24px) var(--pad-lateral) 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}

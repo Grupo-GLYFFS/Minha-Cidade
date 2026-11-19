@@ -27,7 +27,7 @@ const MAIS_USADOS = servicosMaisUsados();
 export default function Inicio() {
   const { usuario } = useSessao();
   const { pedidos } = usePedidos();
-  const alerta = alertaDefesaCivilAtivo(ALERTAS, usuario?.regiao);
+  const alerta = alertaDefesaCivilAtivo(ALERTAS, usuario?.bairro);
   // Votação que encerra primeiro, para a pessoa não perder o prazo
   const projetoAberto = projetosEmVotacao(PROJETOS)[0];
   const meusPedidos = usuario ? pedidosAbertosDaPessoa(pedidos, usuario.id) : [];

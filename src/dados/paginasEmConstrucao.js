@@ -54,20 +54,11 @@ export const PAGINAS_EM_CONSTRUCAO = [
   // Conta (sem trilha)
   { caminho: '/perfil/votos', titulo: 'Meus votos', icone: 'how_to_vote' },
   // Cidade, subprefeitura e bairro
-  {
-    caminho: '/minha-cidade/subprefeituras/:id',
-    titulo: 'Subprefeitura',
-    icone: 'account_balance',
-    trilha: [CIDADE, { rotulo: 'Subprefeitura' }],
-  },
-  {
-    caminho: '/minha-cidade/bairros/:id',
-    titulo: 'Bairro',
-    icone: 'home_pin',
-    trilha: [CIDADE, { rotulo: 'Bairro' }],
-  },
   ...subpaginas('/minha-cidade', [CIDADE], 'da cidade de São Paulo', [
     '/minha-cidade/alertas',
+    '/minha-cidade/alertas/:id',
+    '/minha-cidade/avisos',
+    '/minha-cidade/avisos/:id',
     '/minha-cidade/pedidos',
     '/minha-cidade/pedidos/:id',
     '/minha-cidade/obras',
@@ -76,6 +67,10 @@ export const PAGINAS_EM_CONSTRUCAO = [
     '/minha-cidade/orcamento',
   ]),
   ...subpaginas('/meu-bairro', BAIRRO, 'da Vila Mariana', [
+    '/meu-bairro/alertas',
+    '/meu-bairro/alertas/:id',
+    '/meu-bairro/avisos',
+    '/meu-bairro/avisos/:id',
     '/meu-bairro/pedidos',
     '/meu-bairro/pedidos/:id',
     '/meu-bairro/orcamento',

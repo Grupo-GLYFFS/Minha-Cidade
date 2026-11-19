@@ -1,0 +1,360 @@
+/* Avisos (prancha 19): linha do tempo com a data à esquerda, card do aviso, card de aviso
+   parecido e o card de link do detalhe (serviço ou obra). */
+
+/* ---------- Linha do tempo ---------- */
+.linhaTempo {
+  display: grid;
+  gap: rem(16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dia {
+  display: grid;
+  grid-template-columns: rem(144px) minmax(0, 1fr);
+}
+
+.data {
+  display: grid;
+  align-content: start;
+  padding-top: rem(24px);
+}
+
+.dataDia {
+  font-size: rem(18px);
+  font-weight: 800;
+}
+
+.dataSemana {
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+/* ---------- Card do aviso ---------- */
+.card {
+  position: relative;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.card:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.corpo {
+  padding: rem(24px) rem(64px) rem(20px) rem(32px);
+}
+
+.seta {
+  position: absolute;
+  top: rem(24px);
+  right: rem(24px);
+  color: var(--cor-texto-2);
+}
+
+.quem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(8px);
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 700;
+}
+
+.org {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(24px);
+  height: rem(24px);
+  border-radius: rem(6px);
+}
+
+.cidade,
+.sub {
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.saude {
+  background: var(--cor-status-vermelho-fundo);
+  color: var(--cor-status-vermelho-texto);
+}
+
+.cultura {
+  background: var(--cor-status-ambar-fundo);
+  color: var(--cor-status-ambar-texto);
+}
+
+.ponto {
+  color: var(--cor-texto-2);
+}
+
+.assunto {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(4px);
+  height: rem(26px);
+  padding: 0 rem(10px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-selo);
+  background: var(--cor-superficie);
+  font-size: rem(13px);
+  font-weight: 700;
+}
+
+.titulo {
+  margin: rem(12px) 0 rem(6px);
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* O título é o link e estica para o card inteiro ser clicável */
+.titulo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.titulo a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--raio-card);
+}
+
+.titulo a:focus-visible {
+  outline: none;
+}
+
+.titulo a:focus-visible::after {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.resumo {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.imagem {
+  display: block;
+  width: 100%;
+  height: rem(200px);
+  margin-top: rem(16px);
+  border-radius: var(--raio-controle);
+  object-fit: cover;
+}
+
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12px);
+  padding: rem(12px) rem(32px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.onde {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(6px);
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.onde strong {
+  color: var(--cor-texto);
+}
+
+/* Botões do rodapé ficam acima do link que cobre o card */
+.rodape > :last-child {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Aviso parecido: miniatura à esquerda ---------- */
+.parecido .corpo {
+  display: flex;
+  gap: rem(24px);
+  padding-left: rem(32px);
+}
+
+.miniatura {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(200px);
+  height: rem(136px);
+  overflow: hidden;
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.parecidoTexto {
+  min-width: 0;
+}
+
+.publicou {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.publicou strong,
+.publicou b {
+  color: var(--cor-texto);
+}
+
+/* ---------- Detalhe ---------- */
+.metaLinha {
+  margin: rem(8px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.corpoTexto {
+  margin: 0;
+  font-size: rem(18px);
+  line-height: 1.6;
+}
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  margin-top: rem(32px);
+  padding: rem(16px) rem(64px) rem(16px) rem(20px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.link:hover {
+  border-color: var(--cor-borda-forte);
+  background: var(--cor-fundo-card);
+}
+
+.linkIcone {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(48px);
+  height: rem(48px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.linkTexto {
+  display: grid;
+}
+
+.linkTitulo {
+  font-size: rem(18px);
+  font-weight: 700;
+  color: var(--cor-azul-escuro);
+}
+
+.linkMeta {
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.link .seta {
+  top: 50%;
+  margin-top: rem(-12px);
+  color: var(--cor-azul-escuro);
+}
+
+.secao {
+  margin-top: rem(96px);
+}
+
+.tituloSecao {
+  margin: 0 0 rem(24px);
+  font-size: rem(24px);
+  font-weight: 700;
+}
+
+.lista {
+  display: grid;
+  gap: rem(16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mais {
+  margin-top: rem(16px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .dia {
+    grid-template-columns: minmax(0, 1fr);
+    gap: rem(8px);
+  }
+
+  .data {
+    display: flex;
+    gap: rem(8px);
+    align-items: baseline;
+    padding-top: 0;
+  }
+
+  .corpo {
+    padding: rem(16px) rem(48px) rem(16px) rem(16px);
+  }
+
+  .seta {
+    top: rem(16px);
+    right: rem(16px);
+  }
+
+  .imagem {
+    height: rem(160px);
+  }
+
+  .rodape {
+    padding: rem(12px) rem(16px);
+  }
+
+  .parecido .corpo {
+    flex-direction: column;
+    padding-left: rem(16px);
+  }
+
+  .miniatura {
+    width: 100%;
+    height: rem(120px);
+  }
+
+  .secao {
+    margin-top: rem(48px);
+  }
+}

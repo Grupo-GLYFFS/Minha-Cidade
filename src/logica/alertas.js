@@ -1,29 +1,64 @@
 import { HOJE } from './datas';
 import { projetosEmVotacao, textoPrazoVotacao } from './votacao';
+import { juntarNomes } from './avisos';
+import { buscarSubprefeitura, comArtigo } from './lugares';
+import { NIVEIS_ALERTA } from '../dados/niveisAlerta';
 
-// Procura o alerta da Defesa Civil que vale hoje para a região da pessoa.
-// Recebe a lista de alertas e a região (ex.: "Zona Sul"). Sem região (visitante),
-// vale o primeiro alerta ativo de qualquer região (o texto do alerta diz qual é).
+// Diz se um alerta vale num bairro. Alerta sem bairros vale para a cidade toda.
+// Recebe o alerta e o nome do bairro; devolve true ou false.
+export function alertaValeNoBairro(alerta, bairro) {
+  return alerta.bairros.length === 0 || alerta.bairros.includes(bairro);
+}
+
+// Procura o alerta da Defesa Civil que vale hoje no bairro da pessoa.
+// Recebe a lista de alertas e o nome do bairro. Sem bairro (visitante), vale o primeiro
+// alerta ativo de qualquer lugar (o texto do alerta diz qual é).
 // Devolve o alerta ou undefined se não houver nenhum.
-export function alertaDefesaCivilAtivo(alertas, regiao) {
+export function alertaDefesaCivilAtivo(alertas, bairro) {
   return alertas.find(
     (alerta) =>
       alerta.tipo === 'defesa-civil' &&
       alerta.ativo &&
-      // Alerta sem região vale para a cidade toda
-      (!regiao || alerta.regiao === '' || alerta.regiao === regiao),
+      (!bairro || alertaValeNoBairro(alerta, bairro)),
   );
 }
 
-// Separa todos os alertas da Defesa Civil que valem hoje para uma região
-// (os da região e os da cidade toda). Recebe a lista de alertas e a região; devolve uma nova lista.
-export function alertasDefesaCivilDaRegiao(alertas, regiao) {
-  return alertas.filter(
+// Separa os alertas de um lugar. Recebe a lista e os nomes dos bairros do lugar
+// (null = cidade toda, que recebe todos). Devolve { ativos, encerrados }, na ordem dos dados
+// (dados/alertas.js já vem do mais importante para o menos importante).
+export function alertasDoLugar(alertas, bairros = null) {
+  const doLugar = alertas.filter(
     (alerta) =>
-      alerta.tipo === 'defesa-civil' &&
-      alerta.ativo &&
-      (alerta.regiao === '' || alerta.regiao === regiao),
+      !bairros ||
+      alerta.bairros.length === 0 ||
+      alerta.bairros.some((nome) => bairros.includes(nome)),
   );
+  return {
+    ativos: doLugar.filter((alerta) => alerta.ativo),
+    encerrados: doLugar.filter((alerta) => !alerta.ativo),
+  };
+}
+
+// Procura o nível de um alerta (Atenção, Alerta, Emergência), com o ícone e a cor do selo.
+// Recebe o id do nível; devolve o nível.
+export function buscarNivel(idNivel) {
+  return NIVEIS_ALERTA.find((nivel) => nivel.id === idNivel) ?? NIVEIS_ALERTA[0];
+}
+
+// Monta as partes do texto "onde" de um alerta, separadas por "·" na tela.
+// Recebe o alerta e, nas listas do bairro, o bairro da lista ({ nome, prep }).
+// Devolve, por exemplo, ["Santana e Tucuruvi", "Subprefeitura Santana/Tucuruvi"]
+// ou ["Cidade toda", "inclui a Vila Mariana"].
+export function partesDaArea(alerta, bairroDaLista = null) {
+  if (alerta.bairros.length === 0) {
+    return bairroDaLista ? ['Cidade toda', `inclui ${comArtigo(bairroDaLista)}`] : ['Cidade toda'];
+  }
+  const subs = alerta.subprefeituras.map((id) => buscarSubprefeitura(id)?.nome).filter(Boolean);
+  const partes = [juntarNomes(alerta.bairros)];
+  if (subs.length > 0) {
+    partes.push(`${subs.length === 1 ? 'Subprefeitura' : 'Subprefeituras'} ${juntarNomes(subs)}`);
+  }
+  return partes;
 }
 
 // Aviso de cada status do pedido da pessoa: título e ícone.
@@ -65,7 +100,7 @@ function avisoDoPedido(pedido) {
 
 // Junta todos os avisos da pessoa em uma lista só, do mais importante e recente para o mais antigo.
 // Recebe { usuario, pedidos, solicitacoes, projetos, votos, alertasCidade, lidos, hoje }:
-// - alertas da Defesa Civil ativos na região da pessoa (ou na cidade toda): marcados como importantes;
+// - alertas da Defesa Civil ativos no bairro da pessoa (ou na cidade toda): marcados como importantes;
 // - um aviso para o status atual de cada pedido da pessoa (menos "enviada" e "avaliada");
 // - um aviso para cada solicitação de serviço recebida;
 // - um aviso para cada votação aberta em que a pessoa ainda não votou
@@ -88,7 +123,7 @@ export function montarAlertas({
       (alerta) =>
         alerta.tipo === 'defesa-civil' &&
         alerta.ativo &&
-        (alerta.regiao === '' || alerta.regiao === usuario.regiao),
+        alertaValeNoBairro(alerta, usuario.bairro),
     )
     .map((alerta) => ({
       id: `defesa-civil-${alerta.id}`,
@@ -96,7 +131,7 @@ export function montarAlertas({
       titulo: alerta.titulo,
       texto: comMaiuscula(alerta.mensagem),
       data: alerta.criadoEm,
-      link: '/servicos/alertas-de-risco',
+      link: `/minha-cidade/alertas/${alerta.id}`,
       icone: 'warning',
       importante: true,
     }));

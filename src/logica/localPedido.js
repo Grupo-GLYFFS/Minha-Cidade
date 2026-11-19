@@ -1,20 +1,34 @@
-import { SUBPREFEITURAS_DOS_BAIRROS } from '../dados/subprefeiturasDosBairros';
+import { BAIRROS_CIDADE } from '../dados/bairrosCidade';
+import { SUBPREFEITURAS } from '../dados/subprefeituras';
 import { normalizarTexto } from './enderecos';
 
-// Descobre a subprefeitura responsável por um bairro.
+// Nomes pelos quais cada bairro é conhecido: o do distrito e os apelidos do dia a dia
+function nomesDoBairro(bairro) {
+  return [bairro.nome, ...(bairro.apelidos ?? [])].map(normalizarTexto);
+}
+
+// Descobre a subprefeitura responsável por um bairro (os 96 de dados/bairrosCidade.js).
 // Recebe o nome do bairro como a pessoa digitou ou como o ViaCEP devolveu;
 // devolve o nome da subprefeitura (ex.: "Vila Mariana") ou "" se o app não conhece o bairro.
 export function subprefeituraDoBairro(bairro) {
   const procurado = normalizarTexto(bairro);
   if (!procurado) return '';
-  // Primeiro o nome igual; depois um nome que contém o bairro conhecido (ex.: "Jardim Vila Mariana")
-  const igual = SUBPREFEITURAS_DOS_BAIRROS.find(
-    (item) => normalizarTexto(item.bairro) === procurado,
-  );
-  const parecido = SUBPREFEITURAS_DOS_BAIRROS.find((item) =>
-    procurado.includes(normalizarTexto(item.bairro)),
-  );
-  return (igual ?? parecido)?.subprefeitura ?? '';
+  // Primeiro o nome igual; depois um nome que contém o bairro conhecido (ex.: "Jardim Vila Mariana").
+  // Entre os parecidos vale o nome mais longo ("Vila Mariana" ganha de "Vila Maria").
+  const igual = BAIRROS_CIDADE.find((item) => nomesDoBairro(item).includes(procurado));
+  let parecido;
+  let tamanho = 0;
+  BAIRROS_CIDADE.forEach((item) => {
+    nomesDoBairro(item).forEach((nome) => {
+      if (procurado.includes(nome) && nome.length > tamanho) {
+        parecido = item;
+        tamanho = nome.length;
+      }
+    });
+  });
+  const achado = igual ?? parecido;
+  if (!achado) return '';
+  return SUBPREFEITURAS.find((sub) => sub.id === achado.subprefeitura)?.nome ?? '';
 }
 
 // Escreve o nome completo da subprefeitura. Recebe "Vila Mariana"; devolve "Subprefeitura Vila Mariana".
