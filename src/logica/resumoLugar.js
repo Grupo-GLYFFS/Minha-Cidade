@@ -6,6 +6,7 @@ import { alertasDoLugar } from './alertas';
 import { avisosDoLugar } from './avisos';
 import { estaAberto } from './pedidos';
 import { projetosEmVotacao } from './votacao';
+import { contarObrasEmAndamento, votacoesDoRecorte } from './recorte';
 
 // Situações de obra que contam como "em andamento" (parada e concluída não contam)
 const OBRA_EM_ANDAMENTO = ['no-prazo', 'atrasada'];
@@ -23,8 +24,17 @@ function noLugar(nomeBairro, bairros) {
 
 // Conta o que acontece num lugar, para os cards "O que acontece" e "Bairros".
 // Recebe os pedidos (do contexto, com os novos da pessoa) e os nomes dos bairros do lugar
-// (null = cidade toda). Devolve { alertas, avisos, pedidos, obras, votacoes } com os números.
-export function resumirLugar(pedidos, bairros = null) {
+// (null = cidade toda) e, para o bairro da pessoa, o recorte (logica/recorte.js): com ele,
+// obras e votações seguem a regra do recorte, a mesma das páginas /meu-bairro/obras e /votacoes.
+// Devolve { alertas, avisos, pedidos, obras, votacoes } com os números.
+export function resumirLugar(pedidos, bairros = null, recorte = null) {
+  if (recorte) {
+    return {
+      ...resumirLugar(pedidos, bairros),
+      obras: contarObrasEmAndamento(OBRAS, recorte),
+      votacoes: projetosEmVotacao(votacoesDoRecorte(PROJETOS, recorte)).length,
+    };
+  }
   const votacoes = projetosEmVotacao(PROJETOS).filter(
     (projeto) =>
       // Cidade toda: só as votações da cidade (as de subprefeitura ficam no recorte dela)

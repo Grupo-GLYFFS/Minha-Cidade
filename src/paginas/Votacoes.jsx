@@ -9,7 +9,7 @@ import EstadoCarregando from '../componentes/EstadoCarregando';
 import EstadoErro from '../componentes/EstadoErro';
 import GruposVotacoes from '../componentes/votacoes/GruposVotacoes';
 import { PROJETOS } from '../dados/projetos';
-import { votacoesDoRecorte } from '../logica/votacao';
+import { votacoesDoRecorte } from '../logica/recorte';
 import { destinoObras, destinoOrcamento } from '../logica/destinos';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';

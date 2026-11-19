@@ -3,7 +3,7 @@ import { useSessao } from '../../contexto/useSessao';
 import { OBRAS } from '../../dados/obras';
 import { BAIRRO_PADRAO } from '../../logica/bairros';
 import { contarAbertos, pedidosDoBairro } from '../../logica/gruposPedidos';
-import { obraEmAndamento } from '../../logica/obras';
+import { contarObrasEmAndamento, montarRecorte } from '../../logica/recorte';
 import { pluralizar } from '../../logica/formatos';
 
 // Monta os cards do "Para onde ir" das páginas de pedidos, com os números de agora.
@@ -14,9 +14,8 @@ export function useDestinosPedidos() {
   const nomeBairro = usuario?.bairro || BAIRRO_PADRAO;
   const abertosBairro = contarAbertos(pedidosDoBairro(pedidos, nomeBairro));
   const feitos = usuario ? pedidos.filter((pedido) => pedido.autorId === usuario.id).length : 0;
-  const obrasBairro = OBRAS.filter(
-    (obra) => obra.bairro === nomeBairro && obraEmAndamento(obra),
-  ).length;
+  // Mesma regra do recorte do bairro de /meu-bairro/obras
+  const obrasBairro = contarObrasEmAndamento(OBRAS, montarRecorte('bairro', nomeBairro));
 
   return {
     nomeBairro,

@@ -120,18 +120,6 @@ export function caminhoVotacao(projeto) {
   return `${base}/votacoes/${projeto.id}`;
 }
 
-// Separa as votações de um recorte (ver logica/recorte.js).
-// Cidade: as votações da cidade toda. Bairro: as da subprefeitura do bairro e as da cidade
-// que incluem o bairro. Recebe a lista e o recorte; devolve uma nova lista.
-export function votacoesDoRecorte(projetos, recorte) {
-  if (recorte.escopo !== 'bairro') return projetos.filter((p) => p.escopo === 'cidade');
-  return projetos.filter(
-    (p) =>
-      (p.escopo === 'subprefeitura' && p.subprefeitura === recorte.subprefeitura.nome) ||
-      (p.escopo === 'cidade' && p.bairros.includes(recorte.bairro)),
-  );
-}
-
 // Separa uma lista de votações em abertas (a que termina antes primeiro) e encerradas
 // (a que terminou por último primeiro). Recebe a lista e hoje; devolve { abertas, encerradas }.
 export function separarVotacoes(projetos, hoje = HOJE) {
