@@ -133,7 +133,7 @@ export const NOMES_CRIAR_CONTA = {
   numero: 'Número',
   distrito: 'Distrito',
   complemento: 'Complemento',
-  termos: 'Termos de uso',
+  termos: 'Política de privacidade',
 };
 
 // Formulário vazio. "situacaoCep", "rua", "bairro", "cidadeDoCep" e "distrito" vêm da busca
@@ -200,6 +200,9 @@ export const esquemaCriarConta = esquemaPassoVoce.pick(['nome', 'celular', 'emai
       is: 'encontrado',
       then: (regra) => regra.required('Escolha o distrito onde fica o seu endereço.'),
     }),
-    termos: boolean().oneOf([true], 'Marque a caixa para aceitar os termos e criar a conta.'),
+    termos: boolean().oneOf(
+      [true],
+      'Marque a caixa para aceitar a política de privacidade e criar a conta.',
+    ),
   }),
 );
