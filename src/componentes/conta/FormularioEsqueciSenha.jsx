@@ -6,6 +6,7 @@ import CampoTexto from '../CampoTexto';
 import Icone from '../Icone';
 import ResumoErros from '../ResumoErros';
 import { esquemaEsqueciSenha } from '../../logica/esquemaEntrar';
+import { manterErrosAtuais } from '../../logica/resumoErros';
 import classes from './FormularioConta.module.css';
 
 const VALIDADOR = yupResolver(esquemaEsqueciSenha);
@@ -50,7 +51,10 @@ export default function FormularioEsqueciSenha() {
       onSubmit={handleSubmit(() => setEnviado(true), aoFalhar)}
       noValidate
     >
-      <ResumoErros erros={errosResumo} titulo="Corrija o campo marcado para enviar o link." />
+      <ResumoErros
+        erros={manterErrosAtuais(errosResumo, errors)}
+        titulo="Corrija o campo marcado para enviar o link."
+      />
       <CampoTexto
         id="login"
         rotulo="E-mail ou CPF"

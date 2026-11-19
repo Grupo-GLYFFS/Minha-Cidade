@@ -8,11 +8,14 @@ import painel from './PainelMenu.module.css';
 // Um item do menu principal do topo.
 // Sem painel (Serviços): só o link. Com painel (Global Solution, Minha cidade, Meu bairro):
 // o nome leva à página e a seta abre o painel, que também abre ao passar o mouse.
+// Aberto pelo mouse, fecha quando ele sai; o clique na seta deixa aberto (ou fecha, se já
+// estava aberto por clique).
 // O item da página atual fica marcado com aria-current ("page" na página, "true" nas subpáginas).
 // Recebe o item de MENU_PRINCIPAL (dados/navegacao.js).
 export default function GrupoMenu({ item }) {
   const { pathname } = useLocation();
-  const { aberto, abrir, fechar, alternar, refContorno, aoTeclar } = usePainelAberto();
+  const { aberto, abrirPassagem, fecharPassagem, fechar, alternar, refContorno, aoTeclar } =
+    usePainelAberto();
   const atual = estadoItemMenu(item, pathname);
 
   if (!item.painel) {
@@ -33,8 +36,8 @@ export default function GrupoMenu({ item }) {
     <li
       className={classes.item}
       ref={refContorno}
-      onMouseEnter={abrir}
-      onMouseLeave={fechar}
+      onMouseEnter={abrirPassagem}
+      onMouseLeave={fecharPassagem}
       onKeyDown={aoTeclar}
     >
       <span className={classesGrupo.join(' ')}>

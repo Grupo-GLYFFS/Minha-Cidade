@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import SecaoCard from '../componentes/SecaoCard';
@@ -37,6 +37,7 @@ export default function NovoPedido() {
   const { pedidos, adicionarPedido } = usePedidos();
   const { usuario } = useSessao();
   const [parametros, setParametros] = useSearchParams();
+  const local = useLocation();
   const [valores, setValores] = useState(() =>
     valoresIniciaisComCategoria(parametros.get('categoria')),
   );
@@ -45,6 +46,12 @@ export default function NovoPedido() {
   const [categoriaEscolhida, setCategoriaEscolhida] = useState(Boolean(valores.categoria));
   const [tituloEditado, setTituloEditado] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  // Pedido que acabou de ser criado aqui e o endereço em que ele foi enviado. Fica guardado
+  // na tela porque a lista de pedidos e o endereço (?enviado=) não se atualizam juntos: sem ele,
+  // o pedido novo aparecia como "repetido" por um instante e a página voltava para a etapa 2.
+  const [recemCriado, setRecemCriado] = useState(null);
+  // Trava do envio: um segundo clique antes de a tela se atualizar não cria outro pedido
+  const travaEnvio = useRef(false);
   const cartao = useRef(null);
   const fotosAtuais = useRef(valores.fotos);
 
@@ -95,9 +102,17 @@ export default function NovoPedido() {
     }));
   }
 
-  // Muda vários campos de uma vez (ex.: rua e bairro vindos do CEP)
+  // Muda vários campos de uma vez (ex.: rua e bairro vindos do CEP).
+  // Os campos que chegaram preenchidos saem do resumo de erros e perdem o aviso.
   function mudarVarios(campos) {
     setValores((atual) => ({ ...atual, ...campos }));
+    const corrigidos = Object.keys(campos).filter((campo) => campos[campo]);
+    if (corrigidos.length === 0) return;
+    setErros((atual) => {
+      const novo = { ...atual };
+      corrigidos.forEach((campo) => delete novo[campo]);
+      return novo;
+    });
   }
 
   function escolherCategoria(id) {
@@ -116,7 +131,7 @@ export default function NovoPedido() {
   // Botão de avançar: confere a etapa e segue, ou envia na última
   function aoEnviar(evento) {
     evento.preventDefault();
-    if (enviando) return;
+    if (enviando || travaEnvio.current) return;
     const problemas = ESQUEMAS[etapa] ? validarEtapa(ESQUEMAS[etapa], valores) : {};
     // Sem descrição boa não há sugestão: o erro da categoria só aparece depois
     if (problemas.descricao) delete problemas.categoria;
@@ -130,18 +145,32 @@ export default function NovoPedido() {
       irPara(etapa + 1);
       return;
     }
+    // Um pedido igual ao que já existe (ou ao recém-criado) não é criado de novo
+    if (repetido) {
+      irPara(2);
+      return;
+    }
+    travaEnvio.current = true;
     setEnviando(true);
     setTimeout(() => {
       const novo = adicionarPedido(prepararDadosDoFormulario(valores));
+      setRecemCriado({ pedido: novo, chave: local.key });
       // O pedido enviado fica no endereço: recarregar a página continua mostrando a confirmação
       setParametros({ enviado: novo.id }, { replace: true });
       setEnviando(false);
+      travaEnvio.current = false;
       window.scrollTo(0, 0);
     }, ESPERA_ENVIO_MS);
   }
 
-  const idEnviado = parametros.get('enviado');
-  const enviado = idEnviado && buscarPedido(pedidos, idEnviado);
+  // "Pedido enviado" tem prioridade sobre a checagem de repetido e de etapas.
+  // Vale o pedido do endereço ou, enquanto o endereço não muda, o que acabou de ser criado.
+  const criadoAqui = recemCriado?.chave === local.key ? recemCriado.pedido : null;
+  const idEnviado = parametros.get('enviado') ?? criadoAqui?.id;
+  const enviado =
+    idEnviado &&
+    (buscarPedido(pedidos, idEnviado) ??
+      (recemCriado?.pedido.id === idEnviado ? recemCriado.pedido : null));
   if (enviado && enviado.autorId === usuario?.id) return <PedidoEnviado pedido={enviado} />;
   if (etapa > liberada) {
     return (

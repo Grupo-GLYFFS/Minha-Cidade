@@ -24,7 +24,7 @@ const SO_ICONE = ['icone', 'icone-acao', 'fechar'];
 // - compacto (44 px, só dentro de cards e no topo) e largo (largura total);
 // - icone (nome do Material Symbols) e iconeDireita (avançar, enviar e expandir ficam à direita);
 // - pressionado: transforma em toggle (Seguir/Seguindo) com aria-pressed; ligado mostra iconeLigado;
-// - carregando: troca o ícone por um spinner e marca aria-busy;
+// - carregando: troca o ícone por um spinner, marca aria-busy e não deixa clicar de novo;
 // - desabilitado: opacidade 0,45, com disabled e aria-disabled;
 // - contagem: número numa pílula à direita do texto;
 // - para (rota interna, vira <Link>) ou href (link externo); sem os dois, é um <button>.
@@ -112,7 +112,8 @@ export default function Botao({
     );
   }
   return (
-    <button type={type} disabled={desabilitado} {...comuns}>
+    // Enquanto carrega, o botão fica desativado (evita enviar duas vezes)
+    <button type={type} disabled={desabilitado || carregando} {...comuns}>
       {conteudo}
     </button>
   );

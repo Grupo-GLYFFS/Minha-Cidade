@@ -13,6 +13,7 @@ import SeparadorOu from './SeparadorOu';
 import { useSessao } from '../../contexto/useSessao';
 import { CAMPOS_ENTRAR, NOMES_CAMPOS_ENTRAR, esquemaEntrar } from '../../logica/esquemaEntrar';
 import { simularGovbr } from '../../logica/govbr';
+import { manterErrosAtuais } from '../../logica/resumoErros';
 import {
   LIMITE_TENTATIVAS,
   bloqueadoAte,
@@ -54,6 +55,8 @@ export default function FormularioEntrar({ destino }) {
   const { entrar, entrarDemonstracao } = useSessao();
   const navigate = useNavigate();
   const [errosResumo, setErrosResumo] = useState([]);
+  // Conta os envios com erro (a cada um, o foco volta para o resumo)
+  const [tentativa, setTentativa] = useState(0);
   const [falha, setFalha] = useState(null);
   const [conectandoGovbr, setConectandoGovbr] = useState(false);
 
@@ -66,6 +69,8 @@ export default function FormularioEntrar({ destino }) {
     defaultValues: { login: '', senha: '', manter: false },
     shouldFocusError: false,
   });
+  // O resumo acompanha as correções: campo corrigido sai da lista
+  const resumoAtual = manterErrosAtuais(errosResumo, errors);
 
   // Dados preenchidos: confere o bloqueio e a senha
   async function aoEnviar(valores) {
@@ -94,6 +99,7 @@ export default function FormularioEntrar({ destino }) {
         mensagem: erros[campo].message,
       })),
     );
+    setTentativa((atual) => atual + 1);
   }
 
   // gov.br: simula a volta com os dados da Maria e entra na conta dela
@@ -112,12 +118,13 @@ export default function FormularioEntrar({ destino }) {
 
       {falha && <AvisoErroConta titulo={falha.titulo} linhas={falha.linhas} />}
       <ResumoErros
-        erros={errosResumo}
+        erros={resumoAtual}
         titulo={
-          errosResumo.length === 1
+          resumoAtual.length === 1
             ? 'Corrija o campo marcado para entrar.'
             : 'Corrija os 2 campos marcados para entrar.'
         }
+        tentativa={tentativa}
       />
 
       <CampoTexto

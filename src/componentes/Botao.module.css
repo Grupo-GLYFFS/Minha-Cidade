@@ -208,7 +208,9 @@
   pointer-events: none;
 }
 
-.botao[aria-busy='true'] {
+.botao[aria-busy='true'],
+.botao[aria-busy='true']:disabled {
+  opacity: 1;
   cursor: progress;
   pointer-events: none;
 }

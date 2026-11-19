@@ -18,7 +18,7 @@ export const NOTIFICACOES = [
     tipo: 'Lembrete de agendamento',
     situacao: { cor: 'azul', rotulo: 'Agendado' },
     acao: { rotulo: 'Ver o agendamento' },
-    para: '/servicos/solicitacoes/SRV-2026-117655',
+    para: '/servicos/minhas-solicitacoes/SRV-2026-117655',
     nova: true,
   },
   {
@@ -58,7 +58,7 @@ export const NOTIFICACOES = [
     tipo: 'Agendamento confirmado',
     situacao: { cor: 'azul', rotulo: 'Agendado' },
     acao: { rotulo: 'Ver o agendamento' },
-    para: '/servicos/solicitacoes/SRV-2026-119032',
+    para: '/servicos/minhas-solicitacoes/SRV-2026-119032',
     nova: true,
   },
   {
@@ -111,7 +111,7 @@ export const NOTIFICACOES = [
     tipo: 'Agendamento confirmado',
     situacao: { cor: 'azul', rotulo: 'Agendado' },
     acao: { rotulo: 'Ver o agendamento' },
-    para: '/servicos/solicitacoes/SRV-2026-118204',
+    para: '/servicos/minhas-solicitacoes/SRV-2026-118204',
   },
   {
     id: 'n-008',
@@ -183,7 +183,7 @@ export const NOTIFICACOES = [
     tipo: 'Agendamento confirmado',
     situacao: { cor: 'azul', rotulo: 'Agendado' },
     acao: { rotulo: 'Ver o agendamento' },
-    para: '/servicos/solicitacoes/SRV-2026-117655',
+    para: '/servicos/minhas-solicitacoes/SRV-2026-117655',
   },
   {
     id: 'n-002',

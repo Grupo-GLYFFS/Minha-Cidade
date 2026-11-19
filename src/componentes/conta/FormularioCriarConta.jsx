@@ -22,6 +22,8 @@ import {
   esquemaCriarConta,
 } from '../../logica/esquemaCriarConta';
 import { simularGovbr } from '../../logica/govbr';
+import { manterErrosAtuais } from '../../logica/resumoErros';
+import { PESSOA_NOVA_GOVBR } from '../../dados/pessoaNovaGovbr';
 import classes from './FormularioConta.module.css';
 
 const VALIDADOR = yupResolver(esquemaCriarConta);
@@ -41,6 +43,8 @@ function tituloResumo(quantos) {
 export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoMudarBairro }) {
   const { emailEmUso, cpfEmUso } = useSessao();
   const [errosResumo, setErrosResumo] = useState([]);
+  // Conta os envios com erro (a cada um, o foco volta para o resumo)
+  const [tentativa, setTentativa] = useState(0);
   const [conectandoGovbr, setConectandoGovbr] = useState(false);
   const [veioDoGovbr, setVeioDoGovbr] = useState(false);
 
@@ -52,6 +56,8 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
   const { register, handleSubmit, setValue, setError, control, formState } = formulario;
   const { errors } = formState;
   const senha = useWatch({ control, name: 'senha' });
+  // O resumo acompanha as correções: campo corrigido sai da lista
+  const resumoAtual = manterErrosAtuais(errosResumo, errors);
 
   // Monta o resumo na ordem da tela. Recebe os erros { campo: { message } }.
   function mostrarResumo(erros) {
@@ -62,6 +68,7 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
         mensagem: erros[campo].message,
       })),
     );
+    setTentativa((atual) => atual + 1);
   }
 
   // Regras certas: ainda confere se o e-mail ou o CPF já têm conta
@@ -78,11 +85,12 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
     aoContinuar(valores);
   }
 
-  // gov.br: simula a volta com nome, CPF, celular, e-mail e endereço já preenchidos
+  // gov.br: simula a volta de uma pessoa sem conta, com nome, CPF, celular, e-mail
+  // e endereço já preenchidos. Depois de um envio com erro, os campos são conferidos de novo.
   async function preencherComGovbr() {
     setConectandoGovbr(true);
-    const dados = await simularGovbr();
-    const opcoes = { shouldDirty: true };
+    const dados = await simularGovbr(PESSOA_NOVA_GOVBR);
+    const opcoes = { shouldDirty: true, shouldValidate: formState.isSubmitted };
     Object.entries(dados).forEach(([campo, valor]) => setValue(campo, valor, opcoes));
     setConectandoGovbr(false);
     setVeioDoGovbr(true);
@@ -115,7 +123,11 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
         onSubmit={handleSubmit(aoEnviar, mostrarResumo)}
         noValidate
       >
-        <ResumoErros erros={errosResumo} titulo={tituloResumo(errosResumo.length)} />
+        <ResumoErros
+          erros={resumoAtual}
+          titulo={tituloResumo(resumoAtual.length)}
+          tentativa={tentativa}
+        />
 
         {veioDoGovbr ? (
           <p className={classes.ok} role="status">
