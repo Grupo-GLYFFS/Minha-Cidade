@@ -24,6 +24,7 @@ export default function PedidosBairro() {
   const recorte = useRecorte('bairro');
   const { lugar } = recorte;
   const doLugar = pedidosDoLugar(pedidos, recorte.bairros);
+  const doMeuBairro = recorte.base === '/meu-bairro';
   // O Abrir pedido leva o lugar (?de=) para usar a trilha dele
   const novoPedido = `/pedidos/novo?de=${origemDoRecorte(recorte)}`;
 
