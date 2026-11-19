@@ -1,9 +1,9 @@
 import { usePedidos } from '../../contexto/usePedidos';
 import { useSessao } from '../../contexto/useSessao';
 import { useBairroDaPessoa } from '../../contexto/useBairroDaPessoa';
-import { OBRAS } from '../../dados/obras';
 import { contarAbertos, pedidosDoBairro } from '../../logica/gruposPedidos';
-import { contarObrasEmAndamento, montarRecorte } from '../../logica/recorte';
+import { montarRecorte } from '../../logica/recorte';
+import { metaObras } from '../../logica/destinos';
 import { pluralizar } from '../../logica/formatos';
 import { lugarPorNome, noLugar } from '../../logica/lugares';
 
@@ -16,7 +16,7 @@ export function useDestinosPedidos() {
   const abertosBairro = contarAbertos(pedidosDoBairro(pedidos, nomeBairro));
   const feitos = usuario ? pedidos.filter((pedido) => pedido.autorId === usuario.id).length : 0;
   // Mesma regra do recorte do bairro de /meu-bairro/obras
-  const obrasBairro = contarObrasEmAndamento(OBRAS, montarRecorte('bairro', nomeBairro));
+  const obrasBairro = metaObras(montarRecorte('bairro', nomeBairro));
 
   return {
     nomeBairro,
@@ -44,7 +44,7 @@ export function useDestinosPedidos() {
     obras: {
       icone: 'construction',
       titulo: 'Obras do bairro',
-      meta: `${obrasBairro} em andamento`,
+      meta: obrasBairro,
       para: '/meu-bairro/obras',
     },
   };

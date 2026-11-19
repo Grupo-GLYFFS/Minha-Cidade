@@ -2,7 +2,8 @@ import { OBRAS } from '../dados/obras';
 import { PROJETOS } from '../dados/projetos';
 import { AREAS_ORCAMENTO } from '../dados/orcamento';
 import { projetosEmVotacao } from './votacao';
-import { contarObrasEmAndamento, votacoesDoRecorte } from './recorte';
+import { contarObrasEmAndamento, obrasDoRecorte, votacoesDoRecorte } from './recorte';
+import { metaComTotal } from './resumoLugar';
 import { contaDaSubprefeitura, totalOrcamento, valorCurto } from './orcamento';
 import { pluralizar } from './formatos';
 
@@ -10,13 +11,12 @@ import { pluralizar } from './formatos';
 // Cada função recebe o recorte (logica/recorte.js) e devolve { icone, titulo, meta, para },
 // com um número de verdade na meta.
 
-// Card das obras: conta as que estão em andamento (no prazo ou atrasadas).
+// Card das obras: o total da lista e, junto, as que estão em andamento (no prazo ou atrasadas).
 export function destinoObras(recorte) {
-  const emAndamento = contarObrasEmAndamento(OBRAS, recorte);
   return {
     icone: 'construction',
     titulo: `Obras ${recorte.deQuem}`,
-    meta: `${emAndamento} em andamento`,
+    meta: metaObras(recorte),
     para: `${recorte.base}/obras`,
   };
 }
@@ -44,4 +44,16 @@ export function destinoOrcamento(recorte) {
     meta: `${valorCurto(pago)} pagos até outubro`,
     para: `${recorte.base}/orcamento`,
   };
+}
+
+// Meta das obras de um recorte, igual nos cards: "2 obras · 1 em andamento" ou
+// "1 obra · nenhuma em andamento". Recebe o recorte; devolve o texto.
+export function metaObras(recorte) {
+  return metaComTotal(
+    obrasDoRecorte(OBRAS, recorte).length,
+    ['obra', 'obras'],
+    contarObrasEmAndamento(OBRAS, recorte),
+    ['em andamento', 'em andamento'],
+    'nenhuma',
+  );
 }
