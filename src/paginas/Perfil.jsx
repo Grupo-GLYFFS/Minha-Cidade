@@ -68,7 +68,7 @@ export default function Perfil() {
   // Valor mostrado na linha de cada dado (o CPF aparece mascarado)
   function valorDe(campo) {
     if (campo === 'cpf') return usuario.cpf ? mascararCpf(usuario.cpf) : 'Não informado';
-    return usuario[campo];
+    return usuario[campo] || 'Não informado';
   }
 
   return (

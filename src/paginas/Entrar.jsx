@@ -7,7 +7,7 @@ import { useSessao } from '../contexto/useSessao';
 import { useCaminhoConta } from '../contexto/useCaminhoConta';
 import { destinoSeguro } from '../logica/sessao';
 
-// Página "Entrar" (/entrar): gov.br, e-mail ou CPF e senha.
+// Página "Entrar" (/entrar): e-mail e senha (já preenchidos com a conta da Maria).
 // O endereço pode trazer ?voltar=/caminho: depois de entrar, a pessoa volta para lá (ou para o Início).
 // Quem já está logado é levado direto ao destino. Depois de trocar a senha, mostra "Senha trocada".
 export default function Entrar() {

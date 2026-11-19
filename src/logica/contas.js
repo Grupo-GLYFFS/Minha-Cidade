@@ -1,12 +1,11 @@
 import { formatarCelular } from './celular';
 import { CIDADE_ATENDIDA } from './buscarCep';
-import { formatarCpf, limparCpf } from './cpf';
+import { formatarCpf } from './cpf';
 
-// Mensagens de erro da conta. A de entrar é a mesma para e-mail, CPF ou senha errados,
+// Mensagens de erro da conta. A de entrar é a mesma para e-mail ou senha errados,
 // para não revelar quais e-mails têm conta.
-export const ERRO_ENTRAR = 'E-mail, CPF ou senha não conferem.';
+export const ERRO_ENTRAR = 'E-mail ou senha não conferem.';
 export const ERRO_EMAIL_EM_USO = 'Já existe uma conta com este e-mail.';
-export const ERRO_CPF_EM_USO = 'Já existe uma conta com este CPF.';
 
 // Deixa o e-mail pronto para comparar: sem espaços e em minúsculas.
 // Recebe " Maria@Exemplo.com "; devolve "maria@exemplo.com".
@@ -38,19 +37,10 @@ export function buscarContaPorEmail(contas, email) {
   return contas.find((conta) => conta.email === procurado);
 }
 
-// Procura uma conta pelo CPF. Recebe a lista de contas e o CPF (com ou sem máscara);
-// devolve a conta ou undefined.
-export function buscarContaPorCpf(contas, cpf) {
-  const procurado = limparCpf(cpf);
-  return contas.find((conta) => conta.cpf && limparCpf(conta.cpf) === procurado);
-}
-
-// Procura a conta de quem está entrando, pelo e-mail (se o texto tem @) ou pelo CPF.
-// Recebe a lista de contas (a de demonstração junto) e o que a pessoa digitou; devolve a conta ou undefined.
+// Procura a conta de quem está entrando, pelo e-mail.
+// Recebe a lista de contas (a de demonstração junto) e o e-mail; devolve a conta ou undefined.
 export function buscarContaPorLogin(contas, login = '') {
-  return login.includes('@')
-    ? buscarContaPorEmail(contas, login)
-    : buscarContaPorCpf(contas, login);
+  return buscarContaPorEmail(contas, login);
 }
 
 // Arruma os dados pessoais que a pessoa digita (no cadastro e em "Meus dados").
@@ -58,19 +48,19 @@ export function buscarContaPorLogin(contas, login = '') {
 // (e o e-mail e o CPF, quando vêm do Meu perfil).
 // Também é o que fica salvo como mudança da conta de demonstração.
 export function limparDadosPessoais(valores) {
-  const numero = valores.numero.trim();
+  const numero = (valores.numero ?? '').trim();
   return {
     ...(valores.email ? { email: normalizarEmail(valores.email) } : {}),
     ...(valores.cpf ? { cpf: valores.cpf } : {}),
     nome: limparNome(valores.nome),
-    celular: formatarCelular(valores.celular),
-    cep: valores.cep,
-    rua: valores.rua.trim(),
+    celular: valores.celular ? formatarCelular(valores.celular) : '',
+    cep: valores.cep ?? '',
+    rua: (valores.rua ?? '').trim(),
     // "s/n", "sn" e "S/N" ficam todos como "S/N"
     numero: /^s\/?n$/i.test(numero) ? 'S/N' : numero,
     complemento: (valores.complemento ?? '').trim(),
-    bairro: valores.bairro.trim(),
-    regiao: valores.regiao,
+    bairro: (valores.bairro ?? '').trim(),
+    regiao: valores.regiao ?? '',
   };
 }
 
@@ -81,7 +71,7 @@ export function montarConta(valores, hashSenha, id) {
     id,
     ...limparDadosPessoais(valores),
     email: normalizarEmail(valores.email),
-    cpf: formatarCpf(valores.cpf),
+    cpf: valores.cpf ? formatarCpf(valores.cpf) : '',
     hashSenha,
   };
 }

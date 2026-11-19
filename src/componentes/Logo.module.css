@@ -37,3 +37,13 @@
 .nome > span:first-child {
   margin-top: rem(1.75px);
 }
+
+/* Versão sobre o painel azul: nome branco e borda branca fina para destacar o ícone */
+.sobreAzul .icone {
+  border-radius: rem(10px);
+  box-shadow: 0 0 0 2px var(--cor-sobre-primaria);
+}
+
+.sobreAzul .nome {
+  color: var(--cor-sobre-primaria);
+}

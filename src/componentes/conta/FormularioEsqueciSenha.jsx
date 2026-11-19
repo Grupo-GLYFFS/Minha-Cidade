@@ -13,7 +13,7 @@ import classes from './FormularioConta.module.css';
 
 const VALIDADOR = yupResolver(esquemaEsqueciSenha);
 
-// Formulário "Esqueci minha senha": e-mail ou CPF da conta.
+// Formulário "Esqueci minha senha": e-mail da conta.
 // O protótipo não manda e-mail: depois de enviar, mostra que o link foi enviado e um botão
 // que faz o papel do link do e-mail (leva à tela "Nova senha" desta conta).
 // A mensagem é a mesma com ou sem conta, para não revelar quem tem cadastro.
@@ -21,7 +21,7 @@ export default function FormularioEsqueciSenha() {
   // "Voltar para Entrar" leva junto o destino (?voltar=)
   const { entrar, voltar } = useCaminhoConta();
   const [errosResumo, setErrosResumo] = useState([]);
-  // Guarda o e-mail ou CPF enviado (o link de demonstração leva para a senha nova desta conta)
+  // Guarda o e-mail enviado (o link de demonstração leva para a senha nova desta conta)
   const [enviado, setEnviado] = useState(null);
   const {
     register,
@@ -31,7 +31,7 @@ export default function FormularioEsqueciSenha() {
 
   // Campo com erro: resumo no topo
   function aoFalhar(erros) {
-    setErrosResumo([{ campo: 'login', rotulo: 'E-mail ou CPF', mensagem: erros.login.message }]);
+    setErrosResumo([{ campo: 'login', rotulo: 'E-mail', mensagem: erros.login.message }]);
   }
 
   if (enviado) {
@@ -40,8 +40,7 @@ export default function FormularioEsqueciSenha() {
         <p className={classes.ok} role="status">
           <Icone nome="mark_email_read" />
           <span>
-            <b>Link enviado.</b> Se houver uma conta com esses dados, ele chega no e-mail dela em
-            alguns minutos.
+            <b>Link enviado.</b> Se houver uma conta com este e-mail, ele chega em alguns minutos.
           </span>
         </p>
         <Botao
@@ -72,9 +71,10 @@ export default function FormularioEsqueciSenha() {
       />
       <CampoTexto
         id="login"
-        rotulo="E-mail ou CPF"
+        rotulo="E-mail"
+        type="email"
         ajuda="O link vale por 1 hora."
-        autoComplete="username"
+        autoComplete="email"
         erro={errors.login?.message}
         {...register('login')}
       />

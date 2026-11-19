@@ -14,12 +14,10 @@ import {
 } from '../armazenamento';
 import { gerarHashSenha } from '../logica/senha';
 import {
-  ERRO_CPF_EM_USO,
   ERRO_EMAIL_EM_USO,
   ERRO_ENTRAR,
   aplicarAjustesDemonstracao,
   aplicarDadosNaConta,
-  buscarContaPorCpf,
   buscarContaPorEmail,
   buscarContaPorLogin,
   limparDadosPessoais,
@@ -118,25 +116,12 @@ export default function SessaoProvider({ children }) {
     [contas, senhaDemo],
   );
 
-  // Entra direto na conta de demonstração (botão "Entrar com gov.br", que simula a volta do gov.br)
-  const entrarDemonstracao = useCallback(() => {
-    setManter(true);
-    setIdLogado(USUARIO.id);
-  }, []);
-
-  // Diz se o CPF já tem conta (inclui a de demonstração). Recebe o CPF; devolve true ou false.
-  const cpfEmUso = useCallback(
-    (cpf) => Boolean(buscarContaPorCpf([USUARIO, ...contas], cpf)),
-    [contas],
-  );
-
   // Cria a conta com os valores do formulário e já entra nela.
   // Recebe os valores validados; devolve uma promessa com { ok: true, usuario }
   // ou { ok: false, erro, campo } (campo = nome do campo com problema, ex.: "email").
   const criarConta = useCallback(
     async (valores) => {
       if (emailEmUso(valores.email)) return { ok: false, erro: ERRO_EMAIL_EM_USO, campo: 'email' };
-      if (cpfEmUso(valores.cpf)) return { ok: false, erro: ERRO_CPF_EM_USO, campo: 'cpf' };
       const email = normalizarEmail(valores.email);
       const hash = await gerarHashSenha(email, valores.senha);
       const conta = montarConta(valores, hash, `u-${crypto.randomUUID()}`);
@@ -145,7 +130,7 @@ export default function SessaoProvider({ children }) {
       setIdLogado(conta.id);
       return { ok: true, usuario: montarUsuario(conta) };
     },
-    [emailEmUso, cpfEmUso],
+    [emailEmUso],
   );
 
   // Troca nome, celular e endereço da pessoa logada (tela "Meus dados").
@@ -193,25 +178,13 @@ export default function SessaoProvider({ children }) {
       usuario,
       logado: usuario !== null,
       entrar,
-      entrarDemonstracao,
       criarConta,
       emailEmUso,
-      cpfEmUso,
       atualizarConta,
       trocarSenha,
       sair,
     }),
-    [
-      usuario,
-      entrar,
-      entrarDemonstracao,
-      criarConta,
-      emailEmUso,
-      cpfEmUso,
-      atualizarConta,
-      trocarSenha,
-      sair,
-    ],
+    [usuario, entrar, criarConta, emailEmUso, atualizarConta, trocarSenha, sair],
   );
 
   return <ContextoSessao.Provider value={valor}>{children}</ContextoSessao.Provider>;

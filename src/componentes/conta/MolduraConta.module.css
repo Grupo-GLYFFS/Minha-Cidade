@@ -13,31 +13,13 @@
   grid-area: form;
   display: flex;
   flex-direction: column;
-  padding: rem(28px) rem(40px) rem(56px);
+  padding: rem(40px) rem(40px) rem(56px);
 }
 
-/* Linha de cima: logo (só no celular) e "Voltar ao início" à direita */
+/* Barra com o logo: no computador o logo já está no painel azul à esquerda */
 .barra {
-  display: flex;
+  display: none;
   align-items: center;
-  justify-content: flex-end;
-  gap: rem(16px);
-}
-
-.voltar {
-  flex: none;
-}
-
-/* A seta "‹" e o "Início" curto só aparecem no celular */
-.seta,
-.soCelular {
-  display: none;
-}
-
-/* Logo (componente Logo): só aparece no celular, empurrando "Voltar ao início" para a direita */
-.barra .logo {
-  display: none;
-  margin-right: auto;
 }
 
 /* Coluna de 440 no meio do espaço que sobra */
@@ -45,7 +27,6 @@
   width: 100%;
   max-width: rem(440px);
   margin: auto;
-  padding-top: rem(24px);
 }
 
 .titulo {
@@ -89,11 +70,8 @@
   }
 
   .barra {
-    justify-content: space-between;
-  }
-
-  .barra .logo {
-    display: inline-flex;
+    display: flex;
+    margin-bottom: rem(24px);
   }
 
   .coluna {
@@ -105,42 +83,17 @@
   }
 }
 
-/* Celular: barra "‹ Início" de 64 no alto, sem o logo, e o formulário com 24 em cima */
+/* Celular: barra de 64 no alto com o logo para voltar ao Início, e o formulário com 24 em cima */
 @media (max-width: $mantine-breakpoint-sm) {
   .lado {
     padding: 0 0 rem(40px);
   }
 
   .barra {
-    justify-content: flex-start;
     min-height: rem(64px);
-    padding: 0 rem(8px);
+    margin-bottom: 0;
+    padding: 0 rem(16px);
     border-bottom: var(--espessura-borda) solid var(--cor-borda);
-  }
-
-  .barra .logo {
-    display: none;
-  }
-
-  .voltar > :first-child {
-    display: none;
-  }
-
-  .voltar {
-    gap: rem(2px);
-    padding-inline: rem(8px);
-  }
-
-  .voltar .seta {
-    display: inline-block;
-  }
-
-  .soComputador {
-    display: none;
-  }
-
-  .soCelular {
-    display: inline;
   }
 
   .coluna {

@@ -6,15 +6,13 @@ import Botao from '../Botao';
 import CampoTexto from '../CampoTexto';
 import ResumoErros from '../ResumoErros';
 import AvisoErroConta from './AvisoErroConta';
-import BotaoGovbr from './BotaoGovbr';
 import CaixaMarcar from './CaixaMarcar';
 import CampoSenha from './CampoSenha';
-import SeparadorOu from './SeparadorOu';
 import { useSessao } from '../../contexto/useSessao';
 import { useCaminhoConta } from '../../contexto/useCaminhoConta';
+import { SENHA_DEMONSTRACAO, USUARIO } from '../../dados/usuario';
 import { caminhoComVoltar } from '../../logica/sessao';
 import { CAMPOS_ENTRAR, NOMES_CAMPOS_ENTRAR, esquemaEntrar } from '../../logica/esquemaEntrar';
-import { simularGovbr } from '../../logica/govbr';
 import { manterErrosAtuais } from '../../logica/resumoErros';
 import {
   LIMITE_TENTATIVAS,
@@ -40,7 +38,7 @@ function avisoDeFalha(ate) {
     };
   }
   return {
-    titulo: 'E-mail, CPF ou senha não conferem.',
+    titulo: 'E-mail ou senha não conferem.',
     linhas: [
       'Confira e tente de novo.',
       `Depois de ${LIMITE_TENTATIVAS} tentativas, a conta fica bloqueada por 15 minutos.`,
@@ -48,21 +46,20 @@ function avisoDeFalha(ate) {
   };
 }
 
-// Formulário "Entrar": gov.br (simulado, entra na conta da Maria), e-mail ou CPF, senha
-// e "Manter conectado neste aparelho". Depois de entrar, vai para o destino.
-// Com campo vazio ou errado: resumo de erros no topo. Com senha errada: aviso sem dizer
-// qual dos dados errou; na quinta vez, bloqueia por 15 minutos neste aparelho.
+// Formulário "Entrar": e-mail, senha e "Manter conectado neste aparelho".
+// Os campos já vêm preenchidos com a conta de demonstração (Maria), para entrar em um clique.
+// Depois de entrar, vai para o destino. Com campo vazio ou errado: resumo de erros no topo.
+// Com senha errada: aviso sem dizer qual dos dados errou; na quinta vez, bloqueia por 15 minutos.
 // Recebe o destino (ex.: "/inicio").
 export default function FormularioEntrar({ destino }) {
   // O link do "Esqueci minha senha" leva junto o destino (?voltar=)
   const { voltar } = useCaminhoConta();
-  const { entrar, entrarDemonstracao } = useSessao();
+  const { entrar } = useSessao();
   const navigate = useNavigate();
   const [errosResumo, setErrosResumo] = useState([]);
   // Conta os envios com erro (a cada um, o foco volta para o resumo)
   const [tentativa, setTentativa] = useState(0);
   const [falha, setFalha] = useState(null);
-  const [conectandoGovbr, setConectandoGovbr] = useState(false);
 
   const {
     register,
@@ -70,7 +67,7 @@ export default function FormularioEntrar({ destino }) {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: VALIDADOR,
-    defaultValues: { login: '', senha: '', manter: false },
+    defaultValues: { login: USUARIO.email, senha: SENHA_DEMONSTRACAO, manter: false },
     shouldFocusError: false,
   });
   // O resumo acompanha as correções: campo corrigido sai da lista
@@ -106,20 +103,8 @@ export default function FormularioEntrar({ destino }) {
     setTentativa((atual) => atual + 1);
   }
 
-  // gov.br: simula a volta com os dados da Maria e entra na conta dela
-  async function entrarComGovbr() {
-    setConectandoGovbr(true);
-    await simularGovbr();
-    zerarTentativas();
-    entrarDemonstracao();
-    navigate(destino, { replace: true });
-  }
-
   return (
     <form className={classes.formulario} onSubmit={handleSubmit(aoEnviar, aoFalhar)} noValidate>
-      <BotaoGovbr verbo="Entrar" carregando={conectandoGovbr} onClick={entrarComGovbr} />
-      <SeparadorOu />
-
       {falha && <AvisoErroConta titulo={falha.titulo} linhas={falha.linhas} />}
       <ResumoErros
         erros={resumoAtual}
@@ -133,8 +118,9 @@ export default function FormularioEntrar({ destino }) {
 
       <CampoTexto
         id="login"
-        rotulo="E-mail ou CPF"
-        autoComplete="username"
+        rotulo="E-mail"
+        type="email"
+        autoComplete="email"
         erro={errors.login?.message}
         {...register('login')}
       />

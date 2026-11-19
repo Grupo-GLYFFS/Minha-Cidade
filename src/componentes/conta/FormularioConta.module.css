@@ -5,19 +5,7 @@
   margin-top: rem(32px);
 }
 
-/* Texto pequeno de apoio (ex.: reenvio do código) */
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: rem(4px) rem(8px);
-  margin: 0;
-  font-size: rem(15px);
-  font-weight: 500;
-  color: var(--cor-texto-2);
-}
-
-/* Aviso de que deu certo (link enviado, dados do gov.br preenchidos) */
+/* Aviso de que deu certo (link enviado) */
 .ok {
   display: flex;
   align-items: flex-start;
@@ -33,22 +21,6 @@
 
 .ok b {
   font-weight: 800;
-}
-
-/* Busca do CEP em andamento */
-.buscando {
-  display: flex;
-  align-items: center;
-  gap: rem(8px);
-  margin: 0;
-  font-size: rem(15px);
-  font-weight: 600;
-  color: var(--cor-texto-2);
-}
-
-/* CEP com endereço achado: borda verde */
-.cepOk input {
-  border-color: var(--cor-sucesso);
 }
 
 /* Link dentro da mensagem de erro de um campo */

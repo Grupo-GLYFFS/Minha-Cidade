@@ -1,33 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { NativeSelect } from '@mantine/core';
 import Botao from '../Botao';
 import CampoTexto from '../CampoTexto';
-import CamposLado from '../CamposLado';
 import Icone from '../Icone';
 import ResumoErros from '../ResumoErros';
-import BotaoGovbr from './BotaoGovbr';
-import CaixaMarcar from './CaixaMarcar';
 import CampoSenha from './CampoSenha';
-import CamposEnderecoConta from './CamposEnderecoConta';
-import SeparadorOu from './SeparadorOu';
 import { useSessao } from '../../contexto/useSessao';
 import { useCaminhoConta } from '../../contexto/useCaminhoConta';
-import { formatarCelular } from '../../logica/celular';
-import { ERRO_CPF_EM_USO, ERRO_EMAIL_EM_USO } from '../../logica/contas';
-import { formatarCpf } from '../../logica/cpf';
+import { ENDERECOS_CADASTRO, buscarEnderecoCadastro } from '../../dados/enderecosCadastro';
+import { ERRO_EMAIL_EM_USO } from '../../logica/contas';
 import {
   CAMPOS_CRIAR_CONTA,
   NOMES_CRIAR_CONTA,
+  VALORES_CRIAR_CONTA,
   esquemaCriarConta,
 } from '../../logica/esquemaCriarConta';
-import { simularGovbr } from '../../logica/govbr';
 import { manterErrosAtuais } from '../../logica/resumoErros';
-import { PESSOA_NOVA_GOVBR } from '../../dados/pessoaNovaGovbr';
+import campoClasses from '../CampoTexto.module.css';
 import classes from './FormularioConta.module.css';
 
 const VALIDADOR = yupResolver(esquemaCriarConta);
+
+// Opções do dropdown "Endereço"
+const OPCOES_ENDERECO = [
+  { value: '', label: 'Escolha um endereço' },
+  ...ENDERECOS_CADASTRO.map((item) => ({ value: item.id, label: item.rotulo })),
+];
 
 // Título do resumo de erros. Recebe quantos campos têm erro.
 function tituloResumo(quantos) {
@@ -36,31 +37,39 @@ function tituloResumo(quantos) {
     : `Corrija os ${quantos} campos marcados para criar a conta.`;
 }
 
-// Formulário "Criar conta" numa página só: gov.br (simulado, preenche os dados), nome, CPF,
-// celular, e-mail, senha com requisitos, endereço pelo CEP e aceite da política de privacidade.
-// Com erro: resumo no topo (CPF que não existe, e-mail ou CPF que já têm conta…).
-// Tudo certo: chama aoContinuar(valores), que leva à confirmação do e-mail.
-// Recebe os valores iniciais (ao voltar de "Corrigir"), aoContinuar e aoMudarBairro (painel azul).
-export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoMudarBairro }) {
-  const { emailEmUso, cpfEmUso } = useSessao();
+// Formulário "Criar conta" numa página só: nome completo, e-mail, senha com requisitos e endereço.
+// O bairro do endereço escolhido aparece no painel azul ao lado e vira o bairro da pessoa.
+// Tudo certo: chama aoCriar(valores), que cria a conta e já entra nela.
+export default function FormularioCriarConta({ aoCriar, aoMudarBairro }) {
+  const { emailEmUso } = useSessao();
   // "Entrar com ela" leva junto o destino (?voltar=)
   const { entrar } = useCaminhoConta();
   const [errosResumo, setErrosResumo] = useState([]);
   // Conta os envios com erro (a cada um, o foco volta para o resumo)
   const [tentativa, setTentativa] = useState(0);
-  const [conectandoGovbr, setConectandoGovbr] = useState(false);
-  const [veioDoGovbr, setVeioDoGovbr] = useState(false);
 
-  const formulario = useForm({
+  const {
+    register,
+    handleSubmit,
+    setError,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm({
     resolver: VALIDADOR,
-    defaultValues: valoresIniciais,
+    defaultValues: VALORES_CRIAR_CONTA,
     shouldFocusError: false,
   });
-  const { register, handleSubmit, setValue, setError, control, formState } = formulario;
-  const { errors } = formState;
+
   const senha = useWatch({ control, name: 'senha' });
+  const enderecoId = useWatch({ control, name: 'endereco' });
   // O resumo acompanha as correções: campo corrigido sai da lista
   const resumoAtual = manterErrosAtuais(errosResumo, errors);
+
+  // Avisa o painel azul quando a pessoa escolhe um endereço
+  useEffect(() => {
+    const escolhido = buscarEnderecoCadastro(enderecoId);
+    aoMudarBairro?.(escolhido?.bairro ?? null);
+  }, [enderecoId, aoMudarBairro]);
 
   // Monta o resumo na ordem da tela. Recebe os erros { campo: { message } }.
   function mostrarResumo(erros) {
@@ -74,40 +83,16 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
     setTentativa((atual) => atual + 1);
   }
 
-  // Regras certas: ainda confere se o e-mail ou o CPF já têm conta
-  function aoEnviar(valores) {
-    const jaExistem = {};
-    if (cpfEmUso(valores.cpf)) jaExistem.cpf = { message: ERRO_CPF_EM_USO };
-    if (emailEmUso(valores.email)) jaExistem.email = { message: ERRO_EMAIL_EM_USO };
-    if (Object.keys(jaExistem).length > 0) {
-      Object.entries(jaExistem).forEach(([campo, erro]) => setError(campo, erro));
-      mostrarResumo(jaExistem);
+  // Regras certas: confere se o e-mail já tem conta e cria
+  async function aoEnviar(valores) {
+    if (emailEmUso(valores.email)) {
+      const erro = { message: ERRO_EMAIL_EM_USO };
+      setError('email', erro);
+      mostrarResumo({ email: erro });
       return;
     }
     setErrosResumo([]);
-    aoContinuar(valores);
-  }
-
-  // gov.br: simula a volta de uma pessoa sem conta, com nome, CPF, celular, e-mail
-  // e endereço já preenchidos. Depois de um envio com erro, os campos são conferidos de novo.
-  async function preencherComGovbr() {
-    setConectandoGovbr(true);
-    const dados = await simularGovbr(PESSOA_NOVA_GOVBR);
-    const opcoes = { shouldDirty: true, shouldValidate: formState.isSubmitted };
-    Object.entries(dados).forEach(([campo, valor]) => setValue(campo, valor, opcoes));
-    setConectandoGovbr(false);
-    setVeioDoGovbr(true);
-  }
-
-  // Liga um campo com máscara: aplica a máscara enquanto a pessoa digita.
-  // Depois de um envio com erro, confere de novo já com a máscara (o erro some quando fica certo).
-  function comMascara(campo, formatar) {
-    return register(campo, {
-      onChange: (evento) =>
-        setValue(campo, formatar(evento.target.value), {
-          shouldValidate: formState.isSubmitted,
-        }),
-    });
+    await aoCriar(valores);
   }
 
   // Erro do e-mail que já tem conta: traz o link para entrar com ela
@@ -124,91 +109,63 @@ export default function FormularioCriarConta({ valoresIniciais, aoContinuar, aoM
     );
 
   return (
-    <FormProvider {...formulario}>
-      <form
-        className={classes.formulario}
-        onSubmit={handleSubmit(aoEnviar, mostrarResumo)}
-        noValidate
-      >
-        <ResumoErros
-          erros={resumoAtual}
-          titulo={tituloResumo(resumoAtual.length)}
-          tentativa={tentativa}
-        />
+    <form
+      className={classes.formulario}
+      onSubmit={handleSubmit(aoEnviar, mostrarResumo)}
+      noValidate
+    >
+      <ResumoErros
+        erros={resumoAtual}
+        titulo={tituloResumo(resumoAtual.length)}
+        tentativa={tentativa}
+      />
 
-        {veioDoGovbr ? (
-          <p className={classes.ok} role="status">
-            <Icone nome="check_circle" preenchido />
-            <span>
-              <b>Dados trazidos do gov.br.</b> Confira, crie a senha e aceite a política de
-              privacidade.
-            </span>
-          </p>
-        ) : (
-          <>
-            <BotaoGovbr verbo="Criar" carregando={conectandoGovbr} onClick={preencherComGovbr} />
-            <SeparadorOu>ou preencha seus dados</SeparadorOu>
-          </>
-        )}
+      <CampoTexto
+        id="nome"
+        rotulo="Nome completo"
+        autoComplete="name"
+        erro={errors.nome?.message}
+        {...register('nome')}
+      />
+      <CampoTexto
+        id="email"
+        rotulo="E-mail"
+        type="email"
+        autoComplete="email"
+        erro={erroEmail}
+        {...register('email')}
+      />
+      <CampoSenha
+        id="senha"
+        autoComplete="new-password"
+        senhaDigitada={senha}
+        erro={errors.senha?.message}
+        {...register('senha')}
+      />
 
-        <CampoTexto
-          id="nome"
-          rotulo="Nome completo"
-          autoComplete="name"
-          erro={errors.nome?.message}
-          {...register('nome')}
-        />
-        <CamposLado>
-          <CampoTexto
-            id="cpf"
-            rotulo="CPF"
-            placeholder="000.000.000-00"
-            inputMode="numeric"
-            maxLength={14}
-            erro={errors.cpf?.message}
-            {...comMascara('cpf', formatarCpf)}
-          />
-          <CampoTexto
-            id="celular"
-            rotulo="Celular"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            maxLength={15}
-            erro={errors.celular?.message}
-            {...comMascara('celular', formatarCelular)}
-          />
-        </CamposLado>
-        <CampoTexto
-          id="email"
-          rotulo="E-mail"
-          type="email"
-          autoComplete="email"
-          erro={erroEmail}
-          {...register('email')}
-        />
-        <CampoSenha
-          id="senha"
-          autoComplete="new-password"
-          senhaDigitada={senha}
-          erro={errors.senha?.message}
-          {...register('senha')}
-        />
+      <NativeSelect
+        id="endereco"
+        label="Endereço"
+        data={OPCOES_ENDERECO}
+        error={
+          errors.endereco?.message && (
+            <>
+              <Icone nome="error" tamanho={20} />
+              {errors.endereco.message}
+            </>
+          )
+        }
+        classNames={{
+          label: campoClasses.rotulo,
+          input: campoClasses.campo,
+          error: campoClasses.erro,
+        }}
+        {...register('endereco')}
+      />
 
-        <CamposEnderecoConta aoMudarBairro={aoMudarBairro} />
-
-        <CaixaMarcar id="termos" erro={errors.termos?.message} {...register('termos')}>
-          Li e aceito a{' '}
-          <Link to="/ajuda/privacidade" target="_blank">
-            Política de privacidade
-          </Link>
-          .
-        </CaixaMarcar>
-
-        <Botao variante="principal" type="submit" largo>
-          Criar conta
-        </Botao>
-      </form>
-    </FormProvider>
+      <Botao variante="principal" type="submit" largo carregando={isSubmitting}>
+        {isSubmitting ? 'Criando conta…' : 'Criar conta'}
+      </Botao>
+    </form>
   );
 }

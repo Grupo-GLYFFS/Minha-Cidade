@@ -6,7 +6,7 @@ import { useCaminhoConta } from '../contexto/useCaminhoConta';
 import { useSessao } from '../contexto/useSessao';
 import { destinoSeguro } from '../logica/sessao';
 
-// Página "Esqueci minha senha" (/entrar/esqueci): pede o e-mail ou CPF para mandar o link.
+// Página "Esqueci minha senha" (/entrar/esqueci): pede o e-mail para mandar o link.
 // Quem já está logado é levado ao destino do ?voltar= (ou ao Início), como em Entrar.
 export default function EsqueciSenha() {
   const { entrar, voltar } = useCaminhoConta();

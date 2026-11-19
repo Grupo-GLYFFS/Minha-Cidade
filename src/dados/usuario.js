@@ -1,6 +1,6 @@
 // Conta de demonstração: a Maria, dona dos pedidos de exemplo.
-// Ela sempre existe; dá para entrar com o botão "Entrar com gov.br" (que simula a volta do gov.br
-// com os dados dela) ou digitando o e-mail (ou o CPF) e a senha abaixo. Os outros dados (pedidos, votos) apontam para ela pelo "id".
+// Ela sempre existe; a tela Entrar já vem preenchida com o e-mail e a senha abaixo.
+// Os outros dados (pedidos, votos) apontam para ela pelo "id".
 export const USUARIO = {
   id: 'u-001',
   nome: 'Maria Souza',
