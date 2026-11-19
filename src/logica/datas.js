@@ -1,5 +1,5 @@
 // Data fixa que o app usa como "hoje", para os dados de exemplo ficarem sempre iguais.
-export const HOJE = '2026-11-06';
+export const HOJE = '2026-11-13';
 
 const NOMES_DIAS = [
   'Domingo',

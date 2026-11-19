@@ -2,13 +2,13 @@
 export const SERVICOS_EDUCACAO = [
   {
     id: 'matricula-escolar',
-    nome: 'Pedir vaga em creche ou escola',
+    nome: 'Vaga em creche ou escola',
     nomeCurto: 'Matrícula escolar',
     resumo: 'Inscreva a criança em creche, pré-escola ou ensino fundamental da prefeitura.',
     categoria: 'educacao',
     subcategoria: 'matricula',
     tipo: 'solicitacao',
-    maisUsado: true,
+    maisUsado: 3,
     icone: 'school',
     palavrasChave: [
       'matrícula',
@@ -98,7 +98,7 @@ export const SERVICOS_EDUCACAO = [
   },
   {
     id: 'transporte-escolar',
-    nome: 'Pedir transporte escolar gratuito',
+    nome: 'Transporte escolar gratuito',
     resumo: 'Van gratuita para alunos que moram longe da escola ou têm deficiência.',
     categoria: 'educacao',
     subcategoria: 'matricula',

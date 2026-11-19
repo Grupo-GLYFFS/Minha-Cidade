@@ -21,7 +21,11 @@ import { SERVICOS_ATENDIMENTO } from './atendimento';
 // - campos (só em 'solicitacao'): perguntas do formulário, montado pelo motor de pedidos;
 //   um campo 'cep' (com nome "cep") já traz rua, número, bairro e região junto,
 //   então esses campos não precisam ser listados de novo;
-// - maisUsado (opcional): aparece nos atalhos "Serviços mais usados".
+// - maisUsado (opcional): posição (1, 2, 3…) nos atalhos "Mais usados" de Serviços e do Início;
+// - atalho (opcional): rota aberta direto pelo card do catálogo, sem passar pela ficha;
+// - nomeEtapa (opcional): nome da 1ª etapa do formulário (padrão "Detalhes");
+// - prazoDias e textoPrazo (opcionais): em quantos dias a prefeitura responde e a frase
+//   do prazo em Minhas solicitações (padrão 15 dias e "Resposta até").
 export const SERVICOS = [
   ...SERVICOS_SAUDE,
   ...SERVICOS_EDUCACAO,

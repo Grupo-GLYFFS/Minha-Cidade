@@ -34,7 +34,7 @@ export const SERVICOS_TRANSPORTE_TRANSITO = [
   },
   {
     id: 'bilhete-de-estudante',
-    nome: 'Pedir Bilhete Único de estudante',
+    nome: 'Bilhete Único de estudante',
     resumo: 'Meia passagem ou passe livre para alunos de escolas, cursos técnicos e faculdades.',
     categoria: 'transporte-transito',
     subcategoria: 'onibus',
@@ -111,7 +111,7 @@ export const SERVICOS_TRANSPORTE_TRANSITO = [
   },
   {
     id: 'cartao-pessoa-com-deficiencia',
-    nome: 'Pedir cartão de ônibus gratuito para pessoa com deficiência',
+    nome: 'Cartão de ônibus gratuito para pessoa com deficiência',
     resumo: 'Gratuidade no transporte para pessoas com deficiência e, se preciso, um acompanhante.',
     categoria: 'transporte-transito',
     subcategoria: 'onibus',

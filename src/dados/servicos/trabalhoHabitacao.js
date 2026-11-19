@@ -102,7 +102,7 @@ export const SERVICOS_TRABALHO_HABITACAO = [
   },
   {
     id: 'alvara-de-funcionamento',
-    nome: 'Pedir licença de funcionamento',
+    nome: 'Licença de funcionamento',
     resumo: 'Autorização da prefeitura para abrir comércio, escritório ou oficina.',
     categoria: 'trabalho-renda',
     subcategoria: 'negocio',

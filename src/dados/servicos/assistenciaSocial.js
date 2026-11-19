@@ -8,6 +8,9 @@ export const SERVICOS_ASSISTENCIA_SOCIAL = [
     subcategoria: 'beneficios',
     tipo: 'solicitacao',
     icone: 'groups',
+    nomeEtapa: 'Família',
+    prazoDias: 15,
+    textoPrazo: 'O CRAS marca o dia até',
     palavrasChave: [
       'cadúnico',
       'cadastro único',
@@ -145,7 +148,7 @@ export const SERVICOS_ASSISTENCIA_SOCIAL = [
   },
   {
     id: 'abordagem-social',
-    nome: 'Pedir ajuda para pessoa em situação de rua',
+    nome: 'Ajuda para pessoa em situação de rua',
     resumo: 'A equipe de abordagem social vai até a pessoa e oferece acolhimento.',
     categoria: 'assistencia-social',
     subcategoria: 'protecao',
@@ -215,7 +218,7 @@ export const SERVICOS_ASSISTENCIA_SOCIAL = [
   },
   {
     id: 'violencia-domestica',
-    nome: 'Pedir ajuda em caso de violência doméstica',
+    nome: 'Ajuda em caso de violência doméstica',
     resumo: 'Atendimento sigiloso para mulheres, crianças e idosos em situação de violência.',
     categoria: 'assistencia-social',
     subcategoria: 'protecao',

@@ -84,7 +84,7 @@ export const SERVICOS_ATENDIMENTO = [
   },
   {
     id: 'informacao-publica',
-    nome: 'Pedir informação pública',
+    nome: 'Informação pública',
     resumo: 'Peça dados, gastos e documentos da prefeitura pela Lei de Acesso à Informação.',
     categoria: 'atendimento-ouvidoria',
     subcategoria: 'ouvidoria',
@@ -149,8 +149,9 @@ export const SERVICOS_ATENDIMENTO = [
     subcategoria: 'participacao',
     tipo: 'proprio',
     icone: 'fact_check',
-    destino: '/perfil',
+    destino: '/perfil/pedidos',
     rotuloDestino: 'Ver meus pedidos',
+    atalho: '/perfil/pedidos',
     palavrasChave: [
       'protocolo',
       'meus pedidos',
@@ -181,8 +182,9 @@ export const SERVICOS_ATENDIMENTO = [
     subcategoria: 'participacao',
     tipo: 'proprio',
     icone: 'how_to_vote',
-    destino: '/minha-cidade',
-    rotuloDestino: 'Abrir Cidade Aberta',
+    destino: '/minha-cidade/votacoes',
+    rotuloDestino: 'Ver as votações',
+    atalho: '/minha-cidade/votacoes',
     palavrasChave: [
       'votar',
       'votação',
@@ -209,6 +211,9 @@ export const SERVICOS_ATENDIMENTO = [
   {
     id: 'telefones-uteis',
     nome: 'Ver telefones úteis',
+    nomeCurto: 'Telefones úteis',
+    maisUsado: 8,
+    atalho: '/ajuda/telefones',
     resumo: 'Números de emergência e de atendimento da prefeitura, todos gratuitos.',
     categoria: 'atendimento-ouvidoria',
     subcategoria: 'contatos',

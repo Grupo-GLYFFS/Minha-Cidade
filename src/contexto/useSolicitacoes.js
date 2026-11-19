@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { ContextoSolicitacoes } from './ContextoSolicitacoes';
 
-// Dá acesso às solicitações de serviço da pessoa logada e à ação adicionarSolicitacao.
+// Dá acesso às solicitações de serviço da pessoa logada e às ações
+// adicionarSolicitacao, remarcar e cancelar.
 // Devolve o objeto do SolicitacoesProvider; avisa se for usado fora dele.
 export function useSolicitacoes() {
   const contexto = useContext(ContextoSolicitacoes);
