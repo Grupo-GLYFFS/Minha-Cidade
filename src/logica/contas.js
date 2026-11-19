@@ -1,11 +1,12 @@
 import { formatarCelular } from './celular';
 import { CIDADE_ATENDIDA } from './buscarCep';
+import { formatarCpf, limparCpf } from './cpf';
 
-// Mensagens de erro da conta. A de entrar é a mesma para e-mail ou senha errados,
+// Mensagens de erro da conta. A de entrar é a mesma para e-mail, CPF ou senha errados,
 // para não revelar quais e-mails têm conta.
-export const ERRO_ENTRAR = 'E-mail ou senha incorretos. Confira e tente de novo.';
-export const ERRO_EMAIL_EM_USO =
-  'Já existe uma conta com este e-mail. Entre com ela ou use outro e-mail.';
+export const ERRO_ENTRAR = 'E-mail, CPF ou senha não conferem.';
+export const ERRO_EMAIL_EM_USO = 'Já existe uma conta com este e-mail.';
+export const ERRO_CPF_EM_USO = 'Já existe uma conta com este CPF.';
 
 // Deixa o e-mail pronto para comparar: sem espaços e em minúsculas.
 // Recebe " Maria@Exemplo.com "; devolve "maria@exemplo.com".
@@ -37,6 +38,21 @@ export function buscarContaPorEmail(contas, email) {
   return contas.find((conta) => conta.email === procurado);
 }
 
+// Procura uma conta pelo CPF. Recebe a lista de contas e o CPF (com ou sem máscara);
+// devolve a conta ou undefined.
+export function buscarContaPorCpf(contas, cpf) {
+  const procurado = limparCpf(cpf);
+  return contas.find((conta) => conta.cpf && limparCpf(conta.cpf) === procurado);
+}
+
+// Procura a conta de quem está entrando, pelo e-mail (se o texto tem @) ou pelo CPF.
+// Recebe a lista de contas (a de demonstração junto) e o que a pessoa digitou; devolve a conta ou undefined.
+export function buscarContaPorLogin(contas, login = '') {
+  return login.includes('@')
+    ? buscarContaPorEmail(contas, login)
+    : buscarContaPorCpf(contas, login);
+}
+
 // Arruma os dados pessoais que a pessoa digita (no cadastro e em "Meus dados").
 // Recebe os valores já validados; devolve nome, celular e endereço limpos.
 // Também é o que fica salvo como mudança da conta de demonstração.
@@ -57,12 +73,12 @@ export function limparDadosPessoais(valores) {
 
 // Monta a conta nova a partir do formulário "Criar conta".
 // Recebe os valores já validados, o hash da senha e o id novo; devolve a conta para salvar.
-// A foto e o comprovante não entram: o protótipo só confere os arquivos, não guarda.
 export function montarConta(valores, hashSenha, id) {
   return {
     id,
     ...limparDadosPessoais(valores),
     email: normalizarEmail(valores.email),
+    cpf: formatarCpf(valores.cpf),
     hashSenha,
   };
 }

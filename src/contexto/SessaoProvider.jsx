@@ -1,14 +1,24 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ContextoSessao } from './ContextoSessao';
 import { SENHA_DEMONSTRACAO, USUARIO } from '../dados/usuario';
-import { apagarDado, lerDado, salvarDado } from '../armazenamento';
+import {
+  apagarDado,
+  apagarDadoDaAba,
+  lerDado,
+  lerDadoDaAba,
+  salvarDado,
+  salvarDadoDaAba,
+} from '../armazenamento';
 import { gerarHashSenha } from '../logica/senha';
 import {
+  ERRO_CPF_EM_USO,
   ERRO_EMAIL_EM_USO,
   ERRO_ENTRAR,
   aplicarAjustesDemonstracao,
   aplicarDadosNaConta,
+  buscarContaPorCpf,
   buscarContaPorEmail,
+  buscarContaPorLogin,
   limparDadosPessoais,
   montarConta,
   montarUsuario,
@@ -21,14 +31,24 @@ const CHAVE_SESSAO = 'sessao';
 // Mudanças feitas em "Meus dados" na conta de demonstração (a Maria fica no código)
 const CHAVE_AJUSTES_DEMO = 'conta-demo-ajustes';
 
+// Lê a sessão salva: primeiro a que fica no aparelho ("Manter conectado"), depois a que
+// vale só enquanto a aba está aberta. Devolve { id, manter } (id null para visitante).
+function lerSessaoSalva() {
+  const fixa = lerDado(CHAVE_SESSAO, null);
+  if (fixa) return { id: fixa, manter: true };
+  return { id: lerDadoDaAba(CHAVE_SESSAO, null), manter: false };
+}
+
 // Guarda quem está usando o app: as contas criadas neste aparelho e a pessoa logada.
 // A conta de demonstração (Maria) sempre existe; o que ela muda em "Meus dados" fica salvo à parte
-// e é aplicado por cima dos dados de exemplo. O id de quem está logado fica salvo,
-// então recarregar a página mantém a pessoa dentro da conta.
+// e é aplicado por cima dos dados de exemplo. O id de quem está logado fica salvo no aparelho
+// ("Manter conectado") ou só na aba; recarregar a página mantém a pessoa dentro da conta.
 // Recebe as telas do app (children), que leem os dados com useSessao().
 export default function SessaoProvider({ children }) {
   const [contas, setContas] = useState(() => lerDado(CHAVE_CONTAS, []));
-  const [idLogado, setIdLogado] = useState(() => lerDado(CHAVE_SESSAO, null));
+  const [sessaoSalva] = useState(lerSessaoSalva);
+  const [idLogado, setIdLogado] = useState(sessaoSalva.id);
+  const [manter, setManter] = useState(sessaoSalva.manter);
   const [ajustesDemo, setAjustesDemo] = useState(() => lerDado(CHAVE_AJUSTES_DEMO, null));
 
   // Salva as contas sempre que mudam (só depois da primeira conta, para não criar a chave à toa)
@@ -41,11 +61,14 @@ export default function SessaoProvider({ children }) {
     if (ajustesDemo) salvarDado(CHAVE_AJUSTES_DEMO, ajustesDemo);
   }, [ajustesDemo]);
 
-  // Salva quem está logado; ao sair, apaga o dado
+  // Salva quem está logado (no aparelho ou só na aba); ao sair, apaga dos dois lugares
   useEffect(() => {
-    if (idLogado) salvarDado(CHAVE_SESSAO, idLogado);
-    else apagarDado(CHAVE_SESSAO);
-  }, [idLogado]);
+    apagarDado(CHAVE_SESSAO);
+    apagarDadoDaAba(CHAVE_SESSAO);
+    if (!idLogado) return;
+    if (manter) salvarDado(CHAVE_SESSAO, idLogado);
+    else salvarDadoDaAba(CHAVE_SESSAO, idLogado);
+  }, [idLogado, manter]);
 
   // Pessoa logada no formato usado pelas telas, ou null para visitante
   const usuario = useMemo(() => {
@@ -61,31 +84,40 @@ export default function SessaoProvider({ children }) {
     [contas],
   );
 
-  // Entra com e-mail e senha.
-  // Recebe os dois; devolve uma promessa com { ok: true } ou { ok: false, erro }.
+  // Entra com e-mail (ou CPF) e senha.
+  // Recebe o que a pessoa digitou, a senha e se é para manter conectado neste aparelho;
+  // devolve uma promessa com { ok: true } ou { ok: false, erro }.
   const entrar = useCallback(
-    async (email, senha) => {
-      const emailLimpo = normalizarEmail(email);
-      const hashDigitado = await gerarHashSenha(emailLimpo, senha);
+    async (login, senha, manterConectado = true) => {
+      const conta = buscarContaPorLogin([USUARIO, ...contas], login);
+      if (!conta) return { ok: false, erro: ERRO_ENTRAR };
+      // O e-mail da conta é o "sal" do hash, então o CPF também serve para entrar
+      const hashDigitado = await gerarHashSenha(conta.email, senha);
 
       // A conta de demonstração confere com o hash da senha pública dela
-      if (emailLimpo === USUARIO.email) {
-        const hashDemonstracao = await gerarHashSenha(USUARIO.email, SENHA_DEMONSTRACAO);
-        if (hashDigitado !== hashDemonstracao) return { ok: false, erro: ERRO_ENTRAR };
-        setIdLogado(USUARIO.id);
-        return { ok: true };
-      }
-
-      const conta = buscarContaPorEmail(contas, emailLimpo);
-      if (!conta || conta.hashSenha !== hashDigitado) return { ok: false, erro: ERRO_ENTRAR };
+      const hashCerto =
+        conta.id === USUARIO.id
+          ? await gerarHashSenha(USUARIO.email, SENHA_DEMONSTRACAO)
+          : conta.hashSenha;
+      if (hashDigitado !== hashCerto) return { ok: false, erro: ERRO_ENTRAR };
+      setManter(manterConectado);
       setIdLogado(conta.id);
       return { ok: true };
     },
     [contas],
   );
 
-  // Entra direto na conta de demonstração (botão da tela "Entrar")
-  const entrarDemonstracao = useCallback(() => setIdLogado(USUARIO.id), []);
+  // Entra direto na conta de demonstração (botão "Entrar com gov.br", que simula a volta do gov.br)
+  const entrarDemonstracao = useCallback(() => {
+    setManter(true);
+    setIdLogado(USUARIO.id);
+  }, []);
+
+  // Diz se o CPF já tem conta (inclui a de demonstração). Recebe o CPF; devolve true ou false.
+  const cpfEmUso = useCallback(
+    (cpf) => Boolean(buscarContaPorCpf([USUARIO, ...contas], cpf)),
+    [contas],
+  );
 
   // Cria a conta com os valores do formulário e já entra nela.
   // Recebe os valores validados; devolve uma promessa com { ok: true, usuario }
@@ -93,14 +125,16 @@ export default function SessaoProvider({ children }) {
   const criarConta = useCallback(
     async (valores) => {
       if (emailEmUso(valores.email)) return { ok: false, erro: ERRO_EMAIL_EM_USO, campo: 'email' };
+      if (cpfEmUso(valores.cpf)) return { ok: false, erro: ERRO_CPF_EM_USO, campo: 'cpf' };
       const email = normalizarEmail(valores.email);
       const hash = await gerarHashSenha(email, valores.senha);
       const conta = montarConta(valores, hash, `u-${crypto.randomUUID()}`);
       setContas((atual) => [...atual, conta]);
+      setManter(true);
       setIdLogado(conta.id);
       return { ok: true, usuario: montarUsuario(conta) };
     },
-    [emailEmUso],
+    [emailEmUso, cpfEmUso],
   );
 
   // Troca nome, celular e endereço da pessoa logada (tela "Meus dados").
@@ -132,10 +166,11 @@ export default function SessaoProvider({ children }) {
       entrarDemonstracao,
       criarConta,
       emailEmUso,
+      cpfEmUso,
       atualizarConta,
       sair,
     }),
-    [usuario, entrar, entrarDemonstracao, criarConta, emailEmUso, atualizarConta, sair],
+    [usuario, entrar, entrarDemonstracao, criarConta, emailEmUso, cpfEmUso, atualizarConta, sair],
   );
 
   return <ContextoSessao.Provider value={valor}>{children}</ContextoSessao.Provider>;

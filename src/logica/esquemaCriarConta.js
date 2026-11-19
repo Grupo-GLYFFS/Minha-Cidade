@@ -1,24 +1,14 @@
 import { boolean, object, ref, string } from 'yup';
 import { celularValido } from './celular';
+import { cpfValido } from './cpf';
 import { SENHA_MAX, SENHA_MIN } from './senha';
-import { FORMATO_NUMERO, regraArquivo, regraCep, regraRegiao } from './regrasFormulario';
-
-// Tipos de arquivo aceitos como comprovante de residência
-export const TIPOS_COMPROVANTE = ['application/pdf', 'image/jpeg', 'image/png'];
-
-// Os 3 passos do cadastro: título curto (no Stepper) e explicação
-export const PASSOS_CONTA = [
-  { titulo: 'Você', descricao: 'Seus dados e senha' },
-  { titulo: 'Endereço', descricao: 'Onde você mora' },
-  { titulo: 'Comprovante', descricao: 'Confirme o endereço' },
-];
-
-// Campos de cada passo, na ordem da tela: o primeiro com erro recebe o foco
-export const CAMPOS_POR_PASSO = [
-  ['nome', 'celular', 'email', 'senha', 'confirmarSenha', 'foto'],
-  ['cep', 'rua', 'numero', 'complemento', 'bairro', 'regiao'],
-  ['comprovante', 'aceite'],
-];
+import {
+  FORMATO_CEP,
+  FORMATO_NUMERO,
+  regraArquivo,
+  regraCep,
+  regraRegiao,
+} from './regrasFormulario';
 
 // Nome de cada campo, para a lista de erros no topo do formulário
 export const NOMES_CAMPOS_CONTA = {
@@ -34,27 +24,6 @@ export const NOMES_CAMPOS_CONTA = {
   complemento: 'Complemento',
   bairro: 'Bairro',
   regiao: 'Região',
-  comprovante: 'Comprovante de residência',
-  aceite: 'Uso dos dados',
-};
-
-// Valores do formulário vazio ("cidadeDoCep" guarda a cidade que o ViaCEP devolveu)
-export const VALORES_INICIAIS_CONTA = {
-  nome: '',
-  celular: '',
-  email: '',
-  senha: '',
-  confirmarSenha: '',
-  foto: null,
-  cep: '',
-  cidadeDoCep: '',
-  rua: '',
-  numero: '',
-  complemento: '',
-  bairro: '',
-  regiao: '',
-  comprovante: null,
-  aceite: false,
 };
 
 // Nome: só letras (com acento), espaço, apóstrofo e hífen, ex.: "Ana Lima", "Joana D'Arc"
@@ -137,19 +106,90 @@ export const esquemaPassoEndereco = object({
   regiao: regraRegiao(),
 });
 
-// Passo 3 (Comprovante): arquivo obrigatório (PDF, JPG ou PNG até 5 MB) e aceite do uso dos dados.
-export const esquemaPassoComprovante = object({
-  comprovante: regraArquivo({
-    aceito: (arquivo) => TIPOS_COMPROVANTE.includes(arquivo.type),
-    mensagemTipo: 'Escolha um arquivo PDF, JPG ou PNG.',
-    nomeArquivo: 'Este arquivo',
-    obrigatorio: 'Escolha o comprovante de residência (conta de luz, água ou telefone).',
-  }),
-  aceite: boolean().oneOf(
-    [true],
-    'Marque a caixa para aceitar o uso dos dados. Sem isso não dá para acompanhar seus pedidos.',
-  ),
-});
+// ---------- Tela "Criar conta" (uma página só, com confirmação por código no e-mail) ----------
 
-// Esquema de cada passo, na ordem
-export const ESQUEMAS_POR_PASSO = [esquemaPassoVoce, esquemaPassoEndereco, esquemaPassoComprovante];
+// Ordem dos campos na tela: o resumo de erros e o foco seguem esta ordem
+export const CAMPOS_CRIAR_CONTA = [
+  'nome',
+  'cpf',
+  'celular',
+  'email',
+  'senha',
+  'cep',
+  'numero',
+  'complemento',
+  'termos',
+];
+
+// Nome de cada campo da tela, para o resumo de erros
+export const NOMES_CRIAR_CONTA = {
+  nome: 'Nome completo',
+  cpf: 'CPF',
+  celular: 'Celular',
+  email: 'E-mail',
+  senha: 'Senha',
+  cep: 'CEP',
+  numero: 'Número',
+  complemento: 'Complemento',
+  termos: 'Termos de uso',
+};
+
+// Formulário vazio. "situacaoCep", "rua", "bairro" e "cidadeDoCep" vêm da busca no ViaCEP.
+export const VALORES_CRIAR_CONTA = {
+  nome: '',
+  cpf: '',
+  celular: '',
+  email: '',
+  senha: '',
+  cep: '',
+  numero: '',
+  complemento: '',
+  termos: false,
+  situacaoCep: '',
+  rua: '',
+  bairro: '',
+  cidadeDoCep: '',
+};
+
+// O que falta no CEP depois da busca, conforme a situação devolvida pelo ViaCEP
+const ERROS_BUSCA_CEP = {
+  '': 'Digite os 8 números do CEP e espere o endereço aparecer.',
+  buscando: 'Espere o endereço aparecer.',
+  'nao-encontrado': 'Não achamos este CEP. Confira os números.',
+  'fora-da-cidade': 'Este CEP não é da cidade de São Paulo. O app atende só quem mora na capital.',
+  falha: 'Não conseguimos buscar o CEP agora. Tente de novo em instantes.',
+};
+
+// Regras da tela "Criar conta".
+// Nome, celular e e-mail seguem as mesmas regras do "Meus dados"; o CEP só passa
+// quando o ViaCEP achou um endereço da cidade (o endereço define o bairro da pessoa).
+export const esquemaCriarConta = esquemaPassoVoce.pick(['nome', 'celular', 'email']).concat(
+  object({
+    cpf: string()
+      .required('Digite seu CPF, ex.: 123.456.789-09.')
+      .test('cpf', 'Este CPF não existe. Confira os números no documento.', (valor) =>
+        cpfValido(valor),
+      ),
+    senha: string()
+      .required('Crie uma senha com pelo menos 8 caracteres, letras e números.')
+      .min(SENHA_MIN, `Use pelo menos ${SENHA_MIN} caracteres na senha.`)
+      .max(SENHA_MAX, `Use até ${SENHA_MAX} caracteres na senha.`)
+      .matches(/[a-zA-Z]/, 'Coloque pelo menos uma letra na senha.')
+      .matches(/\d/, 'Coloque pelo menos um número na senha.'),
+    situacaoCep: string(),
+    cep: string()
+      .required('Digite o CEP da sua casa, ex.: 04015-001.')
+      .matches(FORMATO_CEP, 'Digite os 8 números do CEP, ex.: 04015-001.')
+      .test('endereco', function cepComEndereco() {
+        const situacao = this.parent.situacaoCep ?? '';
+        if (situacao === 'encontrado') return true;
+        return this.createError({ message: ERROS_BUSCA_CEP[situacao] ?? ERROS_BUSCA_CEP[''] });
+      }),
+    numero: string()
+      .trim()
+      .required('Digite o número da casa ou s/n se não houver.')
+      .matches(FORMATO_NUMERO, 'Use só números (ex.: 120) ou s/n se a casa não tiver número.'),
+    complemento: string().trim().max(60, 'Encurte o complemento para até 60 caracteres.'),
+    termos: boolean().oneOf([true], 'Marque a caixa para aceitar os termos e criar a conta.'),
+  }),
+);

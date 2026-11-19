@@ -12,8 +12,11 @@ export const REGRAS_SENHA = [
     texto: `Pelo menos ${SENHA_MIN} caracteres`,
     cumpre: (senha) => senha.length >= SENHA_MIN,
   },
-  { id: 'letra', texto: 'Pelo menos uma letra', cumpre: (senha) => /[a-zA-Z]/.test(senha) },
-  { id: 'numero', texto: 'Pelo menos um número', cumpre: (senha) => /\d/.test(senha) },
+  {
+    id: 'letrasNumeros',
+    texto: 'Letras e números',
+    cumpre: (senha) => /[a-zA-Z]/.test(senha) && /\d/.test(senha),
+  },
 ];
 
 // Transforma a senha em um código (hash SHA-256) para não guardar a senha em texto.

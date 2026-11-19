@@ -1,4 +1,4 @@
-// Único arquivo do app que mexe no localStorage.
+// Único arquivo do app que mexe no localStorage (e no sessionStorage).
 // O resto do código usa só estas funções, nunca o localStorage direto.
 
 // Prefixo para não misturar com dados de outros sites no mesmo navegador
@@ -30,6 +30,36 @@ export function salvarDado(chave, valor) {
 export function apagarDado(chave) {
   try {
     localStorage.removeItem(PREFIXO + chave);
+  } catch {
+    // Acesso bloqueado: não há o que apagar
+  }
+}
+
+// Lê um dado guardado só enquanto a aba está aberta (sessionStorage).
+// Usado na sessão de quem não marcou "Manter conectado neste aparelho".
+// Recebe a chave e um valor padrão; devolve o dado ou o padrão.
+export function lerDadoDaAba(chave, padrao) {
+  try {
+    const texto = sessionStorage.getItem(PREFIXO + chave);
+    return texto === null ? padrao : JSON.parse(texto);
+  } catch {
+    return padrao;
+  }
+}
+
+// Guarda um dado só enquanto a aba está aberta (some ao fechar o navegador). Recebe a chave e o valor.
+export function salvarDadoDaAba(chave, valor) {
+  try {
+    sessionStorage.setItem(PREFIXO + chave, JSON.stringify(valor));
+  } catch {
+    // Acesso bloqueado: o app continua funcionando só na memória
+  }
+}
+
+// Apaga um dado guardado só na aba. Recebe a chave.
+export function apagarDadoDaAba(chave) {
+  try {
+    sessionStorage.removeItem(PREFIXO + chave);
   } catch {
     // Acesso bloqueado: não há o que apagar
   }
