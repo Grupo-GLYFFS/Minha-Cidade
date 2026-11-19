@@ -1,25 +1,41 @@
-/* Rodapé: fundo cinza-claro, container de 1200.
-   Computador: 88 em cima, 3 grupos de 240 alinhados à esquerda (vão de 64) → 64 → linha final com o logo à esquerda e o © à direita, 64 embaixo.
-   Celular: 64 em cima, 2 colunas com Ajuda embaixo de Páginas (vãos de 40 e 24) → 48 → logo em cima do ©, 48 embaixo. */
+/* Rodapé (RP10): fundo branco, container de 1200.
+   Computador: coluna de 300 com o logo em cima e o © no pé (alinhado à base do último link),
+   64 até os 3 grupos de links; 96 em cima e 80 embaixo.
+   Celular: logo → grupos em 2 colunas → ©, com 48 entre eles; 72 em cima e 56 embaixo. */
 
 .rodape {
   margin-top: auto;
-  background: var(--cor-fundo-card);
+  background: var(--cor-superficie);
   border-top: var(--espessura-borda) solid var(--cor-borda);
   color: var(--cor-texto);
 }
 
 .miolo {
   box-sizing: border-box;
+  display: grid;
+  grid-template-columns: rem(300px) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'marca grade'
+    'copy grade';
+  gap: rem(40px) rem(64px);
   width: min(var(--largura-topo), calc(100% - rem(64px)));
   margin-inline: auto;
-  padding: rem(88px) 0 rem(64px);
+  padding: rem(96px) 0 rem(80px);
+}
+
+.marca {
+  grid-area: marca;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .grade {
+  grid-area: grade;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, rem(240px)));
-  gap: rem(32px) rem(64px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: rem(40px) rem(32px);
 }
 
 .titulo {
@@ -27,7 +43,7 @@
   font-size: rem(15px);
   font-weight: 800;
   line-height: rem(20px);
-  color: var(--cor-azul-tinta);
+  color: var(--cor-texto);
 }
 
 .lista {
@@ -53,17 +69,9 @@
   text-underline-offset: 3px;
 }
 
-.base {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: rem(24px);
-  margin-top: rem(64px);
-  padding-top: rem(32px);
-  border-top: var(--espessura-borda) solid var(--cor-borda);
-}
-
 .creditos {
+  grid-area: copy;
+  align-self: end;
   margin: 0;
   font-size: rem(14px);
   font-weight: 500;
@@ -73,19 +81,18 @@
 
 @media (max-width: $mantine-breakpoint-sm) {
   .miolo {
-    padding: rem(64px) 0 rem(48px);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      'marca'
+      'grade'
+      'copy';
+    row-gap: rem(48px);
+    padding: rem(72px) 0 rem(56px);
   }
 
   .grade {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: rem(40px) rem(24px);
-  }
-
-  .base {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: rem(16px);
-    margin-top: rem(48px);
-    padding-top: rem(24px);
   }
 }
