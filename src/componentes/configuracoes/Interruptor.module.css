@@ -1,0 +1,50 @@
+.interruptor {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(60px);
+  height: rem(44px);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: none;
+  cursor: pointer;
+}
+
+.interruptor:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.trilho {
+  position: relative;
+  width: rem(48px);
+  height: rem(28px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-texto-placeholder);
+  transition: background 0.15s;
+}
+
+.bolinha {
+  position: absolute;
+  top: rem(3px);
+  left: rem(3px);
+  width: rem(22px);
+  height: rem(22px);
+  border-radius: 50%;
+  background: var(--cor-superficie);
+  transition: left 0.15s;
+}
+
+.interruptor[aria-checked='true'] .trilho {
+  background: var(--cor-azul);
+}
+
+.interruptor[aria-checked='true'] .bolinha {
+  left: rem(23px);
+}
+
+:global(html[data-contraste='alto']) .trilho {
+  border: 2px solid var(--cor-texto);
+}

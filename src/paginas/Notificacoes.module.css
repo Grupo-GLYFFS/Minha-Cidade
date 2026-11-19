@@ -1,0 +1,15 @@
+/* Abas da página Notificações: 40 até o primeiro dia */
+.abas {
+  margin-bottom: rem(40px);
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .abas {
+    margin-bottom: rem(24px);
+  }
+}
+
+/* As abas da base rolam na horizontal; aqui não deixam aparecer a barra de rolagem vertical */
+.abas > div {
+  overflow-y: hidden;
+}

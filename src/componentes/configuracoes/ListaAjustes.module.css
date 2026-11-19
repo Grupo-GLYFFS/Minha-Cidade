@@ -1,0 +1,13 @@
+/* O corpo de lista do SecaoCard tem 8 em cima e embaixo: a lista encosta nas bordas */
+.lista {
+  margin: rem(-8px) 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* No popup: linha em cima da primeira opção e a última encosta na faixa dos botões
+   (o corpo do popup tem 24 embaixo) */
+.popup {
+  margin: rem(12px) 0 rem(-24px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}

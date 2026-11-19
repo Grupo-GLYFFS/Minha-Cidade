@@ -1,0 +1,73 @@
+.grupo {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: rem(6px);
+  padding: rem(4px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: rem(14px);
+  background: var(--cor-superficie);
+}
+
+.opcao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8px);
+  height: rem(44px);
+  padding: 0 rem(12px);
+  border: var(--espessura-borda) solid transparent;
+  border-radius: rem(10px);
+  background: none;
+  font-family: var(--fonte);
+  font-size: rem(15px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cor-texto-2);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.opcao:hover {
+  background: var(--cor-fundo);
+}
+
+.opcao[aria-pressed='true'] {
+  border-color: var(--cor-azul);
+  background: var(--cor-faixa);
+  font-weight: 800;
+  color: var(--cor-azul-tinta);
+}
+
+.opcao:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.letra {
+  font-weight: 800;
+  line-height: 1;
+}
+
+.pequena {
+  font-size: rem(16px);
+}
+
+.padrao {
+  font-size: rem(18px);
+}
+
+.grande {
+  font-size: rem(20px);
+}
+
+.muito-grande {
+  font-size: rem(22px);
+}
+
+/* Celular: os quatro botões dividem a largura em duas linhas */
+@media (max-width: $mantine-breakpoint-sm) {
+  .grupo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

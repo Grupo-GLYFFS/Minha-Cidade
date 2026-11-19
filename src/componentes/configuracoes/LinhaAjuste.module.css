@@ -1,0 +1,102 @@
+/* Linha de ajuste (31): 64 de altura mínima, sangra o --pad-lateral do card para a
+   divisória ir de borda a borda. */
+
+.item {
+  margin-inline: calc(var(--pad-lateral, 0px) * -1);
+  list-style: none;
+}
+
+.item + .item {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.linha {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: rem(24px);
+  width: 100%;
+  min-height: rem(64px);
+  padding: rem(10px) var(--pad-lateral, 0px);
+  color: var(--cor-texto);
+}
+
+.comIcone {
+  grid-template-columns: rem(20px) minmax(0, 1fr) auto;
+  column-gap: rem(16px);
+}
+
+.botao {
+  border: 0;
+  background: none;
+  font-family: var(--fonte);
+  text-align: left;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background: var(--cor-fundo-card);
+}
+
+.botao:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: -3px;
+}
+
+.icone {
+  color: var(--cor-texto-2);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: rem(2px);
+  min-width: 0;
+}
+
+.rotulo {
+  font-size: rem(16px);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.detalhe {
+  font-size: rem(15px);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--cor-texto-2);
+}
+
+.valor {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(8px);
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+  white-space: nowrap;
+}
+
+.chevron {
+  color: var(--cor-texto-placeholder);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .empilhar {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: rem(12px);
+    padding-block: rem(16px);
+  }
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .linha {
+    column-gap: rem(12px);
+  }
+
+  .valor {
+    white-space: normal;
+    text-align: right;
+  }
+}
