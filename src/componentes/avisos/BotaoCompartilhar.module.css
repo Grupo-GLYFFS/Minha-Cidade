@@ -1,0 +1,25 @@
+/* Botão Compartilhar com a mensagem "Link copiado" logo embaixo, sem empurrar o layout. */
+
+.envolve {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.mensagem:empty {
+  display: none;
+}
+
+.mensagem {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + rem(6px));
+  right: 0;
+  padding: rem(4px) rem(10px);
+  border-radius: var(--raio-topo);
+  background: var(--cor-texto);
+  color: var(--cor-superficie);
+  font-size: rem(13px);
+  font-weight: 700;
+  white-space: nowrap;
+}
