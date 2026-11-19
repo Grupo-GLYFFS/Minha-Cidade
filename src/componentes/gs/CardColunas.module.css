@@ -38,14 +38,31 @@
   color: var(--cor-texto-2);
 }
 
-/* Celular: uma coluna, com a divisória em cima */
+/* Celular: uma coluna, com o ícone à esquerda do texto e a divisória em cima */
 @media (max-width: $mantine-breakpoint-sm) {
   .colunas {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .coluna {
-    padding: rem(20px) rem(16px);
+    display: grid;
+    grid-template-columns: rem(24px) minmax(0, 1fr);
+    column-gap: rem(14px);
+    padding: rem(16px);
+  }
+
+  .icone {
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+
+  .titulo {
+    font-size: rem(16px);
+  }
+
+  .texto {
+    margin-top: rem(2px);
+    font-size: rem(14px);
   }
 
   .coluna + .coluna {
