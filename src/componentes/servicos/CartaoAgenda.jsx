@@ -37,7 +37,8 @@ function partesDoCartao(solicitacao) {
     return {
       grande: formatarDiaMes(solicitacao.canceladaEm),
       linha: `Cancelada ${naData(solicitacao.canceladaEm)}`,
-      nota: 'O horário ficou livre para outra pessoa.',
+      // Só a que tinha horário marcado libera o horário
+      nota: agendamento ? 'O horário ficou livre para outra pessoa.' : undefined,
     };
   }
   // Solicitada ou em análise: no lugar da hora, o prazo da prefeitura e quanto falta

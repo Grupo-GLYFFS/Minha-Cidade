@@ -19,19 +19,21 @@ export default function BotaoSeguir({
   compacto = false,
 }) {
   const mostrarAviso = useAvisoTemporario();
+  // Texto curto do aviso: "esta obra" ou "esta votação" (vem do começo da chave)
+  const oQue = chave.startsWith('votacao') ? 'esta votação' : 'esta obra';
 
   // Pedido pelo visitante: segue quando ele volta logado (só liga, nunca desliga)
   const seguirDepois = useAcaoPendente(`seguir-${chave}`, () => {
     if (seguindo) return;
     aoAlternar();
-    mostrarAviso(`Você está seguindo ${nome}.`, '/perfil/seguindo');
+    mostrarAviso(`Você está seguindo ${oQue}.`, '/perfil/seguindo');
   });
 
   // Liga ou desliga e confirma no rodapé da tela
   function alternar() {
     aoAlternar();
-    if (seguindo) mostrarAviso(`Você deixou de seguir ${nome}.`);
-    else mostrarAviso(`Você está seguindo ${nome}.`, '/perfil/seguindo');
+    if (seguindo) mostrarAviso(`Você deixou de seguir ${oQue}.`);
+    else mostrarAviso(`Você está seguindo ${oQue}.`, '/perfil/seguindo');
   }
 
   if (!logado) {
