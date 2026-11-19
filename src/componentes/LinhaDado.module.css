@@ -67,4 +67,10 @@
     max-width: 58%;
     font-size: rem(15px);
   }
+
+  .valorUmaLinha {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }

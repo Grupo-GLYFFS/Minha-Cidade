@@ -25,6 +25,8 @@ const PROXIMO = {
 // Página "Pedido enviado", depois do Abrir pedido. Cabeçalho de confirmação com o protocolo
 // (e Copiar), o andamento com o próximo passo e o resumo do que foi enviado.
 // Uns 5 segundos depois, a análise simulada passa o pedido para "Em análise" e um aviso aparece.
+// No celular: protocolo numa linha, valores do resumo numa linha com reticências e os dois
+// botões do fim empilhados em largura total, com o principal em cima.
 // Recebe o pedido (lido do contexto, então muda sozinho quando entra em análise).
 export default function PedidoEnviado({ pedido }) {
   const [copiado, setCopiado] = useState(false);
@@ -115,26 +117,30 @@ export default function PedidoEnviado({ pedido }) {
           <AndamentoPedido etapas={etapas} textoData={textoData} />
         </SecaoCard>
         <SecaoCard titulo="O que você enviou" lista>
-          <LinhaDado icone="category" rotulo="Categoria" valor={categoria?.rotulo} />
-          <LinhaDado icone="title" rotulo="Título" valor={pedido.titulo} />
+          <LinhaDado umaLinha icone="category" rotulo="Categoria" valor={categoria?.rotulo} />
+          <LinhaDado umaLinha icone="title" rotulo="Título" valor={pedido.titulo} />
           <LinhaDado
+            umaLinha
             icone="signal_cellular_alt"
             rotulo="Gravidade estimada"
             valor={`${gravidade?.rotulo} · ${pedido.gravidade} de 5`}
           />
           <LinhaDado
+            umaLinha
             icone="location_on"
             rotulo="Onde"
             valor={`${enderecoDoPedido(pedido)} · ${pedido.bairro}`}
           />
           {pedido.subprefeitura && (
             <LinhaDado
+              umaLinha
               icone="account_balance"
               rotulo="Subprefeitura"
               valor={nomeSubprefeitura(pedido.subprefeitura)}
             />
           )}
           <LinhaDado
+            umaLinha
             icone="photo_library"
             rotulo="Fotos"
             valor={
@@ -142,19 +148,21 @@ export default function PedidoEnviado({ pedido }) {
             }
           />
         </SecaoCard>
-        <GrupoBotoes>
-          <Botao variante="secundario" para="/perfil/pedidos">
-            Ver meus pedidos
-          </Botao>
-          <Botao
-            variante="principal"
-            icone="arrow_forward"
-            iconeDireita
-            para={`/minha-cidade/pedidos/${pedido.id}`}
-          >
-            Ver o pedido
-          </Botao>
-        </GrupoBotoes>
+        <div className={classes.enviadoFim}>
+          <GrupoBotoes>
+            <Botao variante="secundario" para="/perfil/pedidos">
+              Ver meus pedidos
+            </Botao>
+            <Botao
+              variante="principal"
+              icone="arrow_forward"
+              iconeDireita
+              para={`/minha-cidade/pedidos/${pedido.id}`}
+            >
+              Ver o pedido
+            </Botao>
+          </GrupoBotoes>
+        </div>
       </div>
     </Pagina>
   );

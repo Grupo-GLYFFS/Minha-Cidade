@@ -95,7 +95,7 @@ Não têm trilha: Início, Serviços, Cidade de São Paulo, as páginas da conta
 | Para                                                  | Use            | Props principais                                                           |
 | ----------------------------------------------------- | -------------- | -------------------------------------------------------------------------- |
 | Seção de conteúdo em card (h2 + linha + corpo)        | `SecaoCard`    | `titulo`, `contagem`, `acao`, `lista`                                      |
-| Linha "rótulo … valor" com divisória de borda a borda | `LinhaDado`    | `icone`, `rotulo`, `valor`, `para`, `acao`                                 |
+| Linha "rótulo … valor" com divisória de borda a borda | `LinhaDado`    | `icone`, `rotulo`, `valor`, `para`, `acao`, `umaLinha` (celular)           |
 | Card genérico (clicável ou não)                       | `Cartao`       | `para`, `seta`, `topo`, `rodape`, `component`                              |
 | Pedido em qualquer lista                              | `CardPedido`   | `pedido`, `midia`, `nivelTitulo`                                           |
 | Título de grupo numa lista agrupada                   | `TituloGrupo`  | `titulo`, `contagem`, `cor`, `id`, `nivel`                                 |
@@ -161,13 +161,13 @@ O celular segue as pranchas de `celular/` e o `CELULAR-PADRAO.md`. Tudo do celul
 
 ### Props do `Pagina` para o celular
 
-| Prop         | Para quê                                                                                                   |
-| ------------ | ---------------------------------------------------------------------------------------------------------- |
-| `voltar`     | `{ rotulo, para }` no lugar do que vem da trilha; `false` tira a barra "‹ Voltar"                           |
-| `tituloTopo` | nome curto no meio da barra, só quando é diferente do h1 (ex.: `"Pedido 2026-005120"`)                      |
+| Prop         | Para quê                                                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `voltar`     | `{ rotulo, para }` no lugar do que vem da trilha; `false` tira a barra "‹ Voltar"                                                |
+| `tituloTopo` | nome curto no meio da barra, só quando é diferente do h1 (ex.: `"Pedido 2026-005120"`)                                           |
 | `acaoTopo`   | botão da direita: `<Botao variante="icone-acao" icone="share" aria-label="Compartilhar pedido" />` ou o Cancelar dos formulários |
-| `faixaTopo`  | o que vai logo abaixo da barra (ex.: `<FaixaPasso>` dos formulários)                                         |
-| `aba`        | marca outra aba: `"inicio"`, `"servicos"`, `"cidade"`, `"bairro"` ou `"mais"`                               |
+| `faixaTopo`  | o que vai logo abaixo da barra (ex.: `<FaixaPasso>` dos formulários)                                                             |
+| `aba`        | marca outra aba: `"inicio"`, `"servicos"`, `"cidade"`, `"bairro"` ou `"mais"`                                                    |
 
 ```jsx
 import BarraPe from '../componentes/celular/BarraPe';
