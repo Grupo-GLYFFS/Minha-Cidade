@@ -68,7 +68,26 @@
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
+  .grupo + .grupo {
+    margin-top: rem(32px);
+  }
+
   .grade {
     grid-template-columns: minmax(0, 1fr);
+    gap: rem(8px);
+  }
+
+  .grade > li {
+    min-width: 0;
+  }
+
+  .card {
+    padding: rem(14px) rem(48px) rem(14px) rem(16px);
+  }
+
+  /* Seta no meio da altura do card */
+  .seta {
+    top: 50%;
+    margin-top: rem(-11px);
   }
 }
