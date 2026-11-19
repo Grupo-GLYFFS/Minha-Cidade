@@ -1,4 +1,42 @@
 import { diaDaSemana, diasEntre, formatarDataExtenso } from './datas';
+import { formatarDataDetalhe, formatarHora } from './datasExtenso';
+
+// Começo do endereço das notificações que falam de uma solicitação de serviço
+const CAMINHO_SOLICITACAO = '/servicos/minhas-solicitacoes/';
+
+// Atualiza as notificações de agendamento com a situação de agora da solicitação:
+// cancelada pela pessoa ou remarcada para outro dia (o texto fixo do exemplo ficaria velho).
+// Recebe as notificações e as solicitações da pessoa; devolve a lista nova (as outras iguais).
+export function aplicarSituacaoDasSolicitacoes(notificacoes, solicitacoes) {
+  return notificacoes.map((item) => {
+    if (!item.para?.startsWith(CAMINHO_SOLICITACAO)) return item;
+    const id = item.para.slice(CAMINHO_SOLICITACAO.length);
+    const solicitacao = solicitacoes.find((s) => s.id === id);
+    if (!solicitacao) return item;
+    if (solicitacao.status === 'cancelada') {
+      return {
+        ...item,
+        texto: 'Você cancelou este agendamento.',
+        situacao: { cor: 'vermelho', rotulo: 'Cancelado' },
+        acao: { rotulo: 'Ver a solicitação' },
+      };
+    }
+    const remarcada = (solicitacao.historico ?? []).some((etapa) => etapa.rotulo === 'Remarcada');
+    if (remarcada && solicitacao.agendamento) {
+      const { data, hora, horaFim } = solicitacao.agendamento;
+      // "às 8h30" ou, com hora de fim, "das 7h às 13h"
+      const horario = horaFim
+        ? `das ${formatarHora(hora)} às ${formatarHora(horaFim)}`
+        : `às ${formatarHora(hora)}`;
+      return {
+        ...item,
+        texto: `Remarcado para ${formatarDataDetalhe(data)}, ${horario}.`,
+        situacao: { cor: 'azul', rotulo: 'Remarcado' },
+      };
+    }
+    return item;
+  });
+}
 
 // "Hoje" das notificações: sexta, 13 de novembro de 2026 (regra 8 das telas)
 export const HOJE_NOTIFICACOES = '2026-11-13';

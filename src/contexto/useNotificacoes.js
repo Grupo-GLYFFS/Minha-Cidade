@@ -3,6 +3,8 @@ import { ehMapaDeListas, lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
 import { USUARIO } from '../dados/usuario';
 import { NOTIFICACOES } from '../dados/notificacoes';
+import { useSolicitacoes } from './useSolicitacoes';
+import { aplicarSituacaoDasSolicitacoes } from '../logica/notificacoes';
 
 // Nome com que as notificações lidas ficam guardadas, no formato { idPessoa: [ids] }
 const CHAVE_LIDAS = 'notificacoes-lidas';
@@ -40,13 +42,18 @@ function juntarLidas(idPessoa, ids) {
 export function useNotificacoes() {
   const { usuario } = useSessao();
   const idPessoa = usuario?.id ?? null;
+  const { solicitacoes } = useSolicitacoes();
   const estado = useSyncExternalStore(inscrever, lerEstado);
 
+  // As de agendamento acompanham a solicitação (cancelada ou remarcada)
   const notificacoes = useMemo(() => {
     if (idPessoa !== USUARIO.id) return [];
     const lidas = estado[idPessoa] ?? [];
-    return NOTIFICACOES.map((item) => ({ ...item, lida: !item.nova || lidas.includes(item.id) }));
-  }, [estado, idPessoa]);
+    return aplicarSituacaoDasSolicitacoes(NOTIFICACOES, solicitacoes).map((item) => ({
+      ...item,
+      lida: !item.nova || lidas.includes(item.id),
+    }));
+  }, [estado, idPessoa, solicitacoes]);
 
   const naoLidas = notificacoes.filter((item) => !item.lida).length;
 
