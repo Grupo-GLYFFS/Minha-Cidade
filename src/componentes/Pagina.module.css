@@ -23,7 +23,7 @@
 /* Coluna larga das telas antigas */
 .colunaLarga {
   composes: coluna;
-  width: min(var(--largura-topo), calc(100% - rem(64px)));
+  width: min(var(--largura-larga), calc(100% - rem(64px)));
 }
 
 @media (max-width: $mantine-breakpoint-sm) {

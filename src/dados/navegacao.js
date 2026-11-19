@@ -71,15 +71,42 @@ export const MENU_CONTA = [
   { rotulo: 'Configurações', caminho: '/configuracoes', icone: 'settings' },
 ];
 
-// Colunas de links do rodapé provisório
+// Grupos de links do rodapé, na ordem do menu, com Global Solution no fim.
+// Todas as páginas do site estão aqui; o Início (/inicio) abre pelo logo.
+// Minha cidade e Meu bairro repetem as páginas do painel do menu.
 export const LINKS_RODAPE = [
   {
-    titulo: 'Navegar',
+    titulo: 'Serviços',
     links: [
-      { rotulo: 'Início', caminho: '/inicio' },
       { rotulo: 'Serviços', caminho: '/servicos' },
-      { rotulo: 'Minha cidade', caminho: '/minha-cidade' },
-      { rotulo: 'Meu bairro', caminho: '/meu-bairro' },
+      { rotulo: 'Buscar', caminho: '/busca' },
+      { rotulo: 'Minhas solicitações', caminho: '/servicos/minhas-solicitacoes' },
+    ],
+  },
+  {
+    titulo: 'Minha cidade',
+    links: [
+      { rotulo: 'Cidade de São Paulo', caminho: '/minha-cidade' },
+      ...painelRegiao('/minha-cidade'),
+    ],
+  },
+  {
+    titulo: 'Meu bairro',
+    links: [
+      { rotulo: 'Vila Mariana', caminho: '/meu-bairro' },
+      ...painelRegiao('/meu-bairro'),
+      { rotulo: 'Subprefeitura', caminho: '/minha-cidade/subprefeituras/vila-mariana' },
+    ],
+  },
+  {
+    titulo: 'Sua conta',
+    links: [
+      { rotulo: 'Meu perfil', caminho: '/perfil' },
+      { rotulo: 'Meus pedidos', caminho: '/perfil/pedidos' },
+      { rotulo: 'Meus votos', caminho: '/perfil/votos' },
+      { rotulo: 'Notificações', caminho: '/notificacoes' },
+      { rotulo: 'Configurações', caminho: '/configuracoes' },
+      { rotulo: 'Entrar ou criar conta', caminho: '/entrar' },
     ],
   },
   {
@@ -87,13 +114,13 @@ export const LINKS_RODAPE = [
     links: [
       { rotulo: 'Perguntas frequentes', caminho: '/ajuda/perguntas-frequentes' },
       { rotulo: 'Telefones úteis', caminho: '/ajuda/telefones' },
-      { rotulo: 'Acessibilidade', caminho: '/ajuda/acessibilidade' },
       { rotulo: 'Privacidade', caminho: '/ajuda/privacidade' },
     ],
   },
   {
-    titulo: 'Sobre',
+    titulo: 'Global Solution',
     links: [
+      { rotulo: 'Apresentação', caminho: '/' },
       { rotulo: 'Como funciona', caminho: '/como-funciona' },
       { rotulo: 'Impacto', caminho: '/impacto' },
       { rotulo: 'Equipe', caminho: '/equipe' },

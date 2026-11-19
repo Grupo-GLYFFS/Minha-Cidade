@@ -1,4 +1,4 @@
-/* Topo: logo à esquerda, menu no meio, ações à direita. Largura do topo: 1088. */
+/* Topo: logo à esquerda, menu no meio, ações à direita. Largura do topo: 1200. */
 
 .topo {
   position: relative;
@@ -15,31 +15,6 @@
   width: min(var(--largura-topo), calc(100% - rem(64px)));
   min-height: rem(76px);
   margin-inline: auto;
-}
-
-.logo {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: rem(10px);
-  min-height: rem(44px);
-  text-decoration: none;
-}
-
-.logoIcone {
-  display: block;
-  width: rem(44px);
-  height: rem(44px);
-}
-
-.logoNome {
-  font-family: var(--fonte-logo);
-  font-size: rem(18px);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  color: var(--cor-azul);
-  white-space: nowrap;
 }
 
 .menu {
@@ -95,7 +70,9 @@
     gap: rem(12px);
   }
 
-  .logoNome {
+  /* Celular: só o ícone do logo, para caber a busca, o sino e o menu da conta.
+     TODO: rever quando o topo do celular for desenhado */
+  .logo > span {
     display: none;
   }
 }

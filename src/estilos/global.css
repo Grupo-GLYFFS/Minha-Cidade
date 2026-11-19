@@ -93,8 +93,10 @@
   --altura-campo: 44px;
   /* Coluna de conteúdo de todas as páginas */
   --largura-conteudo: 880px;
-  /* Largura do topo e do rodapé */
-  --largura-topo: 1088px;
+  /* Largura do topo, da barra de acessibilidade, da faixa de alerta e do rodapé */
+  --largura-topo: 1200px;
+  /* Coluna larga das telas antigas */
+  --largura-larga: 1088px;
   /* Padding padrão (escala de 4 em 4) */
   --pad: 16px;
 
