@@ -19,17 +19,3 @@
   width: rem(48px);
   height: rem(48px);
 }
-
-.q72 {
-  width: rem(72px);
-  height: rem(72px);
-  border-radius: var(--raio-icone);
-}
-
-@media (max-width: $mantine-breakpoint-sm) {
-  .q72 {
-    width: rem(48px);
-    height: rem(48px);
-    border-radius: var(--raio-controle);
-  }
-}

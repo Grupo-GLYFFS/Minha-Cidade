@@ -17,3 +17,24 @@
   max-width: rem(420px);
   margin-top: rem(2px);
 }
+
+/* Celular: imagem em cima, na largura do card × 160, raio 12 (como a votação); ela vai até a
+   borda direita do texto, por cima do espaço da seta, e a seta fica no meio do texto. */
+@media (max-width: $mantine-breakpoint-sm) {
+  .card {
+    flex-direction: column;
+  }
+
+  .card > .midia {
+    width: auto;
+    height: rem(160px);
+    min-height: 0;
+    max-height: none;
+    margin: 0 rem(-48px) rem(-4px) 0;
+    aspect-ratio: auto;
+  }
+
+  .seta {
+    top: calc(50% + rem(86px));
+  }
+}

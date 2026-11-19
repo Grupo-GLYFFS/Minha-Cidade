@@ -25,8 +25,9 @@ import classes from './CartaoVotacaoLista.module.css';
 // "Ver a obra" ou "Ver o resultado" nas encerradas.
 // Recebe o projeto, o resultado (de calcularResultado), o voto da pessoa ("sim", "nao" ou
 // undefined), o texto do lugar (ex.: "Jabaquara" ou "Cidade toda · inclui a Vila Mariana")
-// o estado do Seguir (seguindo, aoAlternarSeguir, logado), um selo opcional e o caminho
-// da página da votação (para; sem ele, caminhoVotacao).
+// o estado do Seguir (seguindo, aoAlternarSeguir, logado), um selo opcional, o caminho
+// da página da votação (para; sem ele, caminhoVotacao) e imagemAEsquerda: na lista que mistura
+// votação e obra (O que você segue), a imagem vai à esquerda, quadrada de 96, como a da obra.
 export default function CartaoVotacaoLista({
   projeto,
   resultado,
@@ -37,6 +38,7 @@ export default function CartaoVotacaoLista({
   logado,
   selo,
   para,
+  imagemAEsquerda = false,
 }) {
   const aberta = votacaoAberta(projeto);
   // Página da votação: a do lugar da lista (para) ou a padrão do projeto
@@ -92,7 +94,9 @@ export default function CartaoVotacaoLista({
   }
 
   return (
-    <article className={classes.cartao}>
+    <article
+      className={imagemAEsquerda ? `${classes.cartao} ${classes.imagemEsquerda}` : classes.cartao}
+    >
       <div className={classes.faixaTopo}>
         <p className={classes.prazo}>
           {selo}

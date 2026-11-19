@@ -13,10 +13,19 @@ import classes from './GruposVotacoes.module.css';
 // - seguir: { segue(id), alternar(id), logado } do useSeguidos("votacoes");
 // - semAbertas (opcional): o que mostrar no lugar do grupo Abertas quando ele está vazio
 //   (sem ele, o grupo vazio some);
-// - selo (opcional): selo no começo da faixa de cima de cada card.
+// - selo (opcional): selo no começo da faixa de cima de cada card;
+// - imagemAEsquerda (opcional): imagem quadrada à esquerda, como a das obras (O que você segue).
 // Nas páginas de um lugar (recorte de bairro ou subprefeitura), as votações da cidade toda ganham
 // o selo "Toda a cidade" e os cards abrem a votação dentro do lugar.
-export default function GruposVotacoes({ projetos, prefixo, recorte, seguir, semAbertas, selo }) {
+export default function GruposVotacoes({
+  projetos,
+  prefixo,
+  recorte,
+  seguir,
+  semAbertas,
+  selo,
+  imagemAEsquerda = false,
+}) {
   const { votoDe, resultado } = useVotos();
   const { abertas, encerradas } = separarVotacoes(projetos);
 
@@ -40,6 +49,7 @@ export default function GruposVotacoes({ projetos, prefixo, recorte, seguir, sem
                 selo ?? (doLugar && projeto.escopo === 'cidade' ? <SeloCidadeToda /> : undefined)
               }
               para={doLugar ? `${recorte.base}/votacoes/${projeto.id}` : undefined}
+              imagemAEsquerda={imagemAEsquerda}
             />
           </li>
         ))}

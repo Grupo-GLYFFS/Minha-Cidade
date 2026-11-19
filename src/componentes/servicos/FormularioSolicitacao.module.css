@@ -38,12 +38,13 @@
   background: var(--cor-fundo-card);
 }
 
+/* Quadro de ícone de 48, raio 12, ícone de 24 */
 .enderecoIcone {
   display: grid;
   flex: none;
   place-items: center;
-  width: rem(40px);
-  height: rem(40px);
+  width: rem(48px);
+  height: rem(48px);
   border-radius: var(--raio-controle);
   background: var(--cor-faixa);
   color: var(--cor-azul-escuro);

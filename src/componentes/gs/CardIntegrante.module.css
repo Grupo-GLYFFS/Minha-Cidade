@@ -57,7 +57,7 @@
   color: var(--cor-texto);
 }
 
-/* Celular: sem a faixa; avatar de 56 à esquerda do nome e o papel embaixo, depois de uma linha */
+/* Celular: sem a faixa; avatar de 56 (branco com borda, como no computador) à esquerda do nome e o papel embaixo, depois de uma linha */
 @media (max-width: $mantine-breakpoint-sm) {
   .card {
     display: grid;
@@ -75,7 +75,6 @@
     width: rem(56px);
     height: rem(56px);
     margin: 0;
-    background: var(--cor-faixa);
   }
 
   .texto {

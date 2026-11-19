@@ -11,7 +11,8 @@ import miniatura from '../CardPedido.module.css';
 import classes from './CartaoObraLista.module.css';
 
 // Card de uma obra na lista de Obras (cidade ou bairro).
-// Em cima: miniatura (ilustração ou ícone do tipo, com a regra de altura do CardPedido), tipo e data da última atualização, título
+// Em cima: miniatura (ilustração ou ícone do tipo, com a regra de altura do CardPedido, a 16 do
+// texto; no celular, em cima, na largura do card × 160), tipo e data da última atualização, título
 // (link para o detalhe, que cobre o card todo), situação, origem e onde fica.
 // Embaixo, numa faixa separada por linha: barra de % feita, previsão e o botão Seguir
 // (a obra concluída não tem Seguir).

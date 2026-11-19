@@ -195,11 +195,16 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  width: rem(80px);
-  height: rem(80px);
+  width: rem(96px);
+  height: rem(96px);
   border-radius: var(--raio-controle);
-  background: var(--cor-status-cinza-fundo);
-  color: var(--cor-texto-2);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+/* Quadro de reserva de 96: ícone de 40, como nos pedidos sem foto */
+.miniatura :global(.icone) {
+  font-size: rem(40px);
 }
 
 .itemTexto {

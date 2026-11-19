@@ -11,14 +11,19 @@ import classes from './CardObraSeguida.module.css';
 // Card de uma obra seguida no Início, no molde do CardPedido (o card inteiro é o link).
 // Ordem: ilustração da obra (ou ícone do tipo) · selo "Obra" e situação · título ·
 // "bairro · previsão" · "62% feita" e a barra · seta arrow_forward.
+// No celular, a imagem vai em cima, na largura do card × 160, como a da votação.
 // Recebe a obra (de dados/obras.js).
 export default function CardObraSeguida({ obra }) {
   const situacao = buscarSituacaoObra(obra.situacao);
 
   return (
-    <Link to={`/minha-cidade/obras/${obra.id}`} className={base.card}>
+    <Link to={`/minha-cidade/obras/${obra.id}`} className={`${base.card} ${classes.card}`}>
       <span
-        className={obra.imagem ? base.midia : `${base.midia} ${base.midiaIcone}`}
+        className={
+          obra.imagem
+            ? `${base.midia} ${classes.midia}`
+            : `${base.midia} ${base.midiaIcone} ${classes.midia}`
+        }
         aria-hidden="true"
       >
         {obra.imagem ? <img src={obra.imagem} alt="" /> : <Icone nome={obra.icone} tamanho={32} />}
@@ -42,7 +47,7 @@ export default function CardObraSeguida({ obra }) {
           <BarraPercentual percentual={obra.percentual} cor={situacao?.cor} altura={8} />
         </span>
       </div>
-      <Icone nome="arrow_forward" tamanho={22} className={base.seta} />
+      <Icone nome="arrow_forward" tamanho={22} className={`${base.seta} ${classes.seta}`} />
     </Link>
   );
 }

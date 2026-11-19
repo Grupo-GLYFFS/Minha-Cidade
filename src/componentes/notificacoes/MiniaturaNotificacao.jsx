@@ -2,7 +2,8 @@ import Icone from '../Icone';
 import classes from './MiniaturaNotificacao.module.css';
 
 // Quadrado com o ícone da notificação: 96 na página e 56 na caixa do sino.
-// Alerta da Defesa Civil fica amarelo; não lida fica branca com borda azul-clara.
+// Fundo #EDF2FF com ícone de 40 (28 na caixa); alerta da Defesa Civil fica âmbar.
+// Na caixa do sino, a não lida tem fundo azul-claro, então o quadro dela fica branco.
 // Recebe a notificação ({ icone, alerta, lida }) e "pequena" (versão de 56 da caixa).
 export default function MiniaturaNotificacao({ notificacao, pequena = false }) {
   const lista = [classes.miniatura];
@@ -12,7 +13,7 @@ export default function MiniaturaNotificacao({ notificacao, pequena = false }) {
 
   return (
     <span className={lista.join(' ')} aria-hidden="true">
-      <Icone nome={notificacao.icone} tamanho={pequena ? 28 : 32} />
+      <Icone nome={notificacao.icone} tamanho={pequena ? 28 : 32} className={classes.icone} />
     </span>
   );
 }

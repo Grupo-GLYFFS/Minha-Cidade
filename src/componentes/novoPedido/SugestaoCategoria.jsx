@@ -46,7 +46,7 @@ export default function SugestaoCategoria({
               onChange={() => aoEscolher(item.id)}
             />
             <span className={classes.iconeCategoria} aria-hidden="true">
-              <Icone nome={item.icone} tamanho={22} />
+              <Icone nome={item.icone} />
             </span>
             {item.rotulo}
           </label>
@@ -60,7 +60,7 @@ export default function SugestaoCategoria({
       {atual && (
         <div className={classes.sugestaoLinha} role="status">
           <span className={classes.iconeCategoria} aria-hidden="true">
-            <Icone nome={atual.icone} tamanho={22} />
+            <Icone nome={atual.icone} />
           </span>
           <div className={classes.sugestaoTexto}>
             <p className={classes.sugestaoRotulo}>Categoria sugerida</p>

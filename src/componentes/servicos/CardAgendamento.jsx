@@ -31,7 +31,7 @@ export default function CardAgendamento({ solicitacao, proxima = false, aoAvisar
           )}
         </p>
         <span className={classes.iconeCard}>
-          <IconeServico nome={servico?.icone ?? 'event'} tamanho={72} />
+          <IconeServico nome={servico?.icone ?? 'event'} />
         </span>
         <div className={classes.conteudo}>
           <h4 className={classes.titulo}>

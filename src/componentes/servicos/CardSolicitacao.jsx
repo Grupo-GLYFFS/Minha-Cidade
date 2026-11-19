@@ -32,17 +32,20 @@ function linhaFinal(solicitacao) {
 
 // Card de uma solicitação ainda sem dia (solicitadas) ou já encerrada (concluídas, canceladas):
 // ícone, nome (link para o detalhe), o que foi pedido, o prazo da prefeitura e a linha final.
+// Na solicitada com prazo, a linha final vai na mesma linha do prazo, com reticências:
+// "O CRAS marca o dia até 28 nov · Solicitada hoje · faltam 15 dias".
 // Recebe a solicitação.
 export default function CardSolicitacao({ solicitacao }) {
   const servico = buscarServico(solicitacao.idServico);
   const final = linhaFinal(solicitacao);
   const aberta = solicitacao.status === 'solicitada' || solicitacao.status === 'em-analise';
+  const comPrazo = aberta && Boolean(solicitacao.prazoData);
 
   return (
     <article className={classes.card}>
       <div className={classes.linhaSemHora}>
         <span className={classes.iconeCard}>
-          <IconeServico nome={servico?.icone ?? 'event'} tamanho={72} />
+          <IconeServico nome={servico?.icone ?? 'event'} />
         </span>
         <div className={classes.conteudo}>
           <h3 className={classes.titulo}>
@@ -51,18 +54,26 @@ export default function CardSolicitacao({ solicitacao }) {
             </Link>
           </h3>
           <p className={classes.resumo}>{solicitacao.resumo}</p>
-          {aberta && solicitacao.prazoData && (
+          {comPrazo ? (
             <p className={classes.prazo}>
               <Icone nome="event_upcoming" tamanho={20} />
-              {solicitacao.textoPrazo} {formatarDiaMes(solicitacao.prazoData)}
+              <span className={classes.prazoTexto}>
+                {solicitacao.textoPrazo} {formatarDiaMes(solicitacao.prazoData)}
+                <span className={classes.prazoMeta}>
+                  <span aria-hidden="true"> · </span>
+                  <span className={classes.oculto}>. </span>
+                  {final.texto}
+                </span>
+              </span>
+            </p>
+          ) : (
+            <p
+              className={`${classes.meta} ${final.icone === 'check_circle' ? classes.metaFeita : ''}`}
+            >
+              {final.icone && <Icone nome={final.icone} tamanho={18} />}
+              {final.texto}
             </p>
           )}
-          <p
-            className={`${classes.meta} ${final.icone === 'check_circle' ? classes.metaFeita : ''}`}
-          >
-            {final.icone && <Icone nome={final.icone} tamanho={18} />}
-            {final.texto}
-          </p>
         </div>
       </div>
     </article>

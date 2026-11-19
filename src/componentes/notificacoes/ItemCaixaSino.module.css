@@ -41,6 +41,19 @@
   font-weight: 700;
   color: var(--cor-texto-2);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Só o tipo encolhe, com reticências; "Não lida" e a hora ficam inteiros */
+.linha1 > * {
+  flex: none;
+}
+
+.linha1 > .tipo {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ponto {
@@ -83,8 +96,6 @@
 }
 
 .tipo {
-  margin: 0;
-  font-size: rem(13px);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--cor-texto);
 }

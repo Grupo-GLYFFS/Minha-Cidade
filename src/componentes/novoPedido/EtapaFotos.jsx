@@ -58,7 +58,7 @@ export default function EtapaFotos({ fotos, aoMudar }) {
         onDragLeave={() => setArrastando(false)}
         onDrop={aoSoltar}
       >
-        <Icone nome="add_photo_alternate" tamanho={32} />
+        <Icone nome="add_a_photo" tamanho={32} />
         <p className={classes.zonaTitulo}>
           {cheia ? 'Você já escolheu 3 fotos' : 'Arraste as fotos para cá'}
         </p>

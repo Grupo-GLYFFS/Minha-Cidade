@@ -112,6 +112,21 @@
   color: var(--cor-azul-escuro);
 }
 
+/* Prazo e "Solicitada…" numa linha só; o que não couber vira reticências */
+.prazoTexto {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prazoMeta {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
 .selo {
   position: relative;
   z-index: 1;

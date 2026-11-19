@@ -117,9 +117,41 @@ const DESENHOS = {
       <rect x="0" y="162" width="320" height="38" fill="#667085" />
     </>
   ),
+  // Boca de lobo: rua com a grade no meio-fio e água empoçada
+  bocaDeLobo: (
+    <>
+      <rect width="320" height="200" fill="#DCE6FF" />
+      <rect x="0" y="36" width="320" height="76" fill="#F2F4F7" />
+      <g fill="#B9C9F5">
+        <rect x="22" y="52" width="40" height="32" rx="3" />
+        <rect x="258" y="52" width="40" height="32" rx="3" />
+      </g>
+      <rect x="0" y="112" width="320" height="20" fill="#D0D5DD" />
+      <rect x="0" y="132" width="320" height="8" fill="#98A2B3" />
+      <rect x="0" y="140" width="320" height="60" fill="#667085" />
+      <rect x="104" y="116" width="112" height="24" rx="4" fill="#1D2939" />
+      <path
+        d="M122 120v16M140 120v16M160 120v16M180 120v16M198 120v16"
+        stroke="#475467"
+        strokeWidth="5"
+      />
+      <ellipse cx="160" cy="170" rx="128" ry="22" fill="#5B8DEF" />
+      <path
+        d="M64 168c18-6 36-6 54 0M184 174c18-6 36-6 54 0"
+        stroke="#DCE6FF"
+        strokeWidth="4"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <g fill="#6B4F3A">
+        <path d="M138 150l14 4-7 6z" />
+        <path d="M178 146l12 2-5 8z" />
+      </g>
+    </>
+  ),
 };
 
-// Mostra o desenho de um pedido. Recebe o nome (poste, buraco, arvore, calcada),
+// Mostra o desenho de um pedido. Recebe o nome (poste, buraco, arvore, calcada, bocaDeLobo),
 // um texto alternativo (sem ele, o desenho é decorativo) e embaixo (no cabeçalho largo,
 // mostra a parte de baixo do desenho, onde está o problema).
 // Devolve null se o nome não existir.

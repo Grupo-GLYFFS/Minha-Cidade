@@ -5,7 +5,7 @@ import MiniaturaNotificacao from './MiniaturaNotificacao';
 import { dataHoraIso, horaNaCaixa } from '../../logica/notificacoes';
 import classes from './ItemCaixaSino.module.css';
 
-// Uma notificação na caixa do sino: miniatura de 56, "Não lida · hora", título e o motivo.
+// Uma notificação na caixa do sino: miniatura de 56, "Tipo · Não lida · hora" e o título.
 // Não lida tem fundo azul-claro. A linha inteira é clicável; abrir marca como lida e fecha a caixa.
 // Recebe a notificação e aoAbrir(id).
 export default function ItemCaixaSino({ notificacao, aoAbrir }) {
@@ -16,6 +16,8 @@ export default function ItemCaixaSino({ notificacao, aoAbrir }) {
       <MiniaturaNotificacao notificacao={notificacao} pequena />
       <div className={classes.texto}>
         <p className={classes.linha1}>
+          <span className={classes.tipo}>{tipo}</span>
+          <span aria-hidden="true">·</span>
           {!lida && (
             <>
               <Icone nome="fiber_manual_record" tamanho={18} preenchido className={classes.ponto} />
@@ -31,7 +33,6 @@ export default function ItemCaixaSino({ notificacao, aoAbrir }) {
             {titulo}
           </Link>
         </p>
-        <p className={classes.tipo}>{tipo}</p>
       </div>
     </li>
   );

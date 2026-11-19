@@ -57,6 +57,7 @@ export default function PainelSeguidos({ aba, listas, seguirObras, seguirVotacoe
         prefixo="seguindo"
         seguir={seguirVotacoes}
         selo={<SeloTipo tipo="votacao" />}
+        imagemAEsquerda
       />
     );
   }

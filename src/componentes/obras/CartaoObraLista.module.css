@@ -17,8 +17,14 @@
 .corpo {
   display: flex;
   align-items: stretch;
-  gap: rem(20px);
+  gap: rem(16px);
   padding: rem(20px) rem(64px) rem(20px) rem(32px);
+}
+
+/* Coluna da foto com 96 (a votação ao lado, em O que você segue, tem 96 × 96) */
+.corpo > .midia {
+  width: rem(96px);
+  aspect-ratio: auto;
 }
 
 .texto {
@@ -140,17 +146,28 @@
   margin-left: auto;
 }
 
-/* Celular: card de lista sem imagem, como o pedido; texto secundário numa linha com reticências,
-   seta à direita no meio do texto e o Seguir na largura toda. */
+/* Celular: foto em cima, na largura do card × 160, raio 12 (como a votação); texto secundário
+   numa linha com reticências, seta à direita no meio do texto e o Seguir na largura toda. */
 @media (max-width: $mantine-breakpoint-sm) {
   .corpo {
+    flex-wrap: wrap;
     align-items: center;
-    gap: rem(14px);
+    gap: rem(12px) rem(14px);
     padding: rem(16px);
   }
 
   .corpo > .midia {
-    display: none;
+    flex: 0 0 100%;
+    width: 100%;
+    height: rem(160px);
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  /* Texto e seta dividem a linha de baixo da foto */
+  .texto {
+    flex: 1 1 0;
   }
 
   .meta {

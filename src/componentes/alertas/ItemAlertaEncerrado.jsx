@@ -4,7 +4,7 @@ import SeloSituacao from '../SeloSituacao';
 import { buscarNivel } from '../../logica/alertas';
 import classes from './Alertas.module.css';
 
-// Card de um alerta encerrado na lista: ícone cinza, órgão e período, título (o link),
+// Card de um alerta encerrado na lista: quadro azul-claro de 96 com o ícone, órgão e período, título (o link),
 // selos "Encerrado" + nível e onde foi. O card inteiro abre o detalhe.
 // Recebe o alerta, o caminho do detalhe e o texto de onde foi.
 export default function ItemAlertaEncerrado({ alerta, caminho, onde }) {

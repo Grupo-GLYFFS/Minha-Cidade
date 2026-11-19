@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import Icone from './Icone';
 import SeloSituacao from './SeloSituacao';
+import IlustracaoPedido from './pedidos/IlustracaoPedido';
 import { buscarCategoria, buscarStatus, textoUltimaMudanca } from '../logica/pedidos';
 import classes from './CardPedido.module.css';
 
 // Card simples de pedido, usado em toda lista de pedidos (cidade, bairro, Meus pedidos,
 // pedidos parecidos, Início). O card inteiro é o link; sem botões dentro, só a seta.
-// Ordem: miniatura (foto, ilustração ou ícone da categoria) · categoria e situação ·
+// Ordem: miniatura (foto, ilustração ou ícone da categoria; boca de lobo sem foto ganha o
+// desenho próprio) · categoria e situação ·
 // título · rua e bairro · data · seta arrow_forward.
 // Recebe o pedido (de dados/pedidos.js), uma ilustração <svg> opcional (midia)
 // o nível do título (3 por padrão) e um selo opcional no começo da primeira linha
@@ -19,10 +21,12 @@ export default function CardPedido({ pedido, midia, nivelTitulo = 3, selo, base 
   const Titulo = `h${nivelTitulo}`;
 
   // Miniatura: ilustração recebida, foto do pedido ou ícone da categoria
+  const desenho =
+    midia || (pedido.categoria === 'boca-de-lobo' ? <IlustracaoPedido nome="bocaDeLobo" /> : null);
   let miniatura = <Icone nome={categoria?.icone ?? 'assignment'} tamanho={32} />;
-  if (midia) miniatura = midia;
+  if (desenho) miniatura = desenho;
   else if (pedido.foto) miniatura = <img src={pedido.foto} alt="" />;
-  const semImagem = !midia && !pedido.foto;
+  const semImagem = !desenho && !pedido.foto;
 
   return (
     <Link to={`${base}/${pedido.id}`} className={`${classes.card} ${classes.pedido}`}>

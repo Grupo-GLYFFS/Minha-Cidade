@@ -119,6 +119,20 @@
   color: var(--cor-azul);
 }
 
+/* Computador, na lista com obras: imagem quadrada de 96 à esquerda, no meio das 3 linhas */
+@media (min-width: $mantine-breakpoint-sm) {
+  .imagemEsquerda .meio {
+    align-items: center;
+    gap: rem(16px);
+  }
+
+  .imagemEsquerda .midia {
+    order: -1;
+    width: rem(96px);
+    height: rem(96px);
+  }
+}
+
 .faixaPe {
   display: flex;
   flex-wrap: wrap;
@@ -202,7 +216,7 @@
   }
 
   .prazo > :global(.icone) {
-    font-size: rem(18px);
+    font-size: rem(20px);
   }
 
   .meio {

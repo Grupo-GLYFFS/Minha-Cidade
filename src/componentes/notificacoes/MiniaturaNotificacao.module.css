@@ -15,8 +15,13 @@
   height: rem(56px);
 }
 
-/* Não lida: branca com contorno azul-claro (fica sobre o fundo azul da caixa) */
-.nova {
+/* Quadro de 96: ícone de 40, como o quadro de reserva dos pedidos */
+.miniatura:not(.pequena) .icone {
+  font-size: rem(40px);
+}
+
+/* Não lida na caixa do sino: branca com contorno azul-claro (fica sobre o fundo azul da linha) */
+.pequena.nova {
   background: var(--cor-superficie);
   box-shadow: inset 0 0 0 1px var(--cor-azul-borda);
 }

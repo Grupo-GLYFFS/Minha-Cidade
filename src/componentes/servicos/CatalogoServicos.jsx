@@ -108,9 +108,7 @@ export default function CatalogoServicos({ categoriaInicial }) {
             <h3 className={classes.tituloGrupo} id={`${idAssunto(categoria.id)}-t`}>
               <span className={classes.bolinha} aria-hidden="true" />
               <span className={classes.nomeGrupo}>{categoria.nome}</span>
-              <span className={classes.contagem}>
-                {servicosDaCategoria(categoria.id).length}
-              </span>
+              <span className={classes.contagem}>{servicosDaCategoria(categoria.id).length}</span>
               <span className={classes.linhaGrupo} aria-hidden="true" />
             </h3>
             <ul className={classes.cards}>

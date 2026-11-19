@@ -161,13 +161,13 @@ O celular segue as pranchas de `celular/` e o `CELULAR-PADRAO.md`. Tudo do celul
 
 ### Props do `Pagina` para o celular
 
-| Prop         | Para quê                                                                                                   |
-| ------------ | ---------------------------------------------------------------------------------------------------------- |
-| `voltar`     | `{ rotulo, para }` no lugar do que vem da trilha; `false` tira a barra "‹ Voltar"                           |
-| `tituloTopo` | nome curto no meio da barra, só quando é diferente do h1 (ex.: `"Pedido 2026-005120"`)                      |
+| Prop         | Para quê                                                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `voltar`     | `{ rotulo, para }` no lugar do que vem da trilha; `false` tira a barra "‹ Voltar"                                                |
+| `tituloTopo` | nome curto no meio da barra, só quando é diferente do h1 (ex.: `"Pedido 2026-005120"`)                                           |
 | `acaoTopo`   | botão da direita: `<Botao variante="icone-acao" icone="share" aria-label="Compartilhar pedido" />` ou o Cancelar dos formulários |
-| `faixaTopo`  | o que vai logo abaixo da barra (ex.: `<FaixaPasso>` dos formulários)                                         |
-| `aba`        | marca outra aba: `"inicio"`, `"servicos"`, `"cidade"`, `"bairro"` ou `"mais"`                               |
+| `faixaTopo`  | o que vai logo abaixo da barra (ex.: `<FaixaPasso>` dos formulários)                                                             |
+| `aba`        | marca outra aba: `"inicio"`, `"servicos"`, `"cidade"`, `"bairro"` ou `"mais"`                                                    |
 
 ```jsx
 import BarraPe from '../componentes/celular/BarraPe';

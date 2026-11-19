@@ -7,8 +7,8 @@ import MiniaturaNotificacao from './MiniaturaNotificacao';
 import { dataHoraIso } from '../../logica/notificacoes';
 import classes from './CardNotificacao.module.css';
 
-// Card de uma notificação na página Notificações (28): miniatura, "Não lida · hora", título,
-// o que mudou e o motivo; embaixo, o selo da situação e o botão que abre a página.
+// Card de uma notificação na página Notificações (28): miniatura, "Tipo · Não lida · hora", título
+// e o que mudou; embaixo, o selo da situação e o botão que abre a página.
 // O card inteiro é clicável (o link do título cobre o card); abrir marca como lida.
 // O botão repete o link para quem usa o mouse, então fica fora do teclado e do leitor de tela.
 // Recebe a notificação e aoAbrir(id).
@@ -21,6 +21,8 @@ export default function CardNotificacao({ notificacao, aoAbrir }) {
         <MiniaturaNotificacao notificacao={notificacao} />
         <div className={classes.texto}>
           <p className={classes.linha1}>
+            <span className={classes.tipo}>{tipo}</span>
+            <span aria-hidden="true">·</span>
             {!lida && (
               <>
                 <Icone
@@ -42,7 +44,6 @@ export default function CardNotificacao({ notificacao, aoAbrir }) {
             </Link>
           </h3>
           <p className={classes.descricao}>{texto}</p>
-          <p className={classes.tipo}>{tipo}</p>
         </div>
       </div>
       <div className={classes.pe}>

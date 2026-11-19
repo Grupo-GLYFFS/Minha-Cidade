@@ -15,7 +15,7 @@
   place-items: center;
   width: rem(40px);
   height: rem(40px);
-  border-radius: rem(10px);
+  border-radius: var(--raio-controle);
   background: var(--cor-status-verde-fundo);
   color: var(--cor-sucesso);
 }
