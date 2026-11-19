@@ -6,13 +6,19 @@ import classes from './FaixaAlerta.module.css';
 // Recebe o título em negrito ("Alerta da Defesa Civil"), o texto, o caminho do link
 // e o texto do link ("Ver orientações").
 // Usa role="status" para o leitor de tela anunciar sem interromper a pessoa.
+// No celular, fica centralizada em 3 linhas: "⚠ título", o texto e o link.
 export default function FaixaAlerta({ titulo, texto, para, rotuloLink = 'Ver orientações' }) {
   return (
     <div className={classes.faixa} role="status">
       <div className={classes.miolo}>
-        <Icone nome="warning" preenchido />
+        <Icone nome="warning" preenchido className={classes.iconeComputador} />
         <p className={classes.texto}>
-          <strong>{titulo}:</strong> {texto}
+          <strong className={classes.titulo}>
+            <Icone nome="warning" tamanho={22} preenchido className={classes.iconeCelular} />
+            {titulo}
+            <span className={classes.doisPontos}>:</span>
+          </strong>{' '}
+          {texto}
         </p>
         {para && (
           <Link to={para} className={classes.link}>

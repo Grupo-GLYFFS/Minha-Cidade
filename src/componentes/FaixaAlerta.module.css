@@ -39,10 +39,40 @@
   white-space: nowrap;
 }
 
+/* O ícone de dentro do título só aparece no celular */
+.iconeCelular {
+  display: none;
+}
+
+/* Celular: centralizada em 3 linhas ("⚠ título", o texto e "Ver orientações") */
 @media (max-width: $mantine-breakpoint-sm) {
   .miolo {
+    flex-direction: column;
+    gap: 0;
     width: calc(100% - rem(32px));
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    padding: rem(16px) 0 rem(4px);
+    text-align: center;
+  }
+
+  .iconeComputador,
+  .doisPontos {
+    display: none;
+  }
+
+  .iconeCelular {
+    display: inline-block;
+  }
+
+  .titulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(6px);
+    margin-bottom: rem(4px);
+    font-size: rem(16px);
+  }
+
+  .texto {
+    line-height: 1.45;
   }
 }

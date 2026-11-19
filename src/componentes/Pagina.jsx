@@ -31,6 +31,7 @@ import classes from './Pagina.module.css';
 //   "‹ Voltar". Sem ele, o "‹ Voltar" é o penúltimo item da trilha do cabeçalho;
 // - tituloTopo (celular): nome curto no meio da barra "‹ Voltar" (só quando é diferente do h1);
 // - acaoTopo (celular): botão da direita da barra "‹ Voltar" (compartilhar só com ícone, Cancelar);
+// - faixaTopo (celular): o que vai logo abaixo da barra "‹ Voltar" (ex.: <FaixaPasso> dos formulários);
 // - aba (celular): marca outra aba ("inicio", "servicos", "cidade", "bairro", "mais") no lugar
 //   da que vem da rota.
 // Ao trocar de página, a tela volta para o topo. O título da aba do navegador acompanha o h1
@@ -44,6 +45,7 @@ export default function Pagina({
   voltar,
   tituloTopo,
   acaoTopo,
+  faixaTopo,
   aba,
 }) {
   const { pathname } = useLocation();
@@ -116,6 +118,7 @@ export default function Pagina({
           acao={acaoTopo}
         />
       )}
+      {faixaTopo}
       <main id="conteudo" className={classes.principal} tabIndex={-1}>
         {cabecalho}
         <div className={larga ? classes.colunaLarga : classes.coluna}>

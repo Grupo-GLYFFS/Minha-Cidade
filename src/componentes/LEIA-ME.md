@@ -147,7 +147,72 @@ Não têm trilha: Início, Serviços, Cidade de São Paulo, as páginas da conta
 <EstadoErro titulo="Não conseguimos carregar os pedidos agora" aoTentarDeNovo={recarregar} />
 ```
 
+## Celular (até 768 px)
+
+O celular segue as pranchas de `celular/` e o `CELULAR-PADRAO.md`. Tudo do celular fica em `@media (max-width: $mantine-breakpoint-sm)` nos CSS Modules; no computador nada muda. No JavaScript, use `useMediaQuery(CONSULTA_CELULAR)` (`src/logica/navegacaoCelular.js`).
+
+### O que o `Pagina` já faz sozinho
+
+- Esconde o `Topo` e o `Rodape`.
+- Mostra a **barra de abas** presa embaixo (Início · Serviços · Cidade · Bairro · Mais). A aba marcada vem da rota (`abaDoCelular` em `src/logica/navegacaoCelular.js`); o Mais mostra as notificações não lidas e abre a **folha Mais**.
+- Mostra a **barra "‹ Voltar"** nas páginas internas. O destino é o **penúltimo item da `trilha`** do `CabecalhoPagina`. Sem trilha: as páginas da conta (`/perfil…`, `/configuracoes`, `/notificacoes`) ganham "‹ Mais", que abre a folha Mais; Minhas solicitações vai para Serviços; Entrar e Criar conta vão para o Início; o resto ganha "‹ Voltar" (volta uma página).
+- Não mostra a barra "‹ Voltar" nas páginas de 1º nível (`/inicio`, `/servicos`, `/minha-cidade`, `/meu-bairro`) nem no cabeçalho `tipo="confirmacao"`.
+- No `CabecalhoPagina`, a trilha e as etapas somem, o h1 vai até 2 linhas (3 no detalhe) e as `acoes` ficam em largura total, divididas em partes iguais.
+
+### Props do `Pagina` para o celular
+
+| Prop         | Para quê                                                                                                   |
+| ------------ | ---------------------------------------------------------------------------------------------------------- |
+| `voltar`     | `{ rotulo, para }` no lugar do que vem da trilha; `false` tira a barra "‹ Voltar"                           |
+| `tituloTopo` | nome curto no meio da barra, só quando é diferente do h1 (ex.: `"Pedido 2026-005120"`)                      |
+| `acaoTopo`   | botão da direita: `<Botao variante="icone-acao" icone="share" aria-label="Compartilhar pedido" />` ou o Cancelar dos formulários |
+| `faixaTopo`  | o que vai logo abaixo da barra (ex.: `<FaixaPasso>` dos formulários)                                         |
+| `aba`        | marca outra aba: `"inicio"`, `"servicos"`, `"cidade"`, `"bairro"` ou `"mais"`                               |
+
+```jsx
+import BarraPe from '../componentes/celular/BarraPe';
+import FaixaPasso from '../componentes/celular/FaixaPasso';
+
+// Detalhe: compartilhar na barra do topo; Seguir | Apoiar na barra do pé (só no celular)
+<Pagina
+  tituloTopo={`Pedido ${pedido.protocolo}`}
+  acaoTopo={<Botao variante="icone-acao" icone="share" aria-label="Compartilhar pedido" onClick={compartilhar} />}
+  cabecalho={<CabecalhoPagina tipo="detalhe" trilha={trilha} titulo={pedido.titulo} acoes={acoesDoComputador} />}
+>
+  {/* conteúdo */}
+  <BarraPe>
+    <Botao variante="secundario" icone="add">Seguir</Botao>
+    <Botao variante="principal" icone="thumb_up">Apoiar</Botao>
+  </BarraPe>
+</Pagina>
+
+// Formulário: ‹ Voltar · nome · Cancelar, faixa do passo e o botão principal no pé
+<Pagina
+  voltar={{ rotulo: 'Voltar', para: anterior }}
+  tituloTopo="Abrir pedido"
+  acaoTopo={<Botao variante="texto" compacto para="/minha-cidade/pedidos">Cancelar</Botao>}
+  faixaTopo={<FaixaPasso etapas={ETAPAS} atual={2} />}
+  cabecalho={<CabecalhoPagina tipo="formulario" titulo="Abrir pedido" etapas={ETAPAS} etapaAtual={2} />}
+>
+  {/* campos */}
+  <BarraPe passo={{ nome: 'Onde fica', rotulo: 'Passo 2 de 3' }}>
+    <Botao variante="principal" icone="arrow_forward" iconeDireita type="submit">Continuar</Botao>
+  </BarraPe>
+</Pagina>
+```
+
+- O que sai do cabeçalho no celular (ex.: Seguir e Apoiar do detalhe, que vão para a `BarraPe`): esconda no CSS da página com `@media (max-width: $mantine-breakpoint-sm)`.
+- A `BarraPe` e a `FaixaPasso` só aparecem no celular. Com a `BarraPe` na página, o aviso do rodapé sobe para ficar 16 acima dela, e o fim da página ganha espaço para nada ficar por baixo.
+- `Popup` vira folha que sobe de baixo, até em cima da barra de abas, com os botões divididos em partes iguais. Não precisa fazer nada.
+
+### Texto que não quebra o layout (classes globais)
+
+- `m-1l`: uma linha com reticências (metadados, datas, endereços, protocolos, rótulos).
+- `m-2l`: até 2 linhas (título de card, h1 de lista e hub, subtítulo, resumo).
+- `m-3l`: até 3 linhas (h1 de detalhe).
+- `m-1l-cel`, `m-2l-cel`, `m-3l-cel`: o mesmo, só no celular.
+- Item de flex ou de grade com texto de uma linha precisa de `min-width: 0` (as classes já põem) e, se o pai for item de grade, nele também. Grade de uma coluna no celular é `minmax(0, 1fr)`, nunca `1fr`.
+
 ## O que ainda é provisório
 
 - `Rodape`: simples, até o usuário escolher o novo.
-- `Topo` no celular: o menu some abaixo de 992 px.
