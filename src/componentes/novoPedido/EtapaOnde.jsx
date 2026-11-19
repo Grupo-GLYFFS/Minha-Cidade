@@ -73,7 +73,9 @@ export default function EtapaOnde({
 
   return (
     <>
-      <ResumoErros erros={listarErros(erros, ['cep', 'rua', 'numero', 'bairro'])} />
+      <div className={classes.resumo}>
+        <ResumoErros erros={listarErros(erros, ['cep', 'rua', 'numero', 'bairro'])} />
+      </div>
       <div className={classes.campos}>
         <CamposLado>
           <div>

@@ -19,10 +19,12 @@ export default function EtapaDescreva({
 
   return (
     <>
-      <ResumoErros
-        titulo={lista.length === 1 ? 'Corrija o campo marcado para continuar.' : undefined}
-        erros={lista}
-      />
+      <div className={classes.resumo}>
+        <ResumoErros
+          titulo={lista.length === 1 ? 'Corrija o campo marcado para continuar.' : undefined}
+          erros={lista}
+        />
+      </div>
       <div className={classes.campo}>
         <CampoTexto
           id="descricao"

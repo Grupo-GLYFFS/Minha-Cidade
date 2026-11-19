@@ -45,7 +45,6 @@ export default function NovoPedido() {
   const [categoriaEscolhida, setCategoriaEscolhida] = useState(Boolean(valores.categoria));
   const [tituloEditado, setTituloEditado] = useState(false);
   const [enviando, setEnviando] = useState(false);
-  const [idEnviado, setIdEnviado] = useState(null);
   const cartao = useRef(null);
   const fotosAtuais = useRef(valores.fotos);
 
@@ -88,7 +87,12 @@ export default function NovoPedido() {
       }
       return novo;
     });
-    setErros((atual) => ({ ...atual, [campo]: undefined }));
+    // A categoria vem da descrição: mudar a descrição também tira o erro da categoria
+    setErros((atual) => ({
+      ...atual,
+      [campo]: undefined,
+      ...(campo === 'descricao' && { categoria: undefined }),
+    }));
   }
 
   // Muda vários campos de uma vez (ex.: rua e bairro vindos do CEP)
@@ -114,6 +118,8 @@ export default function NovoPedido() {
     evento.preventDefault();
     if (enviando) return;
     const problemas = ESQUEMAS[etapa] ? validarEtapa(ESQUEMAS[etapa], valores) : {};
+    // Sem descrição boa não há sugestão: o erro da categoria só aparece depois
+    if (problemas.descricao) delete problemas.categoria;
     setErros(problemas);
     if (Object.keys(problemas).length > 0) return;
     if (etapa === 2 && repetido) {
@@ -127,14 +133,16 @@ export default function NovoPedido() {
     setEnviando(true);
     setTimeout(() => {
       const novo = adicionarPedido(prepararDadosDoFormulario(valores));
-      setIdEnviado(novo.id);
+      // O pedido enviado fica no endereço: recarregar a página continua mostrando a confirmação
+      setParametros({ enviado: novo.id }, { replace: true });
       setEnviando(false);
       window.scrollTo(0, 0);
     }, ESPERA_ENVIO_MS);
   }
 
+  const idEnviado = parametros.get('enviado');
   const enviado = idEnviado && buscarPedido(pedidos, idEnviado);
-  if (enviado) return <PedidoEnviado pedido={enviado} />;
+  if (enviado && enviado.autorId === usuario?.id) return <PedidoEnviado pedido={enviado} />;
   if (etapa > liberada) {
     return (
       <Navigate to={liberada === 1 ? '/pedidos/novo' : `/pedidos/novo?etapa=${liberada}`} replace />

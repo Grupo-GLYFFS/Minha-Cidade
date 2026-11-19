@@ -119,16 +119,17 @@ const DESENHOS = {
   ),
 };
 
-// Mostra o desenho de um pedido. Recebe o nome (poste, buraco, arvore, calcada)
-// e um texto alternativo (sem ele, o desenho é decorativo).
+// Mostra o desenho de um pedido. Recebe o nome (poste, buraco, arvore, calcada),
+// um texto alternativo (sem ele, o desenho é decorativo) e embaixo (no cabeçalho largo,
+// mostra a parte de baixo do desenho, onde está o problema).
 // Devolve null se o nome não existir.
-export default function IlustracaoPedido({ nome, alt }) {
+export default function IlustracaoPedido({ nome, alt, embaixo = false }) {
   const desenho = DESENHOS[nome];
   if (!desenho) return null;
   return (
     <svg
       viewBox="0 0 320 200"
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio={embaixo ? 'xMidYMax slice' : 'xMidYMid slice'}
       role={alt ? 'img' : undefined}
       aria-label={alt}
       aria-hidden={alt ? undefined : 'true'}

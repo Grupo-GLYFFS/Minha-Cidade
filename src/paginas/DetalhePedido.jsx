@@ -72,7 +72,11 @@ export default function DetalhePedido() {
       ]}
       midia={
         pedido.ilustracao && (
-          <IlustracaoPedido nome={pedido.ilustracao} alt={`Foto do local: ${pedido.titulo}`} />
+          <IlustracaoPedido
+            nome={pedido.ilustracao}
+            alt={`Foto do local: ${pedido.titulo}`}
+            embaixo
+          />
         )
       }
       icone={categoria?.icone}

@@ -39,6 +39,8 @@ export default function PedidoEnviado({ pedido }) {
     ...etapa,
     estado: etapa.estado === 'atual' ? 'feita' : etapa.estado,
     proximo: PROXIMOS_PASSOS[etapa.id],
+    // No envio basta a hora; o que acontece nele já está no título da página
+    explicacao: etapa.id === 'enviada' ? undefined : etapa.explicacao,
   }));
 
   // Só o envio mostra a hora; as outras etapas mostram o que acontece nelas

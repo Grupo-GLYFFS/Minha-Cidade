@@ -51,6 +51,11 @@
   white-space: nowrap;
 }
 
+/* Resumo de erros: 24 até o primeiro campo, só quando aparece */
+.resumo:not(:empty) {
+  margin-bottom: rem(24px);
+}
+
 /* Campos só de leitura (Cidade, Subprefeitura): fundo cinza */
 .somenteLeitura input {
   background: var(--cor-cinza-suave);
