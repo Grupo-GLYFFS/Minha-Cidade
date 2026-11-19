@@ -35,17 +35,6 @@ export function filtrarObras(obras, { regiao, situacao }) {
     );
 }
 
-// Soma os números do resumo da lista de obras.
-// Recebe a lista; devolve { valorTotal, valorPago, emAndamento, comProblema }.
-export function resumirObras(obras) {
-  return {
-    valorTotal: obras.reduce((soma, obra) => soma + obra.valorTotal, 0),
-    valorPago: obras.reduce((soma, obra) => soma + obra.valorPago, 0),
-    emAndamento: obras.filter(obraEmAndamento).length,
-    comProblema: obras.filter(obraComProblema).length,
-  };
-}
-
 // Conta as obras ainda não concluídas de um bairro. Recebe a lista e o nome do bairro.
 export function contarObrasDoBairro(obras, bairro) {
   return obras.filter((obra) => obra.bairro === bairro && obraEmAndamento(obra)).length;

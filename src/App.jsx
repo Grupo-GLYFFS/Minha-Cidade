@@ -69,6 +69,8 @@ export default function App() {
       <Route path="/minha-cidade/votacoes/:id" element={<Votacao escopo="cidade" />} />
       <Route path="/meu-bairro/votacoes" element={<Votacoes escopo="bairro" />} />
       <Route path="/meu-bairro/votacoes/:id" element={<Votacao escopo="bairro" />} />
+      <Route path="/minha-cidade/orcamento" element={<OrcamentoCidade />} />
+      <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
       <Route element={<RotaProtegida />}>
         <Route path="/perfil/votos" element={<MeusVotos />} />
       </Route>
@@ -81,9 +83,7 @@ export default function App() {
         <Route path="/servicos/:idServico" element={<Servico />} />
         <Route path="/minha-cidade" element={<CidadeAberta />} />
         <Route path="/minha-cidade/pedidos" element={<Pedidos />} />
-        <Route path="/minha-cidade/orcamento" element={<OrcamentoCidade />} />
         <Route path="/meu-bairro" element={<MeuBairro />} />
-        <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
         <Route path="/pedidos/:id" element={<DetalhePedido />} />
         <Route path="/entrar" element={<Entrar />} />
         <Route path="/criar-conta" element={<CriarConta />} />

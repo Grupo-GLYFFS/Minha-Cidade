@@ -1,0 +1,55 @@
+/* Bloco do extrato: título 16/700 azul, nomes das colunas 13/600 à direita. */
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  margin: 0 0 rem(16px);
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}
+
+.titulo :global(.icone) {
+  color: var(--cor-azul);
+}
+
+.colunas {
+  display: flex;
+  justify-content: flex-end;
+  gap: rem(8px);
+  margin: 0 0 rem(4px);
+  font-size: rem(13px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.segunda {
+  width: rem(128px);
+  text-align: right;
+}
+
+/* Com chevron no fim das linhas, a segunda coluna fica antes dele */
+.comLink {
+  padding-right: rem(28px);
+}
+
+.comLink .segunda {
+  width: rem(104px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  /* No celular, o valor principal fica à esquerda e o segundo à direita, embaixo do nome */
+  .colunas {
+    justify-content: space-between;
+  }
+
+  .comLink {
+    padding-right: 0;
+  }
+
+  .segunda,
+  .comLink .segunda {
+    width: auto;
+  }
+}

@@ -48,11 +48,6 @@ export function totalOrcamento(areas) {
   return { previsto, gasto, percentual: percentualGasto({ previsto, gasto }) };
 }
 
-// Ordena as áreas pelo valor previsto, da maior para a menor. Recebe as áreas; devolve uma nova lista.
-export function ordenarPorPrevisto(areas) {
-  return [...areas].sort((a, b) => b.previsto - a.previsto);
-}
-
 // Confere os mínimos da Constituição (educação e saúde).
 // Recebe os mínimos e as áreas do orçamento; devolve cada mínimo com "aplicado"
 // (percentual inteiro do orçamento total que vai para a área) e "cumprido" (true ou false).

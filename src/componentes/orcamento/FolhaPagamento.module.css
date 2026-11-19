@@ -1,0 +1,8 @@
+/* Aviso no fim da folha. */
+
+.nota {
+  margin: rem(16px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}

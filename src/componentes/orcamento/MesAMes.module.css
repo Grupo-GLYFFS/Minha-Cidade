@@ -1,0 +1,111 @@
+/* Gráfico de colunas: 180 de altura, dez meses lado a lado, gasto azul-escuro e arrecadado claro. */
+
+.grafico {
+  border-bottom: 0;
+}
+
+.legenda {
+  display: flex;
+  gap: rem(24px);
+  margin: 0 0 rem(20px);
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.legenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(8px);
+}
+
+.marcaGasto,
+.marcaArrecadado {
+  display: inline-block;
+  width: rem(14px);
+  height: rem(14px);
+  border-radius: rem(4px);
+}
+
+.marcaGasto,
+.gasto {
+  background: var(--cor-azul-tinta);
+}
+
+.marcaArrecadado,
+.arrecadado {
+  background: var(--cor-azul-borda-forte);
+}
+
+.colunas {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: rem(16px);
+  height: rem(180px);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda-forte);
+}
+
+.mes {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: rem(2px);
+}
+
+.gasto,
+.arrecadado {
+  position: relative;
+  display: block;
+  flex: 1 1 0;
+  max-width: rem(32px);
+  border-radius: rem(4px) rem(4px) 0 0;
+}
+
+/* Valor em cima de cada coluna */
+.gasto em,
+.arrecadado em {
+  position: absolute;
+  bottom: calc(100% + rem(4px));
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: rem(12px);
+  font-style: normal;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--cor-texto);
+}
+
+.eixo {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: rem(16px);
+  margin-top: rem(8px);
+  font-size: rem(13px);
+  font-weight: 600;
+  text-align: center;
+  color: var(--cor-texto-2);
+}
+
+.nota {
+  margin: rem(16px) 0 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .colunas,
+  .eixo {
+    gap: rem(4px);
+  }
+
+  /* No celular os números ficam só na lista de baixo */
+  .gasto em,
+  .arrecadado em {
+    display: none;
+  }
+
+  .eixo {
+    font-size: rem(11px);
+  }
+}
