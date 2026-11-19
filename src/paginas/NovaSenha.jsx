@@ -7,6 +7,7 @@ import Botao from '../componentes/Botao';
 import PeConta from '../componentes/conta/PeConta';
 import { useCaminhoConta } from '../contexto/useCaminhoConta';
 import { caminhoComVoltar } from '../logica/sessao';
+import classes from './NovaSenha.module.css';
 
 // Página "Nova senha" (/entrar/nova-senha): o que abre o link do e-mail do "Esqueci minha senha".
 // A conta vem junto do link (state.login). Sem ela, ou se a conta não existir mais,
@@ -23,7 +24,7 @@ export default function NovaSenha() {
       texto="Crie a senha que você vai usar para entrar."
     >
       {linkInvalido ? (
-        <>
+        <div className={classes.linkInvalido}>
           <AvisoErroConta
             titulo="Este link não vale mais."
             linhas={['Peça um link novo em "Esqueci minha senha".']}
@@ -31,7 +32,7 @@ export default function NovaSenha() {
           <Botao variante="principal" largo para={caminhoComVoltar('/entrar/esqueci', voltar)}>
             Pedir outro link
           </Botao>
-        </>
+        </div>
       ) : (
         <FormularioNovaSenha login={state.login} aoFalhar={() => setLinkInvalido(true)} />
       )}

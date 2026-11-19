@@ -1,0 +1,6 @@
+/* Link que não vale mais: 24 depois do texto do título e 24 entre a caixa e o botão. */
+.linkInvalido {
+  display: grid;
+  gap: rem(24px);
+  margin-top: rem(24px);
+}
