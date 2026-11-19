@@ -17,7 +17,8 @@ import { rotuloComBairro, textoCanais } from '../logica/avisosConta';
 
 // Configurações (/configuracoes): três cards.
 // - Acessibilidade: tamanho da letra e alto contraste (os mesmos da barra do topo).
-// - Alertas: liga e desliga os alertas de emergência (desligar pede confirmação) e "Por onde".
+// - Alertas: liga e desliga os alertas de emergência (desligar pede confirmação), "Por onde"
+//   e as faixas de alerta no alto das páginas (vêm desligadas).
 // - Notificações: um tipo por linha; tocar abre o popup com os canais (No app, E-mail, SMS).
 // Sem "Para onde ir" (regra 14).
 export default function Configuracoes() {
@@ -101,6 +102,17 @@ export default function Configuracoes() {
                 aoClicar={() => abrirCanais('alertas')}
               />
             )}
+            <LinhaAjuste
+              rotulo="Faixas de alerta"
+              detalhe="Mostra no alto das páginas os alertas da Defesa Civil."
+              controle={(idRotulo) => (
+                <Interruptor
+                  ligado={acessibilidade.mostrarFaixasAlerta}
+                  aoMudar={acessibilidade.alternarFaixasAlerta}
+                  idRotulo={idRotulo}
+                />
+              )}
+            />
           </ListaAjustes>
         </SecaoCard>
 

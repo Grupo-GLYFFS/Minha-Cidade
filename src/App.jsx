@@ -26,7 +26,6 @@ import MeusPedidos from './paginas/MeusPedidos';
 import Entrar from './paginas/Entrar';
 import CriarConta from './paginas/CriarConta';
 import EsqueciSenha from './paginas/EsqueciSenha';
-import Acessibilidade from './paginas/Acessibilidade';
 import TelefonesUteis from './paginas/TelefonesUteis';
 import PerguntasFrequentes from './paginas/PerguntasFrequentes';
 import Privacidade from './paginas/Privacidade';
@@ -130,7 +129,6 @@ export default function App() {
       <Route path="/perfil/dados" element={<Navigate to="/perfil" replace />} />
 
       {/* Ajuda */}
-      <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
       <Route path="/ajuda/telefones" element={<TelefonesUteis />} />
       <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />
       <Route path="/ajuda/privacidade" element={<Privacidade />} />

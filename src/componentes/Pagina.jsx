@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Topo from './Topo';
 import FaixaAlerta from './FaixaAlerta';
 import Rodape from './Rodape';
+import { useAcessibilidade } from '../contexto/useAcessibilidade';
 import { ALERTAS } from '../dados/alertas';
 import classes from './Pagina.module.css';
 
@@ -13,19 +14,23 @@ const ALERTA_FAIXA = ALERTAS.find((alerta) => alerta.tipo === 'defesa-civil' && 
 // Recebe:
 // - cabecalho: o <CabecalhoPagina> da página (faixa azul-clara de largura total);
 // - children: o conteúdo, que fica na coluna de 880 com 48 px de respiro em cima;
-// - semFaixaAlerta: esconde a faixa amarela (ela já some sozinha nas páginas de alertas);
+// - semFaixaAlerta: esconde a faixa amarela (ela já some sozinha nas páginas de alertas
+//   e quando "Faixas de alerta" está desligado em Configurações, que é o padrão);
 // - larga: coluna de 1088 em vez de 880 (só para as telas antigas, até serem refeitas).
 // Ao trocar de página, a tela volta para o topo.
 export default function Pagina({ cabecalho, children, semFaixaAlerta = false, larga = false }) {
   const { pathname } = useLocation();
+  const { mostrarFaixasAlerta } = useAcessibilidade();
 
   // Volta ao topo a cada página nova
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // A faixa some nas páginas de alertas (lá o alerta já é o conteúdo)
-  const mostrarFaixa = ALERTA_FAIXA && !semFaixaAlerta && !pathname.includes('/alertas');
+  // A faixa só aparece com a preferência ligada e some nas páginas de alertas
+  // (lá o alerta já é o conteúdo)
+  const mostrarFaixa =
+    mostrarFaixasAlerta && ALERTA_FAIXA && !semFaixaAlerta && !pathname.includes('/alertas');
 
   return (
     <div className={classes.pagina}>

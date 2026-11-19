@@ -12,6 +12,7 @@ import {
 const CHAVE_ACESSIBILIDADE = 'acessibilidade';
 
 // Guarda as preferências de acessibilidade: tamanho da letra, alto contraste e reduzir animações.
+// Guarda também se as faixas de alerta aparecem no alto das páginas (vêm desligadas).
 // Funciona também para o visitante. As escolhas são aplicadas como atributos no <html>
 // (data-letra, data-contraste, data-animacoes), e o global.css faz o resto.
 // Enquanto a pessoa não escolher, "reduzir animações" segue o que o sistema do aparelho pede.
@@ -63,6 +64,10 @@ export default function AcessibilidadeProvider({ children }) {
     () => mudar((atual) => ({ altoContraste: !atual.altoContraste })),
     [mudar],
   );
+  const alternarFaixasAlerta = useCallback(
+    () => mudar((atual) => ({ mostrarFaixasAlerta: !atual.mostrarFaixasAlerta })),
+    [mudar],
+  );
   // Parte do valor em uso agora (que pode ter vindo do sistema) e passa a valer a escolha da pessoa
   const alternarAnimacoes = useCallback(
     () => mudar(() => ({ reduzirAnimacoes: !reduzirAnimacoes })),
@@ -81,12 +86,14 @@ export default function AcessibilidadeProvider({ children }) {
       tamanhoLetra: preferencias.tamanhoLetra,
       altoContraste: preferencias.altoContraste,
       reduzirAnimacoes,
+      mostrarFaixasAlerta: preferencias.mostrarFaixasAlerta,
       diminuirLetra,
       aumentarLetra,
       letraPadrao,
       definirTamanho,
       alternarAltoContraste,
       alternarAnimacoes,
+      alternarFaixasAlerta,
       voltarAoPadrao,
     }),
     [
@@ -98,6 +105,7 @@ export default function AcessibilidadeProvider({ children }) {
       definirTamanho,
       alternarAltoContraste,
       alternarAnimacoes,
+      alternarFaixasAlerta,
       voltarAoPadrao,
     ],
   );

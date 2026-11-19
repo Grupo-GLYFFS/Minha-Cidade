@@ -2,10 +2,12 @@ import { TAMANHOS_LETRA } from '../dados/tamanhosLetra';
 
 // Preferências de quem nunca mexeu na acessibilidade.
 // reduzirAnimacoes null = segue o que o sistema do aparelho pede (prefers-reduced-motion).
+// mostrarFaixasAlerta: a faixa amarela da Defesa Civil no alto das páginas; vem desligada.
 export const PREFERENCIAS_PADRAO = {
   tamanhoLetra: 'padrao',
   altoContraste: false,
   reduzirAnimacoes: null,
+  mostrarFaixasAlerta: false,
 };
 
 // Confere as preferências lidas do navegador antes de usar.
@@ -17,6 +19,7 @@ export function normalizarPreferencias(salvo) {
     tamanhoLetra: tamanhoValido ? salvo.tamanhoLetra : PREFERENCIAS_PADRAO.tamanhoLetra,
     altoContraste: salvo.altoContraste === true,
     reduzirAnimacoes: typeof salvo.reduzirAnimacoes === 'boolean' ? salvo.reduzirAnimacoes : null,
+    mostrarFaixasAlerta: salvo.mostrarFaixasAlerta === true,
   };
 }
 
