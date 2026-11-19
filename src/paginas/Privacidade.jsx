@@ -4,10 +4,10 @@ import SecaoCard from '../componentes/SecaoCard';
 import LinhaDado from '../componentes/LinhaDado';
 import PilhaCards from '../componentes/ajuda/PilhaCards';
 import TextoCard from '../componentes/ajuda/TextoCard';
-import { DADOS_GUARDADOS, DADOS_NAO_GUARDADOS } from '../dados/privacidade';
+import { DADOS_GUARDADOS, DADOS_NAO_GUARDADOS, DIREITOS_LGPD } from '../dados/privacidade';
 
 // Privacidade (/ajuda/privacidade): o que fica guardado neste navegador, o que não fica,
-// os direitos pela LGPD (com atalhos para Meu perfil e Configurações) e o aviso de protótipo.
+// os direitos pela LGPD (só explicados, sem links) e o aviso de protótipo.
 export default function Privacidade() {
   return (
     <Pagina
@@ -48,23 +48,16 @@ export default function Privacidade() {
 
         <SecaoCard titulo="Seus direitos pela LGPD" lista>
           <TextoCard antesDaLista>
-            <p>
-              A Lei Geral de Proteção de Dados (Lei 13.709/2018) garante que você saiba o que é
-              guardado sobre você, corrija o que estiver errado e peça para apagar pelo 156.
-            </p>
+            <p>A Lei Geral de Proteção de Dados (Lei 13.709/2018) garante estes direitos a você.</p>
           </TextoCard>
-          <LinhaDado
-            icone="badge"
-            rotulo="Ver e corrigir seus dados"
-            valor="Meu perfil"
-            para="/perfil"
-          />
-          <LinhaDado
-            icone="notifications"
-            rotulo="Escolher o que receber"
-            valor="Configurações"
-            para="/configuracoes"
-          />
+          {DIREITOS_LGPD.map((item) => (
+            <LinhaDado
+              key={item.rotulo}
+              icone={item.icone}
+              rotulo={item.rotulo}
+              valor={item.detalhe}
+            />
+          ))}
         </SecaoCard>
 
         <SecaoCard titulo="Sobre este app">

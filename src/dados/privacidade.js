@@ -18,3 +18,14 @@ export const DADOS_NAO_GUARDADOS = [
   },
   { icone: 'photo_camera', rotulo: 'Fotos dos pedidos', detalhe: 'Fica só o nome do arquivo' },
 ];
+
+// Direitos pela LGPD, só explicados (a página é informativa, sem links).
+export const DIREITOS_LGPD = [
+  { icone: 'badge', rotulo: 'Ver e corrigir', detalhe: 'Saber o que é guardado e corrigir erros' },
+  {
+    icone: 'notifications',
+    rotulo: 'Escolher o que receber',
+    detalhe: 'Decidir quais avisos chegam a você',
+  },
+  { icone: 'delete', rotulo: 'Pedir para apagar', detalhe: 'Ligue 156 e peça a exclusão' },
+];
