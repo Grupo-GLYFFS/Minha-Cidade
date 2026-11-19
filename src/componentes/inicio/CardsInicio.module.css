@@ -379,12 +379,17 @@
   }
 
   .agenda {
-    flex-wrap: wrap;
     gap: rem(12px);
   }
 
   .hora {
-    width: auto;
+    width: rem(56px);
+  }
+
+  /* No celular, o ícone do serviço sai da agenda para sobrar espaço para o nome */
+  .agenda > :nth-child(2),
+  .linha > :nth-child(2) {
+    display: none;
   }
 
   .link,

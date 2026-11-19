@@ -66,7 +66,8 @@ export default function CardVotacaoInicio({ votacao, totalVotos, voto, segue, ao
             </Botao>
           ) : (
             <Botao variante="secundario" compacto icone="add" para="/entrar">
-              Seguir<span className={classes.oculto}> a votação {votacao.titulo} (entre na conta)</span>
+              Seguir
+              <span className={classes.oculto}> a votação {votacao.titulo} (entre na conta)</span>
             </Botao>
           )}
           {voto ? (

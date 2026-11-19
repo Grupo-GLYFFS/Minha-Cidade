@@ -52,7 +52,10 @@
     font-size: rem(20px);
   }
 
-  .cabecalho > h2 > span {
+  /* O texto do título (2º item: depois da bolinha) encolhe e quebra */
+  .cabecalho > h2 > span:nth-child(2) {
+    flex: 0 1 auto;
+    min-width: 0;
     white-space: normal;
   }
 }

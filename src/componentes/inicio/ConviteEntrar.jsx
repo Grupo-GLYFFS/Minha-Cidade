@@ -13,9 +13,7 @@ export default function ConviteEntrar() {
         <h2 className={classes.titulo} id="convite-entrar">
           Entre na sua conta
         </h2>
-        <p className={classes.frase}>
-          Veja seus agendamentos, seus pedidos e o que você segue.
-        </p>
+        <p className={classes.frase}>Veja seus agendamentos, seus pedidos e o que você segue.</p>
       </div>
       <div className={classes.botoes}>
         <Botao variante="secundario" compacto para="/criar-conta">

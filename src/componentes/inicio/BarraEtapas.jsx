@@ -15,7 +15,10 @@ export default function BarraEtapas({ etapas }) {
   return (
     <div className={classes.zona}>
       {/* A grade tem uma coluna por etapa (3 nas solicitações, 5 ou 6 nos pedidos) */}
-      <ol className={`${classes.etapas} ${classes[`colunas${etapas.length}`] ?? ''}`} aria-label={resumo}>
+      <ol
+        className={`${classes.etapas} ${classes[`colunas${etapas.length}`] ?? ''}`}
+        aria-label={resumo}
+      >
         {etapas.map((etapa) => (
           <li
             key={etapa.id}

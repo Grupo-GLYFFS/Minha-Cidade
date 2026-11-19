@@ -1,11 +1,5 @@
-/* Página Início: o prazo da solicitação em azul-tinta, em 700. */
+/* Página Início: as seções ficam em coluna; o "Para onde ir" já traz o próprio espaço acima. */
 
-.prazo {
-  font-weight: 700;
-  color: var(--cor-azul-tinta);
-}
-
-/* As seções ficam no fluxo; o "Para onde ir" já traz o próprio espaço acima */
 .secoes {
   display: flex;
   flex-direction: column;

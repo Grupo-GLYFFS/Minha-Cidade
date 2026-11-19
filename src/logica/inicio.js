@@ -5,7 +5,8 @@ import { etapasDoPedido } from './linhaDoTempo';
 import { avisoValendo, juntarNomes } from './avisos';
 import { buscarCategoria, buscarStatus, estaAberto, textoUltimaMudanca } from './pedidos';
 import { buscarSituacaoObra, textoPrevisao } from './obras';
-import { buscarStatusSolicitacao } from './solicitacoes';
+import { buscarStatusSolicitacao, textoContagemSolicitacoes } from './solicitacoes';
+import { contar, resumirLugar } from './resumoLugar';
 import {
   caminhoVotacao,
   lugarDaVotacao,
@@ -141,6 +142,47 @@ function descreverVotacao(projeto) {
     faltam: textoFaltamVotacao(projeto.fimVotacao),
     termina: `termina ${dataListaComDia(projeto.fimVotacao)}`,
   };
+}
+
+// Monta os cards do "Para onde ir" do Início, cada um com um número real.
+// Com conta: Meus pedidos, Minhas solicitações, Meu bairro e Minha cidade.
+// Visitante: só Meu bairro e Minha cidade.
+// Recebe { usuario, pedidos, solicitacoes }; devolve [{ icone, titulo, meta, para }].
+export function destinosDoInicio({ usuario, pedidos, solicitacoes }) {
+  const alertas = (bairros) =>
+    contar(resumirLugar(pedidos, bairros).alertas, 'alerta ativo', 'alertas ativos');
+  const hubs = [
+    {
+      icone: 'home_pin',
+      titulo: 'Meu bairro',
+      meta: usuario ? `${usuario.bairro} · ${alertas([usuario.bairro])}` : 'O resumo do seu bairro',
+      para: '/meu-bairro',
+    },
+    {
+      icone: 'location_city',
+      titulo: 'Minha cidade',
+      meta: `Cidade de São Paulo · ${alertas(null)}`,
+      para: '/minha-cidade',
+    },
+  ];
+  if (!usuario) return hubs;
+
+  const feitos = pedidos.filter((pedido) => pedido.autorId === usuario.id).length;
+  return [
+    {
+      icone: 'assignment',
+      titulo: 'Meus pedidos',
+      meta: contar(feitos, 'feito por você', 'feitos por você'),
+      para: '/perfil/pedidos',
+    },
+    {
+      icone: 'event_available',
+      titulo: 'Minhas solicitações',
+      meta: textoContagemSolicitacoes(solicitacoes),
+      para: '/servicos/minhas-solicitacoes',
+    },
+    ...hubs,
+  ];
 }
 
 // Monta a lista "O que você segue": obras, depois pedidos, depois votações abertas.

@@ -9,7 +9,15 @@ import classes from './CardsInicio.module.css';
 // selo", título, a linha de meta e a seta; embaixo, a barra de etapas.
 // Recebe o caminho do detalhe, o ícone, a categoria, o selo { cor, rotulo }, o título,
 // a meta (children) e as etapas da barra.
-export default function CardAndamento({ caminho, icone, categoria, selo, titulo, etapas, children }) {
+export default function CardAndamento({
+  caminho,
+  icone,
+  categoria,
+  selo,
+  titulo,
+  etapas,
+  children,
+}) {
   return (
     <article className={classes.card}>
       <Link to={caminho} className={classes.link}>
