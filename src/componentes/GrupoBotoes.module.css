@@ -9,3 +9,16 @@
 .formulario {
   justify-content: space-between;
 }
+
+/* Celular: dois botões dividem a linha, 50/50 */
+@media (max-width: $mantine-breakpoint-sm) {
+  .botoes {
+    flex-wrap: nowrap;
+    gap: rem(8px);
+  }
+
+  .botoes > * {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}

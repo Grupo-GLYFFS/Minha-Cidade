@@ -55,3 +55,11 @@
   background: var(--cor-superficie);
   color: var(--cor-azul-tinta);
 }
+
+/* Celular: o chip nunca passa da largura da coluna */
+@media (max-width: $mantine-breakpoint-sm) {
+  .chip {
+    max-width: 100%;
+    min-width: 0;
+  }
+}

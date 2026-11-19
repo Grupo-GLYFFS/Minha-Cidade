@@ -69,3 +69,14 @@
   margin-left: rem(6px);
   background: var(--cor-borda);
 }
+
+/* Celular: título 20/700; com pouco espaço, o texto quebra e a linha encolhe até sumir */
+@media (max-width: $mantine-breakpoint-sm) {
+  .titulo {
+    font-size: rem(20px);
+  }
+
+  .linha {
+    min-width: 0;
+  }
+}

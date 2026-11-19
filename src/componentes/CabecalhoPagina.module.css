@@ -128,6 +128,11 @@
   color: var(--cor-sobre-primaria);
 }
 
+/* Invólucro das etapas: no computador não cria caixa nenhuma */
+.etapas {
+  display: contents;
+}
+
 .acoes {
   display: flex;
   flex-wrap: wrap;
@@ -136,6 +141,10 @@
   margin-top: rem(24px);
 }
 
+/* Celular (regra 16 no celular): faixa com 32 em cima e embaixo; a trilha some (a barra
+   "‹ Voltar" faz o papel dela); h1 de lista e hub 36/800 até 2 linhas, de detalhe e formulário
+   30/800 até 3 linhas; subtítulo 16 até 2 linhas; imagem 16:9 com raio 16; ações em largura
+   total, com dois botões 50/50; as etapas do formulário saem (a página usa a BarraPe com o passo). */
 @media (max-width: $mantine-breakpoint-sm) {
   .cabecalho {
     padding: rem(32px) 0;
@@ -145,16 +154,98 @@
     width: calc(100% - rem(32px));
   }
 
+  .trilha {
+    display: none;
+  }
+
+  .icone {
+    margin-bottom: rem(16px);
+  }
+
+  .categoria {
+    max-width: 100%;
+    margin-bottom: rem(8px);
+    font-size: rem(14px);
+  }
+
+  .tituloGrande,
+  .tituloDetalhe {
+    display: -webkit-box;
+    max-width: 100%;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
   .tituloGrande {
-    font-size: rem(34px);
+    font-size: rem(36px);
   }
 
   .tituloDetalhe {
     font-size: rem(30px);
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 
-  .imagem,
+  .subtitulo {
+    display: -webkit-box;
+    max-width: 100%;
+    margin-top: rem(10px);
+    overflow: hidden;
+    font-size: rem(16px);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .midia {
+    margin-bottom: rem(20px);
+    border-radius: rem(16px);
+  }
+
+  .imagem {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
   .mapa {
     height: rem(160px);
+  }
+
+  .confirmacao {
+    gap: rem(10px);
+  }
+
+  .check {
+    width: rem(32px);
+    height: rem(32px);
+  }
+
+  .confirmacao .tituloDetalhe,
+  .confirmacao .tituloGrande {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  /* Ações em largura total; dois botões dividem a linha; botão só de ícone fica do tamanho dele */
+  .acoes {
+    flex-wrap: nowrap;
+    align-self: stretch;
+    gap: rem(8px);
+  }
+
+  .acoes > * {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .acoes > [data-variante='icone-acao'],
+  .acoes > [data-variante='icone'] {
+    flex: none;
+  }
+
+  .etapas {
+    display: none;
   }
 }

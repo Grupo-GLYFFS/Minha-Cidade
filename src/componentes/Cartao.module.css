@@ -58,3 +58,28 @@
 .corpo + .faixa {
   border-top: var(--espessura-borda) solid var(--cor-borda);
 }
+
+/* Celular: padding 16, seta a 16 da borda */
+@media (max-width: $mantine-breakpoint-sm) {
+  .cartao {
+    --pad-lateral: rem(16px);
+    padding: rem(16px);
+  }
+
+  .comSeta {
+    padding-right: rem(52px);
+  }
+
+  .seta {
+    top: rem(16px);
+    right: rem(16px);
+  }
+
+  .comFaixas {
+    padding: 0;
+  }
+
+  .corpo {
+    padding-block: rem(16px);
+  }
+}

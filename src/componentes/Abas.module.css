@@ -58,3 +58,15 @@
   background: var(--cor-faixa);
   color: var(--cor-azul-tinta);
 }
+
+/* Celular: as abas rolam de lado, sem a barra de rolagem aparecer */
+@media (max-width: $mantine-breakpoint-sm) {
+  .abas {
+    scrollbar-width: none;
+  }
+
+  .aba {
+    flex: none;
+    padding: 0 rem(12px);
+  }
+}

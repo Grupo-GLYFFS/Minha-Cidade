@@ -63,8 +63,12 @@
     bottom: var(--altura-abas);
   }
 
-  .caixa.caixa {
+  /* O Mantine põe a classe da caixa também no "inner": por isso o seletor é .inner > .caixa */
+  .caixa {
     --pad-lateral: rem(16px);
+  }
+
+  .inner > .caixa {
     display: flex;
     flex-direction: column;
     flex: 0 0 100%;

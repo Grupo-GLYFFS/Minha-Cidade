@@ -107,8 +107,38 @@
     margin-top: rem(48px);
   }
 
+  /* Celular: sempre uma coluna, cards de 76 com ícone de 44 e a seta à direita, no meio */
   .grade,
   .tres {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: rem(12px);
+  }
+
+  .destino,
+  .tres .destino {
+    flex-direction: row;
+    align-items: center;
+    gap: rem(14px);
+    min-height: rem(76px);
+    padding: rem(14px) rem(52px) rem(14px) rem(16px);
+  }
+
+  .icone {
+    width: rem(44px);
+    height: rem(44px);
+  }
+
+  .nome,
+  .meta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .seta,
+  .tres .seta {
+    top: 50%;
+    right: rem(16px);
+    margin-top: rem(-11px);
   }
 }

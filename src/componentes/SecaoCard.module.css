@@ -74,8 +74,27 @@
     --pad-lateral: rem(16px);
   }
 
-  /* No celular, o botão desce para baixo do título quando não cabe */
+  /* Celular: faixa do título 20/16 (16 com botão), h2 de 22, corpo 20/16/24.
+     O botão desce para baixo do título quando não cabe. */
   .cab {
     flex-wrap: wrap;
+    gap: rem(12px);
+    padding: rem(20px) var(--pad-lateral);
+  }
+
+  .cabComAcao {
+    padding-block: rem(16px);
+  }
+
+  .titulo {
+    font-size: rem(22px);
+  }
+
+  .corpo {
+    padding: rem(20px) var(--pad-lateral) rem(24px);
+  }
+
+  .corpoLista {
+    padding: rem(8px) var(--pad-lateral);
   }
 }

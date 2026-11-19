@@ -48,3 +48,23 @@
 .link:focus-visible {
   outline-offset: -3px;
 }
+
+/* Celular: 56 de altura mínima, 16 nos lados; rótulo 600 numa linha com reticências à
+   esquerda e valor à direita, até 58% da largura */
+@media (max-width: $mantine-breakpoint-sm) {
+  .linha {
+    min-height: rem(56px);
+  }
+
+  .rotulo {
+    overflow: hidden;
+    font-size: rem(15px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .valor {
+    max-width: 58%;
+    font-size: rem(15px);
+  }
+}

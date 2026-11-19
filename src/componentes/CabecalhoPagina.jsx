@@ -21,6 +21,8 @@ const TITULO_GRANDE = ['lista', 'hub', 'conta'];
 // - etapas (nomes) e etapaAtual (começa em 1), só formulários;
 // - acoes: botões centralizados no fim (secundário antes do principal);
 // - children: o que mais vai embaixo do subtítulo (MetaCabecalho, cartão de protocolo…).
+// No celular: a trilha e as etapas somem, o título vai até 2 linhas (3 no detalhe) e as ações
+// ficam em largura total, divididas em partes iguais.
 export default function CabecalhoPagina({
   tipo = 'lista',
   titulo,
@@ -81,7 +83,11 @@ export default function CabecalhoPagina({
 
         {subtitulo && <p className={classes.subtitulo}>{subtitulo}</p>}
         {children}
-        {etapas && <EtapasFormulario etapas={etapas} atual={etapaAtual} />}
+        {etapas && (
+          <div className={classes.etapas}>
+            <EtapasFormulario etapas={etapas} atual={etapaAtual} />
+          </div>
+        )}
         {acoes && <div className={classes.acoes}>{acoes}</div>}
       </div>
     </section>
