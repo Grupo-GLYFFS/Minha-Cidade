@@ -23,7 +23,9 @@ export default function GravidadeEstimada({ gravidade }) {
         <b>{gravidade.rotulo}</b>
         <span className={classes.gravidadeNota}>{gravidade.valor} de 5</span>
       </p>
-      <p className={classes.gravidadeAviso}>A prefeitura confirma a gravidade na análise.</p>
+      <p className={`${classes.gravidadeAviso} m-2l-cel`}>
+        A prefeitura confirma a gravidade na análise.
+      </p>
     </div>
   );
 }
