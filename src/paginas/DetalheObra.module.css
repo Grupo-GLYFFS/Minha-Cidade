@@ -1,0 +1,13 @@
+/* Cards do detalhe empilhados, 40 entre eles (24 no celular). */
+
+.pilha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(40px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .pilha {
+    gap: rem(24px);
+  }
+}

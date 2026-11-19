@@ -1,17 +1,36 @@
-// Grandes projetos da prefeitura que passam pela opinião da população (Cidade Aberta).
+// Votações abertas à população: obras, programas e mudanças de verba.
 // Dados de exemplo: valores, datas e votos são inventados para o protótipo.
 //
-// Campos de cada projeto:
-// - id, titulo, resumo, descricao (lista de parágrafos curtos)
-// - regiao, bairros: onde a obra vai acontecer
-// - tema (ex.: "Mobilidade") e icone (Material Symbols)
-// - valor: custo estimado em reais; prazoObra: quanto tempo a obra deve levar
+// Campos de cada votação:
+// - id, titulo, resumo (uma frase), descricao (parágrafos curtos de "O que muda")
+// - tipo: "Obra", "Programa" ou "Mudança de verba"
+// - escopo: "cidade" (a cidade toda vota) ou "subprefeitura" (os moradores da subprefeitura votam)
+// - bairro (opcional): onde a obra acontece; subprefeitura: nome sem a palavra "Subprefeitura"
+// - bairros: bairros afetados (a votação da cidade aparece nas Votações desses bairros)
+// - icone (Material Symbols); imagem (opcional): ilustração de public/img/votacoes
+// - valor: custo ou dinheiro movido, em reais; prazoObra (opcional): quanto tempo a obra leva
 // - inicioVotacao, fimVotacao: primeiro e último dia da votação (ISO)
-// - status: id de STATUS_PROJETO ("votacao-aberta" ou "encerrada")
-// - situacao, dataSituacao: o que aconteceu depois da votação (só nos encerrados)
-// - quemAfeta: quem sente a mudança no dia a dia
-// - pros, contras: os dois lados, escritos com o mesmo cuidado
-// - votosIniciais: votos que já existiam antes dos votos feitos neste aparelho
+// - status: "votacao-aberta" ou "encerrada"
+// - situacao, dataSituacao: o que aconteceu depois da votação (ids de SITUACOES_PROJETO)
+// - responsavel: { nome, cargo, para } de quem abriu a votação
+// - verba (só mudança de verba): { ano, de: { nome, hoje }, para: { nome, hoje } }
+// - quemAfeta, pros, contras: os dois lados, escritos com o mesmo cuidado
+// - textoSim, textoNao: o que acontece se cada lado ganhar (aparece na caixa do voto)
+// - votosIniciais: { sim, nao } que já existiam antes dos votos feitos neste aparelho
+// - regiao: usada só pelas telas antigas (TODO: tirar quando o Início e o Meu bairro forem refeitos)
+
+// Quem abre as votações da cidade e as da Subprefeitura Vila Mariana
+const PREFEITURA = {
+  nome: 'Prefeitura de São Paulo',
+  cargo: 'Prefeita Helena Batista Rocha',
+  para: '/minha-cidade',
+};
+const SUB_VILA_MARIANA = {
+  nome: 'Subprefeitura Vila Mariana',
+  cargo: 'Subprefeita Luciana Pereira Campos',
+  para: '/minha-cidade/subprefeituras/vila-mariana',
+};
+
 export const PROJETOS = [
   {
     id: 'corredor-jabaquara',
@@ -20,31 +39,35 @@ export const PROJETOS = [
     descricao: [
       'O projeto cria um corredor de ônibus de 6 km na Avenida Jabaquara, ligando a estação Jabaquara do metrô à Vila Mariana. Os ônibus passam a andar na faixa da esquerda, separados dos carros.',
       'As paradas ficam no canteiro central, cobertas e com rampa. As calçadas dos dois lados da avenida também serão refeitas, com piso tátil e mais árvores.',
-      'Durante a obra, parte da avenida terá desvios por trechos de cerca de 1 km de cada vez.',
     ],
+    tipo: 'Obra',
+    escopo: 'cidade',
+    bairro: 'Jabaquara',
+    subprefeitura: 'Jabaquara',
+    bairros: ['Jabaquara', 'Saúde', 'Vila Mariana'],
     regiao: 'Zona Sul',
-    bairros: ['Vila Mariana', 'Saúde', 'Jabaquara'],
-    tema: 'Mobilidade',
     icone: 'directions_bus',
+    imagem: '/img/votacoes/corredor-jabaquara.svg',
     valor: 180000000,
     prazoObra: '24 meses',
     inicioVotacao: '2026-10-19',
     fimVotacao: '2026-11-18',
     status: 'votacao-aberta',
+    responsavel: PREFEITURA,
     quemAfeta:
       'Cerca de 210 mil pessoas que usam as linhas de ônibus da avenida todos os dias, motoristas que passam por ali e o comércio dos dois lados.',
     pros: [
       'Viagem de ônibus até 15 minutos mais rápida nos horários de pico.',
       'Paradas cobertas, com rampa e piso tátil.',
       'Calçadas novas e mais árvores ao longo da avenida.',
-      'Menos poluição com ônibus parados no trânsito.',
     ],
     contras: [
       'Menos espaço para carros e fim de algumas vagas de estacionamento.',
       'Dois anos de obra, com desvios e mais trânsito no período.',
-      'Lojas da avenida podem perder movimento durante a obra.',
     ],
-    votosIniciais: { sim: 4630, nao: 3110, abstencao: 672 },
+    textoSim: 'A prefeitura faz o corredor de ônibus.',
+    textoNao: 'A avenida continua como está.',
+    votosIniciais: { sim: 4630, nao: 3110 },
   },
   {
     id: 'parque-linear-tiquatira',
@@ -54,19 +77,23 @@ export const PROJETOS = [
     descricao: [
       'O parque ocupa as margens do Córrego Tiquatira, na Penha, que hoje têm mato alto e lixo. A ideia é plantar árvores, fazer uma pista de caminhada e uma ciclovia ao longo do córrego.',
       'Parte do parque é feita para encher na chuva forte: a água fica ali por algumas horas em vez de invadir as ruas e as casas próximas.',
-      'O projeto inclui quadras, parquinho, banheiros e iluminação para uso à noite.',
     ],
+    tipo: 'Obra',
+    escopo: 'cidade',
+    bairro: 'Penha',
+    subprefeitura: 'Penha',
+    bairros: ['Penha', 'Cangaíba'],
     regiao: 'Zona Leste',
-    bairros: ['Penha', 'Tatuapé'],
-    tema: 'Meio ambiente',
     icone: 'park',
+    imagem: '/img/votacoes/parque-linear-tiquatira.svg',
     valor: 96000000,
     prazoObra: '18 meses',
     inicioVotacao: '2026-10-26',
     fimVotacao: '2026-11-25',
     status: 'votacao-aberta',
+    responsavel: PREFEITURA,
     quemAfeta:
-      'Moradores da Penha e do Tatuapé que vivem perto do córrego, principalmente as cerca de 4 mil famílias das ruas que alagam na chuva.',
+      'Moradores da Penha e do Cangaíba que vivem perto do córrego, principalmente as cerca de 4 mil famílias das ruas que alagam na chuva.',
     pros: [
       'Menos alagamento nas ruas perto do córrego.',
       'Área de lazer e esporte gratuita perto de casa.',
@@ -74,10 +101,11 @@ export const PROJETOS = [
     ],
     contras: [
       '62 famílias que moram na margem precisarão mudar para moradias da prefeitura.',
-      'Custo de manutenção alto todos os anos (limpeza, segurança e jardinagem).',
-      'Obra perto das casas, com barulho e caminhões por um ano e meio.',
+      'Custo de manutenção alto todos os anos.',
     ],
-    votosIniciais: { sim: 3480, nao: 1290, abstencao: 410 },
+    textoSim: 'A prefeitura faz o parque.',
+    textoNao: 'As margens do córrego continuam como estão.',
+    votosIniciais: { sim: 3480, nao: 1290 },
   },
   {
     id: 'hospital-dia-santana',
@@ -85,31 +113,72 @@ export const PROJETOS = [
     resumo: 'Unidade para cirurgias simples e exames em que a pessoa entra e sai no mesmo dia.',
     descricao: [
       'O hospital-dia faz cirurgias pequenas (como catarata, hérnia e varizes) e exames que precisam de preparo, sem internação: a pessoa chega de manhã e volta para casa no mesmo dia.',
-      'Hoje, quem mora na Zona Norte espera em média 8 meses por essas cirurgias. A nova unidade quer reduzir essa fila pela metade.',
-      'O prédio fica em um terreno da prefeitura perto do metrô Santana.',
+      'Hoje, quem mora em Santana e nos bairros vizinhos espera em média 8 meses por essas cirurgias. A nova unidade quer reduzir essa fila pela metade.',
     ],
+    tipo: 'Obra',
+    escopo: 'cidade',
+    bairro: 'Santana',
+    subprefeitura: 'Santana/Tucuruvi',
+    bairros: ['Santana', 'Tucuruvi', 'Mandaqui'],
     regiao: 'Zona Norte',
-    bairros: ['Santana', 'Tucuruvi', 'Casa Verde'],
-    tema: 'Saúde',
     icone: 'local_hospital',
+    imagem: '/img/votacoes/hospital-dia-santana.svg',
     valor: 140000000,
     prazoObra: '30 meses',
     inicioVotacao: '2026-11-02',
     fimVotacao: '2026-12-02',
     status: 'votacao-aberta',
+    responsavel: PREFEITURA,
     quemAfeta:
-      'Pacientes da Zona Norte na fila de cirurgias e exames, que hoje precisam ir até hospitais de outras regiões.',
+      'Pacientes de Santana e dos bairros vizinhos na fila de cirurgias e exames, que hoje precisam ir até hospitais longe de casa.',
     pros: [
-      'Fila de cirurgias simples menor para quem mora na Zona Norte.',
+      'Fila de cirurgias simples menor para quem mora perto.',
       'Atendimento perto do metrô, sem atravessar a cidade.',
       'Libera leitos dos hospitais grandes para casos graves.',
     ],
     contras: [
       'Precisa de cerca de 300 profissionais novos, um gasto fixo alto todo ano.',
-      'Usa um terreno que poderia virar moradia popular.',
       'Só fica pronto em dois anos e meio; até lá, a fila continua.',
     ],
-    votosIniciais: { sim: 1530, nao: 420, abstencao: 186 },
+    textoSim: 'A prefeitura constrói o hospital-dia.',
+    textoNao: 'O terreno fica para outro uso.',
+    votosIniciais: { sim: 1529, nao: 420 },
+  },
+  {
+    id: 'moradia-centro',
+    titulo: 'Moradia em prédios vazios do Centro',
+    resumo: 'Reforma de 6 prédios abandonados para virarem 520 apartamentos de aluguel social.',
+    descricao: [
+      'O Centro tem prédios vazios há anos, muitos com dívida de IPTU. O projeto compra seis deles e faz uma reforma completa para virarem apartamentos.',
+      'Os apartamentos são alugados por um valor que cabe no orçamento de famílias com renda de até três salários mínimos, perto do trabalho, do metrô e dos serviços.',
+    ],
+    tipo: 'Obra',
+    escopo: 'cidade',
+    subprefeitura: 'Sé',
+    bairros: ['República', 'Sé', 'Santa Cecília'],
+    regiao: 'Centro',
+    icone: 'apartment',
+    valor: 260000000,
+    prazoObra: '36 meses',
+    inicioVotacao: '2026-09-20',
+    fimVotacao: '2026-10-31',
+    status: 'encerrada',
+    situacao: 'encaminhado-camara',
+    dataSituacao: '2026-11-04',
+    responsavel: PREFEITURA,
+    quemAfeta:
+      'Famílias de baixa renda na fila da moradia, que hoje vivem longe do trabalho ou pagam aluguel caro, e os vizinhos dos prédios abandonados.',
+    pros: [
+      '520 famílias morando perto do trabalho e do transporte.',
+      'Prédios abandonados voltam a ter uso e o entorno fica mais seguro.',
+    ],
+    contras: [
+      'Comprar e reformar prédios antigos custa caro por apartamento.',
+      'Atende poucas famílias perto do tamanho da fila da moradia.',
+    ],
+    textoSim: 'A prefeitura compra e reforma os prédios.',
+    textoNao: 'Os prédios continuam como estão.',
+    votosIniciais: { sim: 7120, nao: 5180 },
   },
   {
     id: 'ceu-butanta',
@@ -120,9 +189,12 @@ export const PROJETOS = [
       'Um CEU (Centro Educacional Unificado) junta escola, creche, biblioteca, piscinas, quadras e teatro no mesmo lugar. Nos fins de semana, tudo fica aberto para os moradores.',
       'O novo CEU teria vagas para cerca de 1.800 alunos, da creche ao ensino fundamental, em uma parte do Butantã com falta de vagas.',
     ],
+    tipo: 'Obra',
+    escopo: 'cidade',
+    bairro: 'Butantã',
+    subprefeitura: 'Butantã',
+    bairros: ['Butantã', 'Rio Pequeno'],
     regiao: 'Zona Oeste',
-    bairros: ['Butantã'],
-    tema: 'Educação',
     icone: 'school',
     valor: 210000000,
     prazoObra: '26 meses',
@@ -131,19 +203,20 @@ export const PROJETOS = [
     status: 'encerrada',
     situacao: 'encaminhado-camara',
     dataSituacao: '2026-10-22',
+    responsavel: PREFEITURA,
     quemAfeta:
       'Famílias do Butantã com crianças na fila da creche e da escola, e moradores que hoje não têm espaço de lazer e cultura perto de casa.',
     pros: [
       'Cerca de 1.800 vagas novas de creche e escola.',
       'Piscina, teatro e biblioteca gratuitos para o bairro.',
-      'Espaço seguro para crianças e jovens no contraturno.',
     ],
     contras: [
       'Custo alto para manter aberto todos os dias, inclusive fins de semana.',
-      'O terreno escolhido fica longe de algumas partes do bairro.',
       'Obra de mais de dois anos.',
     ],
-    votosIniciais: { sim: 9840, nao: 3120, abstencao: 860 },
+    textoSim: 'A prefeitura constrói o CEU.',
+    textoNao: 'O terreno fica para outro uso.',
+    votosIniciais: { sim: 9840, nao: 3120 },
   },
   {
     id: 'piscinao-aricanduva',
@@ -153,10 +226,14 @@ export const PROJETOS = [
       'Um piscinão é um reservatório gigante que recebe a água da chuva quando o rio enche. Depois que a chuva passa, a água volta aos poucos para o rio.',
       'O novo piscinão fica embaixo de uma praça em Itaquera e guarda 500 milhões de litros. A praça é refeita por cima, com quadras e área verde.',
     ],
-    regiao: 'Zona Leste',
+    tipo: 'Obra',
+    escopo: 'cidade',
+    bairro: 'Itaquera',
+    subprefeitura: 'Itaquera',
     bairros: ['Itaquera', 'São Mateus'],
-    tema: 'Drenagem',
-    icone: 'water',
+    regiao: 'Zona Leste',
+    icone: 'flood',
+    imagem: '/img/votacoes/piscinao-aricanduva.svg',
     valor: 320000000,
     prazoObra: '32 meses',
     inicioVotacao: '2026-09-01',
@@ -164,51 +241,122 @@ export const PROJETOS = [
     status: 'encerrada',
     situacao: 'aprovado-camara',
     dataSituacao: '2026-10-28',
+    obra: 'piscinao-aricanduva',
+    responsavel: PREFEITURA,
     quemAfeta:
       'Cerca de 90 mil moradores das ruas que alagam perto da Avenida Aricanduva e quem passa pela avenida nos dias de chuva.',
     pros: [
       'Menos enchentes na Avenida Aricanduva e nas ruas próximas.',
-      'Menos prejuízo com casas, carros e lojas alagadas.',
       'A praça de cima é refeita e ganha quadras.',
     ],
     contras: [
       'Obra grande e demorada, com a praça fechada por quase três anos.',
-      'Precisa de limpeza frequente para não acumular lixo e mau cheiro.',
-      'Resolve a enchente de uma parte da região, não de toda a Zona Leste.',
+      'Resolve a enchente de uma parte da região, não de todos os bairros.',
     ],
-    votosIniciais: { sim: 12780, nao: 2410, abstencao: 1190 },
+    textoSim: 'A prefeitura constrói o piscinão.',
+    textoNao: 'A praça continua como está.',
+    votosIniciais: { sim: 12780, nao: 2410 },
   },
   {
-    id: 'moradia-centro',
-    titulo: 'Moradia em prédios vazios do Centro',
-    resumo: 'Reforma de 6 prédios abandonados para virarem 520 apartamentos de aluguel social.',
+    id: 'vm-led-santa-cruz',
+    titulo: 'LED nas ruas em volta do Metrô Santa Cruz',
+    resumo:
+      'Troca de 180 lâmpadas por LED e 12 postes novos nas ruas mais escuras perto da estação.',
     descricao: [
-      'O Centro tem prédios vazios há anos, muitos com dívida de IPTU. O projeto compra seis deles e faz uma reforma completa para virarem apartamentos.',
-      'Os apartamentos são alugados por um valor que cabe no orçamento de famílias com renda de até três salários mínimos, perto do trabalho, do metrô e dos serviços.',
+      'As ruas em volta da estação Santa Cruz têm lâmpadas antigas e trechos escuros. A proposta troca 180 lâmpadas por LED e coloca 12 postes novos nos pontos mais escuros.',
+      'O dinheiro sai do custeio da subprefeitura para 2027.',
     ],
-    regiao: 'Centro',
-    bairros: ['República', 'Sé', 'Santa Cecília'],
-    tema: 'Habitação',
-    icone: 'apartment',
-    valor: 260000000,
-    prazoObra: '36 meses',
-    inicioVotacao: '2026-09-20',
-    fimVotacao: '2026-10-31',
-    status: 'encerrada',
-    situacao: 'encaminhado-camara',
-    dataSituacao: '2026-11-04',
+    tipo: 'Obra',
+    escopo: 'subprefeitura',
+    subprefeitura: 'Vila Mariana',
+    bairros: ['Vila Mariana'],
+    regiao: 'Zona Sul',
+    icone: 'lightbulb',
+    valor: 900000,
+    prazoObra: '4 meses',
+    inicioVotacao: '2026-10-28',
+    fimVotacao: '2026-11-27',
+    status: 'votacao-aberta',
+    responsavel: SUB_VILA_MARIANA,
+    quemAfeta: 'Quem anda a pé à noite perto da estação Santa Cruz e quem mora nessas ruas.',
+    pros: ['Ruas mais claras e mais seguras à noite.', 'LED gasta menos energia e dura mais.'],
+    contras: [
+      'Usa dinheiro que poderia ir para a poda de árvores do bairro.',
+      'Quatro meses de obra nas calçadas.',
+    ],
+    textoSim: 'A subprefeitura troca as lâmpadas e põe os postes novos.',
+    textoNao: 'A iluminação continua como está.',
+    votosIniciais: { sim: 640, nao: 336 },
+  },
+  {
+    id: 'vm-calcadas-acessiveis',
+    titulo: 'Passar R$ 400 mil dos eventos de rua para calçadas acessíveis',
+    resumo: 'Menos festas de rua em 2027 e mais rampas e piso tátil perto de escolas, UBS e metrô.',
+    descricao: [
+      'A subprefeitura reservou R$ 1,1 milhão para eventos de rua em 2027. A proposta tira R$ 400 mil desse valor e usa para refazer calçadas perto da UBS Vila Mariana, da EMEF Vila Mariana e da estação Ana Rosa.',
+      'Se o Não ganhar, o dinheiro continua nos eventos de rua.',
+    ],
+    tipo: 'Mudança de verba',
+    escopo: 'subprefeitura',
+    subprefeitura: 'Vila Mariana',
+    bairros: ['Vila Mariana', 'Moema', 'Saúde'],
+    regiao: 'Zona Sul',
+    icone: 'accessible',
+    valor: 400000,
+    inicioVotacao: '2026-11-10',
+    fimVotacao: '2026-12-04',
+    status: 'votacao-aberta',
+    responsavel: SUB_VILA_MARIANA,
+    verba: {
+      ano: 2027,
+      de: { nome: 'Eventos de rua', hoje: 1100000 },
+      para: { nome: 'Calçadas acessíveis', hoje: 0 },
+    },
     quemAfeta:
-      'Famílias de baixa renda na fila da moradia, que hoje vivem longe do trabalho ou pagam aluguel caro, e os vizinhos dos prédios abandonados.',
+      'Quem anda de cadeira de rodas, bengala ou carrinho de bebê, e quem vai aos eventos de rua do bairro.',
     pros: [
-      '520 famílias morando perto do trabalho e do transporte.',
-      'Prédios abandonados voltam a ter uso e o entorno fica mais seguro.',
-      'Aproveita prédios prontos em vez de construir longe do Centro.',
+      'Cerca de 1.600 metros de calçada nova, com rampa e piso tátil.',
+      'Caminho mais seguro até a UBS, a escola e o metrô.',
     ],
     contras: [
-      'Comprar e reformar prédios antigos custa caro por apartamento.',
-      'Pode levar anos para negociar com os donos dos prédios.',
-      'Atende poucas famílias perto do tamanho da fila da moradia.',
+      'Menos eventos de rua no ano que vem.',
+      'As calçadas só começam a ser feitas em março de 2027.',
     ],
-    votosIniciais: { sim: 7120, nao: 5180, abstencao: 940 },
+    textoSim: 'R$ 400 mil vão para calçadas acessíveis.',
+    textoNao: 'O dinheiro continua nos eventos de rua.',
+    votosIniciais: { sim: 365, nao: 221 },
+  },
+  {
+    id: 'vm-rua-de-lazer',
+    titulo: 'Rua de lazer aos domingos na Alameda dos Maracatins',
+    resumo:
+      'Rua fechada para carros aos domingos, das 10h às 16h, para brincar, pedalar e passear.',
+    descricao: [
+      'Aos domingos, das 10h às 16h, a Alameda dos Maracatins fica fechada para carros entre a Avenida Ibirapuera e a Rua Gaivota. A rua vira espaço para brincar, pedalar e passear.',
+      'Os moradores da alameda continuam entrando e saindo de carro, devagar.',
+    ],
+    tipo: 'Programa',
+    escopo: 'subprefeitura',
+    subprefeitura: 'Vila Mariana',
+    bairros: ['Moema'],
+    regiao: 'Zona Sul',
+    icone: 'directions_bike',
+    valor: 120000,
+    inicioVotacao: '2026-09-01',
+    fimVotacao: '2026-09-30',
+    status: 'encerrada',
+    situacao: 'programa-comecou',
+    dataSituacao: '2026-11-01',
+    responsavel: SUB_VILA_MARIANA,
+    quemAfeta:
+      'Moradores da Alameda dos Maracatins e das ruas em volta, e quem usa a rua no domingo.',
+    pros: [
+      'Espaço seguro para crianças brincarem e para pedalar.',
+      'Mais movimento para o comércio do bairro no domingo.',
+    ],
+    contras: ['Menos lugar para estacionar aos domingos.', 'Mais barulho na rua durante o dia.'],
+    textoSim: 'A rua fecha para carros aos domingos.',
+    textoNao: 'A rua continua aberta aos carros.',
+    votosIniciais: { sim: 1905, nao: 1120 },
   },
 ];

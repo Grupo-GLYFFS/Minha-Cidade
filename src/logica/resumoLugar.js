@@ -27,7 +27,9 @@ function noLugar(nomeBairro, bairros) {
 export function resumirLugar(pedidos, bairros = null) {
   const votacoes = projetosEmVotacao(PROJETOS).filter(
     (projeto) =>
-      !bairros || projeto.bairros.length === 0 || projeto.bairros.some((b) => bairros.includes(b)),
+      // Cidade toda: só as votações da cidade (as de subprefeitura ficam no recorte dela)
+      (!bairros && projeto.escopo === 'cidade') ||
+      (bairros && projeto.bairros.some((b) => bairros.includes(b))),
   );
   return {
     alertas: alertasDoLugar(ALERTAS, bairros).ativos.length,

@@ -3,12 +3,14 @@ import { ContextoVotos } from './ContextoVotos';
 import { lerDado, salvarDado } from '../armazenamento';
 import { useSessao } from './useSessao';
 import { PROJETOS } from '../dados/projetos';
+import { VOTOS_DEMONSTRACAO } from '../dados/votosDemonstracao';
 import { buscarProjeto, calcularResultado, ehOpcaoValida, motivoSemVoto } from '../logica/votacao';
 
 // Nome com que os votos ficam guardados no navegador, no formato { idPessoa: { idProjeto: opcao } }
 const CHAVE_VOTOS = 'votos-projetos';
 
-// Guarda os votos nos grandes projetos da Cidade Aberta, separados por pessoa.
+// Guarda os votos nas votações da cidade e da subprefeitura, separados por pessoa.
+// Na primeira vez, começa com os votos da conta de demonstração (dados/votosDemonstracao.js).
 // Cada pessoa vota uma vez só em cada projeto e não troca o voto depois.
 // O resultado soma os votos de exemplo com todos os votos feitos neste aparelho.
 // Precisa estar dentro do SessaoProvider.
@@ -16,7 +18,9 @@ const CHAVE_VOTOS = 'votos-projetos';
 export default function VotosProvider({ children }) {
   const { usuario } = useSessao();
   const idPessoa = usuario?.id ?? null;
-  const [votosPorPessoa, setVotosPorPessoa] = useState(() => lerDado(CHAVE_VOTOS, {}));
+  const [votosPorPessoa, setVotosPorPessoa] = useState(() =>
+    lerDado(CHAVE_VOTOS, VOTOS_DEMONSTRACAO),
+  );
 
   // Salva sempre que muda (só depois do primeiro voto, para não criar a chave à toa)
   useEffect(() => {
@@ -29,7 +33,7 @@ export default function VotosProvider({ children }) {
     [votosPorPessoa, idPessoa],
   );
 
-  // Diz o voto da pessoa logada em um projeto. Recebe o id; devolve "sim", "nao", "abstencao" ou undefined.
+  // Diz o voto da pessoa logada em um projeto. Recebe o id; devolve "sim", "nao" ou undefined.
   const votoDe = useCallback((idProjeto) => votosDaPessoa[idProjeto], [votosDaPessoa]);
 
   // Diz por que a pessoa não pode votar no projeto (ou null se pode). Recebe o projeto.

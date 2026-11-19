@@ -1,0 +1,32 @@
+/* Votação de orçamento: selo e título à esquerda, botão à direita. */
+
+.lista {
+  margin: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(16px);
+}
+
+.item + .item {
+  margin-top: rem(16px);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: rem(8px);
+}
+
+.texto h3 {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}

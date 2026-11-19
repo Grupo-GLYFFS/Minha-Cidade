@@ -1,0 +1,44 @@
+/* Seções da votação empilhadas, 16 entre elas (como na prancha). */
+
+.pilha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}
+
+.paragrafo {
+  margin: 0;
+  font-size: rem(17px);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--cor-texto);
+}
+
+.resultado {
+  display: flex;
+  flex-direction: column;
+  gap: rem(20px);
+}
+
+.votou {
+  display: flex;
+  align-items: center;
+  gap: rem(10px);
+  margin: 0;
+  padding: rem(14px) rem(16px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  font-size: rem(16px);
+  font-weight: 500;
+}
+
+.votou :global(.icone) {
+  color: var(--cor-azul);
+}
+
+.nota {
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}

@@ -1,0 +1,120 @@
+/* Card de abertura da obra: número de 64, barra de 12, pontas e valores separados por linha. */
+
+.card {
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.topo {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+  padding: rem(32px) rem(32px) rem(24px);
+}
+
+.numero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: rem(12px);
+  margin: 0;
+}
+
+.numero b {
+  font-size: rem(64px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--cor-texto);
+}
+
+.numero span {
+  font-size: rem(18px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.pontas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: rem(12px) rem(24px);
+}
+
+.pontas p {
+  display: flex;
+  flex-direction: column;
+  gap: rem(2px);
+  margin: 0;
+}
+
+.pontas b {
+  font-size: rem(17px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.fim {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.rotulo {
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.era {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-status-ambar-texto);
+}
+
+.valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(16px) rem(48px);
+  margin: 0;
+  padding: rem(20px) rem(32px) rem(28px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.valores dt {
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.valores dd {
+  margin: rem(2px) 0 0;
+  font-size: rem(22px);
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+.valores dd span {
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .topo {
+    padding: rem(24px) rem(16px) rem(20px);
+  }
+
+  .numero b {
+    font-size: rem(48px);
+  }
+
+  .valores {
+    padding: rem(16px) rem(16px) rem(20px);
+  }
+
+  .fim {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
