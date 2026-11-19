@@ -85,14 +85,17 @@
   text-underline-offset: rem(4px);
 }
 
-/* Celular: os números longos (0800) passam para baixo do nome */
+/* Celular: o número desce para baixo do nome, alinhado com o texto */
 @media (max-width: $mantine-breakpoint-xs) {
   .linha {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: rem(20px) minmax(0, 1fr);
+    column-gap: rem(16px);
+    row-gap: rem(4px);
   }
 
   .numero {
-    margin-left: rem(36px);
+    grid-column: 2;
     font-size: rem(20px);
   }
 }
