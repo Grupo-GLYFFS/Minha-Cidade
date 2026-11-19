@@ -1,0 +1,105 @@
+/* Mapa do Brasil em pontos (442 × 435 no desenho), com a pílula de São Paulo à esquerda
+   do marcador, a legenda e a fonte embaixo. */
+
+.mapa {
+  margin: 0;
+  text-align: left;
+}
+
+.area {
+  position: relative;
+}
+
+.desenho {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ponto {
+  fill: var(--cor-azul-borda);
+}
+
+.pontoPequeno {
+  fill: var(--cor-azul);
+}
+
+.marcaFora {
+  fill: var(--cor-superficie);
+  stroke: var(--cor-texto);
+}
+
+.marcaDentro {
+  fill: var(--cor-texto);
+}
+
+/* Pílula presa ao marcador de São Paulo (306,9 × 322,3 no desenho = 69,4% × 74,1%) */
+.saoPaulo {
+  position: absolute;
+  left: 69.4%;
+  top: 74.1%;
+  transform: translate(calc(-100% - rem(16px)), -50%);
+  padding: rem(4px) rem(12px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-selo);
+  background: var(--cor-superficie);
+  font-size: rem(13px);
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--cor-texto);
+}
+
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(8px) rem(24px);
+  margin: rem(16px) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.legenda li {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+}
+
+.legenda i {
+  flex: none;
+  width: rem(12px);
+  height: rem(12px);
+  border-radius: var(--raio-selo);
+}
+
+.corPequeno {
+  background: var(--cor-azul);
+}
+
+.corOutros {
+  background: var(--cor-azul-borda);
+}
+
+.fonte {
+  margin-top: rem(8px);
+  font-size: rem(14px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--cor-texto-2);
+}
+
+.fonte a {
+  font-weight: 700;
+  color: var(--cor-azul-escuro);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .saoPaulo {
+    font-size: rem(12px);
+    padding: rem(2px) rem(8px);
+  }
+}

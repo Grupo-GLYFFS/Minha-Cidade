@@ -1,0 +1,84 @@
+/* Banner do fim das páginas da Global Solution (V3), 40 abaixo do bloco anterior (gap 24 da
+   pilha + 16): fundo azul, raio 20, passos em cima
+   separados por uma linha branca de 30% e, embaixo, título + linha à esquerda e botões à direita. */
+
+.banner {
+  overflow: hidden;
+  margin-top: rem(16px);
+  border-radius: var(--raio-card);
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+.passos {
+  padding: rem(20px) rem(24px);
+  border-bottom: 1px solid color-mix(in srgb, var(--cor-sobre-primaria) 30%, transparent);
+}
+
+.base {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: rem(24px);
+  align-items: center;
+  padding: rem(28px) rem(32px) rem(32px);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(26px);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.linha {
+  margin: rem(6px) 0 0;
+  font-size: rem(16px);
+  line-height: 1.5;
+  color: var(--cor-sobre-azul-suave);
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: rem(12px);
+}
+
+/* Anterior: contorno branco sobre o azul */
+.botoes .contorno {
+  border-color: color-mix(in srgb, var(--cor-sobre-primaria) 60%, transparent);
+  background: transparent;
+  color: var(--cor-sobre-primaria);
+}
+
+.botoes .contorno:hover {
+  border-color: var(--cor-sobre-primaria);
+  background: color-mix(in srgb, var(--cor-sobre-primaria) 10%, transparent);
+}
+
+.banner a:focus-visible {
+  outline-color: var(--cor-sobre-primaria);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .passos {
+    padding: rem(12px) rem(16px);
+  }
+
+  .base {
+    grid-template-columns: 1fr;
+    padding: rem(24px) rem(16px);
+  }
+
+  .titulo {
+    font-size: rem(22px);
+  }
+
+  .botoes {
+    justify-content: stretch;
+  }
+
+  .botoes > * {
+    flex: 1 1 auto;
+  }
+}

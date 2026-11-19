@@ -1,0 +1,111 @@
+/* Faixa dos ODS: azul-clara de largura total, padding 48, conteúdo em 1088.
+   Placas de raio 20, padding 24, altura mínima 220 e texto branco. */
+
+.faixa {
+  padding: rem(48px) 0;
+  background: var(--cor-faixa);
+  border-bottom: var(--espessura-borda) solid var(--cor-azul-borda);
+}
+
+.miolo {
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
+  margin-inline: auto;
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(32px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--cor-texto);
+}
+
+.placas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: rem(16px);
+  margin: rem(28px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.placa {
+  display: flex;
+  flex-direction: column;
+  min-height: rem(220px);
+  padding: rem(24px);
+  border-radius: var(--raio-card);
+  color: var(--cor-sobre-primaria);
+}
+
+.ods11 {
+  background: var(--cor-ods-11);
+}
+
+.ods10 {
+  background: var(--cor-ods-10);
+}
+
+.ods9 {
+  background: var(--cor-ods-9);
+}
+
+.numero {
+  margin: 0;
+  font-size: rem(64px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.numero small {
+  position: relative;
+  top: rem(8px);
+  margin-right: rem(8px);
+  font-size: rem(16px);
+  font-weight: 700;
+  letter-spacing: 0;
+  vertical-align: top;
+}
+
+.nome {
+  margin: auto 0 0;
+  padding-top: rem(16px);
+  font-size: rem(20px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.texto {
+  margin: rem(8px) 0 0;
+  font-size: rem(15px);
+  line-height: 1.45;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .faixa {
+    padding: rem(32px) 0;
+  }
+
+  .miolo {
+    width: calc(100% - rem(32px));
+  }
+
+  .titulo {
+    font-size: rem(26px);
+  }
+
+  .placas {
+    grid-template-columns: 1fr;
+    margin-top: rem(24px);
+  }
+
+  .placa {
+    min-height: 0;
+  }
+
+  .numero {
+    font-size: rem(48px);
+  }
+}

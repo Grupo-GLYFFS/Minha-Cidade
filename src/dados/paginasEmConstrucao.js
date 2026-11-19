@@ -46,11 +46,6 @@ function subpaginas(base, trilhaBase, sufixo, jaExistem) {
 }
 
 export const PAGINAS_EM_CONSTRUCAO = [
-  // Global Solution
-  { caminho: '/', titulo: 'Global Solution', icone: 'school' },
-  { caminho: '/como-funciona', titulo: 'Como funciona', icone: 'route' },
-  { caminho: '/impacto', titulo: 'Impacto', icone: 'insights' },
-  { caminho: '/equipe', titulo: 'Equipe', icone: 'groups' },
   // Conta (sem trilha)
   // Cidade, subprefeitura e bairro
   ...subpaginas('/minha-cidade', [CIDADE], 'da cidade de São Paulo', [

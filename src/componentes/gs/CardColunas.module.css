@@ -1,0 +1,55 @@
+/* 3 colunas de borda a borda dentro do SecaoCard: o corpo em modo lista tem 8 em cima e embaixo
+   e --pad-lateral nos lados; a grade "sangra" esse respiro para as divisórias tocarem a borda. */
+
+.colunas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: rem(-8px) calc(-1 * var(--pad-lateral));
+  padding: 0;
+  list-style: none;
+}
+
+.coluna {
+  padding: rem(24px) rem(28px) rem(28px);
+}
+
+.coluna + .coluna {
+  border-left: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.icone {
+  display: block;
+  margin-bottom: rem(12px);
+  color: var(--cor-azul);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(17px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cor-texto);
+}
+
+.texto {
+  margin: rem(6px) 0 0;
+  font-size: rem(15px);
+  line-height: 1.5;
+  color: var(--cor-texto-2);
+}
+
+/* Celular: uma coluna, com a divisória em cima */
+@media (max-width: $mantine-breakpoint-sm) {
+  .colunas {
+    grid-template-columns: 1fr;
+  }
+
+  .coluna {
+    padding: rem(20px) rem(16px);
+  }
+
+  .coluna + .coluna {
+    border-left: 0;
+    border-top: var(--espessura-borda) solid var(--cor-borda);
+  }
+}

@@ -1,0 +1,47 @@
+/* Minibarra dos indicadores: 8 de altura, segmentos com 2 de espaço entre eles
+   (a borda de 1 px na cor do card, de cada lado do segmento, faz o espaço). */
+
+.barra {
+  display: block;
+  width: 100%;
+  height: rem(8px);
+  margin-top: rem(12px);
+}
+
+.segmento {
+  stroke: var(--cor-superficie);
+  stroke-width: 2px;
+}
+
+.cinza {
+  fill: var(--cor-barra-cinza);
+}
+
+.ambar {
+  fill: var(--cor-barra-ambar);
+}
+
+.azul {
+  fill: var(--cor-azul);
+}
+
+.verde {
+  fill: var(--cor-barra-verde);
+}
+
+.vermelho {
+  fill: var(--cor-barra-vermelho);
+}
+
+.claro {
+  fill-opacity: 0.55;
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

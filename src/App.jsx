@@ -45,6 +45,10 @@ import Alertas from './paginas/Alertas';
 import DetalheAlerta from './paginas/DetalheAlerta';
 import Avisos from './paginas/Avisos';
 import DetalheAviso from './paginas/DetalheAviso';
+import Apresentacao from './paginas/Apresentacao';
+import ComoFunciona from './paginas/ComoFunciona';
+import Impacto from './paginas/Impacto';
+import Equipe from './paginas/Equipe';
 
 // Página de desenvolvimento: só é baixada quando alguém abre /componentes
 const Componentes = lazy(() => import('./paginas/Componentes'));
@@ -71,6 +75,12 @@ export default function App() {
           }
         />
       ))}
+
+      {/* Global Solution: a Apresentação abre o app; depois Como funciona, Impacto e Equipe */}
+      <Route path="/" element={<Apresentacao />} />
+      <Route path="/como-funciona" element={<ComoFunciona />} />
+      <Route path="/impacto" element={<Impacto />} />
+      <Route path="/equipe" element={<Equipe />} />
 
       {/* Início: resumo da cidade e da conta */}
       <Route path="/inicio" element={<Inicio />} />

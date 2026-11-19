@@ -65,6 +65,17 @@
   --cor-status-vermelho-texto: #b42318;
   /* Bolinha do título de grupo quando não é status */
   --cor-status-cinza-bolinha: #475467;
+  /* Minibarras das páginas da Global Solution (pedidos por situação, obras por situação) */
+  --cor-barra-cinza: #98a2b3;
+  --cor-barra-ambar: #dc6803;
+  --cor-barra-verde: #079455;
+  --cor-barra-vermelho: #d92d20;
+  /* Placas dos ODS (cor oficial escurecida para o texto branco ter contraste) */
+  --cor-ods-11: #9a5408;
+  --cor-ods-10: #c5115c;
+  --cor-ods-9: #c2410c;
+  /* Texto claro sobre o azul (faixas azuis da Global Solution) */
+  --cor-sobre-azul-suave: #e6edff;
 
   /* ---------- Raios ---------- */
   --raio-card: 20px;
@@ -271,6 +282,11 @@ html:root[data-contraste='alto'] {
   --cor-status-vermelho-fundo: #fff;
   --cor-status-vermelho-texto: #8a0000;
   --cor-status-cinza-bolinha: #000;
+  --cor-barra-cinza: #545454;
+  --cor-barra-ambar: #5c2300;
+  --cor-barra-verde: #0b5a2a;
+  --cor-barra-vermelho: #8a0000;
+  --cor-sobre-azul-suave: #fff;
   --espessura-borda: 2px;
   --foco-contorno: 4px solid #000;
   --foco-sombra: 0 0 0 8px #ffd400;

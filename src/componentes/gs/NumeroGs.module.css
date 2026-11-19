@@ -1,0 +1,48 @@
+/* Card do número do herói: branco, raio 20, borda #D0D5DD, padding 20/24. */
+
+.card {
+  box-sizing: border-box;
+  margin: 0;
+  padding: rem(20px) rem(24px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  text-align: left;
+}
+
+.numero {
+  display: block;
+  font-size: rem(48px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--cor-texto);
+}
+
+.vermelho {
+  color: var(--cor-erro);
+}
+
+.azul {
+  color: var(--cor-azul);
+}
+
+.texto {
+  display: block;
+  margin-top: rem(8px);
+  font-size: rem(15px);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--cor-texto);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .card {
+    padding: rem(16px);
+  }
+
+  .numero {
+    font-size: rem(40px);
+  }
+}

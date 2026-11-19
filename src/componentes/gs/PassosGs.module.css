@@ -1,0 +1,166 @@
+/* Passos da Global Solution: o desenho das etapas do formulário (bolinha 36, borda 2,
+   linha de 40 × 2 entre os passos), com ícone e link. Versão azul para o banner do fim. */
+
+.passos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: rem(4px) rem(10px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passo {
+  display: flex;
+  align-items: center;
+  gap: rem(10px);
+  font-size: rem(15px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+}
+
+/* Linha entre os passos: azul depois de um passo feito */
+.passo + .passo::before {
+  content: '';
+  width: rem(40px);
+  height: 2px;
+  background: var(--cor-azul-borda-forte);
+}
+
+.feito + .passo::before {
+  background: var(--cor-azul);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(10px);
+  min-height: rem(44px);
+  padding: 0 rem(4px);
+  border-radius: var(--raio-controle);
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--cor-texto);
+}
+
+.bolinha {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(36px);
+  height: rem(36px);
+  border: 2px solid var(--cor-borda-forte);
+  border-radius: var(--raio-selo);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-2);
+}
+
+.link:hover .bolinha {
+  border-color: var(--cor-azul);
+}
+
+.feito {
+  color: var(--cor-azul-escuro);
+}
+
+.feito .bolinha {
+  border-color: var(--cor-azul);
+  color: var(--cor-azul);
+}
+
+.atual {
+  color: var(--cor-texto);
+}
+
+.atual .bolinha {
+  background: var(--cor-azul);
+  border-color: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+/* ---------- Sobre o azul (banner do fim da página) ---------- */
+
+.azul {
+  gap: rem(4px) rem(8px);
+}
+
+.azul .passo {
+  color: var(--cor-sobre-azul-suave);
+}
+
+.azul .passo + .passo::before {
+  width: rem(32px);
+  background: color-mix(in srgb, var(--cor-sobre-primaria) 35%, transparent);
+}
+
+.azul .feito + .passo::before {
+  background: var(--cor-sobre-primaria);
+}
+
+.azul .link:hover {
+  color: var(--cor-sobre-primaria);
+}
+
+.azul .bolinha {
+  border-color: color-mix(in srgb, var(--cor-sobre-primaria) 55%, transparent);
+  background: transparent;
+  color: inherit;
+}
+
+.azul .feito,
+.azul .atual {
+  color: var(--cor-sobre-primaria);
+}
+
+.azul .feito .bolinha,
+.azul .link:hover .bolinha {
+  border-color: var(--cor-sobre-primaria);
+}
+
+.azul .atual .bolinha {
+  background: var(--cor-sobre-primaria);
+  border-color: var(--cor-sobre-primaria);
+  color: var(--cor-azul);
+}
+
+.azul .link:focus-visible {
+  outline-color: var(--cor-sobre-primaria);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Celular: os nomes saem da tela (continuam para o leitor de tela) e ficam só as bolinhas,
+   cada uma com área de toque de 44 */
+@media (max-width: $mantine-breakpoint-sm) {
+  .passos,
+  .azul {
+    flex-wrap: nowrap;
+    gap: rem(4px);
+  }
+
+  .passo + .passo::before,
+  .azul .passo + .passo::before {
+    width: rem(24px);
+  }
+
+  .link {
+    justify-content: center;
+    min-width: rem(44px);
+    padding: 0;
+    font-size: 0;
+    gap: 0;
+  }
+}

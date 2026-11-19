@@ -1,0 +1,141 @@
+/* Herói da Apresentação: faixa azul-clara de largura total, conteúdo centralizado em 1088,
+   padding 36 em cima e embaixo. Embaixo, a grade 1fr | 380 | 1fr com os números e o mapa. */
+
+.heroi {
+  background: var(--cor-faixa);
+  border-bottom: var(--espessura-borda) solid var(--cor-azul-borda);
+  padding: rem(36px) 0;
+  text-align: center;
+}
+
+.miolo {
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
+  margin-inline: auto;
+}
+
+.passos {
+  margin-bottom: rem(36px);
+}
+
+.titulo {
+  max-width: 22ch;
+  margin: 0 auto;
+  font-size: rem(48px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  color: var(--cor-texto);
+}
+
+.texto {
+  max-width: 50ch;
+  margin: rem(20px) auto 0;
+  font-size: rem(18px);
+  line-height: 1.6;
+  color: var(--cor-texto-2);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: rem(12px);
+  margin-top: rem(28px);
+}
+
+.dados {
+  display: grid;
+  grid-template-columns: 1fr rem(380px) 1fr;
+  grid-template-areas: 'esquerda centro direita';
+  gap: rem(32px);
+  align-items: center;
+  margin-top: rem(32px);
+}
+
+.esquerda,
+.direita {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}
+
+.esquerda {
+  grid-area: esquerda;
+}
+
+.centro {
+  grid-area: centro;
+}
+
+.direita {
+  grid-area: direita;
+}
+
+.fonte {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--cor-texto-2);
+}
+
+.fonte a {
+  font-weight: 700;
+  color: var(--cor-azul-escuro);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Tela média: mapa em cima, números lado a lado embaixo */
+@media (max-width: $mantine-breakpoint-md) {
+  .dados {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'centro centro'
+      'esquerda direita';
+    align-items: start;
+  }
+
+  .centro {
+    width: min(100%, rem(380px));
+    margin-inline: auto;
+  }
+}
+
+/* Celular: tudo numa coluna */
+@media (max-width: $mantine-breakpoint-sm) {
+  .heroi {
+    padding: rem(24px) 0 rem(32px);
+  }
+
+  .miolo {
+    width: calc(100% - rem(32px));
+  }
+
+  .passos {
+    margin-bottom: rem(24px);
+  }
+
+  .titulo {
+    font-size: rem(32px);
+  }
+
+  .texto {
+    font-size: rem(16px);
+  }
+
+  .acoes > * {
+    flex: 1 1 auto;
+  }
+
+  .dados {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'centro'
+      'esquerda'
+      'direita';
+    gap: rem(16px);
+  }
+}

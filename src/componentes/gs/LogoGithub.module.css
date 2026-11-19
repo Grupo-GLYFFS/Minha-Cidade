@@ -1,0 +1,8 @@
+/* Logo do GitHub no botão: 22 px, como o ícone do lado esquerdo (4 px mais perto da borda) */
+
+.logo {
+  flex: none;
+  width: rem(22px);
+  height: rem(22px);
+  margin-left: rem(-4px);
+}

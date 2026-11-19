@@ -1,0 +1,58 @@
+/* Card do indicador: raio 20, borda #D0D5DD; faixa do título com linha de borda a borda;
+   número 36/800 e detalhe 14/600. */
+
+.card {
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  margin: 0;
+  padding: rem(14px) rem(20px);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+  font-size: rem(15px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--cor-texto);
+}
+
+.icone {
+  color: var(--cor-azul);
+}
+
+.corpo {
+  padding: rem(16px) rem(20px) rem(20px);
+}
+
+.numero {
+  margin: 0;
+  font-size: rem(36px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--cor-texto);
+}
+
+.detalhe {
+  margin: rem(4px) 0 0;
+  font-size: rem(14px);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .titulo {
+    padding: rem(12px) rem(16px);
+  }
+
+  .corpo {
+    padding: rem(12px) rem(16px) rem(16px);
+  }
+}

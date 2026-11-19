@@ -1,0 +1,44 @@
+/* Corpo do card "Pitch": miniatura 240 × 135 (16:9, tracejada) e o texto com os botões. */
+
+.pitch {
+  display: grid;
+  grid-template-columns: rem(240px) 1fr;
+  gap: rem(28px);
+  align-items: center;
+}
+
+.video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  border: var(--espessura-borda) dashed var(--cor-borda-forte);
+  border-radius: var(--raio-controle);
+  background: var(--cor-fundo);
+  color: var(--cor-texto-2);
+}
+
+.texto {
+  margin: 0;
+  font-size: rem(16px);
+  line-height: 1.6;
+  color: var(--cor-texto-2);
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(12px);
+  margin-top: rem(16px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .pitch {
+    grid-template-columns: 1fr;
+    gap: rem(16px);
+  }
+
+  .botoes > * {
+    flex: 1 1 auto;
+  }
+}

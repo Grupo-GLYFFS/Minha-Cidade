@@ -1,0 +1,44 @@
+/* Anel do ciclo do pedido (SVG 400 × 400, escala com a largura da coluna). */
+
+.anel {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.trilha {
+  fill: none;
+  stroke: var(--cor-azul-borda);
+}
+
+.miolo {
+  fill: var(--cor-faixa);
+}
+
+.arco {
+  fill: none;
+  stroke: var(--cor-azul);
+}
+
+.ponta {
+  fill: var(--cor-azul);
+}
+
+.no {
+  fill: var(--cor-azul);
+}
+
+/* Números e rótulo do centro: tamanho em unidades do desenho (escala junto com o SVG) */
+.numero {
+  font-family: var(--fonte);
+  font-size: 24px;
+  font-weight: 800;
+  fill: var(--cor-sobre-primaria);
+}
+
+.centro {
+  font-family: var(--fonte);
+  font-size: 22px;
+  font-weight: 800;
+  fill: var(--cor-texto);
+}

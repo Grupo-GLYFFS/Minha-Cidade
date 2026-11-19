@@ -1,0 +1,69 @@
+/* Faixa "Conheça o projeto": azul, raio 20, 24 abaixo dos cards. Em cima, título + frase e o
+   botão branco; embaixo, uma linha branca de 30% de borda a borda e o "Entrar no app". */
+
+.convite {
+  overflow: hidden;
+  margin-top: rem(24px);
+  border-radius: var(--raio-card);
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+.topo {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: rem(32px);
+  align-items: center;
+  padding: rem(32px);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(26px);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.frase {
+  margin: rem(6px) 0 0;
+  font-size: rem(16px);
+  line-height: 1.5;
+  color: var(--cor-sobre-azul-suave);
+}
+
+.base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(8px) rem(16px);
+  margin: 0;
+  padding: rem(12px) rem(32px);
+  border-top: 1px solid color-mix(in srgb, var(--cor-sobre-primaria) 30%, transparent);
+  font-size: rem(15px);
+  color: var(--cor-sobre-azul-suave);
+}
+
+.base .entrar {
+  color: var(--cor-sobre-primaria);
+}
+
+.convite a:focus-visible {
+  outline-color: var(--cor-sobre-primaria);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .topo {
+    grid-template-columns: 1fr;
+    gap: rem(20px);
+    padding: rem(24px) rem(16px);
+  }
+
+  .titulo {
+    font-size: rem(22px);
+  }
+
+  .base {
+    padding: rem(12px) rem(16px);
+  }
+}

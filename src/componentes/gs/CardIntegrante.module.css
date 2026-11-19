@@ -1,0 +1,58 @@
+/* Card do integrante: raio 20, borda #D0D5DD; faixa azul-clara de 64 com linha embaixo;
+   avatar de 72 a 20 da borda, subindo 40 sobre a faixa. */
+
+.card {
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.faixa {
+  height: rem(64px);
+  background: var(--cor-faixa);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.avatar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(72px);
+  height: rem(72px);
+  margin: rem(-40px) 0 0 rem(20px);
+  position: relative;
+  border: var(--espessura-borda) solid var(--cor-azul-borda);
+  border-radius: var(--raio-selo);
+  background: var(--cor-superficie);
+  color: var(--cor-azul);
+}
+
+.texto {
+  padding: rem(12px) rem(20px) 0;
+}
+
+.nome {
+  margin: 0;
+  font-size: rem(17px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cor-texto);
+}
+
+.rm {
+  margin: rem(2px) 0 0;
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.papel {
+  margin: rem(12px) 0 0;
+  padding: rem(12px) rem(20px) rem(20px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}

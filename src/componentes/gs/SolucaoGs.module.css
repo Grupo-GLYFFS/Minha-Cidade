@@ -1,0 +1,73 @@
+/* Seção "A solução": título 32/800, frase e 4 cards-link em 4 colunas (gap 16). */
+
+.titulo {
+  max-width: 22ch;
+  margin: 0;
+  font-size: rem(32px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  color: var(--cor-texto);
+}
+
+.frase {
+  margin: rem(12px) 0 0;
+  font-size: rem(17px);
+  line-height: 1.5;
+  color: var(--cor-texto-2);
+}
+
+.areas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: rem(16px);
+  margin: rem(28px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  height: 100%;
+  padding: rem(24px) rem(56px) rem(24px) rem(24px);
+}
+
+.icone {
+  display: block;
+  color: var(--cor-azul);
+}
+
+.nome {
+  margin: rem(12px) 0 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.texto {
+  margin: rem(4px) 0 0;
+  font-size: rem(15px);
+  line-height: 1.45;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: $mantine-breakpoint-md) {
+  .areas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .titulo {
+    font-size: rem(26px);
+  }
+
+  .areas {
+    grid-template-columns: 1fr;
+    margin-top: rem(24px);
+  }
+
+  .card {
+    padding: rem(16px) rem(56px) rem(16px) rem(16px);
+  }
+}

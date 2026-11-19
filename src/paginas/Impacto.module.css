@@ -1,0 +1,36 @@
+/* Impacto: aviso âmbar da simulação e grade 3 × 2 dos indicadores (gap 16). */
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(10px);
+  margin: 0;
+  padding: rem(14px) rem(18px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-status-ambar-fundo);
+  font-size: rem(15px);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--cor-status-ambar-texto);
+}
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: rem(16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: $mantine-breakpoint-md) {
+  .indicadores {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .indicadores {
+    grid-template-columns: 1fr;
+  }
+}

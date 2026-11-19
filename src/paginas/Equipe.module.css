@@ -1,0 +1,46 @@
+/* Equipe: 5 cards em 3 + 2 centralizados (grade de 6 colunas, cada card ocupa 2;
+   o 4º começa na coluna 2), gap 16. */
+
+.integrantes {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: rem(16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.integrantes > li {
+  grid-column: span 2;
+}
+
+.integrantes > li:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Tela média: 2 por linha */
+@media (max-width: $mantine-breakpoint-md) {
+  .integrantes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .integrantes > li,
+  .integrantes > li:nth-child(4) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .integrantes {
+    grid-template-columns: 1fr;
+  }
+}
