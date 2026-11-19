@@ -3,6 +3,7 @@ import Botao from '../Botao';
 import { usePedidos } from '../../contexto/usePedidos';
 import { useSessao } from '../../contexto/useSessao';
 import { useAcaoPendente } from '../../contexto/useAcaoPendente';
+import { useAvisoTemporario } from '../../contexto/useAvisoTemporario';
 import { motivoSemAcompanhar } from '../../logica/acompanhamento';
 import classes from './DetalhePedido.module.css';
 
@@ -26,6 +27,7 @@ const MOTIVOS = {
 export default function AcoesPedido({ pedido }) {
   const { apoiados, seguidos, alternarApoio, alternarSeguir } = usePedidos();
   const { usuario } = useSessao();
+  const mostrarAviso = useAvisoTemporario();
   const [aviso, setAviso] = useState('');
 
   const motivo = motivoSemAcompanhar(pedido, usuario?.id);
@@ -34,16 +36,29 @@ export default function AcoesPedido({ pedido }) {
 
   // Pedido pelo visitante: feito quando ele volta logado (só liga, nunca desliga)
   const apoiarDepois = useAcaoPendente(`apoiar:${pedido.id}`, () => {
-    if (!motivo && !apoia) alternarApoio(pedido.id);
+    if (!motivo && !apoia && alternarApoio(pedido.id)) mostrarAviso('Você apoiou este pedido.');
   });
   const seguirDepois = useAcaoPendente(`seguir-pedido:${pedido.id}`, () => {
-    if (!motivo && !segue) alternarSeguir(pedido.id);
+    if (!motivo && !segue && alternarSeguir(pedido.id)) {
+      mostrarAviso('Você está seguindo este pedido.', '/perfil/seguindo');
+    }
   });
 
   // Visitante vai para "Entrar" (e a ação fica guardada); quem tem conta liga ou desliga
+  // e vê a confirmação no rodapé da tela
   function aoClicar(acao, depois) {
-    if (!usuario) depois();
-    else acao(pedido.id);
+    if (!usuario) {
+      depois();
+      return;
+    }
+    if (!acao(pedido.id)) return;
+    if (acao === alternarApoio) {
+      mostrarAviso(apoia ? 'Você tirou o seu apoio.' : 'Você apoiou este pedido.');
+    } else if (segue) {
+      mostrarAviso('Você deixou de seguir este pedido.');
+    } else {
+      mostrarAviso('Você está seguindo este pedido.', '/perfil/seguindo');
+    }
   }
 
   // Compartilha pela folha do aparelho ou copia o link do pedido

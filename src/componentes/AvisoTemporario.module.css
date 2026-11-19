@@ -1,0 +1,50 @@
+/* Aviso temporário: preso embaixo e no centro da tela, fundo branco, borda, raio 12 e sombra leve. */
+
+.lugar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--pad) + var(--altura-abas));
+  z-index: 400;
+  width: min(rem(560px), calc(100% - 2 * var(--pad)));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  padding: rem(4px) rem(4px) rem(4px) rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-aviso);
+  pointer-events: auto;
+  animation: subir 200ms ease-out;
+}
+
+.icone {
+  flex: none;
+  color: var(--cor-sucesso);
+}
+
+.texto {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: rem(8px) 0;
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(rem(8px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

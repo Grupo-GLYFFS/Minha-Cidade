@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import Botao from '../componentes/Botao';
@@ -7,12 +6,12 @@ import ParaOndeIr from '../componentes/ParaOndeIr';
 import EstadoVazio from '../componentes/EstadoVazio';
 import EstadoCarregando from '../componentes/EstadoCarregando';
 import EstadoErro from '../componentes/EstadoErro';
-import AvisoFeito from '../componentes/servicos/AvisoFeito';
 import DiasAgendados from '../componentes/servicos/DiasAgendados';
 import CardSolicitacao from '../componentes/servicos/CardSolicitacao';
 import { useCarregamento } from '../componentes/servicos/useCarregamento';
 import { useResumoConta } from '../componentes/servicos/useResumoConta';
 import { useSolicitacoes } from '../contexto/useSolicitacoes';
+import { useAvisoTemporario } from '../contexto/useAvisoTemporario';
 import { SERVICOS } from '../dados/servicos';
 import { agruparSolicitacoes } from '../logica/solicitacoes';
 import classes from './MinhasSolicitacoes.module.css';
@@ -25,7 +24,7 @@ export default function MinhasSolicitacoes() {
   const { solicitacoes } = useSolicitacoes();
   const { carregando, erro, tentarDeNovo } = useCarregamento();
   const resumo = useResumoConta();
-  const [aviso, setAviso] = useState('');
+  const mostrarAviso = useAvisoTemporario();
   const grupos = agruparSolicitacoes(solicitacoes);
 
   // Conteúdo conforme o estado da lista
@@ -62,7 +61,7 @@ export default function MinhasSolicitacoes() {
           id={`grupo-${grupo.id}`}
         />
         {grupo.id === 'agendadas' ? (
-          <DiasAgendados agendadas={itens} aoAvisar={setAviso} />
+          <DiasAgendados agendadas={itens} aoAvisar={mostrarAviso} />
         ) : (
           <ul className={classes.lista}>
             {itens.map((item) => (
@@ -91,7 +90,6 @@ export default function MinhasSolicitacoes() {
         />
       }
     >
-      <AvisoFeito texto={aviso} aoFechar={() => setAviso('')} />
       <div className={classes.grupos}>{conteudo}</div>
 
       <ParaOndeIr
