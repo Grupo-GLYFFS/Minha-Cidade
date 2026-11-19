@@ -13,10 +13,11 @@ import { OBRAS } from '../dados/obras';
 import { PROJETOS } from '../dados/projetos';
 import { usePedidos } from '../contexto/usePedidos';
 import { useSessao } from '../contexto/useSessao';
-import { useSeguidos } from '../contexto/useSeguidos';
+import { useOQueSegue } from '../contexto/useOQueSegue';
 import { useVotos } from '../contexto/useVotos';
 import { useCarregamentoSimulado } from '../contexto/useCarregamentoSimulado';
 import { contar } from '../logica/resumoLugar';
+import { seguidosDaPessoa } from '../logica/acompanhamento';
 import classes from './OQueVoceSegue.module.css';
 
 // As três abas, na ordem da tela
@@ -34,8 +35,8 @@ export default function OQueVoceSegue() {
   const { usuario } = useSessao();
   const { pedidos, seguidos: idsPedidos } = usePedidos();
   const { votosDaPessoa } = useVotos();
-  const seguirObras = useSeguidos('obras');
-  const seguirVotacoes = useSeguidos('votacoes');
+  const { seguirObras, seguirVotacoes } = useOQueSegue();
+  // Quem desliga o Seguindo aqui não vê o card sumir na hora (useListaSeguida)
   const idsObras = useListaSeguida(seguirObras.seguidos);
   const idsVotacoes = useListaSeguida(seguirVotacoes.seguidos);
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
@@ -43,12 +44,12 @@ export default function OQueVoceSegue() {
   const pedida = parametros.get('aba');
   const aba = ABAS.some((item) => item.id === pedida) ? pedida : 'votacoes';
 
-  const listas = {
-    votacoes: PROJETOS.filter((projeto) => idsVotacoes.includes(projeto.id)),
-    obras: OBRAS.filter((obra) => idsObras.includes(obra.id)),
-    pedidos: pedidos.filter((pedido) => idsPedidos.includes(pedido.id)),
-  };
-  const total = listas.votacoes.length + listas.obras.length + listas.pedidos.length;
+  // Mesma regra do Início, do Meu perfil e das contagens (logica/acompanhamento.js)
+  const listas = seguidosDaPessoa(
+    { projetos: PROJETOS, obras: OBRAS, pedidos },
+    { votacoes: idsVotacoes, obras: idsObras, pedidos: idsPedidos },
+  );
+  const { total } = listas;
 
   // Troca a aba sem criar uma página nova no histórico
   function mudarAba(id) {

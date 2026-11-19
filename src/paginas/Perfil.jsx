@@ -16,6 +16,7 @@ import { useSolicitacoes } from '../contexto/useSolicitacoes';
 import { useVotos } from '../contexto/useVotos';
 import { useSair } from '../contexto/useSair';
 import { useFotoPerfil } from '../contexto/useFotoPerfil';
+import { useOQueSegue } from '../contexto/useOQueSegue';
 import { normalizarEmail, valoresMeusDados } from '../logica/contas';
 import { mascararCpf } from '../logica/cpf';
 import { regiaoDoBairro } from '../logica/enderecos';
@@ -32,7 +33,8 @@ function contar(numero, singular, plural) {
 // (Editar abre o popup do endereço), "Participação" (atalhos com os números) e Sair.
 export default function Perfil() {
   const { usuario, atualizarConta, emailEmUso } = useSessao();
-  const { pedidos, apoiados } = usePedidos();
+  const { pedidos } = usePedidos();
+  const { seguidos } = useOQueSegue();
   const { solicitacoes } = useSolicitacoes();
   const { votosDaPessoa } = useVotos();
   const { foto, escolherArquivo, removerFoto } = useFotoPerfil();
@@ -101,7 +103,7 @@ export default function Perfil() {
           <LinhaDado
             icone="assignment"
             rotulo="Meus pedidos"
-            valor={`${feitos} feitos · ${apoiados.length} apoiados`}
+            valor={feitos > 0 ? contar(feitos, 'feito', 'feitos') : 'Nenhum ainda'}
             para="/perfil/pedidos"
           />
           <LinhaDado
@@ -123,7 +125,15 @@ export default function Perfil() {
           <LinhaDado
             icone="bookmark"
             rotulo="O que você segue"
-            valor="Votações, obras e pedidos"
+            valor={
+              seguidos.total > 0
+                ? [
+                    contar(seguidos.votacoes.length, 'votação', 'votações'),
+                    contar(seguidos.obras.length, 'obra', 'obras'),
+                    contar(seguidos.pedidos.length, 'pedido', 'pedidos'),
+                  ].join(' · ')
+                : 'Nada ainda'
+            }
             para="/perfil/seguindo"
           />
         </SecaoCard>

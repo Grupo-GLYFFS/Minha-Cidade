@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
-import Abas from '../componentes/Abas';
+import Chip from '../componentes/Chip';
 import Botao from '../componentes/Botao';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import EstadoVazio from '../componentes/EstadoVazio';
@@ -11,6 +10,7 @@ import GruposVotacoes from '../componentes/votacoes/GruposVotacoes';
 import { PROJETOS } from '../dados/projetos';
 import { votacoesDoRecorte } from '../logica/recorte';
 import { noLugar } from '../logica/lugares';
+import { projetosVotados } from '../logica/votacao';
 import { destinoObras, destinoOrcamento } from '../logica/destinos';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';
@@ -19,11 +19,9 @@ import { useSessao } from '../contexto/useSessao';
 import { useCarregamentoSimulado } from '../contexto/useCarregamentoSimulado';
 import classes from './Votacoes.module.css';
 
-// Prefixo dos ids das abas e do painel
-const PREFIXO = 'votacoes';
-
-// Página Votações (/minha-cidade/votacoes e /meu-bairro/votacoes): abas "Todas" e "Você votou",
-// votações agrupadas em Abertas e Encerradas, com Seguir e "Avaliar e votar" em cada card.
+// Página Votações (/minha-cidade/votacoes e /meu-bairro/votacoes): votações agrupadas em Abertas
+// e Encerradas, com Seguir e "Avaliar e votar" em cada card. Os votos da pessoa ficam em
+// Meus votos: o atalho no alto da lista leva para lá, com a contagem da mesma regra.
 // Recebe o escopo: "cidade" (as da cidade toda) ou "bairro" (as da subprefeitura do bairro e as
 // da cidade que incluem o bairro).
 export default function Votacoes({ escopo = 'cidade' }) {
@@ -32,20 +30,13 @@ export default function Votacoes({ escopo = 'cidade' }) {
   const { votosDaPessoa } = useVotos();
   const { logado } = useSessao();
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
-  const [aba, setAba] = useState('todas');
 
-  const todas = votacoesDoRecorte(PROJETOS, recorte);
-  const votou = todas.filter((projeto) => votosDaPessoa[projeto.id]);
-  const visiveis = aba === 'todas' ? todas : votou;
-
-  const abas = [
-    { id: 'todas', rotulo: 'Todas', contagem: todas.length },
-    { id: 'votou', rotulo: 'Você votou', contagem: votou.length },
-  ];
+  const visiveis = votacoesDoRecorte(PROJETOS, recorte);
+  const meusVotos = projetosVotados(PROJETOS, votosDaPessoa).length;
 
   // Lista do bairro sem votação aberta: aviso no lugar do grupo Abertas
   const semAbertas =
-    escopo === 'bairro' && aba === 'todas' ? (
+    escopo === 'bairro' ? (
       <EstadoVazio
         icone="how_to_vote"
         titulo={`Nenhuma votação aberta ${noLugar(recorte.lugar)}`}
@@ -69,28 +60,6 @@ export default function Votacoes({ escopo = 'cidade' }) {
         aoTentarDeNovo={tentarDeNovo}
       />
     );
-  } else if (visiveis.length === 0 && aba === 'votou') {
-    conteudo = (
-      <EstadoVazio
-        icone="how_to_vote"
-        titulo="Você ainda não votou"
-        texto={
-          logado
-            ? 'Quando você votar, a votação aparece aqui com o seu voto.'
-            : 'Entre na sua conta para votar e ver os seus votos.'
-        }
-      >
-        {logado ? (
-          <Botao variante="secundario" onClick={() => setAba('todas')}>
-            Ver as votações abertas
-          </Botao>
-        ) : (
-          <Botao variante="principal" para={`/entrar?voltar=${recorte.base}/votacoes`}>
-            Entrar
-          </Botao>
-        )}
-      </EstadoVazio>
-    );
   } else if (visiveis.length === 0) {
     conteudo = semAbertas ?? (
       <EstadoVazio
@@ -103,7 +72,7 @@ export default function Votacoes({ escopo = 'cidade' }) {
     conteudo = (
       <GruposVotacoes
         projetos={visiveis}
-        prefixo={`${PREFIXO}-${aba}`}
+        prefixo="votacoes"
         recorte={recorte}
         seguir={seguir}
         semAbertas={semAbertas}
@@ -122,16 +91,14 @@ export default function Votacoes({ escopo = 'cidade' }) {
         />
       }
     >
-      <div className={classes.abas}>
-        <Abas abas={abas} ativa={aba} aoMudar={setAba} rotulo="Quais votações" prefixo={PREFIXO} />
-      </div>
-      <div
-        id={`${PREFIXO}-painel-${aba}`}
-        role="tabpanel"
-        aria-labelledby={`${PREFIXO}-aba-${aba}`}
-      >
-        {conteudo}
-      </div>
+      {logado && (
+        <div className={classes.atalhos}>
+          <Chip icone="how_to_vote" contagem={meusVotos} para="/perfil/votos">
+            Meus votos
+          </Chip>
+        </div>
+      )}
+      {conteudo}
       <ParaOndeIr destinos={[destinoObras(recorte), destinoOrcamento(recorte)]} />
     </Pagina>
   );

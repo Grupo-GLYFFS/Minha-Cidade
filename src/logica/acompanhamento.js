@@ -1,6 +1,6 @@
 import { estaAberto } from './pedidos';
 
-// Apoiar e Seguir um pedido (detalhe do pedido e aba "Pedidos seguidos").
+// Apoiar e Seguir um pedido (detalhe do pedido) e a regra do que a pessoa segue.
 // Os dois ligam e desligam. Ficam guardados por pessoa no formato
 // { idPessoa: { apoia: [ids], segue: [ids] } }.
 
@@ -43,11 +43,15 @@ export function motivoSemAcompanhar(pedido, idPessoa) {
   return null;
 }
 
-// Separa os pedidos de outras pessoas que a pessoa apoia ou segue ("Pedidos seguidos").
-// Recebe a lista de pedidos, os ids apoiados, os ids seguidos e o id da pessoa; devolve uma nova lista.
-export function pedidosSeguidosDaPessoa(pedidos, apoiados, seguidos, idPessoa) {
-  return pedidos.filter(
-    (pedido) =>
-      pedido.autorId !== idPessoa && (apoiados.includes(pedido.id) || seguidos.includes(pedido.id)),
-  );
+// Regra única do que a pessoa segue: entram só os itens em que ela marcou Seguir (votações,
+// obras e pedidos, abertos ou encerrados). Apoiar é outra coisa e não entra aqui.
+// Usada por O que você segue, Início, Meu perfil, Meus pedidos, Obras e Votações, para que
+// as contagens batam em todo lugar.
+// Recebe { projetos, obras, pedidos } (listas completas) e { votacoes, obras, pedidos } (ids
+// seguidos). Devolve { votacoes, obras, pedidos, total }.
+export function seguidosDaPessoa(listas, ids) {
+  const votacoes = (listas.projetos ?? []).filter((item) => ids.votacoes?.includes(item.id));
+  const obras = (listas.obras ?? []).filter((item) => ids.obras?.includes(item.id));
+  const pedidos = (listas.pedidos ?? []).filter((item) => ids.pedidos?.includes(item.id));
+  return { votacoes, obras, pedidos, total: votacoes.length + obras.length + pedidos.length };
 }

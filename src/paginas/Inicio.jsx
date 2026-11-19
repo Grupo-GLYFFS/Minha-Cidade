@@ -14,20 +14,18 @@ import CartaoVotacaoLista from '../componentes/votacoes/CartaoVotacaoLista';
 import IlustracaoPedido from '../componentes/pedidos/IlustracaoPedido';
 import SeloTipo from '../componentes/seguindo/SeloTipo';
 import { AVISOS } from '../dados/avisos';
-import { OBRAS } from '../dados/obras';
 import { PROJETOS } from '../dados/projetos';
 import { useSessao } from '../contexto/useSessao';
 import { usePedidos } from '../contexto/usePedidos';
 import { useSolicitacoes } from '../contexto/useSolicitacoes';
 import { useVotos } from '../contexto/useVotos';
-import { useSeguidos } from '../contexto/useSeguidos';
+import { useOQueSegue } from '../contexto/useOQueSegue';
 import { pedidosAbertosDaPessoa } from '../logica/pedidos';
 import { lugarDaVotacao } from '../logica/votacao';
 import {
   agendaDoInicio,
   avisosDoInicio,
   destinosDoInicio,
-  seguidosDoInicio,
   solicitacoesEsperando,
   votacoesDoInicio,
 } from '../logica/inicio';
@@ -40,11 +38,11 @@ import classes from './Inicio.module.css';
 // Seções vazias não aparecem.
 export default function Inicio() {
   const { usuario } = useSessao();
-  const { pedidos, seguidos: pedidosSeguidos } = usePedidos();
+  const { pedidos } = usePedidos();
   const { solicitacoes } = useSolicitacoes();
   const { votoDe, resultado } = useVotos();
-  const obrasSeguidas = useSeguidos('obras');
-  const votacoesSeguidas = useSeguidos('votacoes');
+  // O que a pessoa segue: mesma regra de O que você segue e do Meu perfil
+  const { seguidos: tudoSeguido, seguirVotacoes: votacoesSeguidas } = useOQueSegue();
   const bairro = usuario?.bairro ?? null;
 
   const agenda = agendaDoInicio(solicitacoes);
@@ -52,16 +50,7 @@ export default function Inicio() {
   const esperando = solicitacoesEsperando(solicitacoes);
   const avisos = avisosDoInicio(AVISOS, bairro);
   const votacoes = votacoesDoInicio(PROJETOS, bairro);
-  const seguidos = usuario
-    ? seguidosDoInicio({
-        obras: OBRAS,
-        idsObras: obrasSeguidas.seguidos,
-        pedidos,
-        idsPedidos: pedidosSeguidos,
-        projetos: PROJETOS,
-        idsVotacoes: votacoesSeguidas.seguidos,
-      })
-    : null;
+  const seguidos = usuario ? tudoSeguido : null;
 
   // Card de votação igual ao das listas (com ou sem o selo de tipo)
   function cardVotacao(votacao, selo) {

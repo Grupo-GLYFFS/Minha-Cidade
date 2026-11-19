@@ -165,3 +165,9 @@ export function lugarDaVotacao(projeto, recorte) {
   }
   return projeto.bairro ?? `Subprefeitura ${projeto.subprefeitura}`;
 }
+
+// Separa as votações em que a pessoa votou (Meus votos e o atalho da página Votações).
+// Recebe os projetos e os votos da pessoa ({ idProjeto: voto }); devolve uma nova lista.
+export function projetosVotados(projetos, votosDaPessoa = {}) {
+  return projetos.filter((projeto) => votosDaPessoa[projeto.id]);
+}

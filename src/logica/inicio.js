@@ -2,7 +2,6 @@ import { HOJE } from './datas';
 import { distanciaEmPalavras, formatarDataDetalhe, formatarDiaMes } from './datasExtenso';
 import { etapasDoPedido } from './linhaDoTempo';
 import { avisoValendo } from './avisos';
-import { estaAberto } from './pedidos';
 import { buscarStatusSolicitacao, textoContagemSolicitacoes } from './solicitacoes';
 import { contar, resumirLugar } from './resumoLugar';
 import { projetosEmVotacao } from './votacao';
@@ -158,24 +157,4 @@ export function destinosDoInicio({ usuario, pedidos, solicitacoes }) {
     },
     ...hubs,
   ];
-}
-
-// Junta o que a pessoa segue para a seção "O que você segue" do Início: obras, pedidos ainda
-// abertos e votações abertas, nessa ordem.
-// Recebe { obras, idsObras, pedidos, idsPedidos, projetos, idsVotacoes } (listas completas e os
-// ids seguidos). Devolve { obras, pedidos, votacoes, total }.
-export function seguidosDoInicio({ obras, idsObras, pedidos, idsPedidos, projetos, idsVotacoes }) {
-  const obrasSeguidas = obras.filter((obra) => idsObras.includes(obra.id));
-  const pedidosSeguidos = pedidos.filter(
-    (pedido) => idsPedidos.includes(pedido.id) && estaAberto(pedido),
-  );
-  const votacoesSeguidas = projetosEmVotacao(projetos).filter((projeto) =>
-    idsVotacoes.includes(projeto.id),
-  );
-  return {
-    obras: obrasSeguidas,
-    pedidos: pedidosSeguidos,
-    votacoes: votacoesSeguidas,
-    total: obrasSeguidas.length + pedidosSeguidos.length + votacoesSeguidas.length,
-  };
 }

@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
-import Abas from '../componentes/Abas';
-import Botao from '../componentes/Botao';
+import Chip from '../componentes/Chip';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import EstadoVazio from '../componentes/EstadoVazio';
 import EstadoCarregando from '../componentes/EstadoCarregando';
@@ -12,30 +10,21 @@ import { OBRAS } from '../dados/obras';
 import { obrasDoRecorte } from '../logica/recorte';
 import { destinoOrcamento, destinoVotacoes } from '../logica/destinos';
 import { useRecorte } from '../contexto/useRecorte';
-import { useSeguidos } from '../contexto/useSeguidos';
+import { useOQueSegue } from '../contexto/useOQueSegue';
 import { useCarregamentoSimulado } from '../contexto/useCarregamentoSimulado';
 import classes from './Obras.module.css';
 
-// Prefixo dos ids das abas e do painel
-const PREFIXO = 'obras';
-
-// Página Obras (/minha-cidade/obras e /meu-bairro/obras): abas "Todas" e "Que você segue",
-// obras agrupadas pela situação e o Seguir em cada card.
+// Página Obras (/minha-cidade/obras e /meu-bairro/obras): obras agrupadas pela situação e o
+// Seguir em cada card. As obras seguidas ficam em O que você segue: o atalho no alto da lista
+// leva para lá, com a contagem da mesma regra (useOQueSegue).
 // Recebe o escopo: "cidade" (todas as obras) ou "bairro" (as da subprefeitura do bairro da pessoa).
 export default function Obras({ escopo = 'cidade' }) {
   const recorte = useRecorte(escopo);
-  const { segue, alternar, seguidos, logado } = useSeguidos('obras');
+  const { seguidos, seguirObras } = useOQueSegue();
+  const { segue, alternar, logado } = seguirObras;
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
-  const [aba, setAba] = useState('todas');
 
-  const todas = obrasDoRecorte(OBRAS, recorte);
-  const queSegue = todas.filter((obra) => seguidos.includes(obra.id));
-  const visiveis = aba === 'todas' ? todas : queSegue;
-
-  const abas = [
-    { id: 'todas', rotulo: 'Todas', contagem: todas.length },
-    { id: 'seguidas', rotulo: 'Que você segue', contagem: queSegue.length },
-  ];
+  const visiveis = obrasDoRecorte(OBRAS, recorte);
 
   // O que aparece no painel da aba, conforme o estado da lista
   let conteudo;
@@ -44,28 +33,6 @@ export default function Obras({ escopo = 'cidade' }) {
   } else if (estado === 'erro') {
     conteudo = (
       <EstadoErro titulo="Não conseguimos carregar as obras agora" aoTentarDeNovo={tentarDeNovo} />
-    );
-  } else if (visiveis.length === 0 && aba === 'seguidas') {
-    conteudo = (
-      <EstadoVazio
-        icone="construction"
-        titulo="Você ainda não segue nenhuma obra"
-        texto={
-          logado
-            ? 'Quando você seguir uma obra, ela aparece aqui com as novidades.'
-            : 'Entre na sua conta para seguir as obras.'
-        }
-      >
-        {logado ? (
-          <Botao variante="secundario" onClick={() => setAba('todas')}>
-            Ver todas as obras
-          </Botao>
-        ) : (
-          <Botao variante="principal" para={`/entrar?voltar=${recorte.base}/obras`}>
-            Entrar
-          </Botao>
-        )}
-      </EstadoVazio>
     );
   } else if (visiveis.length === 0) {
     conteudo = (
@@ -80,7 +47,7 @@ export default function Obras({ escopo = 'cidade' }) {
       <GruposObras
         obras={visiveis}
         base={recorte.base}
-        prefixo={`${PREFIXO}-${aba}`}
+        prefixo="obras"
         segue={segue}
         alternar={alternar}
         logado={logado}
@@ -99,16 +66,14 @@ export default function Obras({ escopo = 'cidade' }) {
         />
       }
     >
-      <div className={classes.abas}>
-        <Abas abas={abas} ativa={aba} aoMudar={setAba} rotulo="Quais obras" prefixo={PREFIXO} />
-      </div>
-      <div
-        id={`${PREFIXO}-painel-${aba}`}
-        role="tabpanel"
-        aria-labelledby={`${PREFIXO}-aba-${aba}`}
-      >
-        {conteudo}
-      </div>
+      {logado && (
+        <div className={classes.atalhos}>
+          <Chip icone="bookmark" contagem={seguidos.obras.length} para="/perfil/seguindo?aba=obras">
+            Obras que você segue
+          </Chip>
+        </div>
+      )}
+      {conteudo}
       <ParaOndeIr destinos={[destinoVotacoes(recorte), destinoOrcamento(recorte)]} />
     </Pagina>
   );

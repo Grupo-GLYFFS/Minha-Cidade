@@ -9,6 +9,7 @@ import GruposVotacoes from '../componentes/votacoes/GruposVotacoes';
 import { PROJETOS } from '../dados/projetos';
 import { destinoVotacoes } from '../logica/destinos';
 import { doLugar } from '../logica/lugares';
+import { projetosVotados } from '../logica/votacao';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';
 import { useVotos } from '../contexto/useVotos';
@@ -24,7 +25,7 @@ export default function MeusVotos() {
   const { votosDaPessoa } = useVotos();
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
 
-  const votadas = PROJETOS.filter((projeto) => votosDaPessoa[projeto.id]);
+  const votadas = projetosVotados(PROJETOS, votosDaPessoa);
 
   let conteudo;
   if (estado === 'carregando') {
