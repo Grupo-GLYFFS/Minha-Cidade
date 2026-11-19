@@ -1,4 +1,10 @@
-import { apagarDadoDaAba, ehObjeto, lerDadoDaAba, salvarDadoDaAba } from '../armazenamento';
+import {
+  apagarDadoDaAba,
+  apagarDadosDaAbaComPrefixo,
+  ehObjeto,
+  lerDadoDaAba,
+  salvarDadoDaAba,
+} from '../armazenamento';
 
 // Rascunhos dos formulários longos (Abrir pedido e Solicitar serviço), guardados só na aba:
 // recarregar a página no meio do formulário não apaga o que a pessoa já preencheu.
@@ -15,23 +21,34 @@ function ehArquivo(valor) {
   return Array.isArray(valor) && valor.some((item) => ehObjeto(item) && 'url' in item);
 }
 
-// Lê o rascunho de um formulário. Recebe o nome do rascunho; devolve o objeto ou null.
-export function lerRascunho(nome) {
-  return lerDadoDaAba(PREFIXO_RASCUNHO + nome, null, ehObjeto);
+// Lê o rascunho de um formulário. Recebe o nome do rascunho e o id de quem está preenchendo
+// (null para visitante); devolve os dados ou null. O rascunho de outra pessoa é ignorado.
+export function lerRascunho(nome, idPessoa = null) {
+  const salvo = lerDadoDaAba(PREFIXO_RASCUNHO + nome, null, ehObjeto);
+  if (!salvo) return null;
+  const { dono = null, ...dados } = salvo;
+  if (dono !== null && dono !== idPessoa) return null;
+  return dados;
 }
 
-// Guarda o rascunho, sem os arquivos. Recebe o nome e os dados (objeto).
-export function salvarRascunho(nome, dados) {
+// Guarda o rascunho, sem os arquivos. Recebe o nome, os dados (objeto) e o id de quem
+// preencheu (null para visitante).
+export function salvarRascunho(nome, dados, idPessoa = null) {
   const semArquivos = {};
   Object.entries(dados).forEach(([campo, valor]) => {
     if (!ehArquivo(valor)) semArquivos[campo] = valor;
   });
-  salvarDadoDaAba(PREFIXO_RASCUNHO + nome, semArquivos);
+  salvarDadoDaAba(PREFIXO_RASCUNHO + nome, { ...semArquivos, dono: idPessoa });
 }
 
 // Apaga o rascunho (depois do envio). Recebe o nome.
 export function apagarRascunho(nome) {
   apagarDadoDaAba(PREFIXO_RASCUNHO + nome);
+}
+
+// Apaga todos os rascunhos da aba (ao sair da conta).
+export function apagarTodosRascunhos() {
+  apagarDadosDaAbaComPrefixo(PREFIXO_RASCUNHO);
 }
 
 // Guarda que o pedido foi enviado nesta aba. Recebe o id do pedido.

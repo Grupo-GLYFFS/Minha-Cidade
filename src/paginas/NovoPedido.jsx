@@ -53,7 +53,7 @@ export default function NovoPedido() {
   const [parametros, setParametros] = useSearchParams();
   const local = useLocation();
   // Rascunho da aba (lido uma vez só, ao abrir a página)
-  const [rascunho] = useState(() => lerRascunho(RASCUNHO));
+  const [rascunho] = useState(() => lerRascunho(RASCUNHO, usuario?.id ?? null));
   const [valores, setValores] = useState(() => {
     const iniciais = valoresIniciaisComCategoria(parametros.get('categoria'));
     if (!rascunho?.valores) return iniciais;
@@ -105,8 +105,8 @@ export default function NovoPedido() {
   // Guarda o rascunho a cada mudança (depois do envio, ele já foi apagado)
   useEffect(() => {
     if (recemCriado) return;
-    salvarRascunho(RASCUNHO, { valores, categoriaEscolhida, tituloEditado });
-  }, [valores, categoriaEscolhida, tituloEditado, recemCriado]);
+    salvarRascunho(RASCUNHO, { valores, categoriaEscolhida, tituloEditado }, usuario?.id ?? null);
+  }, [valores, categoriaEscolhida, tituloEditado, recemCriado, usuario]);
 
   // Ao sair da página, libera a memória das miniaturas das fotos
   useEffect(() => {

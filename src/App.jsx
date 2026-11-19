@@ -1,6 +1,7 @@
 import { Fragment, lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import RotaProtegida from './componentes/RotaProtegida';
+import { useConferirAcaoPendente } from './contexto/useConferirAcaoPendente';
 import Inicio from './paginas/Inicio';
 import Busca from './paginas/Busca';
 import Servicos from './paginas/Servicos';
@@ -58,7 +59,9 @@ const Componentes = lazy(() => import('./paginas/Componentes'));
 // Rotas do app, no mapa de 18/11 (ver .claude/visao-do-projeto.md).
 // - Cada página usa <Pagina> por conta própria (topo, cabeçalho, coluna de 880 e rodapé).
 // - As que ficam dentro de <RotaProtegida> precisam de conta: o visitante vai para "Entrar".
+// - A ação pedida sem conta (Apoiar, Seguir) é esquecida se a pessoa vai para outra página.
 export default function App() {
+  useConferirAcaoPendente();
   return (
     <Routes>
       {/* Global Solution: a Apresentação abre o app; depois Como funciona, Impacto e Equipe */}

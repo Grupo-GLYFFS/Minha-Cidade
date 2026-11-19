@@ -35,7 +35,7 @@ export default function FormularioSolicitacao({
   const rascunho = `servico:${servico.id}`;
   const [valores, setValores] = useState(() => ({
     ...valoresIniciais(servico.campos ?? []),
-    ...lerRascunho(rascunho),
+    ...lerRascunho(rascunho, usuario?.id ?? null),
   }));
   const [erros, setErros] = useState({});
   const [confirmado, setConfirmado] = useState(false);
@@ -43,8 +43,8 @@ export default function FormularioSolicitacao({
 
   // Guarda o rascunho a cada resposta
   useEffect(() => {
-    salvarRascunho(rascunho, valores);
-  }, [rascunho, valores]);
+    salvarRascunho(rascunho, valores, usuario?.id ?? null);
+  }, [rascunho, valores, usuario]);
 
   const total = etapas.length + 1;
   // Primeira etapa com resposta faltando (a pessoa não passa dela pelo endereço)

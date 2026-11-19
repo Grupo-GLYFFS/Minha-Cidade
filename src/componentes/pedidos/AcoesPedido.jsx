@@ -19,6 +19,9 @@ const MOTIVOS = {
   },
 };
 
+// Aviso de quem pediu Apoiar ou Seguir sem conta e, ao entrar, viu que o pedido é dela
+const AVISO_PROPRIO = 'Este pedido é seu. Você já acompanha ele.';
+
 // Ações do cabeçalho do detalhe: Apoiar/Apoiado (com o número de apoios), Seguir/Seguindo
 // e Compartilhar. Apoiar e Seguir ligam e desligam e ficam salvos no navegador.
 // Ficam desativados (cinza, mesmo tamanho) no pedido da própria pessoa e nos encerrados.
@@ -35,11 +38,15 @@ export default function AcoesPedido({ pedido }) {
   const segue = seguidos.includes(pedido.id);
 
   // Pedido pelo visitante: feito quando ele volta logado (só liga, nunca desliga)
+  // No pedido da própria pessoa não há o que fazer: o aviso explica
   const apoiarDepois = useAcaoPendente(`apoiar:${pedido.id}`, () => {
-    if (!motivo && !apoia && alternarApoio(pedido.id)) mostrarAviso('Você apoiou este pedido.');
+    if (motivo === 'proprio') mostrarAviso(AVISO_PROPRIO);
+    else if (!motivo && !apoia && alternarApoio(pedido.id))
+      mostrarAviso('Você apoiou este pedido.');
   });
   const seguirDepois = useAcaoPendente(`seguir-pedido:${pedido.id}`, () => {
-    if (!motivo && !segue && alternarSeguir(pedido.id)) {
+    if (motivo === 'proprio') mostrarAviso(AVISO_PROPRIO);
+    else if (!motivo && !segue && alternarSeguir(pedido.id)) {
       mostrarAviso('Você está seguindo este pedido.', '/perfil/seguindo');
     }
   });

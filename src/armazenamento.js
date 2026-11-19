@@ -110,6 +110,20 @@ export function apagarDadoDaAba(chave) {
   }
 }
 
+// Apaga da aba todos os dados cujo nome começa com o prefixo (ex.: "rascunho:").
+export function apagarDadosDaAbaComPrefixo(prefixo) {
+  try {
+    const chaves = [];
+    for (let i = 0; i < sessionStorage.length; i += 1) {
+      const chave = sessionStorage.key(i);
+      if (chave?.startsWith(PREFIXO + prefixo)) chaves.push(chave);
+    }
+    chaves.forEach((chave) => sessionStorage.removeItem(chave));
+  } catch {
+    // Acesso bloqueado: não há o que apagar
+  }
+}
+
 // Apaga as chaves do app de um armazenamento (localStorage ou sessionStorage).
 // Recebe o armazenamento; devolve quantos dados foram apagados.
 function apagarDoArmazenamento(armazenamento) {

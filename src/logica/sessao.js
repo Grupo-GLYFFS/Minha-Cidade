@@ -10,9 +10,13 @@ export const PAGINAS_DE_CONTA = [
 
 // Confere o destino recebido no endereço (?voltar=...) antes de usar.
 // Recebe o texto do parâmetro; devolve o caminho se for uma página do próprio app,
-// ou "/inicio" se estiver vazio ou apontar para outro site (ex.: "//site.com").
+// ou "/inicio" se estiver vazio ou apontar para outro site (ex.: "//site.com" ou "/\site.com").
 export function destinoSeguro(voltar) {
-  if (!voltar || !voltar.startsWith('/') || voltar.startsWith('//')) return '/inicio';
+  if (typeof voltar !== 'string' || !voltar.startsWith('/')) return '/inicio';
+  // Barra dupla, barra invertida ou esquema ("javascript:") podem levar para fora do app
+  if (voltar.startsWith('//') || voltar.includes('\\') || /^\/*[a-z][a-z0-9+.-]*:/i.test(voltar)) {
+    return '/inicio';
+  }
   // Não faz sentido voltar para a própria tela de entrar ou criar conta
   if (PAGINAS_DE_CONTA.some((pagina) => voltar.startsWith(pagina))) return '/inicio';
   return voltar;
