@@ -7,8 +7,9 @@ import classes from './Popup.module.css';
 // Popup (Modal do Mantine) no padrão "Seus dados": cabeçalho com título e X, corpo e faixa
 // de botões, com linhas de borda a borda entre as faixas. O Mantine cuida do foco, do Esc
 // e do fundo escuro.
-// No celular, vira folha que sobe de baixo: vai até em cima da barra de abas, com raio 20
-// em cima, alça de 40 × 4, título de 20 e os botões dividindo a linha em partes iguais.
+// No celular, vira folha que sobe de baixo: vai até o fim da tela, por cima da barra de abas,
+// com raio 20 em cima, alça de 40 × 4, título de 20 e os botões dividindo a linha em partes
+// iguais.
 // Recebe:
 // - aberto e aoFechar (fecha pelo X, pelo Esc e clicando fora);
 // - titulo;

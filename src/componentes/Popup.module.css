@@ -49,18 +49,13 @@
   border-top: var(--espessura-borda) solid var(--cor-borda);
 }
 
-/* Celular: folha que sobe de baixo até em cima da barra de abas.
-   Véu rgba(15,23,42,.48) até a barra; raio 20 só em cima; alça de 40 × 4; título 20;
-   botões em partes iguais. */
+/* Celular: folha que sobe de baixo até o fim da tela, por cima da barra de abas
+   (o Modal tem z-index 200; as abas, 190). Véu rgba(15,23,42,.48) na tela toda; raio 20
+   só em cima; alça de 40 × 4; título 20; botões em partes iguais. */
 @media (max-width: $mantine-breakpoint-sm) {
   .inner.inner {
-    bottom: var(--altura-abas);
     align-items: flex-end;
     padding: 0;
-  }
-
-  .veu.veu {
-    bottom: var(--altura-abas);
   }
 
   /* O Mantine põe a classe da caixa também no "inner": por isso o seletor é .inner > .caixa */
@@ -73,7 +68,7 @@
     flex-direction: column;
     flex: 0 0 100%;
     max-width: 100%;
-    max-height: calc(100dvh - var(--altura-abas) - rem(48px));
+    max-height: calc(100dvh - rem(48px));
     border-radius: var(--raio-card) var(--raio-card) 0 0;
   }
 

@@ -203,7 +203,7 @@ import FaixaPasso from '../componentes/celular/FaixaPasso';
 
 - O que sai do cabeçalho no celular (ex.: Seguir e Apoiar do detalhe, que vão para a `BarraPe`): esconda no CSS da página com `@media (max-width: $mantine-breakpoint-sm)`.
 - A `BarraPe` e a `FaixaPasso` só aparecem no celular. Com a `BarraPe` na página, o aviso do rodapé sobe para ficar 16 acima dela, e o fim da página ganha espaço para nada ficar por baixo.
-- `Popup` vira folha que sobe de baixo, até em cima da barra de abas, com os botões divididos em partes iguais. Não precisa fazer nada.
+- `Popup` vira folha que sobe de baixo até o fim da tela, por cima da barra de abas e da `BarraPe`, com os botões divididos em partes iguais. Não precisa fazer nada.
 
 ### Texto que não quebra o layout (classes globais)
 
