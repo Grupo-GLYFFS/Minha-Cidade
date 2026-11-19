@@ -51,22 +51,16 @@
   background: var(--cor-ods-9);
 }
 
+/* "ODS 11" numa linha só, a sigla no mesmo tamanho e peso do número.
+   O espaço entre as palavras é um pouco maior para não colar. */
 .numero {
   margin: 0;
   font-size: rem(64px);
   font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.numero small {
-  position: relative;
-  top: rem(8px);
-  margin-right: rem(8px);
-  font-size: rem(16px);
-  font-weight: 700;
-  letter-spacing: 0;
-  vertical-align: top;
+  letter-spacing: -0.02em;
+  word-spacing: 0.08em;
+  white-space: nowrap;
 }
 
 .nome {
@@ -81,6 +75,13 @@
   margin: rem(8px) 0 0;
   font-size: rem(15px);
   line-height: 1.45;
+}
+
+/* Entre o celular e 992 px as 3 placas ficam estreitas: "ODS 10" desce para 48. */
+@media (max-width: $mantine-breakpoint-md) {
+  .numero {
+    font-size: rem(48px);
+  }
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
@@ -103,9 +104,5 @@
 
   .placa {
     min-height: 0;
-  }
-
-  .numero {
-    font-size: rem(48px);
   }
 }

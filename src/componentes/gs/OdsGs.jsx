@@ -17,8 +17,7 @@ export default function OdsGs() {
           {ODS_ATENDIDOS.map((ods) => (
             <li key={ods.numero} className={`${classes.placa} ${CLASSE_ODS[ods.numero]}`}>
               <p className={classes.numero}>
-                <small>ODS</small>
-                {ods.numero}
+                ODS {ods.numero}
               </p>
               <h3 className={classes.nome}>{ods.nome}</h3>
               <p className={classes.texto}>{ods.texto}</p>
