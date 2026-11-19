@@ -71,50 +71,22 @@ export const MENU_CONTA = [
   { rotulo: 'Configurações', caminho: '/configuracoes', icone: 'settings' },
 ];
 
-// Grupos de links do rodapé, na ordem do menu, com Global Solution no fim.
-// Todas as páginas do site estão aqui; o Início (/inicio) abre pelo logo.
-// Minha cidade e Meu bairro repetem as páginas do painel do menu.
+// Grupos de links do rodapé: Páginas · Global Solution · Ajuda.
+// As subpáginas da cidade, do bairro e da conta ficam no menu e no menu do perfil.
+// O Início (/inicio) abre pelo logo. Um link com "seLogado" troca de rótulo e caminho
+// quando a pessoa entrou (Entrar ou criar conta vira Meu perfil).
 export const LINKS_RODAPE = [
   {
-    titulo: 'Serviços',
+    titulo: 'Páginas',
     links: [
       { rotulo: 'Serviços', caminho: '/servicos' },
-      { rotulo: 'Buscar', caminho: '/busca' },
-      { rotulo: 'Minhas solicitações', caminho: '/servicos/minhas-solicitacoes' },
-    ],
-  },
-  {
-    titulo: 'Minha cidade',
-    links: [
-      { rotulo: 'Cidade de São Paulo', caminho: '/minha-cidade' },
-      ...painelRegiao('/minha-cidade'),
-    ],
-  },
-  {
-    titulo: 'Meu bairro',
-    links: [
-      { rotulo: 'Vila Mariana', caminho: '/meu-bairro' },
-      ...painelRegiao('/meu-bairro'),
-      { rotulo: 'Subprefeitura', caminho: '/minha-cidade/subprefeituras/vila-mariana' },
-    ],
-  },
-  {
-    titulo: 'Sua conta',
-    links: [
-      { rotulo: 'Meu perfil', caminho: '/perfil' },
-      { rotulo: 'Meus pedidos', caminho: '/perfil/pedidos' },
-      { rotulo: 'Meus votos', caminho: '/perfil/votos' },
-      { rotulo: 'Notificações', caminho: '/notificacoes' },
-      { rotulo: 'Configurações', caminho: '/configuracoes' },
-      { rotulo: 'Entrar ou criar conta', caminho: '/entrar' },
-    ],
-  },
-  {
-    titulo: 'Ajuda',
-    links: [
-      { rotulo: 'Perguntas frequentes', caminho: '/ajuda/perguntas-frequentes' },
-      { rotulo: 'Telefones úteis', caminho: '/ajuda/telefones' },
-      { rotulo: 'Privacidade', caminho: '/ajuda/privacidade' },
+      { rotulo: 'Minha cidade', caminho: '/minha-cidade' },
+      { rotulo: 'Meu bairro', caminho: '/meu-bairro' },
+      {
+        rotulo: 'Entrar ou criar conta',
+        caminho: '/entrar',
+        seLogado: { rotulo: 'Meu perfil', caminho: '/perfil' },
+      },
     ],
   },
   {
@@ -124,6 +96,14 @@ export const LINKS_RODAPE = [
       { rotulo: 'Como funciona', caminho: '/como-funciona' },
       { rotulo: 'Impacto', caminho: '/impacto' },
       { rotulo: 'Equipe', caminho: '/equipe' },
+    ],
+  },
+  {
+    titulo: 'Ajuda',
+    links: [
+      { rotulo: 'Perguntas frequentes', caminho: '/ajuda/perguntas-frequentes' },
+      { rotulo: 'Telefones úteis', caminho: '/ajuda/telefones' },
+      { rotulo: 'Privacidade', caminho: '/ajuda/privacidade' },
     ],
   },
 ];
