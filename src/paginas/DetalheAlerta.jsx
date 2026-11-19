@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import Botao from '../componentes/Botao';
@@ -14,11 +14,13 @@ import BarraAlerta from '../componentes/alertas/BarraAlerta';
 import NiveisAlerta from '../componentes/alertas/NiveisAlerta';
 import PassosAlerta from '../componentes/alertas/PassosAlerta';
 import PontosApoio from '../componentes/alertas/PontosApoio';
+import SeloCidadeToda from '../componentes/SeloCidadeToda';
 import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
+import { useRecorte } from '../contexto/useRecorte';
 import { ALERTAS } from '../dados/alertas';
 import { alertasDoLugar, buscarNivel } from '../logica/alertas';
 import { juntarNomes } from '../logica/avisos';
-import { buscarSubprefeitura, doLugar } from '../logica/lugares';
+import { buscarSubprefeitura } from '../logica/lugares';
 import { contar } from '../logica/resumoLugar';
 import classes from '../componentes/alertas/Alertas.module.css';
 
@@ -33,10 +35,13 @@ function comMinuscula(texto) {
 // Detalhe de um alerta (/minha-cidade/alertas/:id, prancha 17, quadros 4 e 5): nível em degraus,
 // o que está acontecendo, o que fazer (com o 199 na Defesa Civil), área, pontos de apoio,
 // atualizações, a barra presa no pé (Compartilhar e Ligar 199) e "Para onde ir".
-// Recebe doBairro (true em /meu-bairro/alertas/:id, que só muda a trilha).
+// Recebe doBairro (true quando aberto por um lugar: /meu-bairro/alertas/:id, outro bairro ou
+// subprefeitura; muda a trilha e mostra "Toda a cidade" nos alertas da cidade toda).
+// Alerta que não vale no lugar vai para /minha-cidade/alertas/:id.
 export default function DetalheAlerta({ doBairro = false }) {
   const { id } = useParams();
-  const { bairro, trilhaDoBairro } = useLugarDaPessoa();
+  const { bairro } = useLugarDaPessoa();
+  const recorte = useRecorte('bairro');
   const alerta = ALERTAS.find((item) => item.id === id);
 
   if (!alerta) {
@@ -55,17 +60,22 @@ export default function DetalheAlerta({ doBairro = false }) {
     );
   }
 
+  const doLugar = alertasDoLugar([alerta], recorte.bairros);
+  if (doBairro && doLugar.ativos.length + doLugar.encerrados.length === 0) {
+    return <Navigate to={`/minha-cidade/alertas/${alerta.id}`} replace />;
+  }
+
   const nivel = buscarNivel(alerta.nivel);
-  // Endereço do alerta no recorte aberto (o do compartilhar): bairro ou cidade
-  const caminho = `${doBairro ? '/meu-bairro' : '/minha-cidade'}/alertas/${alerta.id}`;
+  // Endereço do alerta no recorte aberto (o do compartilhar): lugar ou cidade
+  const caminho = `${doBairro ? recorte.base : '/minha-cidade'}/alertas/${alerta.id}`;
   const passos = alerta.tipo === 'defesa-civil' ? [...alerta.passos, PASSO_199] : alerta.passos;
   const subs = alerta.subprefeituras
     .map((idSub) => buscarSubprefeitura(idSub)?.nome)
     .filter(Boolean);
   const trilha = doBairro
     ? [
-        ...trilhaDoBairro,
-        { rotulo: 'Alertas', para: '/meu-bairro/alertas' },
+        ...recorte.trilha,
+        { rotulo: 'Alertas', para: `${recorte.base}/alertas` },
         { rotulo: alerta.manchete },
       ]
     : [
@@ -87,6 +97,7 @@ export default function DetalheAlerta({ doBairro = false }) {
           <MetaCabecalho>
             {!alerta.ativo && <SeloSituacao cor="cinza">Encerrado</SeloSituacao>}
             <SeloSituacao cor={nivel.cor}>{nivel.rotulo}</SeloSituacao>
+            {doBairro && alerta.bairros.length === 0 && <SeloCidadeToda />}
             {alerta.bairros.includes(bairro.nome) && (
               <span>
                 <Icone nome="home" tamanho={18} preenchido />
@@ -163,9 +174,9 @@ export default function DetalheAlerta({ doBairro = false }) {
           },
           {
             icone: 'home_pin',
-            titulo: `Alertas ${doLugar(bairro)}`,
-            meta: `${contar(alertasDoLugar(ALERTAS, [bairro.nome]).ativos.length, 'ativo', 'ativos')} agora`,
-            para: '/meu-bairro/alertas',
+            titulo: `Alertas ${recorte.sufixo}`,
+            meta: `${contar(alertasDoLugar(ALERTAS, recorte.bairros).ativos.length, 'ativo', 'ativos')} agora`,
+            para: `${recorte.base}/alertas`,
           },
         ]}
       />

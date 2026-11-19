@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import Botao from '../componentes/Botao';
@@ -9,7 +9,8 @@ import ParaOndeIr from '../componentes/ParaOndeIr';
 import SeloSituacao from '../componentes/SeloSituacao';
 import BotaoCompartilhar from '../componentes/avisos/BotaoCompartilhar';
 import CardAviso from '../componentes/avisos/CardAviso';
-import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
+import SeloCidadeToda from '../componentes/SeloCidadeToda';
+import { useRecorte } from '../contexto/useRecorte';
 import { AVISOS } from '../dados/avisos';
 import {
   avisoValendo,
@@ -18,18 +19,19 @@ import {
   juntarNomes,
   textoPrazo,
 } from '../logica/avisos';
-import { doLugar } from '../logica/lugares';
 import classes from '../componentes/avisos/Avisos.module.css';
 
 // Detalhe de um aviso (/minha-cidade/avisos/:id e /meu-bairro/avisos/:id, prancha 19, quadros
 // 3 e 4): cabeçalho com a ilustração, quem publicou, validade, onde vale (só nos avisos de
 // bairro) e Compartilhar; o texto; o card do serviço ou da obra; avisos parecidos e "Para onde ir".
-// Recebe doBairro (true na rota do bairro, que muda a trilha e os links).
+// Recebe doBairro (true quando aberto por um lugar: /meu-bairro/avisos/:id, outro bairro ou
+// subprefeitura; muda a trilha e os links e mostra "Toda a cidade" nos avisos da cidade toda).
+// Aviso que não vale no lugar vai para /minha-cidade/avisos/:id.
 export default function DetalheAviso({ doBairro = false }) {
   const { id } = useParams();
-  const { bairro, trilhaDoBairro } = useLugarDaPessoa();
+  const recorte = useRecorte('bairro');
   const aviso = AVISOS.find((item) => item.id === id);
-  const base = doBairro ? '/meu-bairro/avisos' : '/minha-cidade/avisos';
+  const base = doBairro ? `${recorte.base}/avisos` : '/minha-cidade/avisos';
 
   if (!aviso) {
     return (
@@ -47,11 +49,16 @@ export default function DetalheAviso({ doBairro = false }) {
     );
   }
 
+  // Aviso vencido continua no lugar se citava um dos bairros (ou valia para a cidade toda)
+  const vale =
+    aviso.bairros.length === 0 || aviso.bairros.some((nome) => recorte.bairros.includes(nome));
+  if (doBairro && !vale) return <Navigate to={`/minha-cidade/avisos/${aviso.id}`} replace />;
+
   const caminho = `${base}/${aviso.id}`;
   const valendo = avisoValendo(aviso);
   const parecidos = avisosParecidos(aviso, AVISOS);
   const trilha = doBairro
-    ? [...trilhaDoBairro, { rotulo: 'Avisos', para: base }, { rotulo: aviso.titulo }]
+    ? [...recorte.trilha, { rotulo: 'Avisos', para: base }, { rotulo: aviso.titulo }]
     : [
         { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
         { rotulo: 'Avisos', para: base },
@@ -80,6 +87,7 @@ export default function DetalheAviso({ doBairro = false }) {
               <Icone nome="event" tamanho={18} />
               {valendo ? textoPrazo(aviso) : 'Prazo encerrado'}
             </span>
+            {doBairro && aviso.bairros.length === 0 && <SeloCidadeToda />}
             {aviso.bairros.length > 0 && (
               <span>
                 <Icone nome="location_on" tamanho={18} />
@@ -131,9 +139,9 @@ export default function DetalheAviso({ doBairro = false }) {
           },
           {
             icone: 'home_pin',
-            titulo: `Avisos ${doLugar(bairro)}`,
-            meta: `${avisosDoLugar(AVISOS, [bairro.nome]).length} valendo`,
-            para: '/meu-bairro/avisos',
+            titulo: `Avisos ${recorte.sufixo}`,
+            meta: `${avisosDoLugar(AVISOS, recorte.bairros).length} valendo`,
+            para: `${recorte.base}/avisos`,
           },
         ]}
       />

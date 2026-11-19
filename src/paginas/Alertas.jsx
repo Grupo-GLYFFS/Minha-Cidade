@@ -9,7 +9,9 @@ import TituloGrupo from '../componentes/TituloGrupo';
 import CardAlerta from '../componentes/alertas/CardAlerta';
 import ItemAlertaEncerrado from '../componentes/alertas/ItemAlertaEncerrado';
 import { useCarregamento } from '../componentes/hub/useCarregamento';
+import SeloCidadeToda from '../componentes/SeloCidadeToda';
 import { useLugarDaPessoa } from '../componentes/hub/useLugarDaPessoa';
+import { useRecorte } from '../contexto/useRecorte';
 import { ALERTAS } from '../dados/alertas';
 import { AVISOS } from '../dados/avisos';
 import { alertasDoLugar, partesDaArea } from '../logica/alertas';
@@ -26,25 +28,29 @@ function seloDoLugar(alerta, nomeBairro) {
   return null;
 }
 
-// Alertas da cidade (/minha-cidade/alertas, prancha 17) ou do bairro da pessoa
-// (/meu-bairro/alertas, prancha 18: os alertas que pegam o bairro, a subprefeitura ou a cidade toda).
+// Alertas da cidade (/minha-cidade/alertas, prancha 17) ou de um lugar (prancha 18): o bairro da
+// pessoa (/meu-bairro/alertas), outro bairro ou uma subprefeitura (/minha-cidade/bairros/:idBairro/
+// alertas e /minha-cidade/subprefeituras/:idSub/alertas). No lugar entram os alertas que pegam um
+// dos bairros e os da cidade toda (com o selo "Toda a cidade").
 // Ativos em cards completos, encerrados embaixo e "Para onde ir" no fim.
-// Recebe doBairro (true na versão do bairro).
+// Recebe doBairro (true na versão do lugar; o lugar vem da rota, por useRecorte).
 export default function Alertas({ doBairro = false }) {
-  const { bairro, trilhaDoBairro } = useLugarDaPessoa();
+  const { bairro } = useLugarDaPessoa();
+  const recorte = useRecorte('bairro');
   const { estado, tentarDeNovo } = useCarregamento();
 
   const doCidade = alertasDoLugar(ALERTAS);
   const daPessoa = alertasDoLugar(ALERTAS, [bairro.nome]);
-  const { ativos: todosAtivos, encerrados } = doBairro ? daPessoa : doCidade;
+  const doRecorte = alertasDoLugar(ALERTAS, recorte.bairros);
+  const { ativos: todosAtivos, encerrados } = doBairro ? doRecorte : doCidade;
   const ativos = estado === 'vazio' ? [] : todosAtivos;
-  const lugarDaLista = doBairro ? bairro : null;
-  // Início das rotas dos detalhes: dentro do Meu bairro, os alertas abrem em /meu-bairro/alertas/:id
-  const base = doBairro ? '/meu-bairro/alertas' : '/minha-cidade/alertas';
+  const lugarDaLista = doBairro ? recorte.lugar : null;
+  // Início das rotas dos detalhes: dentro do lugar, os alertas abrem no próprio lugar
+  const base = doBairro ? `${recorte.base}/alertas` : '/minha-cidade/alertas';
 
-  const titulo = doBairro ? `Alertas ${doLugar(bairro)}` : 'Alertas da cidade de São Paulo';
+  const titulo = doBairro ? `Alertas ${recorte.sufixo}` : 'Alertas da cidade de São Paulo';
   const trilha = doBairro
-    ? [...trilhaDoBairro, { rotulo: 'Alertas' }]
+    ? [...recorte.trilha, { rotulo: 'Alertas' }]
     : [{ rotulo: 'Cidade de São Paulo', para: '/minha-cidade' }, { rotulo: 'Alertas' }];
 
   const destinos = doBairro
@@ -57,9 +63,9 @@ export default function Alertas({ doBairro = false }) {
         },
         {
           icone: 'campaign',
-          titulo: `Avisos ${doLugar(bairro)}`,
-          meta: `${avisosDoLugar(AVISOS, [bairro.nome]).length} valendo`,
-          para: '/meu-bairro/avisos',
+          titulo: `Avisos ${recorte.sufixo}`,
+          meta: `${avisosDoLugar(AVISOS, recorte.bairros).length} valendo`,
+          para: `${recorte.base}/avisos`,
         },
       ]
     : [
@@ -96,7 +102,9 @@ export default function Alertas({ doBairro = false }) {
           {ativos.length === 0 ? (
             <EstadoVazio
               icone="check_circle"
-              titulo={doBairro ? `Nenhum alerta ${noLugar(bairro)} agora` : 'Nenhum alerta agora'}
+              titulo={
+                doBairro ? `Nenhum alerta ${noLugar(recorte.lugar)} agora` : 'Nenhum alerta agora'
+              }
               texto={
                 doBairro
                   ? 'Quando houver um alerta no bairro, ele aparece aqui e no topo do app.'
@@ -117,6 +125,7 @@ export default function Alertas({ doBairro = false }) {
                     alerta={alerta}
                     caminho={`${base}/${alerta.id}`}
                     local={doBairro ? null : seloDoLugar(alerta, bairro.nome)}
+                    selo={doBairro && alerta.bairros.length === 0 ? <SeloCidadeToda /> : null}
                     area={partesDaArea(alerta, lugarDaLista)}
                   />
                 </li>

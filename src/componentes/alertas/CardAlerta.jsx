@@ -15,8 +15,9 @@ import classes from './Alertas.module.css';
 // Recebe:
 // - alerta (de dados/alertas.js) e caminho (rota do detalhe);
 // - local: selo do lugar { icone, texto } (ex.: a casa da pessoa) ou null;
-// - area: partes do texto "onde" (de partesDaArea).
-export default function CardAlerta({ alerta, caminho, local, area }) {
+// - area: partes do texto "onde" (de partesDaArea);
+// - selo: selo extra antes do nível (ex.: "Toda a cidade" nas páginas de um lugar) ou null.
+export default function CardAlerta({ alerta, caminho, local, area, selo }) {
   const [aberto, setAberto] = useState(false);
   const idPassos = useId();
   const idTitulo = useId();
@@ -37,6 +38,7 @@ export default function CardAlerta({ alerta, caminho, local, area }) {
                 {local.texto}
               </span>
             )}
+            {selo}
             <SeloSituacao cor={nivel.cor}>{nivel.rotulo}</SeloSituacao>
           </span>
         </div>

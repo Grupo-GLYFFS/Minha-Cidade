@@ -2,6 +2,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import MetaCabecalho from '../componentes/MetaCabecalho';
+import SeloCidadeToda from '../componentes/SeloCidadeToda';
 import SecaoCard from '../componentes/SecaoCard';
 import ParaOndeIr from '../componentes/ParaOndeIr';
 import NaoEncontrado from '../componentes/NaoEncontrado';
@@ -124,6 +125,7 @@ export default function Votacao({ escopo = 'cidade' }) {
           }
         >
           <MetaCabecalho>
+            {escopo === 'bairro' && projeto.escopo === 'cidade' && <SeloCidadeToda />}
             <span>
               <Icone nome="event" tamanho={20} />
               {prazo}

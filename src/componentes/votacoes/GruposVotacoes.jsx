@@ -1,5 +1,6 @@
 import TituloGrupo from '../TituloGrupo';
 import CartaoVotacaoLista from './CartaoVotacaoLista';
+import SeloCidadeToda from '../SeloCidadeToda';
 import { useVotos } from '../../contexto/useVotos';
 import { lugarDaVotacao, separarVotacoes } from '../../logica/votacao';
 import classes from './GruposVotacoes.module.css';
@@ -13,9 +14,13 @@ import classes from './GruposVotacoes.module.css';
 // - semAbertas (opcional): o que mostrar no lugar do grupo Abertas quando ele está vazio
 //   (sem ele, o grupo vazio some);
 // - selo (opcional): selo no começo da faixa de cima de cada card.
+// Nas páginas de um lugar (recorte de bairro ou subprefeitura), as votações da cidade toda ganham
+// o selo "Toda a cidade" e os cards abrem a votação dentro do lugar.
 export default function GruposVotacoes({ projetos, prefixo, recorte, seguir, semAbertas, selo }) {
   const { votoDe, resultado } = useVotos();
   const { abertas, encerradas } = separarVotacoes(projetos);
+
+  const doLugar = recorte?.escopo === 'bairro';
 
   // Monta a lista de cards de um grupo
   function listar(lista, idTitulo) {
@@ -31,7 +36,10 @@ export default function GruposVotacoes({ projetos, prefixo, recorte, seguir, sem
               seguindo={seguir.segue(projeto.id)}
               aoAlternarSeguir={() => seguir.alternar(projeto.id)}
               logado={seguir.logado}
-              selo={selo}
+              selo={
+                selo ?? (doLugar && projeto.escopo === 'cidade' ? <SeloCidadeToda /> : undefined)
+              }
+              para={doLugar ? `${recorte.base}/votacoes/${projeto.id}` : undefined}
             />
           </li>
         ))}

@@ -161,7 +161,7 @@ export function depoisCurto(projeto, dataLista) {
 // Recebe o projeto e o recorte da página (ou nada, fora das listas da cidade e do bairro).
 export function lugarDaVotacao(projeto, recorte) {
   if (recorte?.escopo === 'bairro' && projeto.escopo === 'cidade') {
-    return `Cidade toda · inclui ${comArtigo(recorte.lugar)}`;
+    return `Inclui ${comArtigo(recorte.lugar)}`;
   }
   return projeto.bairro ?? `Subprefeitura ${projeto.subprefeitura}`;
 }

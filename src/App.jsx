@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { Fragment, lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import RotaProtegida from './componentes/RotaProtegida';
 import Inicio from './paginas/Inicio';
@@ -38,6 +38,7 @@ import MeuBairro from './paginas/MeuBairro';
 import Bairro from './paginas/Bairro';
 import EscolherBairro from './paginas/EscolherBairro';
 import RotaBairro from './componentes/hub/RotaBairro';
+import RotaLugar from './componentes/hub/RotaLugar';
 import Alertas from './paginas/Alertas';
 import DetalheAlerta from './paginas/DetalheAlerta';
 import Avisos from './paginas/Avisos';
@@ -46,6 +47,9 @@ import Apresentacao from './paginas/Apresentacao';
 import ComoFunciona from './paginas/ComoFunciona';
 import Impacto from './paginas/Impacto';
 import Equipe from './paginas/Equipe';
+
+// Início das rotas de outro bairro e de uma subprefeitura (as subpáginas vêm depois)
+const LUGARES = ['/minha-cidade/bairros/:idBairro', '/minha-cidade/subprefeituras/:idSub'];
 
 // Página de desenvolvimento: só é baixada quando alguém abre /componentes
 const Componentes = lazy(() => import('./paginas/Componentes'));
@@ -104,7 +108,26 @@ export default function App() {
         <Route path="/meu-bairro/votacoes/:id" element={<Votacao escopo="bairro" />} />
         <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
         <Route path="/meu-bairro/pedidos" element={<PedidosBairro />} />
-        <Route path="/meu-bairro/pedidos/:id" element={<RedirecionarPedido />} />
+        <Route path="/meu-bairro/pedidos/:id" element={<DetalhePedido escopo="bairro" />} />
+      </Route>
+
+      {/* Outro bairro e subprefeitura: as mesmas páginas do Meu bairro, com o recorte do lugar */}
+      <Route element={<RotaLugar />}>
+        {LUGARES.map((lugar) => (
+          <Fragment key={lugar}>
+            <Route path={`${lugar}/alertas`} element={<Alertas doBairro />} />
+            <Route path={`${lugar}/alertas/:id`} element={<DetalheAlerta doBairro />} />
+            <Route path={`${lugar}/avisos`} element={<Avisos doBairro />} />
+            <Route path={`${lugar}/avisos/:id`} element={<DetalheAviso doBairro />} />
+            <Route path={`${lugar}/obras`} element={<Obras escopo="bairro" />} />
+            <Route path={`${lugar}/obras/:id`} element={<DetalheObra escopo="bairro" />} />
+            <Route path={`${lugar}/votacoes`} element={<Votacoes escopo="bairro" />} />
+            <Route path={`${lugar}/votacoes/:id`} element={<Votacao escopo="bairro" />} />
+            <Route path={`${lugar}/orcamento`} element={<OrcamentoBairro />} />
+            <Route path={`${lugar}/pedidos`} element={<PedidosBairro />} />
+            <Route path={`${lugar}/pedidos/:id`} element={<DetalhePedido escopo="bairro" />} />
+          </Fragment>
+        ))}
       </Route>
 
       {/* Obras, votações e orçamento da cidade e do bairro */}

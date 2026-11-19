@@ -1,5 +1,5 @@
 import { subprefeiturasComOrcamento } from './orcamento';
-import { BAIRRO_PADRAO, doLugar, lugarPorNome } from './lugares';
+import { BAIRRO_PADRAO, buscarBairro, doLugar, lugarPorNome } from './lugares';
 import { subprefeituraDoBairro as nomeDaSubprefeitura } from './localPedido';
 
 // Primeiro nível da trilha de toda subpágina da cidade
@@ -15,7 +15,9 @@ export function subprefeituraDoBairro(bairro) {
 
 // Monta o recorte de uma subpágina (Obras, Votações, Orçamento) da cidade ou do bairro.
 // Recebe o escopo ("cidade" ou "bairro") e o bairro da pessoa.
-// Devolve { escopo, bairro, lugar, subprefeitura, base, trilha, sufixo, deQuem }:
+// Devolve { escopo, tipo, bairro, bairros, lugar, subprefeitura, base, trilha, sufixo, deQuem }:
+// - tipo: "cidade", "bairro" ou "subprefeitura" (montarRecorteLugar);
+// - bairros: os nomes dos bairros do recorte (null na cidade);
 // - lugar: o bairro com a preposição (para noLugar/doLugar/comArtigo);
 // - base: "/minha-cidade" ou "/meu-bairro" (início das rotas);
 // - trilha: os níveis antes do nome da página;
@@ -27,7 +29,9 @@ export function montarRecorte(escopo, bairro = BAIRRO_PADRAO) {
   if (escopo === 'bairro') {
     return {
       escopo,
+      tipo: 'bairro',
       bairro,
+      bairros: [bairro],
       lugar,
       subprefeitura,
       base: '/meu-bairro',
@@ -45,13 +49,49 @@ export function montarRecorte(escopo, bairro = BAIRRO_PADRAO) {
   }
   return {
     escopo: 'cidade',
+    tipo: 'cidade',
     bairro,
+    bairros: null,
     lugar,
     subprefeitura,
     base: '/minha-cidade',
     trilha: [NIVEL_CIDADE],
     sufixo: 'da cidade de São Paulo',
     deQuem: 'da cidade',
+  };
+}
+
+// Monta o recorte de um lugar que não é o bairro da pessoa, para as mesmas páginas do bairro
+// abertas pela cidade: /minha-cidade/bairros/:idBairro/... e /minha-cidade/subprefeituras/:idSub/...
+// O escopo continua "bairro" (as regras de obras, votações e orçamento são as do recorte local).
+// Recebe { idBairro } ou { idSub }; devolve o recorte (como montarRecorte) ou null se o lugar não existe.
+export function montarRecorteLugar({ idBairro, idSub }) {
+  if (idBairro) {
+    const achado = buscarBairro(idBairro);
+    if (!achado) return null;
+    const recorte = montarRecorte('bairro', achado.nome);
+    const base = `/minha-cidade/bairros/${achado.id}`;
+    return {
+      ...recorte,
+      base,
+      trilha: [...recorte.trilha.slice(0, -1), { rotulo: achado.nome, para: base }],
+    };
+  }
+  const subprefeitura = subprefeiturasComOrcamento().find((sub) => sub.id === idSub);
+  if (!subprefeitura) return null;
+  const base = `/minha-cidade/subprefeituras/${subprefeitura.id}`;
+  const lugar = { nome: `Subprefeitura ${subprefeitura.nome}`, prep: 'na' };
+  return {
+    escopo: 'bairro',
+    tipo: 'subprefeitura',
+    bairro: null,
+    bairros: subprefeitura.bairros,
+    lugar,
+    subprefeitura,
+    base,
+    trilha: [NIVEL_CIDADE, { rotulo: lugar.nome, para: base }],
+    sufixo: doLugar(lugar),
+    deQuem: 'da subprefeitura',
   };
 }
 
@@ -74,13 +114,14 @@ export function contarObrasEmAndamento(obras, recorte) {
     .length;
 }
 
-// Separa as votações de um recorte. Cidade: as votações da cidade toda. Bairro: as da
-// subprefeitura do bairro e as da cidade que incluem o bairro. Recebe a lista e o recorte.
+// Separa as votações de um recorte. Cidade: as votações da cidade toda. Bairro (ou
+// subprefeitura): as da subprefeitura e as da cidade que incluem um dos bairros do recorte.
+// Recebe a lista e o recorte.
 export function votacoesDoRecorte(projetos, recorte) {
   if (recorte.escopo !== 'bairro') return projetos.filter((p) => p.escopo === 'cidade');
   return projetos.filter(
     (p) =>
       (p.escopo === 'subprefeitura' && p.subprefeitura === recorte.subprefeitura.nome) ||
-      (p.escopo === 'cidade' && p.bairros.includes(recorte.bairro)),
+      (p.escopo === 'cidade' && p.bairros.some((nome) => recorte.bairros.includes(nome))),
   );
 }

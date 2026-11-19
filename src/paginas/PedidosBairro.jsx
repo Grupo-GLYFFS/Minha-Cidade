@@ -7,47 +7,37 @@ import ListaPedidos from '../componentes/pedidos/ListaPedidos';
 import { useCarregamentoSimulado } from '../componentes/pedidos/useCarregamentoSimulado';
 import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
-import { pedidosDoBairro } from '../logica/gruposPedidos';
-import { doLugar, lugarPorNome, noLugar } from '../logica/lugares';
-import { idSubprefeitura, nomeSubprefeitura, subprefeituraDoBairro } from '../logica/localPedido';
+import { useRecorte } from '../contexto/useRecorte';
+import { pedidosDoLugar } from '../logica/gruposPedidos';
+import { noLugar } from '../logica/lugares';
 
-// Pedidos do bairro de quem usa o app (/meu-bairro/pedidos), agrupados por situação.
-// Sem conta, mostra o bairro escolhido na Escolher bairro.
+// Pedidos de um lugar, agrupados por situação:
+// - /meu-bairro/pedidos: o bairro de quem usa o app (sem conta, o escolhido na Escolher bairro);
+// - /minha-cidade/bairros/:idBairro/pedidos: outro bairro;
+// - /minha-cidade/subprefeituras/:idSub/pedidos: os bairros da subprefeitura.
+// O lugar vem do recorte da rota (useRecorte); os cards abrem o detalhe dentro do mesmo lugar.
 export default function PedidosBairro() {
   const { pedidos } = usePedidos();
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
   const destinos = useDestinosPedidos();
-  const bairro = destinos.nomeBairro;
-  const lugar = lugarPorNome(bairro);
-  const subprefeitura = subprefeituraDoBairro(bairro);
-  const doBairro = pedidosDoBairro(pedidos, bairro);
-
-  // Trilha: Cidade › Subprefeitura (quando o app conhece) › Bairro › Pedidos
-  const trilha = [
-    { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
-    ...(subprefeitura
-      ? [
-          {
-            rotulo: nomeSubprefeitura(subprefeitura),
-            para: `/minha-cidade/subprefeituras/${idSubprefeitura(subprefeitura)}`,
-          },
-        ]
-      : []),
-    { rotulo: bairro, para: '/meu-bairro' },
-    { rotulo: 'Pedidos' },
-  ];
+  const recorte = useRecorte('bairro');
+  const { lugar } = recorte;
+  const doLugar = pedidosDoLugar(pedidos, recorte.bairros);
+  const doMeuBairro = recorte.base === '/meu-bairro';
+  // No Meu bairro, o Abrir pedido usa a trilha do bairro
+  const novoPedido = doMeuBairro ? '/pedidos/novo?de=bairro' : '/pedidos/novo';
 
   return (
     <Pagina
       cabecalho={
         <CabecalhoPagina
           tipo="lista"
-          titulo={`Pedidos ${doLugar(lugar)}`}
+          titulo={`Pedidos ${recorte.sufixo}`}
           subtitulo={`Buracos, lixo, iluminação e outros problemas de rua avisados por quem mora ${noLugar(lugar)}.`}
           icone="assignment"
-          trilha={trilha}
+          trilha={[...recorte.trilha, { rotulo: 'Pedidos' }]}
           acoes={
-            <Botao variante="principal" icone="add" para="/pedidos/novo">
+            <Botao variante="principal" icone="add" para={novoPedido}>
               Abrir pedido
             </Botao>
           }
@@ -55,25 +45,30 @@ export default function PedidosBairro() {
       }
     >
       <ListaPedidos
-        pedidos={doBairro}
+        pedidos={doLugar}
+        base={`${recorte.base}/pedidos`}
         estado={estado}
         aoTentarDeNovo={tentarDeNovo}
         prefixo="bairro"
         vazio={
           <EstadoVazio
             titulo={`Nenhum pedido ${noLugar(lugar)}`}
-            texto="Ninguém avisou um problema de rua no bairro ainda. Se você viu um, avise a prefeitura."
+            texto="Ninguém avisou um problema de rua aqui ainda. Se você viu um, avise a prefeitura."
           >
             <Botao variante="secundario" para="/minha-cidade/pedidos">
               Ver os pedidos da cidade
             </Botao>
-            <Botao variante="principal" icone="add" para="/pedidos/novo">
+            <Botao variante="principal" icone="add" para={novoPedido}>
               Abrir pedido
             </Botao>
           </EstadoVazio>
         }
       />
-      <ParaOndeIr destinos={[destinos.cidade, destinos.meus]} />
+      <ParaOndeIr
+        destinos={
+          doMeuBairro ? [destinos.cidade, destinos.meus] : [destinos.bairro, destinos.cidade]
+        }
+      />
     </Pagina>
   );
 }

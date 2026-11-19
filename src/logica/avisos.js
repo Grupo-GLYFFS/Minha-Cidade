@@ -44,12 +44,15 @@ export function juntarNomes(nomes) {
 
 // Separa os avisos que valem num lugar, dos mais novos para os mais antigos.
 // Recebe a lista e os nomes dos bairros do lugar (null = cidade: só os avisos da cidade toda).
-// Os avisos do bairro são os que citam um dos bairros (os da cidade toda ficam na lista da cidade).
+// Os avisos de um lugar são os que citam um dos bairros e os da cidade toda (valem lá também),
+// como nos Alertas e nas Votações do bairro.
 export function avisosDoLugar(avisos, bairros = null, hoje = HOJE) {
   return avisos
     .filter((aviso) => avisoValendo(aviso, hoje))
     .filter((aviso) =>
-      bairros ? aviso.bairros.some((nome) => bairros.includes(nome)) : aviso.bairros.length === 0,
+      bairros
+        ? aviso.bairros.length === 0 || aviso.bairros.some((nome) => bairros.includes(nome))
+        : aviso.bairros.length === 0,
     )
     .sort((a, b) => b.data.localeCompare(a.data));
 }

@@ -74,6 +74,13 @@ export function pedidosDoBairro(pedidos, bairro) {
   return pedidos.filter((pedido) => pedido.bairro === bairro);
 }
 
+// Separa os pedidos de um lugar (um bairro ou os bairros de uma subprefeitura).
+// Recebe a lista e os nomes dos bairros (null = cidade toda); devolve uma nova lista.
+export function pedidosDoLugar(pedidos, bairros) {
+  if (!bairros) return pedidos;
+  return pedidos.filter((pedido) => bairros.includes(pedido.bairro));
+}
+
 // Conta os pedidos em andamento de uma lista. Recebe a lista; devolve o número.
 export function contarAbertos(pedidos) {
   return pedidos.filter(estaAberto).length;

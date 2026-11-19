@@ -7,8 +7,9 @@ import classes from '../CardPedido.module.css';
 // Mesmo molde do CardPedido: o card inteiro é o link, sem botões dentro.
 // Ordem: miniatura 96 × 72 (ilustração do aviso ou ícone do assunto) · "órgão · data" ·
 // título · "Até … · onde vale" · seta arrow_forward.
-// Recebe o aviso, o caminho do detalhe e o nível do título (3 por padrão).
-export default function CardAviso({ aviso, caminho, nivelTitulo = 3 }) {
+// Recebe o aviso, o caminho do detalhe, o nível do título (3 por padrão) e um selo opcional
+// no começo da primeira linha (ex.: "Toda a cidade" nas páginas de um lugar).
+export default function CardAviso({ aviso, caminho, nivelTitulo = 3, selo }) {
   const Titulo = `h${nivelTitulo}`;
   const onde = aviso.bairros.length === 0 ? 'Cidade toda' : juntarNomes(aviso.bairros);
 
@@ -26,11 +27,14 @@ export default function CardAviso({ aviso, caminho, nivelTitulo = 3 }) {
       </span>
       <div className={classes.texto}>
         <span className={classes.topo}>
+          {selo}
           {aviso.orgao.nome} · {dataCurta(aviso.data)}
         </span>
         <Titulo className={classes.titulo}>{aviso.titulo}</Titulo>
         <span className={classes.meta}>
-          Até {dataCurta(aviso.validoAte)} · {onde}
+          {/* Com o selo "Toda a cidade", o lugar já está no selo */}
+          Até {dataCurta(aviso.validoAte)}
+          {selo ? '' : ` · ${onde}`}
         </span>
       </div>
       <Icone nome="arrow_forward" tamanho={22} className={classes.seta} />

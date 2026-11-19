@@ -21,6 +21,7 @@ import { prepararDadosDoFormulario, valoresIniciaisComCategoria } from '../logic
 import { montarTitulo, sugerirCategoria } from '../logica/sugestaoPedido';
 import { buscarDuplicado } from '../logica/duplicados';
 import { buscarPedido } from '../logica/pedidos';
+import { useRecorte } from '../contexto/useRecorte';
 import {
   apagarRascunho,
   foiEnviadoNaAba,
@@ -73,6 +74,11 @@ export default function NovoPedido() {
   const fotosAtuais = useRef(valores.fotos);
 
   const etapa = Math.min(4, Math.max(1, Number(parametros.get('etapa')) || 1));
+  // Aberto por Pedidos do bairro (?de=bairro): a trilha é a do bairro, em todas as etapas
+  const doBairro = parametros.get('de') === 'bairro';
+  const recorteBairro = useRecorte('bairro');
+  // Junta o ?de=bairro aos outros parâmetros do endereço. Recebe um objeto; devolve outro.
+  const comOrigem = (outros) => (doBairro ? { ...outros, de: 'bairro' } : outros);
   const repetido =
     valores.rua.trim().length >= 3 && valores.bairro.trim()
       ? buscarDuplicado(valores, pedidos)
@@ -148,7 +154,7 @@ export default function NovoPedido() {
   function irPara(numero, { abrirLista = false } = {}) {
     setErros({});
     if (abrirLista) setListaAberta(true);
-    setParametros(numero === 1 ? {} : { etapa: String(numero) });
+    setParametros(comOrigem(numero === 1 ? {} : { etapa: String(numero) }));
   }
 
   // Botão de avançar: confere a etapa e segue, ou envia na última
@@ -206,7 +212,10 @@ export default function NovoPedido() {
   }
   if (etapa > liberada) {
     return (
-      <Navigate to={liberada === 1 ? '/pedidos/novo' : `/pedidos/novo?etapa=${liberada}`} replace />
+      <Navigate
+        to={`/pedidos/novo?${new URLSearchParams(comOrigem(liberada === 1 ? {} : { etapa: String(liberada) }))}`}
+        replace
+      />
     );
   }
 
@@ -219,8 +228,12 @@ export default function NovoPedido() {
           tipo="formulario"
           titulo="Abrir pedido"
           trilha={[
-            { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
-            { rotulo: 'Pedidos', para: '/minha-cidade/pedidos' },
+            ...(doBairro
+              ? [...recorteBairro.trilha, { rotulo: 'Pedidos', para: '/meu-bairro/pedidos' }]
+              : [
+                  { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
+                  { rotulo: 'Pedidos', para: '/minha-cidade/pedidos' },
+                ]),
             { rotulo: 'Abrir pedido' },
           ]}
           etapas={ETAPAS_NOVO_PEDIDO}

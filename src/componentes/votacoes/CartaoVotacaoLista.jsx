@@ -25,7 +25,8 @@ import classes from './CartaoVotacaoLista.module.css';
 // "Ver a obra" ou "Ver o resultado" nas encerradas.
 // Recebe o projeto, o resultado (de calcularResultado), o voto da pessoa ("sim", "nao" ou
 // undefined), o texto do lugar (ex.: "Jabaquara" ou "Cidade toda · inclui a Vila Mariana")
-// e o estado do Seguir (seguindo, aoAlternarSeguir, logado).
+// o estado do Seguir (seguindo, aoAlternarSeguir, logado), um selo opcional e o caminho
+// da página da votação (para; sem ele, caminhoVotacao).
 export default function CartaoVotacaoLista({
   projeto,
   resultado,
@@ -35,9 +36,11 @@ export default function CartaoVotacaoLista({
   aoAlternarSeguir,
   logado,
   selo,
+  para,
 }) {
   const aberta = votacaoAberta(projeto);
-  const caminho = caminhoVotacao(projeto);
+  // Página da votação: a do lugar da lista (para) ou a padrão do projeto
+  const caminho = para ?? caminhoVotacao(projeto);
   const ehVerba = projeto.tipo === 'Mudança de verba';
 
   // Os três números da faixa de baixo

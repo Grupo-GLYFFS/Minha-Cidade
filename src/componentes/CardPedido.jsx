@@ -11,7 +11,8 @@ import classes from './CardPedido.module.css';
 // Recebe o pedido (de dados/pedidos.js), uma ilustração <svg> opcional (midia)
 // o nível do título (3 por padrão) e um selo opcional no começo da primeira linha
 // (o selo de tipo "Pedido" nas listas do que a pessoa segue).
-export default function CardPedido({ pedido, midia, nivelTitulo = 3, selo }) {
+// base: início da rota do detalhe (ex.: "/meu-bairro/pedidos"); sem ela, /pedidos/:id.
+export default function CardPedido({ pedido, midia, nivelTitulo = 3, selo, base = '/pedidos' }) {
   const categoria = buscarCategoria(pedido.categoria);
   const status = buscarStatus(pedido.status);
   const Titulo = `h${nivelTitulo}`;
@@ -23,7 +24,7 @@ export default function CardPedido({ pedido, midia, nivelTitulo = 3, selo }) {
   const semImagem = !midia && !pedido.foto;
 
   return (
-    <Link to={`/pedidos/${pedido.id}`} className={classes.card}>
+    <Link to={`${base}/${pedido.id}`} className={classes.card}>
       <span
         className={semImagem ? `${classes.midia} ${classes.midiaIcone}` : classes.midia}
         aria-hidden="true"

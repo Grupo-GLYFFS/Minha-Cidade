@@ -20,7 +20,7 @@ import {
   servicosDoBairro,
 } from '../../logica/lugares';
 import { cardsAcontece, contar, resumirLugar } from '../../logica/resumoLugar';
-import { montarRecorte } from '../../logica/recorte';
+import { montarRecorte, montarRecorteLugar } from '../../logica/recorte';
 import classes from './Hub.module.css';
 
 // Página de um bairro (prancha 15 e 16): o bairro da pessoa (/meu-bairro, com o selo
@@ -38,11 +38,14 @@ export default function PerfilBairro({ bairro, seu = false }) {
   const perfil = perfilDoBairro(bairro.id);
   const servicos = servicosDoBairro(bairro, BAIRROS);
 
-  // O bairro da pessoa leva às subpáginas de /meu-bairro (contadas pelo recorte do bairro,
-  // como nessas páginas); os outros, às listas da cidade
+  // Os cards levam às subpáginas do bairro (/meu-bairro ou /minha-cidade/bairros/:id), contadas
+  // pelo mesmo recorte dessas páginas
+  const recorte = seu
+    ? montarRecorte('bairro', bairro.nome)
+    : montarRecorteLugar({ idBairro: bairro.id });
   const cards = cardsAcontece(
-    resumirLugar(pedidos, [bairro.nome], seu ? montarRecorte('bairro', bairro.nome) : null),
-    seu ? '/meu-bairro' : '/minha-cidade',
+    resumirLugar(pedidos, recorte.bairros, recorte),
+    recorte.base,
     'Pedidos do bairro',
     sub.percentualPago,
   );

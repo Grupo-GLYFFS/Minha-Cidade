@@ -26,6 +26,7 @@ import {
   noLugar,
 } from '../logica/lugares';
 import { cardsAcontece, contar, resumirLugar } from '../logica/resumoLugar';
+import { montarRecorteLugar } from '../logica/recorte';
 
 // Quantos bairros cabem na seção antes de virar "Ver todos" (5 cards + o "Ver todos")
 const MAXIMO_BAIRROS = 6;
@@ -65,10 +66,12 @@ export default function Subprefeitura() {
   }));
   // O bairro da pessoa vem primeiro nos cards; o resto continua de A a Z
   const ordenados = [...bairros].sort((a, b) => Number(b.seu) - Number(a.seu));
-  const nomes = bairros.map((bairro) => bairro.nome);
+  // Os cards levam às subpáginas da subprefeitura (/minha-cidade/subprefeituras/:id/...),
+  // contadas pelo mesmo recorte dessas páginas
+  const recorte = montarRecorteLugar({ idSub: sub.id });
   const cards = cardsAcontece(
-    resumirLugar(pedidos, nomes),
-    '/minha-cidade',
+    resumirLugar(pedidos, recorte.bairros, recorte),
+    recorte.base,
     'Pedidos',
     sub.percentualPago,
   );

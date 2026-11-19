@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import MetaCabecalho from '../componentes/MetaCabecalho';
@@ -21,6 +21,8 @@ import { useCarregamentoSimulado } from '../componentes/pedidos/useCarregamentoS
 import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
 import { useSessao } from '../contexto/useSessao';
+import { useRecorte } from '../contexto/useRecorte';
+import { pedidosDoLugar } from '../logica/gruposPedidos';
 import { buscarCategoria, buscarPedido, buscarStatus } from '../logica/pedidos';
 import { nivelPrioridade } from '../logica/prioridade';
 import { etapasDoPedido } from '../logica/linhaDoTempo';
@@ -28,12 +30,16 @@ import { formatarNoDia } from '../logica/datasPedido';
 import { enderecoDoPedido, nomeSubprefeitura } from '../logica/localPedido';
 import classes from '../componentes/pedidos/DetalhePedido.module.css';
 
-// Detalhe do pedido (/minha-cidade/pedidos/:id).
+// Detalhe do pedido (/minha-cidade/pedidos/:id, /meu-bairro/pedidos/:id e as rotas de outro
+// bairro ou subprefeitura). Recebe o escopo ("cidade" ou "bairro"), que muda só a trilha e o
+// menu marcado; pedido de fora do lugar aberto pelo bairro vai para /minha-cidade/pedidos/:id.
 // Cabeçalho com desenho (ou ícone da categoria), protocolo, prioridade, situação e as ações
 // Apoiar, Seguir e Compartilhar; depois as seções O que foi relatado, Prioridade, Onde,
 // Andamento e Atualizações da prefeitura. Pedido que não existe mostra "não encontrado".
-export default function DetalhePedido() {
+export default function DetalhePedido({ escopo = 'cidade' }) {
   const { id } = useParams();
+  const recorte = useRecorte(escopo);
+  const lista = escopo === 'bairro' ? `${recorte.base}/pedidos` : '/minha-cidade/pedidos';
   const { pedidos } = usePedidos();
   const { usuario } = useSessao();
   const { estado, tentarDeNovo } = useCarregamentoSimulado();
@@ -48,12 +54,16 @@ export default function DetalhePedido() {
           texto="O link pode estar incompleto ou o pedido foi tirado do app."
           icone="assignment_late"
         >
-          <Botao variante="principal" para="/minha-cidade/pedidos">
-            Ver os pedidos da cidade
+          <Botao variante="principal" para={lista}>
+            Ver os pedidos
           </Botao>
         </NaoEncontrado>
       </Pagina>
     );
+  }
+
+  if (escopo === 'bairro' && pedidosDoLugar([pedido], recorte.bairros).length === 0) {
+    return <Navigate to={`/minha-cidade/pedidos/${pedido.id}`} replace />;
   }
 
   const categoria = buscarCategoria(pedido.categoria);
@@ -66,8 +76,8 @@ export default function DetalhePedido() {
       tipo="detalhe"
       titulo={pedido.titulo}
       trilha={[
-        { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
-        { rotulo: 'Pedidos', para: '/minha-cidade/pedidos' },
+        ...recorte.trilha,
+        { rotulo: 'Pedidos', para: lista },
         { rotulo: `Pedido ${pedido.protocolo}` },
       ]}
       midia={

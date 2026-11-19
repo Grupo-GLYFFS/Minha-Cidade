@@ -12,7 +12,8 @@ import classes from './ListaPedidos.module.css';
 // - aoTentarDeNovo: chamada pelo botão do erro;
 // - vazio: o <EstadoVazio> mostrado quando não há pedidos;
 // - prefixo: base dos ids dos títulos dos grupos;
-// - limite: quantos pedidos cada grupo mostra antes do "Mostrar mais" (null mostra todos).
+// - limite: quantos pedidos cada grupo mostra antes do "Mostrar mais" (null mostra todos);
+// - base: início da rota do detalhe (opcional; ex.: "/meu-bairro/pedidos").
 export default function ListaPedidos({
   pedidos,
   estado = 'pronto',
@@ -20,6 +21,7 @@ export default function ListaPedidos({
   vazio,
   prefixo,
   limite,
+  base,
 }) {
   if (estado === 'carregando') return <EstadoCarregando texto="Carregando os pedidos…" />;
   if (estado === 'erro') {
@@ -35,7 +37,7 @@ export default function ListaPedidos({
   return (
     <div className={classes.grupos}>
       {agruparPorSituacao(pedidos).map((grupo) => (
-        <GrupoPedidos key={grupo.id} grupo={grupo} prefixo={prefixo} limite={limite} />
+        <GrupoPedidos key={grupo.id} grupo={grupo} prefixo={prefixo} limite={limite} base={base} />
       ))}
     </div>
   );
