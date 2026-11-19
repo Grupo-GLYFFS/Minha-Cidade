@@ -1,6 +1,6 @@
 /* Rodapé: fundo cinza-claro, container de 1200.
-   Computador: 88 em cima, logo → 56 → 6 grupos (vão de 32) → 64 → créditos, 64 embaixo.
-   Celular: 64 em cima, logo → 40 → 2 colunas (vãos de 40 e 24) → 48 → créditos, 48 embaixo. */
+   Computador: 88 em cima, 6 grupos (vão de 32) → 64 → linha final com o logo à esquerda e o © à direita, 64 embaixo.
+   Celular: 64 em cima, 2 colunas (vãos de 40 e 24) → 48 → logo em cima do ©, 48 embaixo. */
 
 .rodape {
   margin-top: auto;
@@ -14,10 +14,6 @@
   width: min(var(--largura-topo), calc(100% - rem(64px)));
   margin-inline: auto;
   padding: rem(88px) 0 rem(64px);
-}
-
-.logo {
-  margin-bottom: rem(56px);
 }
 
 .grade {
@@ -58,6 +54,10 @@
 }
 
 .base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(24px);
   margin-top: rem(64px);
   padding-top: rem(32px);
   border-top: var(--espessura-borda) solid var(--cor-borda);
@@ -76,16 +76,15 @@
     padding: rem(64px) 0 rem(48px);
   }
 
-  .logo {
-    margin-bottom: rem(40px);
-  }
-
   .grade {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: rem(40px) rem(24px);
   }
 
   .base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(16px);
     margin-top: rem(48px);
     padding-top: rem(24px);
   }

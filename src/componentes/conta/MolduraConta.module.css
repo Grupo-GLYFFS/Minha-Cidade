@@ -28,29 +28,10 @@
   flex: none;
 }
 
-.logo {
+/* Logo (componente Logo): só aparece no celular, empurrando "Voltar ao início" para a direita */
+.barra .logo {
   display: none;
-  align-items: center;
-  gap: rem(10px);
-  min-height: rem(44px);
   margin-right: auto;
-  text-decoration: none;
-}
-
-.logoIcone {
-  display: block;
-  width: rem(40px);
-  height: rem(40px);
-  border-radius: rem(10px);
-}
-
-.logoNome {
-  font-family: var(--fonte-logo);
-  font-size: rem(18px);
-  font-weight: 700;
-  line-height: 1;
-  color: var(--cor-azul);
-  white-space: nowrap;
 }
 
 /* Coluna de 440 no meio do espaço que sobra */
@@ -105,7 +86,7 @@
     justify-content: space-between;
   }
 
-  .logo {
+  .barra .logo {
     display: inline-flex;
   }
 
@@ -115,12 +96,5 @@
 
   .titulo {
     font-size: rem(32px);
-  }
-}
-
-/* Celular estreito: só o ícone do logo, para caber ao lado de "Voltar ao início" */
-@media (max-width: $mantine-breakpoint-xs) {
-  .logoNome {
-    display: none;
   }
 }

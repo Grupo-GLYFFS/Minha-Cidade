@@ -1,5 +1,6 @@
-/* Logo: ícone de 40 e o nome em duas linhas de 22, no bloco de 40 de altura.
-   A 1ª linha sobe 1,5 px para o topo do "M" e a base de "Prefeitura" baterem com o desenho do ícone. */
+/* Logo: ícone de 40 e o nome em duas linhas de 20 (linha de 18), no bloco de 40 de altura.
+   A 1ª linha desce 1,75 px: sobram ~3 px entre o texto e o topo e a base do desenho do ícone.
+   Largura total: 168. */
 
 .logo {
   flex: none;
@@ -21,9 +22,9 @@
   display: block;
   height: rem(40px);
   font-family: var(--fonte-logo);
-  font-size: rem(22px);
+  font-size: rem(20px);
   font-weight: 700;
-  line-height: 1;
+  line-height: 0.9;
   letter-spacing: -0.01em;
   color: var(--cor-azul);
   white-space: nowrap;
@@ -34,5 +35,5 @@
 }
 
 .nome > span:first-child {
-  margin-top: rem(-1.5px);
+  margin-top: rem(1.75px);
 }

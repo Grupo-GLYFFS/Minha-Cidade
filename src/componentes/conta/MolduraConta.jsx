@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import Botao from '../Botao';
+import Logo from '../Logo';
 import PainelConta from './PainelConta';
 import classes from './MolduraConta.module.css';
 
@@ -16,22 +16,7 @@ export default function MolduraConta({ painel = 'entrar', bairro, titulo, texto,
     <div className={classes.tela}>
       <main className={classes.lado} id="conteudo">
         <div className={classes.barra}>
-          <Link
-            to="/inicio"
-            className={classes.logo}
-            aria-label="Minha Prefeitura, ir para o início"
-          >
-            <img
-              className={classes.logoIcone}
-              src="/img/logo-icone.png"
-              alt=""
-              width="40"
-              height="40"
-            />
-            <span className={classes.logoNome} aria-hidden="true">
-              Minha Prefeitura
-            </span>
-          </Link>
+          <Logo className={classes.logo} />
           <Botao variante="texto" icone="arrow_back" para="/inicio" className={classes.voltar}>
             Voltar ao início
           </Botao>
