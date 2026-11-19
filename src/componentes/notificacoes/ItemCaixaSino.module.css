@@ -1,0 +1,90 @@
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: rem(56px) minmax(0, 1fr);
+  column-gap: rem(14px);
+  align-items: start;
+  padding: rem(12px);
+  border-radius: var(--raio-icone);
+}
+
+.nova {
+  background: var(--cor-faixa);
+}
+
+.item:has(.link:hover) {
+  background: var(--cor-fundo);
+}
+
+.nova:has(.link:hover) {
+  background: var(--cor-azul-borda);
+}
+
+.item:has(.link:focus-visible) {
+  outline: var(--foco-contorno);
+  outline-offset: -3px;
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: rem(3px);
+  min-width: 0;
+}
+
+.linha1 {
+  display: flex;
+  align-items: center;
+  gap: rem(6px);
+  margin: 0;
+  font-size: rem(13px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.ponto {
+  font-size: rem(11px);
+  color: var(--cor-azul);
+}
+
+.naoLida {
+  font-weight: 800;
+  color: var(--cor-azul-escuro);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 800;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.link {
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tipo {
+  margin: 0;
+  font-size: rem(13px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}

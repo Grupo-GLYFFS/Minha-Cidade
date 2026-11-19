@@ -1,0 +1,151 @@
+/* Sino do topo e a caixa de notificações (440 px, presa embaixo do sino, alinhada à direita). */
+
+.contorno {
+  position: relative;
+}
+
+.sinoAberto {
+  border-color: var(--cor-azul);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+/* Contador do sino, colado no canto de cima à direita */
+.badge {
+  position: absolute;
+  top: rem(-6px);
+  right: rem(-6px);
+  box-sizing: border-box;
+  min-width: rem(20px);
+  height: rem(20px);
+  padding: 0 rem(5px);
+  border: 2px solid var(--cor-superficie);
+  border-radius: var(--raio-selo);
+  background: var(--cor-contador);
+  color: var(--cor-sobre-primaria);
+  font-size: rem(11px);
+  font-weight: 800;
+  line-height: rem(16px);
+  text-align: center;
+}
+
+.caixa {
+  position: absolute;
+  top: calc(100% + rem(8px));
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  width: rem(440px);
+  max-height: min(rem(700px), calc(100vh - rem(140px)));
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
+}
+
+.caixa[hidden] {
+  display: none;
+}
+
+.cab {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: rem(8px);
+  padding: rem(12px) rem(12px) rem(12px) rem(20px);
+  border-bottom: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.titulo {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+.abas {
+  flex: none;
+  padding: 0 rem(8px);
+}
+
+.rola {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: rem(4px);
+  margin: 0;
+  padding: rem(8px);
+  list-style: none;
+}
+
+.vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: rem(48px) rem(32px);
+  text-align: center;
+}
+
+.vazioIcone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(64px);
+  height: rem(64px);
+  border-radius: var(--raio-selo);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.vazioTitulo {
+  margin: rem(16px) 0 0;
+  font-size: rem(18px);
+  font-weight: 800;
+  color: var(--cor-texto);
+  text-wrap: balance;
+}
+
+.vazioTexto {
+  margin: rem(6px) 0 0;
+  font-size: rem(15px);
+  color: var(--cor-texto-2);
+}
+
+.pe {
+  flex: none;
+  padding: rem(12px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+:global(html[data-contraste='alto']) .caixa {
+  box-shadow: none;
+}
+
+/* Celular: a caixa ocupa a largura da tela, com 16 de cada lado */
+@media (max-width: $mantine-breakpoint-sm) {
+  .caixa {
+    position: fixed;
+    top: rem(72px);
+    right: rem(16px);
+    left: rem(16px);
+    width: auto;
+    max-height: calc(100vh - rem(96px));
+  }
+
+  .cab {
+    flex-wrap: wrap;
+  }
+}
+
+/* As abas da base rolam na horizontal; aqui não deixam aparecer a barra de rolagem vertical */
+.abas > div {
+  overflow-y: hidden;
+}

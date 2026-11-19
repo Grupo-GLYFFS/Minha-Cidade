@@ -34,6 +34,8 @@ import TelefonesUteis from './paginas/TelefonesUteis';
 import PerguntasFrequentes from './paginas/PerguntasFrequentes';
 import Privacidade from './paginas/Privacidade';
 import NaoEncontrada from './paginas/NaoEncontrada';
+import Notificacoes from './paginas/Notificacoes';
+import Configuracoes from './paginas/Configuracoes';
 
 // Página de desenvolvimento: só é baixada quando alguém abre /componentes
 const Componentes = lazy(() => import('./paginas/Componentes'));
@@ -80,13 +82,9 @@ export default function App() {
         <Route path="/meu-bairro" element={<MeuBairro />} />
         <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
         <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
-        <Route path="/ajuda/telefones" element={<TelefonesUteis />} />
-        <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />
-        <Route path="/ajuda/privacidade" element={<Privacidade />} />
         <Route element={<RotaProtegida />}>
           <Route path="/servicos/:idServico/solicitar" element={<SolicitarServico />} />
           <Route path="/minha-cidade/alertas" element={<Alertas />} />
-          <Route path="/perfil" element={<Perfil />} />
           <Route path="/perfil/dados" element={<MeusDados />} />
         </Route>
       </Route>
@@ -101,6 +99,18 @@ export default function App() {
         <Route path="/pedidos/novo" element={<NovoPedido />} />
         <Route path="/perfil/pedidos" element={<MeusPedidos />} />
       </Route>
+
+      {/* Conta (páginas novas, fora do LayoutAntigo; precisam de conta) */}
+      <Route element={<RotaProtegida />}>
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/notificacoes" element={<Notificacoes />} />
+        <Route path="/configuracoes" element={<Configuracoes />} />
+      </Route>
+
+      {/* Ajuda (páginas novas, fora do LayoutAntigo) */}
+      <Route path="/ajuda/telefones" element={<TelefonesUteis />} />
+      <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />
+      <Route path="/ajuda/privacidade" element={<Privacidade />} />
 
       {/* A Ouvidoria já é um serviço do catálogo: o link antigo leva para a ficha dela */}
       <Route path="/ajuda/ouvidoria" element={<Navigate to="/servicos/ouvidoria" replace />} />

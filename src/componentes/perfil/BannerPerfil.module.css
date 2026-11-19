@@ -1,0 +1,112 @@
+/* Banner do Meu perfil (30): primeiro bloco do conteúdo, azul, raio 20, 32 de respiro. */
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: rem(24px);
+  padding: rem(32px);
+  border-radius: var(--raio-card);
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+.foto {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: rem(120px);
+  height: rem(120px);
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  font-family: var(--fonte);
+  font-size: rem(44px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cor-azul);
+  cursor: pointer;
+}
+
+.foto:focus-visible {
+  outline: 3px solid var(--cor-sobre-primaria);
+  outline-offset: 3px;
+}
+
+.imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* "Editar" sobre a foto: aparece no mouse e no foco do teclado */
+.editar {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.foto:hover .editar,
+.foto:focus-visible .editar {
+  display: flex;
+}
+
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(6px);
+  height: rem(36px);
+  padding: 0 rem(12px) 0 rem(10px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  font-size: rem(15px);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--cor-texto);
+}
+
+.texto {
+  min-width: 0;
+}
+
+.nome {
+  margin: 0;
+  font-size: rem(40px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.email {
+  margin: rem(6px) 0 0;
+  font-size: rem(17px);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .banner {
+    gap: rem(16px);
+    padding: rem(16px);
+  }
+
+  .foto {
+    width: rem(80px);
+    height: rem(80px);
+    font-size: rem(30px);
+  }
+
+  .nome {
+    font-size: rem(26px);
+  }
+
+  .email {
+    font-size: rem(15px);
+  }
+}

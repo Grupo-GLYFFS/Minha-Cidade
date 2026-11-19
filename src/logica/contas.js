@@ -54,11 +54,14 @@ export function buscarContaPorLogin(contas, login = '') {
 }
 
 // Arruma os dados pessoais que a pessoa digita (no cadastro e em "Meus dados").
-// Recebe os valores já validados; devolve nome, celular e endereço limpos.
+// Recebe os valores já validados; devolve nome, celular e endereço limpos
+// (e o e-mail e o CPF, quando vêm do Meu perfil).
 // Também é o que fica salvo como mudança da conta de demonstração.
 export function limparDadosPessoais(valores) {
   const numero = valores.numero.trim();
   return {
+    ...(valores.email ? { email: normalizarEmail(valores.email) } : {}),
+    ...(valores.cpf ? { cpf: valores.cpf } : {}),
     nome: limparNome(valores.nome),
     celular: formatarCelular(valores.celular),
     cep: valores.cep,

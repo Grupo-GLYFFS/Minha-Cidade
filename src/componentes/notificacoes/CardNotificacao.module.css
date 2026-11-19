@@ -1,0 +1,131 @@
+/* Card da notificação (28): miniatura de 96 + texto; faixa de baixo com o selo e o botão,
+   separada por uma linha de borda a borda. */
+
+.card {
+  position: relative;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+}
+
+.card:has(.link:hover) {
+  border-color: var(--cor-borda-forte);
+}
+
+.card:has(.link:focus-visible) {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.topo {
+  display: grid;
+  grid-template-columns: rem(96px) minmax(0, 1fr);
+  gap: rem(24px);
+  padding: rem(24px) rem(32px);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: rem(6px);
+  min-width: 0;
+}
+
+.linha1 {
+  display: flex;
+  align-items: center;
+  gap: rem(6px);
+  margin: 0;
+  font-size: rem(13px);
+  font-weight: 700;
+  color: var(--cor-texto-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.ponto {
+  font-size: rem(12px);
+  color: var(--cor-azul);
+}
+
+.naoLida {
+  font-weight: 800;
+  color: var(--cor-azul-escuro);
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.link {
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+/* O link cobre o card inteiro */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.descricao {
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--cor-texto-2);
+}
+
+.tipo {
+  margin: 0;
+  font-size: rem(13px);
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+.pe {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12px);
+  padding: rem(16px) rem(32px);
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+/* O botão fica acima do link que cobre o card */
+.botao {
+  position: relative;
+  z-index: 1;
+  min-width: rem(220px);
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .topo {
+    grid-template-columns: rem(56px) minmax(0, 1fr);
+    gap: rem(16px);
+    padding: rem(16px);
+  }
+
+  .pe {
+    flex-wrap: wrap;
+    padding: rem(12px) rem(16px);
+  }
+
+  .botao {
+    min-width: 0;
+  }
+}

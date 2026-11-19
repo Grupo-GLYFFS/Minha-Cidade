@@ -1,0 +1,34 @@
+.miniatura {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(96px);
+  height: rem(96px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.pequena {
+  width: rem(56px);
+  height: rem(56px);
+}
+
+/* Não lida: branca com contorno azul-claro (fica sobre o fundo azul da caixa) */
+.nova {
+  background: var(--cor-superficie);
+  box-shadow: inset 0 0 0 1px var(--cor-azul-borda);
+}
+
+.alerta {
+  background: var(--cor-status-ambar-fundo);
+  color: var(--cor-status-ambar-texto);
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .miniatura:not(.pequena) {
+    width: rem(56px);
+    height: rem(56px);
+  }
+}

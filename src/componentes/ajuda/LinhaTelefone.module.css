@@ -1,0 +1,101 @@
+/* Linha de telefone (33): nome e uso à esquerda, número grande em azul à direita.
+   Divisória de borda a borda do card (sangra o --pad-lateral do SecaoCard). */
+
+.lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  margin-inline: calc(var(--pad-lateral, 0px) * -1);
+}
+
+/* O corpo de lista do SecaoCard tem 8 em cima e embaixo: a lista encosta nas bordas */
+.item:first-child {
+  margin-top: rem(-8px);
+}
+
+.item:last-child {
+  margin-bottom: rem(-8px);
+  overflow: hidden;
+  border-radius: 0 0 var(--raio-card) var(--raio-card);
+}
+
+.item + .item {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.linha {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  min-height: rem(76px);
+  padding: rem(14px) var(--pad-lateral, 0px);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.linha:hover {
+  background: var(--cor-fundo-card);
+}
+
+.linha:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: -3px;
+}
+
+.icone {
+  flex: none;
+  color: var(--cor-texto-2);
+}
+
+.texto {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: rem(2px);
+  min-width: 0;
+}
+
+.nome {
+  font-size: rem(16px);
+  font-weight: 600;
+}
+
+.uso {
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.numero {
+  flex: none;
+  font-size: rem(22px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cor-azul-escuro);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.linha:hover .numero {
+  text-decoration: underline;
+  text-underline-offset: rem(4px);
+}
+
+/* Celular: o número desce para baixo do nome, alinhado com o texto */
+@media (max-width: $mantine-breakpoint-xs) {
+  .linha {
+    display: grid;
+    grid-template-columns: rem(20px) minmax(0, 1fr);
+    column-gap: rem(16px);
+    row-gap: rem(4px);
+  }
+
+  .numero {
+    grid-column: 2;
+    font-size: rem(20px);
+  }
+}

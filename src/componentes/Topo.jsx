@@ -4,18 +4,17 @@ import BarraAcessibilidade from './topo/BarraAcessibilidade';
 import GrupoMenu from './topo/GrupoMenu';
 import MenuConta from './topo/MenuConta';
 import { useSessao } from '../contexto/useSessao';
-import { useAlertas } from '../contexto/useAlertas';
+import SinoNotificacoes from './notificacoes/SinoNotificacoes';
 import { MENU_PRINCIPAL } from '../dados/navegacao';
 import classes from './Topo.module.css';
 
 // Topo de todas as páginas: barra de acessibilidade, logo (leva ao Início do app, /inicio),
 // menu principal (Global Solution ▾ · Serviços · Minha cidade ▾ · Meu bairro ▾),
-// busca, sino de Notificações (só para quem entrou) e menu da conta.
+// busca, sino de Notificações com a caixa que abre embaixo dele (só para quem entrou)
+// e menu da conta.
 // TODO: versão do celular (hoje o menu some abaixo de 992 px)
 export default function Topo() {
   const { logado } = useSessao();
-  const { naoLidos } = useAlertas();
-  const rotuloSino = naoLidos > 0 ? `Notificações, ${naoLidos} novas` : 'Notificações';
 
   return (
     <header>
@@ -50,20 +49,7 @@ export default function Topo() {
 
           <div className={classes.acoes}>
             <Botao variante="icone" icone="search" para="/busca" aria-label="Buscar" />
-            {logado && (
-              <Botao
-                variante="icone"
-                icone="notifications"
-                para="/notificacoes"
-                aria-label={rotuloSino}
-              >
-                {naoLidos > 0 && (
-                  <span className={classes.badge} aria-hidden="true">
-                    {naoLidos}
-                  </span>
-                )}
-              </Botao>
-            )}
+            {logado && <SinoNotificacoes />}
             <MenuConta />
           </div>
         </div>

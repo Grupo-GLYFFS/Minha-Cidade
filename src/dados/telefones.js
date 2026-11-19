@@ -1,5 +1,5 @@
 // Telefones úteis, em grupos. Só números públicos e conhecidos, todos com ligação gratuita.
-// "paraQuem" completa o nome do botão para o leitor de tela ("Ligar para o SAMU, 192").
+// "paraQuem" completa o nome do link para o leitor de tela ("Ligar para o SAMU, 192").
 export const GRUPOS_TELEFONES = [
   {
     id: 'emergencia',
@@ -9,25 +9,36 @@ export const GRUPOS_TELEFONES = [
         numero: '190',
         nome: 'Polícia Militar',
         paraQuem: 'a Polícia Militar',
-        descricao: 'Crime acontecendo agora, violência ou risco à vida.',
+        icone: 'local_police',
+        descricao: 'Crime acontecendo agora ou risco à vida',
       },
       {
         numero: '192',
         nome: 'SAMU',
         paraQuem: 'o SAMU',
-        descricao: 'Ambulância para urgência médica, como desmaio, acidente ou falta de ar.',
+        icone: 'ambulance',
+        descricao: 'Ambulância para desmaio, acidente ou falta de ar',
       },
       {
         numero: '193',
         nome: 'Corpo de Bombeiros',
         paraQuem: 'o Corpo de Bombeiros',
-        descricao: 'Incêndio, resgate, pessoa presa ou afogamento.',
+        icone: 'fire_truck',
+        descricao: 'Incêndio, resgate ou afogamento',
       },
       {
         numero: '199',
         nome: 'Defesa Civil',
         paraQuem: 'a Defesa Civil',
-        descricao: 'Enchente, deslizamento, árvore caindo ou risco de desabamento.',
+        icone: 'flood',
+        descricao: 'Enchente, deslizamento ou árvore com risco de cair',
+      },
+      {
+        numero: '153',
+        nome: 'Guarda Civil Metropolitana',
+        paraQuem: 'a Guarda Civil Metropolitana',
+        icone: 'shield',
+        descricao: 'Segurança em praças, parques, escolas e prédios da prefeitura',
       },
     ],
   },
@@ -37,10 +48,10 @@ export const GRUPOS_TELEFONES = [
     telefones: [
       {
         numero: '156',
-        nome: 'Central de atendimento',
-        paraQuem: 'a Central de atendimento da Prefeitura',
-        descricao:
-          'Serviços e informações da Prefeitura de São Paulo, como buraco, lixo e iluminação.',
+        nome: 'Central da Prefeitura',
+        paraQuem: 'a Central da Prefeitura',
+        icone: 'support_agent',
+        descricao: 'Serviços e informações da Prefeitura de São Paulo',
       },
     ],
   },
@@ -52,13 +63,15 @@ export const GRUPOS_TELEFONES = [
         numero: '136',
         nome: 'Disque Saúde',
         paraQuem: 'o Disque Saúde',
-        descricao: 'Informações sobre saúde, vacinas e o SUS.',
+        icone: 'medical_services',
+        descricao: 'Vacinas, SUS e dúvidas sobre saúde',
       },
       {
         numero: '188',
-        nome: 'CVV, apoio emocional',
+        nome: 'CVV',
         paraQuem: 'o CVV',
-        descricao: 'Conversa com quem precisa desabafar, 24 horas por dia, com sigilo.',
+        icone: 'favorite',
+        descricao: 'Apoio emocional, 24 horas, com sigilo',
       },
     ],
   },
@@ -68,16 +81,44 @@ export const GRUPOS_TELEFONES = [
     telefones: [
       {
         numero: '100',
-        nome: 'Direitos Humanos',
+        nome: 'Disque Direitos Humanos',
         paraQuem: 'o Disque Direitos Humanos',
-        descricao:
-          'Denúncias de violência contra crianças, idosos, pessoas com deficiência e outros.',
+        icone: 'diversity_3',
+        descricao: 'Violência contra crianças, idosos e pessoas com deficiência',
       },
       {
         numero: '180',
         nome: 'Central de Atendimento à Mulher',
         paraQuem: 'a Central de Atendimento à Mulher',
-        descricao: 'Ajuda e denúncia em casos de violência contra a mulher.',
+        icone: 'woman',
+        descricao: 'Ajuda e denúncia de violência contra a mulher',
+      },
+    ],
+  },
+  {
+    id: 'casa',
+    titulo: 'Água, luz e gás',
+    telefones: [
+      {
+        numero: '0800 055 0195',
+        nome: 'Sabesp',
+        paraQuem: 'a Sabesp',
+        icone: 'water_drop',
+        descricao: 'Falta de água, vazamento e esgoto',
+      },
+      {
+        numero: '0800 72 72 120',
+        nome: 'Enel',
+        paraQuem: 'a Enel',
+        icone: 'bolt',
+        descricao: 'Falta de luz e fio caído',
+      },
+      {
+        numero: '0800 110 197',
+        nome: 'Comgás',
+        paraQuem: 'a Comgás',
+        icone: 'local_fire_department',
+        descricao: 'Cheiro ou vazamento de gás',
       },
     ],
   },

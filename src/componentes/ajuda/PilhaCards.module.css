@@ -1,0 +1,5 @@
+.pilha {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}

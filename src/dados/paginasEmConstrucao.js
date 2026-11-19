@@ -58,8 +58,6 @@ export const PAGINAS_EM_CONSTRUCAO = [
     icone: 'event_available',
   },
   { caminho: '/perfil/votos', titulo: 'Meus votos', icone: 'how_to_vote' },
-  { caminho: '/notificacoes', titulo: 'Notificações', icone: 'notifications' },
-  { caminho: '/configuracoes', titulo: 'Configurações', icone: 'settings' },
   // Cidade, subprefeitura e bairro
   {
     caminho: '/minha-cidade/subprefeituras/:id',

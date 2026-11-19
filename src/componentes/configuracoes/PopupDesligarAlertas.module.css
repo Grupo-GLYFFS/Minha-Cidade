@@ -1,0 +1,6 @@
+.texto {
+  margin: 0;
+  font-size: rem(16px);
+  line-height: 1.5;
+  color: var(--cor-texto-2);
+}

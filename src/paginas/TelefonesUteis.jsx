@@ -1,25 +1,54 @@
-import { Group, Text } from '@mantine/core';
-import PaginaAjuda from '../componentes/ajuda/PaginaAjuda';
-import GrupoTelefones from '../componentes/ajuda/GrupoTelefones';
-import Icone from '../componentes/Icone';
+import Pagina from '../componentes/Pagina';
+import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import SecaoCard from '../componentes/SecaoCard';
+import ParaOndeIr from '../componentes/ParaOndeIr';
+import PilhaCards from '../componentes/ajuda/PilhaCards';
+import ListaTelefones from '../componentes/ajuda/ListaTelefones';
 import { GRUPOS_TELEFONES } from '../dados/telefones';
+import { GRUPOS_PERGUNTAS } from '../dados/perguntas';
+import { ALERTAS } from '../dados/alertas';
 
-// Telefones úteis: emergência, prefeitura, saúde e direitos, com botão de ligar em cada um.
-// Aberta para todos, sem precisar de conta.
+// Quantas perguntas e quantos alertas ativos existem (metas do "Para onde ir")
+const TOTAL_PERGUNTAS = GRUPOS_PERGUNTAS.reduce((soma, grupo) => soma + grupo.perguntas.length, 0);
+const ALERTAS_ATIVOS = ALERTAS.filter((alerta) => alerta.ativo).length;
+
+// Telefones úteis (/ajuda/telefones): um card por grupo, cada linha liga para o número.
 export default function TelefonesUteis() {
   return (
-    <PaginaAjuda
-      titulo="Telefones úteis"
-      descricao="Toque no botão para ligar. Em emergência, ligue antes de abrir qualquer pedido no app."
+    <Pagina
+      cabecalho={
+        <CabecalhoPagina
+          tipo="lista"
+          titulo="Telefones úteis"
+          subtitulo="Todas as ligações são gratuitas."
+          icone="call"
+        />
+      }
     >
-      <Group gap={8} wrap="nowrap" align="flex-start" c="var(--cor-texto-suave)">
-        <Icone nome="info" tamanho={20} />
-        <Text c="inherit">Todas as ligações são gratuitas, de telefone fixo ou celular.</Text>
-      </Group>
+      <PilhaCards>
+        {GRUPOS_TELEFONES.map((grupo) => (
+          <SecaoCard key={grupo.id} titulo={grupo.titulo} lista>
+            <ListaTelefones telefones={grupo.telefones} />
+          </SecaoCard>
+        ))}
+      </PilhaCards>
 
-      {GRUPOS_TELEFONES.map((grupo) => (
-        <GrupoTelefones key={grupo.id} grupo={grupo} />
-      ))}
-    </PaginaAjuda>
+      <ParaOndeIr
+        destinos={[
+          {
+            icone: 'warning',
+            titulo: 'Alertas da cidade de São Paulo',
+            meta: `${ALERTAS_ATIVOS} ativos agora`,
+            para: '/minha-cidade/alertas',
+          },
+          {
+            icone: 'help',
+            titulo: 'Perguntas frequentes',
+            meta: `${TOTAL_PERGUNTAS} perguntas`,
+            para: '/ajuda/perguntas-frequentes',
+          },
+        ]}
+      />
+    </Pagina>
   );
 }

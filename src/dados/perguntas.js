@@ -1,56 +1,45 @@
 // Perguntas frequentes sobre o app, em grupos, com respostas curtas em linguagem simples.
+// Cada grupo vira um card da página Perguntas frequentes; cada pergunta abre e fecha.
 export const GRUPOS_PERGUNTAS = [
-  {
-    id: 'conta',
-    titulo: 'Conta',
-    perguntas: [
-      {
-        id: 'criar-conta',
-        pergunta: 'Preciso de conta para usar o app?',
-        resposta:
-          'Não para consultar. Sem conta você vê os serviços, os pedidos do bairro e os telefones. A conta é pedida para abrir pedidos, apoiar, pedir serviços online e receber alertas.',
-      },
-      {
-        id: 'demonstracao',
-        pergunta: 'O que é a conta de demonstração?',
-        resposta:
-          'É a conta da Maria, com pedidos de exemplo, para conhecer o app sem cadastrar nada. Toque em "Entrar com conta de demonstração" na tela Entrar.',
-      },
-    ],
-  },
   {
     id: 'pedidos',
     titulo: 'Pedidos',
     perguntas: [
       {
+        id: 'pedido-ou-solicitacao',
+        pergunta: 'Qual a diferença entre pedido e solicitação?',
+        resposta:
+          'Pedido é um problema na rua para a prefeitura resolver, como buraco, lâmpada apagada ou entulho na calçada. Solicitação é um serviço para você, como vacina, matrícula na escola ou inscrição no CadÚnico.',
+      },
+      {
         id: 'abrir-pedido',
         pergunta: 'Como abro um pedido?',
         resposta:
-          'Entre na sua conta, abra Pedidos (no celular, fica na aba Cidade) e toque em "Abrir pedido". Escolha o tipo de problema, diga o endereço, conte a gravidade e envie. Você recebe um número de protocolo na hora.',
-      },
-      {
-        id: 'apoiar',
-        pergunta: 'O que é apoiar um pedido?',
-        resposta:
-          'É dizer "esse problema também me afeta". Cada apoio soma pontos na prioridade do pedido. Assim, em vez de abrir outro pedido igual, o bairro junta força num só.',
-      },
-      {
-        id: 'prioridade',
-        pergunta: 'Como a prioridade é calculada?',
-        resposta:
-          'Usamos a matriz GUT: gravidade, urgência e tendência recebem notas de 1 a 5 e são multiplicadas (de 1 a 125 pontos). Depois, cada apoio soma 1 ponto. Com 75 pontos ou mais a prioridade é alta; de 35 a 74, média; abaixo disso, baixa.',
-      },
-      {
-        id: 'recusado',
-        pergunta: 'Por que meu pedido foi recusado?',
-        resposta:
-          'O motivo aparece no andamento do pedido. Os mais comuns: o problema não é da prefeitura (por exemplo, terreno particular) ou o pedido não segue as regras do serviço. Quando possível, a prefeitura diz o que vai fazer no lugar.',
+          'Toque em Abrir pedido, no fim de qualquer página. São três passos: o tipo de problema, o lugar e os detalhes. O protocolo aparece assim que você envia.',
       },
       {
         id: 'repetido',
         pergunta: 'E se alguém já pediu a mesma coisa?',
         resposta:
-          'Antes de enviar, o app procura um pedido aberto com o mesmo tipo de problema, no mesmo bairro e na mesma rua. Se achar, sugere apoiar o que já existe.',
+          'Antes de enviar, o app mostra os pedidos parecidos perto do mesmo endereço. Se um deles for o seu problema, apoie esse pedido em vez de abrir outro.',
+      },
+      {
+        id: 'apoiar',
+        pergunta: 'O que é apoiar um pedido?',
+        resposta:
+          'É dizer que o problema também afeta você. Cada apoio aumenta a prioridade do pedido.',
+      },
+      {
+        id: 'prioridade',
+        pergunta: 'Como a prioridade é calculada?',
+        resposta:
+          'Pela gravidade, pela urgência e pela chance de o problema piorar, cada uma com nota de 1 a 5. Cada apoio soma mais um ponto. O resultado aparece no pedido como prioridade baixa, média ou alta.',
+      },
+      {
+        id: 'recusado',
+        pergunta: 'Por que meu pedido foi recusado?',
+        resposta:
+          'O motivo aparece no andamento do pedido. Os mais comuns são problema em terreno particular e pedido repetido.',
       },
     ],
   },
@@ -59,34 +48,52 @@ export const GRUPOS_PERGUNTAS = [
     titulo: 'Serviços',
     perguntas: [
       {
-        id: 'servico-sem-conta',
-        pergunta: 'Posso pedir um serviço sem conta?',
-        resposta:
-          'Você pode ler como cada serviço funciona, os documentos e os telefones sem conta. Para pedir pelo app, é preciso entrar. Sem conta, você também pode ligar para a Central 156.',
-      },
-      {
         id: 'acompanhar',
         pergunta: 'Onde acompanho o que pedi?',
         resposta:
-          'Em Perfil, na opção "Meus pedidos e protocolos". Lá ficam os pedidos de melhoria e os serviços que você pediu, com o andamento de cada um.',
+          'No menu da sua foto, no topo. Os serviços ficam em Minhas solicitações e os problemas da rua em Meus pedidos.',
+      },
+      {
+        id: 'remarcar',
+        pergunta: 'Posso remarcar ou cancelar um agendamento?',
+        resposta:
+          'Sim. Abra a solicitação em Minhas solicitações e use Remarcar ou Cancelar. O horário antigo fica livre para outra pessoa.',
       },
     ],
   },
   {
-    id: 'privacidade',
-    titulo: 'Privacidade',
+    id: 'conta',
+    titulo: 'Conta',
     perguntas: [
       {
-        id: 'onde-ficam',
-        pergunta: 'Meus dados ficam salvos onde?',
+        id: 'precisa-conta',
+        pergunta: 'Preciso de conta para usar o app?',
         resposta:
-          'Só neste navegador, porque o app é um protótipo e não tem servidor. Nada é enviado para a prefeitura nem para outra pessoa. Você pode apagar tudo na página Privacidade dos dados.',
+          'Não para consultar. Sem conta você vê serviços, pedidos, obras, votações e telefones. A conta é pedida para abrir pedidos, apoiar, votar e agendar serviços.',
       },
       {
-        id: 'oficial',
-        pergunta: 'Este é o app oficial da prefeitura?',
+        id: 'mudar-endereco',
+        pergunta: 'Como mudo meu endereço?',
         resposta:
-          'Não. É um protótipo feito por estudantes da FIAP. Para pedidos de verdade, use a Central 156 ou os canais oficiais da Prefeitura de São Paulo.',
+          'Em Meu perfil, na parte Endereço, ou no link Alterar endereço, no rodapé. A página Meu bairro muda junto.',
+      },
+    ],
+  },
+  {
+    id: 'alertas',
+    titulo: 'Alertas',
+    perguntas: [
+      {
+        id: 'origem-alertas',
+        pergunta: 'De onde vêm os alertas?',
+        resposta:
+          'Da Defesa Civil de São Paulo: chuva forte, alagamento, calor e frio intensos. O alerta do seu bairro também aparece na faixa amarela no topo das páginas.',
+      },
+      {
+        id: 'desligar-notificacoes',
+        pergunta: 'Como desligo as notificações?',
+        resposta:
+          'Em Configurações, escolha o que quer receber. Os alertas de emergência também podem ser desligados, mas o app pede confirmação antes.',
       },
     ],
   },
@@ -98,13 +105,31 @@ export const GRUPOS_PERGUNTAS = [
         id: 'aumentar-letra',
         pergunta: 'Como aumento a letra?',
         resposta:
-          'No computador, use os botões A− e A+ no topo da página. No celular, abra Perfil e depois Acessibilidade (sem conta, o link fica na tela Entrar). Lá também dá para ligar o alto contraste.',
+          'Use A− e A+ na barra do topo de qualquer página. Ao lado fica o botão Alto contraste.',
       },
       {
         id: 'leitor-de-tela',
         pergunta: 'O app funciona com leitor de tela?',
         resposta:
           'Sim. Os títulos seguem uma ordem, todos os campos e botões têm nome e os avisos são lidos em voz alta. Também dá para usar tudo só pelo teclado.',
+      },
+    ],
+  },
+  {
+    id: 'privacidade',
+    titulo: 'Privacidade',
+    perguntas: [
+      {
+        id: 'onde-ficam',
+        pergunta: 'Onde ficam os meus dados?',
+        resposta:
+          'Só neste navegador, porque o app é um protótipo e não tem servidor. Para ver o que fica guardado, abra a página Privacidade. Se quiser, peça para apagar seus dados pelo 156.',
+      },
+      {
+        id: 'oficial',
+        pergunta: 'Este é o app oficial da prefeitura?',
+        resposta:
+          'Não. É um protótipo feito por estudantes da FIAP, com dados de exemplo. Para pedidos de verdade, ligue 156.',
       },
     ],
   },
