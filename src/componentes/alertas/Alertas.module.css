@@ -423,58 +423,209 @@
   border: 0;
 }
 
+/* Compartilhar da barra do pé: um para o computador e outro, só com o ícone, para o celular */
+.soCelular {
+  display: none;
+}
+
 @media (max-width: $mantine-breakpoint-sm) {
+  /* ---------- Card do alerta ativo ---------- */
+  .cards {
+    gap: rem(12px);
+  }
+
   .corpo,
   .faixa {
     padding: rem(16px);
   }
 
+  .faixa {
+    padding-block: rem(20px);
+  }
+
+  /* Órgão e selos na mesma linha: o órgão encolhe com reticências */
+  .topo {
+    flex-wrap: nowrap;
+    gap: rem(8px);
+    min-width: 0;
+  }
+
+  .orgao {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .orgao :global(.icone) {
+    flex: none;
+  }
+
+  .selos {
+    flex: none;
+    flex-wrap: nowrap;
+  }
+
+  /* Com o selo "Toda a cidade" (alertas de um lugar), os selos descem para a linha de baixo */
+  .topo:has(.selos > :nth-child(2)) {
+    flex-wrap: wrap;
+    row-gap: rem(8px);
+  }
+
+  .fatos > div {
+    min-width: 0;
+  }
+
+  .fatos dd {
+    min-width: 0;
+    overflow: hidden;
+    font-size: rem(14px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .acoes {
+    flex-wrap: nowrap;
+    gap: rem(8px);
     padding: rem(12px) rem(16px);
   }
 
+  .acoes > * {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-inline: rem(10px);
+  }
+
+  .acoes > :last-child {
+    flex: none;
+    padding-inline: 0;
+  }
+
+  /* "O que fazer" aberto: "Fechar o que fazer" vai na linha de cima, na largura toda */
+  .acoes:has(> [aria-expanded='true']) {
+    flex-wrap: wrap;
+  }
+
+  .acoes > [aria-expanded='true'] {
+    flex-basis: 100%;
+  }
+
+  /* ---------- Encerrados: card de lista sem o quadradinho do ícone ---------- */
   .item {
-    align-items: flex-start;
-    gap: rem(16px);
+    display: block;
     padding: rem(16px) rem(48px) rem(16px) rem(16px);
   }
 
   .miniatura {
-    width: rem(56px);
-    height: rem(56px);
+    display: none;
+  }
+
+  .itemMeta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .itemTitulo {
+    font-size: rem(17px);
+  }
+
+  .itemRodape {
+    gap: rem(6px) rem(10px);
+  }
+
+  .onde {
+    display: block;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .onde :global(.icone) {
+    margin-right: rem(4px);
+    vertical-align: rem(-4px);
   }
 
   .seta {
-    top: rem(16px);
+    top: 50%;
     right: rem(16px);
+    margin-top: rem(-11px);
+  }
+
+  /* ---------- Detalhe ---------- */
+  .pilha {
+    gap: rem(12px);
   }
 
   .niveis {
-    grid-template-columns: minmax(0, 1fr);
+    gap: rem(6px);
   }
 
-  /* Pontos de apoio: o "Como chegar" desce para a linha de baixo */
+  .nivel {
+    flex-direction: column;
+    gap: rem(2px);
+    height: auto;
+    min-height: rem(64px);
+    padding: rem(8px) rem(2px);
+    font-size: rem(14px);
+  }
+
+  /* Pontos de apoio: "Como chegar" fica só com o ícone, à direita */
   .linhaPonto {
-    flex-wrap: wrap;
+    gap: rem(12px);
+    padding-block: rem(12px);
   }
 
-  .linhaPonto .linhaTexto {
-    flex-basis: calc(100% - rem(36px));
+  .linhaPonto .linhaNome,
+  .linhaPonto .linhaDetalhe {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .linhaPonto > :last-child {
-    margin-left: rem(36px);
+    flex: none;
+    width: rem(44px);
+    padding: 0;
   }
 
+  .comoChegarTexto {
+    display: none;
+  }
+
+  /* Barra do pé: só o "Ligar 199" (e o compartilhar com ícone), presa acima da barra de abas */
   .barra {
-    padding: rem(12px) 0;
+    bottom: var(--altura-barra-abas, 0);
+    flex-wrap: nowrap;
+    margin-inline: rem(-16px);
+    padding: rem(16px);
+  }
+
+  .barraInfo,
+  .soComputador {
+    display: none;
+  }
+
+  .soCelular {
+    display: contents;
   }
 
   .barraAcoes {
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    gap: rem(8px);
     width: 100%;
   }
 
-  .barraAcoes > * {
+  .barraAcoes > a {
     flex: 1 1 auto;
+  }
+
+  /* Alerta sem o "Ligar 199": a barra fica só com o compartilhar, à direita */
+  .barraAcoes:not(:has(> a)) {
+    justify-content: flex-start;
   }
 }
