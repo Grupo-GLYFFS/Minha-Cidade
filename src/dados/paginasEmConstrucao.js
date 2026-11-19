@@ -61,25 +61,22 @@ export const PAGINAS_EM_CONSTRUCAO = [
   { caminho: '/notificacoes', titulo: 'Notificações', icone: 'notifications' },
   { caminho: '/configuracoes', titulo: 'Configurações', icone: 'settings' },
   // Cidade, subprefeitura e bairro
-  {
-    caminho: '/minha-cidade/subprefeituras/:id',
-    titulo: 'Subprefeitura',
-    icone: 'account_balance',
-    trilha: [CIDADE, { rotulo: 'Subprefeitura' }],
-  },
-  {
-    caminho: '/minha-cidade/bairros/:id',
-    titulo: 'Bairro',
-    icone: 'home_pin',
-    trilha: [CIDADE, { rotulo: 'Bairro' }],
-  },
   ...subpaginas('/minha-cidade', [CIDADE], 'da cidade de São Paulo', [
     '/minha-cidade/alertas',
+    '/minha-cidade/alertas/:id',
+    '/minha-cidade/avisos',
+    '/minha-cidade/avisos/:id',
     '/minha-cidade/pedidos',
     '/minha-cidade/obras',
     '/minha-cidade/votacoes',
     '/minha-cidade/votacoes/:id',
     '/minha-cidade/orcamento',
   ]),
-  ...subpaginas('/meu-bairro', BAIRRO, 'da Vila Mariana', ['/meu-bairro/orcamento']),
+  ...subpaginas('/meu-bairro', BAIRRO, 'da Vila Mariana', [
+    '/meu-bairro/alertas',
+    '/meu-bairro/alertas/:id',
+    '/meu-bairro/avisos',
+    '/meu-bairro/avisos/:id',
+    '/meu-bairro/orcamento',
+  ]),
 ];
