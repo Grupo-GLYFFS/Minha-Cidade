@@ -54,7 +54,7 @@ A parte que mais diferencia o app é o morador participando do começo ao fim:
 
 ### Direto da pasta, sem instalar nada
 
-Abra o arquivo `dist/index.html` com dois cliques (Chrome, Edge ou Firefox). O site funciona direto do arquivo, sem servidor.
+Abra o arquivo `dist/index.html` com dois cliques (Chrome, Edge ou Firefox). No .zip da entrega, é o `index.html` da pasta. O site funciona direto do arquivo, sem servidor.
 
 Precisa de internet para as fontes, os ícones e a busca do CEP (ViaCEP). Os dados que você cria (conta, pedidos, votos) ficam guardados só no seu navegador.
 
@@ -177,16 +177,12 @@ Usamos o Claude (Anthropic) como assistente no desenho das telas e na escrita do
 
 ## Equipe
 
-> Preencher com os dados do grupo (os mesmos de `src/dados/equipe.js`, que aparecem na página Equipe).
-
-| Nome   | RM   | Papel                        |
-| ------ | ---- | ---------------------------- |
-| [NOME] | [RM] | Design e protótipo           |
-| [NOME] | [RM] | Páginas e menu               |
-| [NOME] | [RM] | Simulação dos pedidos        |
-| [NOME] | [RM] | Formulários e acessibilidade |
-| [NOME] | [RM] | Pesquisa, README e pitch     |
+- Felipe Santos, RM 574050
+- Samuel Almeida Santos, RM 572554
+- Gabriel de Lucca Chiapetta Santana, RM 573610
+- Leonardo de Lima Dias, RM 569286
+- Fabricio Cardoso Nicoli, RM 571627
 
 - **Pitch (vídeo):** [LINK DO PITCH]
-- **Repositório:** [LINK DO REPOSITÓRIO]
+- **Repositório:** https://github.com/Grupo-GLYFFS/Minha-Cidade
 - **Site publicado:** [LINK DO SITE]

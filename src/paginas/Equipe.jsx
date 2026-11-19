@@ -20,7 +20,7 @@ export default function Equipe() {
           </h2>
           <ul className={classesEquipe.integrantes}>
             {INTEGRANTES.map((integrante) => (
-              <CardIntegrante key={integrante.papel} integrante={integrante} />
+              <CardIntegrante key={integrante.rm} integrante={integrante} />
             ))}
           </ul>
         </section>

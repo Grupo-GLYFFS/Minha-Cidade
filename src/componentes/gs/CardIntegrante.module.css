@@ -27,6 +27,15 @@
   border-radius: var(--raio-selo);
   background: var(--cor-superficie);
   color: var(--cor-azul);
+  overflow: hidden;
+}
+
+/* Foto do integrante: ocupa o avatar inteiro, recortada no raio dele */
+.foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .texto {
