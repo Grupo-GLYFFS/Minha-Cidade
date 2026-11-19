@@ -4,9 +4,9 @@ import { LINKS_RODAPE } from '../dados/navegacao';
 import { useSessao } from '../contexto/useSessao';
 import classes from './Rodape.module.css';
 
-// Rodapé de todas as páginas (desenho RP10): à esquerda, o logo (leva ao Início) em cima
-// e o © no pé; à direita, três grupos de links (Páginas · Global Solution · Ajuda).
-// No celular: logo, grupos e o © no fim.
+// Rodapé de todas as páginas (desenho RP10): à esquerda, o logo (leva ao Início);
+// à direita, três grupos de links (Páginas · Global Solution · Ajuda).
+// Embaixo de tudo, a linha do © centralizada. No celular: logo, grupos e a linha do ©.
 // Para quem entrou, "Entrar ou criar conta" vira "Meu perfil".
 export default function Rodape() {
   const { logado } = useSessao();
@@ -38,7 +38,9 @@ export default function Rodape() {
             </nav>
           ))}
         </div>
+      </div>
 
+      <div className={classes.base}>
         <p className={classes.creditos}>© 2026 Minha Prefeitura</p>
       </div>
     </footer>

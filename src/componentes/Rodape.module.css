@@ -1,7 +1,8 @@
-/* Rodapé (RP10): fundo branco, container de 1200.
-   Computador: coluna de 300 com o logo em cima e o © no pé (alinhado à base do último link),
-   64 até os 3 grupos de links; 96 em cima e 80 embaixo.
-   Celular: logo → grupos em 2 colunas → ©, com 48 entre eles; 72 em cima e 56 embaixo. */
+/* Rodapé (RP10, v4.2): fundo branco, container de 1200.
+   Computador: coluna de 300 só com o logo, 64 até os 3 grupos de links; 96 em cima e 80 embaixo.
+   Celular: logo → grupos em 2 colunas, com 48 entre eles; 72 em cima e 56 embaixo.
+   Embaixo de tudo, a linha do ©: divisória de borda a borda e o texto centralizado,
+   com 28 em cima e embaixo (24 no celular). */
 
 .rodape {
   margin-top: auto;
@@ -14,10 +15,6 @@
   box-sizing: border-box;
   display: grid;
   grid-template-columns: rem(300px) minmax(0, 1fr);
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    'marca grade'
-    'copy grade';
   gap: rem(40px) rem(64px);
   width: min(var(--largura-topo), calc(100% - rem(64px)));
   margin-inline: auto;
@@ -25,14 +22,12 @@
 }
 
 .marca {
-  grid-area: marca;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
 .grade {
-  grid-area: grade;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: rem(40px) rem(32px);
@@ -69,24 +64,25 @@
   text-underline-offset: 3px;
 }
 
+/* Linha do ©, com a divisória de borda a borda */
+.base {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+  padding: rem(28px) 0;
+}
+
 .creditos {
-  grid-area: copy;
-  align-self: end;
-  margin: 0;
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
+  margin: 0 auto;
   font-size: rem(14px);
   font-weight: 500;
   line-height: rem(20px);
   color: var(--cor-texto-2);
+  text-align: center;
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
   .miolo {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto;
-    grid-template-areas:
-      'marca'
-      'grade'
-      'copy';
     row-gap: rem(48px);
     padding: rem(72px) 0 rem(56px);
   }
@@ -94,5 +90,9 @@
   .grade {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: rem(40px) rem(24px);
+  }
+
+  .base {
+    padding: rem(24px) 0;
   }
 }
