@@ -76,10 +76,15 @@ export const PAGINAS_EM_CONSTRUCAO = [
   ...subpaginas('/minha-cidade', [CIDADE], 'da cidade de São Paulo', [
     '/minha-cidade/alertas',
     '/minha-cidade/pedidos',
+    '/minha-cidade/pedidos/:id',
     '/minha-cidade/obras',
     '/minha-cidade/votacoes',
     '/minha-cidade/votacoes/:id',
     '/minha-cidade/orcamento',
   ]),
-  ...subpaginas('/meu-bairro', BAIRRO, 'da Vila Mariana', ['/meu-bairro/orcamento']),
+  ...subpaginas('/meu-bairro', BAIRRO, 'da Vila Mariana', [
+    '/meu-bairro/pedidos',
+    '/meu-bairro/pedidos/:id',
+    '/meu-bairro/orcamento',
+  ]),
 ];

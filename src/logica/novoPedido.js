@@ -1,6 +1,8 @@
 import { HOJE, momentoDeHoje } from './datas';
 import { CATEGORIAS_PEDIDO } from '../dados/categoriasPedido';
 import { VALORES_INICIAIS } from './esquemaNovoPedido';
+import { estimarGravidade } from './sugestaoPedido';
+import { subprefeituraDoBairro } from './localPedido';
 
 // Valores iniciais do formulário, com a categoria já escolhida quando ela vem do endereço
 // (ex.: /pedidos/novo?categoria=iluminacao, vindo da página de um serviço).
@@ -30,37 +32,39 @@ export function proximoIdPedido(pedidos) {
   return `p-${String(proximo).padStart(3, '0')}`;
 }
 
+// Escreve o número do endereço: "s/n", "sn" e "S/N" ficam todos como "S/N".
+export function arrumarNumero(numero) {
+  const limpo = numero.trim();
+  return /^s\/?n$/i.test(limpo) ? 'S/N' : limpo;
+}
+
 // Transforma o que a pessoa preencheu no formulário nos dados do pedido.
 // Recebe os valores já validados; devolve os dados que montarNovoPedido espera.
-// A pessoa só informa a gravidade. Na vida real, urgência e tendência são definidas pela
-// prefeitura na análise; no protótipo usamos valores iniciais: urgência igual à gravidade
-// e tendência 3 (meio da escala).
+// A pessoa não escolhe a gravidade: o app estima pela descrição e a prefeitura confirma
+// na análise. Urgência igual à gravidade e tendência 3 (meio da escala).
 export function prepararDadosDoFormulario(valores) {
-  const gravidade = Number(valores.gravidade);
-  const numero = valores.numero.trim();
-
+  const gravidade = estimarGravidade(valores.descricao, valores.categoria).valor;
+  const bairro = valores.bairro.trim();
   return {
     categoria: valores.categoria,
     titulo: valores.titulo.trim(),
     descricao: valores.descricao.trim(),
     cep: valores.cep,
     rua: valores.rua.trim(),
-    // "s/n", "sn" e "S/N" ficam todos como "S/N"
-    numero: /^s\/?n$/i.test(numero) ? 'S/N' : numero,
-    bairro: valores.bairro.trim(),
-    regiao: valores.regiao,
+    numero: arrumarNumero(valores.numero),
+    bairro,
+    subprefeitura: subprefeituraDoBairro(bairro),
     gravidade,
     urgencia: gravidade,
     tendencia: 3,
-    // A foto não é guardada no protótipo, só o nome do arquivo
-    nomeFoto: valores.foto ? valores.foto.name : null,
+    // As fotos não são guardadas no protótipo, só os nomes dos arquivos
+    fotos: valores.fotos.map((foto) => foto.nome),
   };
 }
 
 // Monta um pedido completo a partir do que a pessoa preencheu no formulário.
-// Recebe os dados do formulário (titulo, descricao, categoria, bairro, regiao, rua, numero,
-// gravidade, urgencia, tendencia), a lista atual, o id de quem abriu, o momento de agora
-// e a hora real em milissegundos (usada pela análise simulada);
+// Recebe os dados de prepararDadosDoFormulario, a lista atual, o id de quem abriu,
+// o momento de agora e a hora real em milissegundos (usada pela análise simulada);
 // devolve o pedido novo, com status "enviada" e nenhum apoio.
 export function montarNovoPedido(
   dados,

@@ -1,30 +1,33 @@
-/* Celular: um cartão por linha nas duas visões */
-.lista {
-  list-style: none;
+/* Lista de pedidos agrupada por situação: 48 entre grupos, 12 entre os cards. */
+
+.grupos {
+  display: flex;
+  flex-direction: column;
+  gap: rem(48px);
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+}
+
+/* O título do grupo já traz a sua margem de baixo */
+.grupo > h2 {
+  margin-bottom: 0;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 12px;
+  list-style: none;
 }
 
-/* Computador: grade com 2 colunas (3 na tela larga); lista continua com 1 */
-@media (min-width: $mantine-breakpoint-md) {
-  .lista {
-    gap: 16px;
-  }
-
-  .lista[data-visao='grade'] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .lista[data-visao='lista'] {
-    gap: 12px;
-  }
-}
-
-@media (min-width: $mantine-breakpoint-lg) {
-  .lista[data-visao='grade'] {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+@media (max-width: $mantine-breakpoint-sm) {
+  .grupos {
+    gap: rem(32px);
   }
 }

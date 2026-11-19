@@ -1,0 +1,243 @@
+/* Detalhe do pedido: seções em cards, 40 entre elas (24 no celular). */
+
+.secoes {
+  display: flex;
+  flex-direction: column;
+  gap: rem(40px);
+}
+
+/* Metadados do cabeçalho */
+.prioridade :global(.icone) {
+  color: var(--cor-texto-2);
+}
+
+.seuPedido {
+  font-weight: 700;
+  color: var(--cor-azul-escuro);
+}
+
+/* Aviso "Link do pedido copiado" embaixo das ações (vazio, não ocupa espaço) */
+.avisoAcao {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 600;
+  text-align: center;
+  color: var(--cor-sucesso);
+}
+
+.avisoAcao:empty {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* O que foi relatado */
+.descricao {
+  margin: 0;
+  font-size: rem(17px);
+  line-height: 1.6;
+  color: var(--cor-texto);
+}
+
+.fotos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(12px);
+  margin: rem(24px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foto {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(120px);
+  height: rem(120px);
+  padding: 0;
+  overflow: hidden;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-cinza-suave);
+  color: var(--cor-texto-placeholder);
+  cursor: default;
+}
+
+button.foto {
+  cursor: pointer;
+}
+
+button.foto:hover {
+  border-color: var(--cor-azul);
+}
+
+.foto > svg,
+.fotoGrande > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fotoGrande {
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--raio-controle);
+}
+
+/* Prioridade: três degraus iguais, o atual com borda escura */
+.degraus {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.degrau {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8px);
+  min-height: rem(52px);
+  padding: 0 rem(12px);
+  border: var(--espessura-borda) solid var(--cor-linha);
+  border-radius: var(--raio-controle);
+  background: var(--cor-fundo-card);
+  font-size: rem(16px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.degrau :global(.icone) {
+  color: var(--cor-texto-placeholder);
+}
+
+.degrauAtual {
+  border: rem(2px) solid var(--cor-texto);
+  background: var(--cor-superficie);
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+.degrauAtual :global(.icone) {
+  color: var(--cor-texto);
+}
+
+.pontos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(4px) rem(8px);
+  margin: rem(16px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.pontos b {
+  font-weight: 800;
+  color: var(--cor-texto);
+}
+
+/* Atualizações da prefeitura */
+.semAtualizacao {
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  margin: 0;
+  padding: rem(16px);
+  border: var(--espessura-borda) solid var(--cor-linha);
+  border-radius: var(--raio-controle);
+  background: var(--cor-fundo-card);
+  font-size: rem(15px);
+  color: var(--cor-texto-2);
+}
+
+.semAtualizacao :global(.icone) {
+  color: var(--cor-azul-escuro);
+}
+
+.atualizacoes {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.atualizacao {
+  display: flex;
+  gap: rem(16px);
+}
+
+.atualizacaoIcone {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(40px);
+  height: rem(40px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  color: var(--cor-azul-escuro);
+}
+
+.atualizacaoMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(4px) rem(8px);
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.autor {
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.atualizacaoTexto {
+  margin: rem(4px) 0 0;
+  font-size: rem(16px);
+  line-height: 1.5;
+  color: var(--cor-texto);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .secoes {
+    gap: rem(24px);
+  }
+
+  .degraus {
+    gap: rem(8px);
+  }
+
+  .degrau {
+    flex-direction: column;
+    gap: rem(2px);
+    min-height: rem(64px);
+    font-size: rem(14px);
+  }
+
+  .foto {
+    width: rem(96px);
+    height: rem(96px);
+  }
+}

@@ -1,83 +1,148 @@
-import { useEffect } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Alert, Button, Stack } from '@mantine/core';
-import CabecalhoAntigo from '../componentes/CabecalhoAntigo';
-import CabecalhoDetalhe from '../componentes/pedidos/CabecalhoDetalhe';
-import SobrePedido from '../componentes/pedidos/SobrePedido';
-import BlocoApoio from '../componentes/pedidos/BlocoApoio';
-import CartaoPrioridade from '../componentes/pedidos/CartaoPrioridade';
-import LinhaDoTempoPedido from '../componentes/pedidos/LinhaDoTempoPedido';
-import AvisoEmAnalise from '../componentes/novoPedido/AvisoEmAnalise';
+import { useParams } from 'react-router-dom';
+import Pagina from '../componentes/Pagina';
+import CabecalhoPagina from '../componentes/CabecalhoPagina';
+import MetaCabecalho from '../componentes/MetaCabecalho';
+import SeloSituacao from '../componentes/SeloSituacao';
 import Icone from '../componentes/Icone';
+import SecaoCard from '../componentes/SecaoCard';
+import LinhaDado from '../componentes/LinhaDado';
+import Botao from '../componentes/Botao';
+import NaoEncontrado from '../componentes/NaoEncontrado';
+import ParaOndeIr from '../componentes/ParaOndeIr';
+import EstadoCarregando from '../componentes/EstadoCarregando';
+import EstadoErro from '../componentes/EstadoErro';
+import IlustracaoPedido from '../componentes/pedidos/IlustracaoPedido';
+import AcoesPedido from '../componentes/pedidos/AcoesPedido';
+import FotosRelatadas from '../componentes/pedidos/FotosRelatadas';
+import SecaoPrioridade from '../componentes/pedidos/SecaoPrioridade';
+import AndamentoPedido from '../componentes/pedidos/AndamentoPedido';
+import SecaoAtualizacoes from '../componentes/pedidos/SecaoAtualizacoes';
+import { useCarregamentoSimulado } from '../componentes/pedidos/useCarregamentoSimulado';
+import { useDestinosPedidos } from '../componentes/pedidos/useDestinosPedidos';
 import { usePedidos } from '../contexto/usePedidos';
-import { buscarPedido } from '../logica/pedidos';
-import classes from './DetalhePedido.module.css';
+import { useSessao } from '../contexto/useSessao';
+import { buscarCategoria, buscarPedido, buscarStatus } from '../logica/pedidos';
+import { nivelPrioridade } from '../logica/prioridade';
+import { etapasDoPedido } from '../logica/linhaDoTempo';
+import { formatarNoDia } from '../logica/datasPedido';
+import { enderecoDoPedido, nomeSubprefeitura } from '../logica/localPedido';
+import classes from '../componentes/pedidos/DetalhePedido.module.css';
 
-// Página de um pedido: dados completos, linha do tempo, apoio e prioridade.
-// O id vem do endereço (/pedidos/p-001). Se o pedido não existir, oferece a volta para a lista.
-// Quando a pessoa chega depois de apoiar (vinda do aviso de pedido repetido), mostra a confirmação.
+// Detalhe do pedido (/minha-cidade/pedidos/:id).
+// Cabeçalho com desenho (ou ícone da categoria), protocolo, prioridade, situação e as ações
+// Apoiar, Seguir e Compartilhar; depois as seções O que foi relatado, Prioridade, Onde,
+// Andamento e Atualizações da prefeitura. Pedido que não existe mostra "não encontrado".
 export default function DetalhePedido() {
   const { id } = useParams();
   const { pedidos } = usePedidos();
+  const { usuario } = useSessao();
+  const { estado, tentarDeNovo } = useCarregamentoSimulado();
+  const destinos = useDestinosPedidos();
   const pedido = buscarPedido(pedidos, id);
-  const local = useLocation();
-  const navigate = useNavigate();
-  const acabouDeApoiar = local.state?.aviso === 'apoiou';
-
-  // Ao abrir um pedido vindo do meio da lista, começa a página do topo
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
 
   if (!pedido) {
     return (
-      <Stack gap="md" align="flex-start">
-        <CabecalhoAntigo
-          titulo="Pedido não encontrado"
-          descricao="O link pode estar errado ou o pedido foi removido. Veja a lista com todos os pedidos."
-        />
-        <Button component={Link} to="/minha-cidade/pedidos">
-          Voltar para pedidos
-        </Button>
-      </Stack>
+      <Pagina>
+        <NaoEncontrado
+          titulo="Não encontramos este pedido"
+          texto="O link pode estar incompleto ou o pedido foi tirado do app."
+          icone="assignment_late"
+        >
+          <Botao variante="principal" para="/minha-cidade/pedidos">
+            Ver os pedidos da cidade
+          </Botao>
+        </NaoEncontrado>
+      </Pagina>
+    );
+  }
+
+  const categoria = buscarCategoria(pedido.categoria);
+  const status = buscarStatus(pedido.status);
+  const prioridade = nivelPrioridade(pedido);
+  const ehSeu = usuario && pedido.autorId === usuario.id;
+
+  const cabecalho = (
+    <CabecalhoPagina
+      tipo="detalhe"
+      titulo={pedido.titulo}
+      trilha={[
+        { rotulo: 'Cidade de São Paulo', para: '/minha-cidade' },
+        { rotulo: 'Pedidos', para: '/minha-cidade/pedidos' },
+        { rotulo: `Pedido ${pedido.protocolo}` },
+      ]}
+      midia={
+        pedido.ilustracao && (
+          <IlustracaoPedido
+            nome={pedido.ilustracao}
+            alt={`Foto do local: ${pedido.titulo}`}
+            embaixo
+          />
+        )
+      }
+      icone={categoria?.icone}
+      categoria={{ icone: categoria?.icone, rotulo: categoria?.rotulo }}
+      acoes={<AcoesPedido pedido={pedido} />}
+    >
+      <MetaCabecalho>
+        <span>
+          Protocolo <b>{pedido.protocolo}</b>
+        </span>
+        <span className={classes.prioridade}>
+          <Icone nome={prioridade.icone} tamanho={20} />
+          {prioridade.rotulo}
+        </span>
+        {ehSeu && (
+          <span className={classes.seuPedido}>
+            <Icone nome="person" tamanho={20} preenchido />
+            Seu pedido
+          </span>
+        )}
+        {status && <SeloSituacao cor={status.cor}>{status.rotulo}</SeloSituacao>}
+      </MetaCabecalho>
+      <MetaCabecalho>
+        <span>Enviado {formatarNoDia(pedido.criadoEm)}</span>
+      </MetaCabecalho>
+    </CabecalhoPagina>
+  );
+
+  // O cabeçalho aparece já; as seções esperam a busca (carregando e erro)
+  let conteudo;
+  if (estado === 'carregando') conteudo = <EstadoCarregando texto="Carregando o pedido…" />;
+  else if (estado === 'erro') {
+    conteudo = (
+      <EstadoErro titulo="Não conseguimos carregar o pedido agora" aoTentarDeNovo={tentarDeNovo} />
+    );
+  } else {
+    conteudo = (
+      <div className={classes.secoes}>
+        <SecaoCard titulo="O que foi relatado">
+          <p className={classes.descricao}>{pedido.descricao}</p>
+          <FotosRelatadas pedido={pedido} />
+        </SecaoCard>
+        <SecaoPrioridade pedido={pedido} />
+        <SecaoCard titulo="Onde" lista>
+          <LinhaDado icone="location_on" rotulo="Rua" valor={enderecoDoPedido(pedido)} />
+          <LinhaDado icone="home_work" rotulo="Bairro" valor={pedido.bairro} />
+          {pedido.subprefeitura && (
+            <LinhaDado
+              icone="account_balance"
+              rotulo="Subprefeitura"
+              valor={nomeSubprefeitura(pedido.subprefeitura)}
+            />
+          )}
+        </SecaoCard>
+        <SecaoCard titulo="Andamento">
+          <AndamentoPedido etapas={etapasDoPedido(pedido)} />
+        </SecaoCard>
+        <SecaoAtualizacoes pedido={pedido} />
+      </div>
     );
   }
 
   return (
-    <Stack gap="lg">
-      <CabecalhoDetalhe pedido={pedido} />
-
-      {acabouDeApoiar && (
-        <Alert
-          role="status"
-          color="green"
-          variant="light"
-          radius="md"
-          title="Você apoiou este pedido"
-          icon={<Icone nome="check_circle" tamanho={20} preenchido />}
-          withCloseButton
-          closeButtonLabel="Fechar aviso"
-          // Fechar apaga o aviso do histórico, para ele não voltar ao recarregar
-          onClose={() => navigate(local.pathname, { replace: true, state: null })}
-        >
-          Obrigado! Em vez de um pedido repetido, o seu apoio subiu a prioridade deste.
-        </Alert>
-      )}
-      <AvisoEmAnalise pedido={pedido} />
-
-      {/* Celular: tudo empilhado. Computador: conteúdo à esquerda, apoio e prioridade à direita */}
-      <div className={classes.grade}>
-        <div className={classes.sobre}>
-          <SobrePedido pedido={pedido} />
-        </div>
-        <div className={classes.lateral}>
-          <BlocoApoio pedido={pedido} />
-          <CartaoPrioridade pedido={pedido} />
-        </div>
-        <div className={classes.andamento}>
-          <LinhaDoTempoPedido pedido={pedido} />
-        </div>
-      </div>
-    </Stack>
+    <Pagina cabecalho={cabecalho}>
+      {conteudo}
+      <ParaOndeIr destinos={[destinos.bairro, destinos.meus, destinos.obras]} />
+    </Pagina>
   );
 }

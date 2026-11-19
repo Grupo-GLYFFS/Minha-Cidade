@@ -1,9 +1,9 @@
 import { buscarStatus } from './pedidos';
 
 // Caminho normal de um pedido, do envio até a conclusão
-const ETAPAS_NORMAIS = ['enviada', 'em-analise', 'aprovada', 'em-execucao', 'concluida'];
+export const ETAPAS_NORMAIS = ['enviada', 'em-analise', 'aprovada', 'em-execucao', 'concluida'];
 
-// O que acontece em cada etapa, em linguagem simples
+// O que acontece em cada etapa, em linguagem simples (detalhe do pedido)
 const EXPLICACOES = {
   enviada: 'O pedido chegou à prefeitura.',
   'em-analise': 'A equipe confere o local e o tipo de problema.',
@@ -13,50 +13,67 @@ const EXPLICACOES = {
   avaliada: 'Quem abriu o pedido avaliou o serviço.',
 };
 
+// O que vem pela frente em cada etapa (tela "Pedido enviado")
+export const PROXIMOS_PASSOS = {
+  'em-analise': 'A equipe confere o local e o tipo de problema.',
+  aprovada: 'A prefeitura define a prioridade e quem vai fazer o serviço.',
+  'em-execucao': 'A equipe faz o conserto.',
+  concluida: 'Você avalia o resultado.',
+};
+
+const UM_DIA_MS = 24 * 60 * 60 * 1000;
+
+// Estima o dia de uma etapa que não tem data guardada, repartindo o tempo
+// entre o envio e a última mudança. Recebe o pedido, a posição da etapa e a posição atual;
+// devolve "AAAA-MM-DD".
+function estimarData(pedido, posicao, posicaoAtual) {
+  if (posicaoAtual <= 0) return pedido.criadoEm.slice(0, 10);
+  const inicio = Date.parse(pedido.criadoEm.slice(0, 10));
+  const fim = Date.parse(pedido.atualizadoEm.slice(0, 10));
+  const dias = Math.round(((fim - inicio) / UM_DIA_MS) * (posicao / posicaoAtual));
+  return new Date(inicio + dias * UM_DIA_MS).toISOString().slice(0, 10);
+}
+
+// Junta os dados de uma etapa. Recebe o id do status, o estado, a data e a explicação.
+function montarEtapa(id, estado, data, explicacao = EXPLICACOES[id]) {
+  return { id, rotulo: buscarStatus(id)?.rotulo ?? id, explicacao, estado, data };
+}
+
 // Monta as etapas da linha do tempo de um pedido.
 // Recebe o pedido; devolve uma lista de { id, rotulo, explicacao, estado, data }, em que
-// estado é "feita", "atual", "futura" ou "recusada" e data só existe quando é conhecida.
+// estado é "feita", "atual", "futura" ou "recusada". Etapas futuras não têm data.
+// As datas vêm de pedido.datasEtapas; as que faltam são estimadas.
 export function etapasDoPedido(pedido) {
-  // Pedido recusado: passou pelo envio e pela análise e parou ali
+  const datas = pedido.datasEtapas ?? {};
+
+  // Pedido recusado: passou pelo envio e pela análise e parou ali, com o motivo
   if (pedido.status === 'recusada') {
     return [
-      montarEtapa('enviada', 'feita', pedido.criadoEm),
-      montarEtapa('em-analise', 'feita'),
-      {
-        id: 'recusada',
-        rotulo: 'Recusado',
-        explicacao: pedido.motivoRecusa ?? 'A prefeitura não vai atender este pedido.',
-        estado: 'recusada',
-        data: pedido.atualizadoEm,
-      },
+      montarEtapa('enviada', 'feita', datas.enviada ?? estimarData(pedido, 0, 2)),
+      montarEtapa('em-analise', 'feita', datas['em-analise'] ?? estimarData(pedido, 1, 2)),
+      montarEtapa(
+        'recusada',
+        'recusada',
+        datas.recusada ?? estimarData(pedido, 2, 2),
+        pedido.motivoRecusa ?? 'A prefeitura não vai atender este pedido.',
+      ),
     ];
   }
 
-  // "Avaliada" só aparece quando o pedido chegou nela
+  // "Avaliado" só aparece quando o pedido chegou nele
   const ids = pedido.status === 'avaliada' ? [...ETAPAS_NORMAIS, 'avaliada'] : ETAPAS_NORMAIS;
   const posicaoAtual = ids.indexOf(pedido.status);
   const ultima = ids.length - 1;
 
   return ids.map((id, posicao) => {
-    let estado = 'futura';
-    if (posicao < posicaoAtual) estado = 'feita';
-    // A última etapa (concluída ou avaliada) já é o fim: aparece como feita
-    if (posicao === posicaoAtual) estado = posicao === ultima ? 'feita' : 'atual';
-
-    let data;
-    if (posicao === 0) data = pedido.criadoEm;
-    else if (posicao === posicaoAtual) data = pedido.atualizadoEm;
+    if (posicao > posicaoAtual) return montarEtapa(id, 'futura');
+    // A última etapa (concluído ou avaliado) já é o fim: aparece como feita
+    const estado = posicao === posicaoAtual && posicao !== ultima ? 'atual' : 'feita';
+    const data =
+      datas[id] ??
+      (posicao === posicaoAtual
+        ? pedido.atualizadoEm.slice(0, 10)
+        : estimarData(pedido, posicao, posicaoAtual));
     return montarEtapa(id, estado, data);
   });
-}
-
-// Junta os dados de uma etapa. Recebe o id do status, o estado e a data (opcional).
-function montarEtapa(id, estado, data) {
-  return { id, rotulo: buscarStatus(id)?.rotulo ?? id, explicacao: EXPLICACOES[id], estado, data };
-}
-
-// Descobre a posição da etapa atual, para destacar a linha até ela.
-// Recebe a lista de etapas; devolve o índice da última etapa feita, atual ou recusada.
-export function posicaoEtapaAtiva(etapas) {
-  return etapas.reduce((ativa, etapa, posicao) => (etapa.estado === 'futura' ? ativa : posicao), 0);
 }
