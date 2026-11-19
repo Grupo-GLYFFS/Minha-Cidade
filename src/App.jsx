@@ -26,6 +26,7 @@ import MeusPedidos from './paginas/MeusPedidos';
 import MeusDados from './paginas/MeusDados';
 import Entrar from './paginas/Entrar';
 import CriarConta from './paginas/CriarConta';
+import EsqueciSenha from './paginas/EsqueciSenha';
 import Acessibilidade from './paginas/Acessibilidade';
 import TelefonesUteis from './paginas/TelefonesUteis';
 import PerguntasFrequentes from './paginas/PerguntasFrequentes';
@@ -58,6 +59,11 @@ export default function App() {
         />
       ))}
 
+      {/* Conta: moldura própria, sem topo e sem rodapé */}
+      <Route path="/entrar" element={<Entrar />} />
+      <Route path="/entrar/esqueci" element={<EsqueciSenha />} />
+      <Route path="/criar-conta" element={<CriarConta />} />
+
       <Route element={<LayoutAntigo />}>
         <Route path="/inicio" element={<Inicio />} />
         <Route path="/busca" element={<Busca />} />
@@ -73,8 +79,6 @@ export default function App() {
         <Route path="/meu-bairro" element={<MeuBairro />} />
         <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />
         <Route path="/pedidos/:id" element={<DetalhePedido />} />
-        <Route path="/entrar" element={<Entrar />} />
-        <Route path="/criar-conta" element={<CriarConta />} />
         <Route path="/ajuda/acessibilidade" element={<Acessibilidade />} />
         <Route path="/ajuda/telefones" element={<TelefonesUteis />} />
         <Route path="/ajuda/perguntas-frequentes" element={<PerguntasFrequentes />} />

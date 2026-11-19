@@ -1,0 +1,160 @@
+/* Painel azul das páginas de conta: 40/56/40/64 de padding, 48 entre logo, mensagem e rodapé.
+   No computador fica preso na altura da tela enquanto o formulário rola. */
+
+.painel {
+  grid-area: painel;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: rem(48px);
+  padding: rem(40px) rem(56px) rem(40px) rem(64px);
+  background: var(--cor-azul);
+  color: var(--cor-sobre-primaria);
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: rem(10px);
+  min-height: rem(44px);
+  font-family: var(--fonte-logo);
+  font-size: rem(18px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cor-sobre-primaria);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.marcaIcone {
+  display: block;
+  width: rem(40px);
+  height: rem(40px);
+  border-radius: rem(10px);
+  box-shadow: 0 0 0 2px var(--cor-sobre-primaria);
+}
+
+/* Mensagem no meio da altura do painel */
+.mensagem {
+  margin-block: auto;
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(36px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--cor-sobre-primaria);
+}
+
+.texto {
+  margin: rem(12px) 0 0;
+  font-size: rem(17px);
+  line-height: 1.5;
+  color: var(--cor-azul-borda);
+}
+
+.linha {
+  display: block;
+}
+
+/* Lista do que a conta permite: linhas finas brancas entre os itens */
+.lista {
+  margin: rem(32px) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid color-mix(in srgb, var(--cor-sobre-primaria) 28%, transparent);
+}
+
+.lista li {
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  padding: rem(16px) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--cor-sobre-primaria) 28%, transparent);
+  font-size: rem(16px);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Card branco com o bairro e quem cuida dele */
+.bairro {
+  margin: rem(32px) 0 0;
+  border-radius: var(--raio-card);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  overflow: hidden;
+}
+
+.bairroLinha {
+  display: flex;
+  align-items: center;
+  gap: rem(14px);
+  padding: rem(16px) rem(24px);
+}
+
+.bairroLinha + .bairroLinha {
+  border-top: var(--espessura-borda) solid var(--cor-borda);
+}
+
+.bairroLinha :global(.icone) {
+  color: var(--cor-azul);
+}
+
+.bairro dt {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.bairro dd {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 700;
+}
+
+.pe {
+  margin: 0;
+  font-size: rem(14px);
+  color: var(--cor-azul-borda);
+}
+
+.pe a {
+  display: inline-flex;
+  align-items: center;
+  min-height: rem(44px);
+  font-weight: 700;
+  color: var(--cor-sobre-primaria);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.painel :focus-visible {
+  outline-color: var(--cor-sobre-primaria);
+}
+
+@media (max-width: $mantine-breakpoint-md) {
+  .painel {
+    position: static;
+    min-height: 0;
+    max-height: none;
+    gap: rem(32px);
+    padding: rem(32px) rem(16px);
+  }
+
+  /* No celular o logo já aparece em cima do formulário */
+  .marca {
+    display: none;
+  }
+
+  .titulo {
+    font-size: rem(28px);
+  }
+}

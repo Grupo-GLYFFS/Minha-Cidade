@@ -1,0 +1,27 @@
+/* O link do rótulo ("Esqueci minha senha") fica na linha do rótulo, à direita. */
+.campo {
+  position: relative;
+}
+
+.acao {
+  position: absolute;
+  top: rem(-12px);
+  right: rem(-8px);
+}
+
+.olho {
+  display: grid;
+  place-items: center;
+  width: rem(44px);
+  height: rem(44px);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: none;
+  color: var(--cor-texto-2);
+  cursor: pointer;
+}
+
+.olho:hover {
+  color: var(--cor-texto);
+}

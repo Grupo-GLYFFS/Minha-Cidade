@@ -1,0 +1,59 @@
+.endereco {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: rem(14px);
+  row-gap: rem(2px);
+  padding: rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+}
+
+.icone {
+  grid-row: 1 / span 3;
+  display: grid;
+  place-items: center;
+  width: rem(40px);
+  height: rem(40px);
+  border-radius: rem(10px);
+  background: var(--cor-status-verde-fundo);
+  color: var(--cor-sucesso);
+}
+
+.rotulo {
+  font-size: rem(14px);
+  font-weight: 700;
+  color: var(--cor-sucesso);
+}
+
+.rua {
+  font-size: rem(16px);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.local {
+  font-size: rem(15px);
+  color: var(--cor-texto-2);
+}
+
+.bairro {
+  display: flex;
+  align-items: center;
+  gap: rem(12px);
+  margin: 0;
+  padding: rem(14px) rem(16px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  font-size: rem(15px);
+  line-height: 1.45;
+  color: var(--cor-azul-tinta);
+}
+
+.bairro :global(.icone) {
+  color: var(--cor-azul);
+}
+
+.bairro b {
+  font-weight: 800;
+}

@@ -1,0 +1,77 @@
+/* Seis caixas de 52 × 60, raio 12, número 24/800. */
+.campo {
+  display: grid;
+  gap: rem(8px);
+}
+
+.rotulo {
+  font-size: rem(16px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--cor-texto);
+}
+
+.ajuda {
+  margin: 0;
+  font-size: rem(14px);
+  line-height: 1.45;
+  color: var(--cor-texto-2);
+}
+
+.caixas {
+  display: flex;
+  gap: rem(10px);
+}
+
+.caixa {
+  width: rem(52px);
+  min-width: 0;
+  height: rem(60px);
+  padding: 0;
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  font-family: var(--fonte);
+  font-size: rem(24px);
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  color: var(--cor-texto);
+}
+
+.caixa:focus {
+  border: 2px solid var(--cor-azul);
+  outline: none;
+}
+
+.caixa:focus-visible {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.comErro .caixa {
+  border: 2px solid var(--cor-erro);
+}
+
+.erro {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(6px);
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--cor-erro);
+}
+
+/* No celular estreito as caixas dividem a largura */
+@media (max-width: $mantine-breakpoint-xs) {
+  .caixas {
+    gap: rem(8px);
+  }
+
+  .caixa {
+    flex: 1 1 0;
+    width: auto;
+  }
+}

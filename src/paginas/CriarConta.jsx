@@ -1,54 +1,89 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-import { Anchor, Stack, Text } from '@mantine/core';
 import MolduraConta from '../componentes/conta/MolduraConta';
 import FormularioCriarConta from '../componentes/conta/FormularioCriarConta';
+import ConfirmarEmail from '../componentes/conta/ConfirmarEmail';
+import PeConta from '../componentes/conta/PeConta';
 import { useSessao } from '../contexto/useSessao';
 import { useCaminhoConta } from '../contexto/useCaminhoConta';
+import { regiaoDe } from '../logica/bairros';
+import { VALORES_CRIAR_CONTA } from '../logica/esquemaCriarConta';
 import { destinoSeguro } from '../logica/sessao';
 
-// Tela "Criar conta": cadastro em 3 passos (Você, Endereço, Comprovante).
-// Ao terminar, a conta é criada, a pessoa já entra nela e volta para o destino do ?voltar=
+// Página "Criar conta" (/criar-conta), em dois passos na mesma rota:
+// 1. o formulário (dados, senha e endereço pelo CEP);
+// 2. "Confirme seu e-mail", com o código de 6 números. "Corrigir" volta ao formulário preenchido.
+// Com o código certo, a conta é criada, a pessoa já entra nela e vai para o destino do ?voltar=
 // (ou o Início), que mostra "Conta criada! Boas-vindas, <nome>!".
-// Quem já chega logado é levado direto ao destino.
 export default function CriarConta() {
   const { logado, criarConta } = useSessao();
   const [parametros] = useSearchParams();
   const destino = destinoSeguro(parametros.get('voltar'));
   const { entrar } = useCaminhoConta();
   const navigate = useNavigate();
-  // Guarda se a pessoa já estava logada ao abrir a tela; quem acabou de criar a conta
-  // é levado pelo navigate abaixo (com o aviso de boas-vindas), e não por este desvio
+  // Quem já chega logado vai direto ao destino; quem acabou de criar a conta vai pelo navigate
   const [jaEstavaLogado] = useState(logado);
+  const [valores, setValores] = useState(VALORES_CRIAR_CONTA);
+  const [passo, setPasso] = useState('dados');
+  const [bairro, setBairro] = useState('');
 
-  // Cria a conta e vai para o destino. Recebe os valores do formulário; devolve o resultado.
-  async function aoCriar(valores) {
-    const resultado = await criarConta(valores);
+  // Dados certos: guarda e passa para a confirmação do e-mail
+  function aoContinuar(valoresDoFormulario) {
+    setValores(valoresDoFormulario);
+    setPasso('codigo');
+    window.scrollTo(0, 0);
+  }
+
+  // Código certo: cria a conta (a região vem do bairro do CEP) e vai para o destino
+  async function aoConfirmar() {
+    const resultado = await criarConta({ ...valores, regiao: regiaoDe(valores.bairro) });
     if (resultado.ok) {
       navigate(destino, {
+        replace: true,
         state: { aviso: 'conta-criada', nome: resultado.usuario.primeiroNome },
       });
+      return;
     }
-    return resultado;
+    // E-mail ou CPF ganharam conta no meio do caminho: volta ao formulário
+    setPasso('dados');
   }
 
   if (jaEstavaLogado) return <Navigate to={destino} replace />;
 
+  if (passo === 'codigo') {
+    return (
+      <MolduraConta
+        painel="endereco"
+        bairro={bairro}
+        titulo="Confirme seu e-mail"
+        texto={
+          <>
+            Enviamos um código de 6 números para <b>{valores.email}</b>.
+          </>
+        }
+      >
+        <ConfirmarEmail aoConfirmar={aoConfirmar} />
+        <PeConta pergunta="E-mail errado?" acao="Corrigir" onClick={() => setPasso('dados')} />
+      </MolduraConta>
+    );
+  }
+
   return (
     <MolduraConta
+      painel="endereco"
+      bairro={bairro}
       titulo="Criar conta"
-      descricao="Leva uns 3 minutos. Com a conta você abre pedidos, apoia e acompanha tudo do seu bairro."
-      largura="larga"
+      texto={
+        <>
+          Já tem conta? <Link to={entrar}>Entrar</Link>
+        </>
+      }
     >
-      <Stack gap="lg">
-        <FormularioCriarConta aoCriar={aoCriar} />
-        <Text ta="center">
-          Já tem conta?{' '}
-          <Anchor component={Link} to={entrar} fw={700} c="var(--cor-link)">
-            Entrar
-          </Anchor>
-        </Text>
-      </Stack>
+      <FormularioCriarConta
+        valoresIniciais={valores}
+        aoContinuar={aoContinuar}
+        aoMudarBairro={setBairro}
+      />
     </MolduraConta>
   );
 }

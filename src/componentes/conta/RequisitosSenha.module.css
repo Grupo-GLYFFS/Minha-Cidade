@@ -1,0 +1,25 @@
+.lista {
+  display: grid;
+  gap: rem(6px);
+  margin: rem(12px) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: rem(14px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+.lista li {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+}
+
+.lista :global(.icone) {
+  color: var(--cor-texto-placeholder);
+}
+
+.feito,
+.feito :global(.icone) {
+  color: var(--cor-sucesso);
+}

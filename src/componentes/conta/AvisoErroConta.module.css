@@ -1,0 +1,35 @@
+/* Mesmo visual do ResumoErros: caixa vermelho-clara, raio 12. */
+.aviso {
+  display: flex;
+  gap: rem(12px);
+  padding: rem(16px);
+  border: var(--espessura-borda) solid var(--cor-erro-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+}
+
+.texto {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.titulo {
+  margin: 0;
+  font-size: rem(16px);
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--cor-erro-tinta);
+}
+
+.linhas {
+  margin: rem(4px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--cor-erro-tinta);
+}
+
+.linhas span {
+  display: block;
+}

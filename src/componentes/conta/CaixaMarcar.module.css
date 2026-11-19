@@ -1,0 +1,74 @@
+/* Caixa de 22, raio 6, borda 2; marcada fica azul com o check branco. */
+.linha {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(12px);
+  min-height: rem(44px);
+  padding-top: rem(10px);
+  font-size: rem(15px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+
+.linha a {
+  font-weight: 700;
+  color: var(--cor-azul-escuro);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.quadro {
+  position: relative;
+  flex: none;
+  width: rem(22px);
+  height: rem(22px);
+  margin-top: rem(1px);
+}
+
+.input {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 2px solid var(--cor-texto-placeholder);
+  border-radius: rem(6px);
+  background: var(--cor-superficie);
+  cursor: pointer;
+}
+
+.input:checked {
+  border-color: var(--cor-azul);
+  background: var(--cor-azul);
+}
+
+.marca {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--cor-sobre-primaria);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.input:checked + .marca {
+  opacity: 1;
+}
+
+.comErro .input {
+  border-color: var(--cor-erro);
+}
+
+.erro {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(6px);
+  margin: rem(6px) 0 0;
+  font-size: rem(14px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--cor-erro);
+}

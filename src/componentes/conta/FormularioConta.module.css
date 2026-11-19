@@ -1,0 +1,60 @@
+/* Layout comum dos formulários de conta: 32 depois do texto do título, 24 entre os campos. */
+.formulario {
+  display: grid;
+  gap: rem(24px);
+  margin-top: rem(32px);
+}
+
+/* Texto pequeno de apoio (ex.: reenvio do código) */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(4px) rem(8px);
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+/* Aviso de que deu certo (link enviado, dados do gov.br preenchidos) */
+.ok {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(12px);
+  margin: 0;
+  padding: rem(14px) rem(16px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-status-verde-fundo);
+  font-size: rem(15px);
+  line-height: 1.45;
+  color: var(--cor-status-verde-texto);
+}
+
+.ok b {
+  font-weight: 800;
+}
+
+/* Busca do CEP em andamento */
+.buscando {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-texto-2);
+}
+
+/* CEP com endereço achado: borda verde */
+.cepOk input {
+  border-color: var(--cor-sucesso);
+}
+
+/* Link dentro da mensagem de erro de um campo */
+.linkErro {
+  color: var(--cor-erro);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
