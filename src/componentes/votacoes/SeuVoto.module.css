@@ -1,0 +1,86 @@
+/* "Seu voto": regra + Votar, confirmação + parcial, ou o convite para entrar. */
+
+.caixa {
+  display: flex;
+  flex-direction: column;
+  gap: rem(20px);
+  outline: none;
+}
+
+.regra,
+.nota {
+  margin: 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.confirmado {
+  display: flex;
+  align-items: center;
+  gap: rem(10px);
+  margin: 0;
+  padding: rem(14px) rem(16px);
+  border-radius: var(--raio-controle);
+  background: var(--cor-faixa);
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.confirmado :global(.icone) {
+  flex: none;
+  color: var(--cor-azul);
+}
+
+.entrar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(16px) rem(20px);
+  padding: rem(20px) rem(28px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: rem(16px);
+  background: var(--cor-fundo-card);
+}
+
+.cadeado {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: rem(56px);
+  height: rem(56px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  color: var(--cor-azul);
+}
+
+.entrarTexto {
+  flex: 1 1 rem(240px);
+}
+
+.entrarTexto h3 {
+  margin: 0;
+  font-size: rem(18px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.entrarTexto p {
+  margin: rem(2px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.entrarBotoes {
+  display: flex;
+  gap: rem(12px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .entrar {
+    padding: rem(16px);
+  }
+}

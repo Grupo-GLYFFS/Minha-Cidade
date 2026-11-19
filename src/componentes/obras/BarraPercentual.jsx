@@ -4,7 +4,7 @@ import classes from './BarraPercentual.module.css';
 // Cor da barra para cada cor de status (regra 7) e o azul do site
 const COR_BARRA = {
   azul: 'var(--cor-azul)',
-  cinza: 'var(--cor-status-cinza-bolinha)',
+  cinza: 'var(--cor-texto-placeholder)',
   ambar: 'var(--cor-status-ambar-texto)',
   verde: 'var(--cor-status-verde-texto)',
   vermelho: 'var(--cor-status-vermelho-texto)',

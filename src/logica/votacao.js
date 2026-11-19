@@ -166,3 +166,13 @@ export function depoisCurto(projeto, dataLista) {
   if (!situacao) return null;
   return `${situacao.curto} ${dataLista(projeto.dataSituacao)}`;
 }
+
+// Escreve onde a votação vale, para o card: o bairro da obra ("Jabaquara"), a subprefeitura
+// ("Subprefeitura Vila Mariana") ou, na lista do bairro, "Cidade toda · inclui a Vila Mariana".
+// Recebe o projeto e o recorte da página (ou nada, fora das listas da cidade e do bairro).
+export function lugarDaVotacao(projeto, recorte) {
+  if (recorte?.escopo === 'bairro' && projeto.escopo === 'cidade') {
+    return `Cidade toda · inclui a ${recorte.bairro}`;
+  }
+  return projeto.bairro ?? `Subprefeitura ${projeto.subprefeitura}`;
+}

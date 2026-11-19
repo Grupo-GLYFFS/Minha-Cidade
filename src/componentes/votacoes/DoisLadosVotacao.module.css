@@ -1,0 +1,64 @@
+/* Quadros "A favor" (verde-claro) e "Contra" (vermelho-claro), raio 16. */
+
+.lados {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}
+
+.favor,
+.contra {
+  padding: rem(20px) rem(28px);
+  border-radius: rem(16px);
+}
+
+.favor {
+  background: var(--cor-status-verde-fundo);
+  --cor-lado: var(--cor-status-verde-texto);
+}
+
+.contra {
+  background: var(--cor-status-vermelho-fundo);
+  --cor-lado: var(--cor-status-vermelho-texto);
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+  margin: 0 0 rem(12px);
+  font-size: rem(18px);
+  font-weight: 700;
+  color: var(--cor-lado);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(16px);
+  font-size: rem(16px);
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.marca {
+  flex: none;
+  margin-top: rem(2px);
+  color: var(--cor-lado);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .favor,
+  .contra {
+    padding: rem(16px);
+  }
+}

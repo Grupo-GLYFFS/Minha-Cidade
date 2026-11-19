@@ -14,8 +14,9 @@ import Pedidos from './paginas/Pedidos';
 import NovoPedido from './paginas/NovoPedido';
 import DetalhePedido from './paginas/DetalhePedido';
 import CidadeAberta from './paginas/CidadeAberta';
-import ProjetosCidade from './paginas/ProjetosCidade';
-import ProjetoCidade from './paginas/ProjetoCidade';
+import Votacoes from './paginas/Votacoes';
+import Votacao from './paginas/Votacao';
+import MeusVotos from './paginas/MeusVotos';
 import Obras from './paginas/Obras';
 import DetalheObra from './paginas/DetalheObra';
 import OrcamentoCidade from './paginas/OrcamentoCidade';
@@ -64,6 +65,13 @@ export default function App() {
       <Route path="/minha-cidade/obras/:id" element={<DetalheObra escopo="cidade" />} />
       <Route path="/meu-bairro/obras" element={<Obras escopo="bairro" />} />
       <Route path="/meu-bairro/obras/:id" element={<DetalheObra escopo="bairro" />} />
+      <Route path="/minha-cidade/votacoes" element={<Votacoes escopo="cidade" />} />
+      <Route path="/minha-cidade/votacoes/:id" element={<Votacao escopo="cidade" />} />
+      <Route path="/meu-bairro/votacoes" element={<Votacoes escopo="bairro" />} />
+      <Route path="/meu-bairro/votacoes/:id" element={<Votacao escopo="bairro" />} />
+      <Route element={<RotaProtegida />}>
+        <Route path="/perfil/votos" element={<MeusVotos />} />
+      </Route>
 
       <Route element={<LayoutAntigo />}>
         <Route path="/inicio" element={<Inicio />} />
@@ -73,8 +81,6 @@ export default function App() {
         <Route path="/servicos/:idServico" element={<Servico />} />
         <Route path="/minha-cidade" element={<CidadeAberta />} />
         <Route path="/minha-cidade/pedidos" element={<Pedidos />} />
-        <Route path="/minha-cidade/votacoes" element={<ProjetosCidade />} />
-        <Route path="/minha-cidade/votacoes/:id" element={<ProjetoCidade />} />
         <Route path="/minha-cidade/orcamento" element={<OrcamentoCidade />} />
         <Route path="/meu-bairro" element={<MeuBairro />} />
         <Route path="/meu-bairro/orcamento" element={<OrcamentoBairro />} />

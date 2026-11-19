@@ -1,0 +1,24 @@
+/* Barra da obra dentro da linha do tempo: 360 de largura, texto embaixo. */
+
+.obra {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+  margin-top: rem(12px);
+}
+
+.barra {
+  width: min(rem(360px), 100%);
+}
+
+.obra p {
+  margin: 0;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.obra b {
+  font-weight: 700;
+  color: var(--cor-texto);
+}

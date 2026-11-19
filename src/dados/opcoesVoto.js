@@ -3,5 +3,5 @@
 // dizem o mesmo, sem depender da cor.
 export const OPCOES_VOTO = [
   { valor: 'sim', rotulo: 'Sim', icone: 'thumb_up', cor: 'var(--cor-azul)' },
-  { valor: 'nao', rotulo: 'Não', icone: 'thumb_down', cor: 'var(--cor-status-cinza-bolinha)' },
+  { valor: 'nao', rotulo: 'Não', icone: 'thumb_down', cor: 'var(--cor-texto-placeholder)' },
 ];

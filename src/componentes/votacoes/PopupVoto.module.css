@@ -1,0 +1,93 @@
+/* Caixa do voto: duas opções em cartões de escolha (borda azul de 2 na escolhida). */
+
+.projeto {
+  margin: 0 0 rem(20px);
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: rem(10px);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.opcao {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: rem(14px);
+  min-height: rem(64px);
+  padding: rem(12px) rem(16px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  cursor: pointer;
+}
+
+.opcao:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.opcao:has(.radio:checked) {
+  border: 2px solid var(--cor-azul);
+  padding: rem(11px) rem(15px);
+  background: var(--cor-faixa);
+}
+
+.opcao:has(.radio:focus-visible) {
+  outline: var(--foco-contorno);
+  outline-offset: 2px;
+}
+
+.radio {
+  flex: none;
+  width: rem(20px);
+  height: rem(20px);
+  margin: 0;
+  accent-color: var(--cor-azul);
+}
+
+.icone {
+  flex: none;
+  color: var(--cor-azul-tinta);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: rem(2px);
+}
+
+.texto b {
+  font-size: rem(16px);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.texto small {
+  font-size: rem(14px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}
+
+.erro {
+  display: flex;
+  align-items: center;
+  gap: rem(6px);
+  margin: rem(12px) 0 0;
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--cor-erro);
+}
+
+.aviso {
+  margin: rem(16px) 0 0;
+  font-size: rem(15px);
+  font-weight: 500;
+  color: var(--cor-texto-2);
+}

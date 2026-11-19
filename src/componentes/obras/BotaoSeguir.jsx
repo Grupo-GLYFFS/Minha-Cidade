@@ -1,5 +1,5 @@
-import { useLocation } from 'react-router-dom';
 import Botao from '../Botao';
+import { useCaminhoConta } from '../../contexto/useCaminhoConta';
 
 // Botão Seguir/Seguindo de uma obra ou votação (toggle com aria-pressed).
 // Para o visitante, vira um link para "Entrar", que depois volta para esta página.
@@ -9,7 +9,7 @@ import Botao from '../Botao';
 // - nome: o que é seguido, para o leitor de tela (ex.: "a obra Reforma do Parque da Lapa");
 // - compacto: 44 px (dentro de cards).
 export default function BotaoSeguir({ seguindo, aoAlternar, logado, nome, compacto = false }) {
-  const { pathname } = useLocation();
+  const { entrar } = useCaminhoConta();
 
   if (!logado) {
     return (
@@ -17,7 +17,7 @@ export default function BotaoSeguir({ seguindo, aoAlternar, logado, nome, compac
         variante="secundario"
         compacto={compacto}
         icone="add"
-        para={`/entrar?voltar=${encodeURIComponent(pathname)}`}
+        para={entrar}
         aria-label={`Seguir ${nome}. Entre na sua conta para seguir`}
       >
         Seguir
