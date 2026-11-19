@@ -91,3 +91,14 @@
   font-weight: 500;
   color: var(--cor-texto-2);
 }
+
+/* Celular (folha do voto): 16 até as opções e 14 até o aviso */
+@media (max-width: $mantine-breakpoint-sm) {
+  .projeto {
+    margin-bottom: rem(16px);
+  }
+
+  .aviso {
+    margin-top: rem(14px);
+  }
+}

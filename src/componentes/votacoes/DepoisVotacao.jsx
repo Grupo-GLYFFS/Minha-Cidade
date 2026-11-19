@@ -58,24 +58,26 @@ export default function DepoisVotacao({ projeto, resultado }) {
     etapas.push({ id: 'camara', rotulo: 'Votação na Câmara', estado: 'futura' });
   }
 
+  // "Ver a obra": ao lado do título no computador; no celular desce para o fim do card, na largura toda
+  const verObra = obra && (
+    <Botao
+      variante="secundario"
+      compacto
+      icone="arrow_forward"
+      iconeDireita
+      para={`/minha-cidade/obras/${obra.id}`}
+    >
+      Ver a obra
+    </Botao>
+  );
+
   return (
     <SecaoCard
       titulo="Depois da votação"
-      acao={
-        obra && (
-          <Botao
-            variante="secundario"
-            compacto
-            icone="arrow_forward"
-            iconeDireita
-            para={`/minha-cidade/obras/${obra.id}`}
-          >
-            Ver a obra
-          </Botao>
-        )
-      }
+      acao={verObra && <span className={classes.soComputador}>{verObra}</span>}
     >
       <LinhaEtapas etapas={etapas} rotulo="Depois da votação" marcarAtual={false} />
+      {verObra && <div className={classes.soCelular}>{verObra}</div>}
     </SecaoCard>
   );
 }

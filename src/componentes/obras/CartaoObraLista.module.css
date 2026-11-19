@@ -140,26 +140,106 @@
   margin-left: auto;
 }
 
+/* Celular: card de lista sem imagem, como o pedido; texto secundário numa linha com reticências,
+   seta à direita no meio do texto e o Seguir na largura toda. */
 @media (max-width: $mantine-breakpoint-sm) {
   .corpo {
-    gap: rem(12px);
-    padding: rem(16px) rem(48px) rem(16px) rem(16px);
+    align-items: center;
+    gap: rem(14px);
+    padding: rem(16px);
+  }
+
+  .corpo > .midia {
+    display: none;
+  }
+
+  .meta {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .meta > span[aria-hidden='true'] {
+    margin-inline: rem(6px);
+  }
+
+  .meta > :global(span:not([aria-hidden])) {
+    margin-right: rem(6px);
+    vertical-align: middle;
+  }
+
+  .titulo {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: rem(17px);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .linha {
+    gap: rem(8px);
+  }
+
+  .onde {
+    display: block;
+    flex: 1 1 100%;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .onde > :global(.icone) {
+    margin-right: rem(2px);
+    vertical-align: rem(-4px);
+  }
+
+  .onde > span[aria-hidden='true']:not(:global(.icone)) {
+    margin-inline: rem(4px);
   }
 
   .seta {
-    top: rem(16px);
-    right: rem(16px);
+    position: static;
+    flex: none;
   }
 
   .pe {
-    padding: rem(12px) rem(16px);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: rem(12px);
+    min-height: 0;
+    padding: rem(14px) rem(16px) rem(16px);
   }
 
   .barra {
     width: 100%;
   }
 
+  .progresso {
+    flex-wrap: nowrap;
+    gap: rem(6px);
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .progresso > * {
+    flex: none;
+  }
+
+  .progresso > .previsao {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .acao {
     margin-left: 0;
+  }
+
+  .acao > * {
+    width: 100%;
   }
 }

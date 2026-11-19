@@ -170,32 +170,113 @@
   margin-left: auto;
 }
 
+/* Celular: prazo numa linha, ilustração na largura toda (160 de altura) em cima do texto,
+   números lado a lado e os botões dividindo a linha. */
 @media (max-width: $mantine-breakpoint-sm) {
-  .faixaTopo,
-  .meio,
-  .faixaPe {
-    padding-inline: rem(16px);
+  .faixaTopo {
+    flex-wrap: nowrap;
+    gap: rem(8px);
+    min-height: rem(48px);
+    padding: rem(10px) rem(16px);
+  }
+
+  .prazo {
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    gap: rem(6px);
+    min-width: 0;
+    overflow: hidden;
+    font-size: rem(14px);
+    white-space: nowrap;
+  }
+
+  .prazo > * {
+    flex: none;
+  }
+
+  .prazo > span:last-child {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .prazo > :global(.icone) {
+    font-size: rem(18px);
   }
 
   .meio {
-    gap: rem(12px);
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: rem(14px);
+    padding: rem(16px);
+  }
+
+  .texto {
+    gap: rem(4px);
+  }
+
+  .meta {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .titulo {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .resumo {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: rem(14px);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .midia {
-    width: rem(96px);
-    height: rem(68px);
+    width: 100%;
+    height: rem(160px);
   }
 
-  .numeros > div {
-    padding: 0 rem(16px);
+  .faixaPe {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: rem(14px);
+    padding: rem(14px) rem(16px) rem(16px);
+  }
+
+  .numeros {
+    gap: rem(8px) rem(24px);
+  }
+
+  .numeros > div,
+  .numeros > div:first-child {
+    min-width: 0;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
   }
 
   .numeros dd {
-    white-space: normal;
+    overflow: hidden;
+    font-size: rem(15px);
+    text-overflow: ellipsis;
   }
 
   .acoes {
+    flex-wrap: nowrap;
+    gap: rem(8px);
     width: 100%;
     margin-left: 0;
+  }
+
+  .acoes > * {
+    flex: 1 1 auto;
+    padding-inline: rem(12px);
   }
 }

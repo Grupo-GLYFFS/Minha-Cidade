@@ -22,3 +22,27 @@
   font-weight: 700;
   color: var(--cor-texto);
 }
+
+/* "Ver a obra": no título no computador (a caixa não muda o layout), no fim do card no celular */
+.soComputador {
+  display: contents;
+}
+
+.soCelular {
+  display: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .soComputador {
+    display: none;
+  }
+
+  .soCelular {
+    display: flex;
+    margin-top: rem(20px);
+  }
+
+  .soCelular > * {
+    flex: 1 1 auto;
+  }
+}

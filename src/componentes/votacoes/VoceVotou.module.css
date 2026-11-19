@@ -15,3 +15,10 @@
   white-space: nowrap;
   color: var(--cor-azul-tinta);
 }
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .selo {
+    height: rem(26px);
+    font-size: rem(12px);
+  }
+}

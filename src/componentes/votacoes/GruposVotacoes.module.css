@@ -17,6 +17,10 @@
 
 @media (max-width: $mantine-breakpoint-sm) {
   .grupos {
-    gap: rem(32px);
+    gap: rem(48px);
+  }
+
+  .lista {
+    gap: rem(12px);
   }
 }

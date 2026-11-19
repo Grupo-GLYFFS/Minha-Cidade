@@ -42,3 +42,19 @@
   font-weight: 500;
   color: var(--cor-texto-2);
 }
+
+/* Seguir do cabeçalho: no computador fica lá (a caixa não muda o layout); no celular vai para a barra do pé */
+.soComputador {
+  display: contents;
+}
+
+/* Celular: seções a 12 uma da outra */
+@media (max-width: $mantine-breakpoint-sm) {
+  .pilha {
+    gap: rem(12px);
+  }
+
+  .soComputador {
+    display: none;
+  }
+}
