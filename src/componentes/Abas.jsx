@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import classes from './Abas.module.css';
 
-// Abas de uma lista (ex.: Meus pedidos | Pedidos seguidos), sempre com contagem.
+// Abas de uma lista (ex.: Votações | Obras | Pedidos em O que você segue), sempre com contagem.
 // Recebe:
 // - abas: [{ id, rotulo, contagem }];
 // - ativa: id da aba escolhida; aoMudar(id): chamada ao escolher outra;
