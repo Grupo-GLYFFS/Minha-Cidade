@@ -22,7 +22,7 @@ export default function CardBairro({ nome, para, seu = false, resumo }) {
         <Icone nome="holiday_village" />
       </span>
       <span className={classes.lugarNome}>
-        {nome}
+        <span className={classes.lugarNomeTexto}>{nome}</span>
         {seu && <span className={classes.selo}>Seu</span>}
       </span>
       <ul className={classes.bairroNumeros}>
