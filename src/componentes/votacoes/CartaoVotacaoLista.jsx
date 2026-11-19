@@ -140,6 +140,7 @@ export default function CartaoVotacaoLista({
           <div className={classes.acoes}>
             {aberta && (
               <BotaoSeguir
+                chave={`votacao:${projeto.id}`}
                 compacto
                 seguindo={seguindo}
                 aoAlternar={aoAlternarSeguir}

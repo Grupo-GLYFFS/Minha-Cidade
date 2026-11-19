@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import MetaCabecalho from '../componentes/MetaCabecalho';
@@ -18,6 +18,7 @@ import { OBRAS } from '../dados/obras';
 import { buscarObra, buscarSituacaoObra, dataAtualizacao, etapasDaObra } from '../logica/obras';
 import { dataDetalhe, dataLista, quandoMudouDetalhe } from '../logica/datasTexto';
 import { destinoObras, destinoOrcamento, destinoVotacoes } from '../logica/destinos';
+import { obrasDoRecorte } from '../logica/recorte';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';
 import classes from './DetalheObra.module.css';
@@ -26,6 +27,7 @@ import classes from './DetalheObra.module.css';
 // situação, origem, Seguir e Compartilhar; card de andamento e valores; ficha; etapas;
 // atualizações da prefeitura e "Para onde ir".
 // Recebe o escopo ("cidade" ou "bairro"), que muda só a trilha e o "Para onde ir".
+// Obra de outro bairro aberta em /meu-bairro vai para /minha-cidade/obras/:id.
 export default function DetalheObra({ escopo = 'cidade' }) {
   const { id } = useParams();
   const recorte = useRecorte(escopo);
@@ -46,6 +48,10 @@ export default function DetalheObra({ escopo = 'cidade' }) {
         </NaoEncontrado>
       </Pagina>
     );
+  }
+
+  if (escopo === 'bairro' && obrasDoRecorte([obra], recorte).length === 0) {
+    return <Navigate to={`/minha-cidade/obras/${obra.id}`} replace />;
   }
 
   const situacao = buscarSituacaoObra(obra.situacao);
@@ -69,6 +75,7 @@ export default function DetalheObra({ escopo = 'cidade' }) {
             <>
               {!concluida && (
                 <BotaoSeguir
+                  chave={`obra:${obra.id}`}
                   seguindo={segue(obra.id)}
                   aoAlternar={() => alternar(obra.id)}
                   logado={logado}

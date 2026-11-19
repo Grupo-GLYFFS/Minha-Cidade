@@ -35,7 +35,10 @@ export function useDestinosPedidos() {
     meus: {
       icone: 'person',
       titulo: 'Meus pedidos',
-      meta: `${pluralizar(feitos, 'feito', 'feitos')} por você`,
+      // Sem conta, convida a entrar no lugar do "0 feitos por você"
+      meta: usuario
+        ? `${pluralizar(feitos, 'feito', 'feitos')} por você`
+        : 'Entre para ver os seus',
       para: '/perfil/pedidos',
     },
     obras: {

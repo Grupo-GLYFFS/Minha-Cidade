@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Pagina from '../componentes/Pagina';
 import CabecalhoPagina from '../componentes/CabecalhoPagina';
 import MetaCabecalho from '../componentes/MetaCabecalho';
@@ -21,6 +21,7 @@ import { dataDetalhe } from '../logica/datasTexto';
 import { diasAte } from '../logica/datas';
 import { formatarNumero, formatarValorCurto, pluralizar } from '../logica/formatos';
 import { destinoOrcamento, destinoVotacoes } from '../logica/destinos';
+import { votacoesDoRecorte } from '../logica/recorte';
 import { useRecorte } from '../contexto/useRecorte';
 import { useSeguidos } from '../contexto/useSeguidos';
 import { useVotos } from '../contexto/useVotos';
@@ -38,6 +39,7 @@ const ICONE_TIPO = {
 // e Seu voto (caixa do voto, só Sim e Não; depois de votar, "Você votou" e o parcial).
 // Encerrada: Resultado e Depois da votação primeiro, sem Seguir.
 // Recebe o escopo ("cidade" ou "bairro"), que muda a trilha e o "Para onde ir".
+// Votação de outro bairro aberta em /meu-bairro vai para /minha-cidade/votacoes/:id.
 export default function Votacao({ escopo = 'cidade' }) {
   const { id } = useParams();
   const recorte = useRecorte(escopo);
@@ -59,6 +61,12 @@ export default function Votacao({ escopo = 'cidade' }) {
         </NaoEncontrado>
       </Pagina>
     );
+  }
+
+  // Em /meu-bairro, só a votação do bairro ou a da cidade toda; outra vai para a da cidade
+  const doBairro = projeto.escopo === 'cidade' || votacoesDoRecorte([projeto], recorte).length > 0;
+  if (escopo === 'bairro' && !doBairro) {
+    return <Navigate to={`/minha-cidade/votacoes/${projeto.id}`} replace />;
   }
 
   const aberta = votacaoAberta(projeto);
@@ -104,6 +112,7 @@ export default function Votacao({ escopo = 'cidade' }) {
             <>
               {aberta && (
                 <BotaoSeguir
+                  chave={`votacao:${projeto.id}`}
                   seguindo={segue(projeto.id)}
                   aoAlternar={() => alternar(projeto.id)}
                   logado={logado}

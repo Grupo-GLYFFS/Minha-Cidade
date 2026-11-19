@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Botao from '../Botao';
 import { usePedidos } from '../../contexto/usePedidos';
 import { useSessao } from '../../contexto/useSessao';
-import { useCaminhoConta } from '../../contexto/useCaminhoConta';
+import { useAcaoPendente } from '../../contexto/useAcaoPendente';
 import { motivoSemAcompanhar } from '../../logica/acompanhamento';
 import classes from './DetalhePedido.module.css';
 
@@ -22,22 +21,28 @@ const MOTIVOS = {
 // Ações do cabeçalho do detalhe: Apoiar/Apoiado (com o número de apoios), Seguir/Seguindo
 // e Compartilhar. Apoiar e Seguir ligam e desligam e ficam salvos no navegador.
 // Ficam desativados (cinza, mesmo tamanho) no pedido da própria pessoa e nos encerrados.
-// Sem conta, Apoiar e Seguir levam para "Entrar" e voltam para o pedido.
+// Sem conta, Apoiar e Seguir levam para "Entrar", voltam para o pedido e já apoiam ou seguem.
 // Recebe o pedido.
 export default function AcoesPedido({ pedido }) {
   const { apoiados, seguidos, alternarApoio, alternarSeguir } = usePedidos();
   const { usuario } = useSessao();
-  const { entrar } = useCaminhoConta();
-  const navegar = useNavigate();
   const [aviso, setAviso] = useState('');
 
   const motivo = motivoSemAcompanhar(pedido, usuario?.id);
   const apoia = apoiados.includes(pedido.id);
   const segue = seguidos.includes(pedido.id);
 
-  // Visitante vai para "Entrar"; quem tem conta liga ou desliga
-  function aoClicar(acao) {
-    if (!usuario) navegar(entrar);
+  // Pedido pelo visitante: feito quando ele volta logado (só liga, nunca desliga)
+  const apoiarDepois = useAcaoPendente(`apoiar:${pedido.id}`, () => {
+    if (!motivo && !apoia) alternarApoio(pedido.id);
+  });
+  const seguirDepois = useAcaoPendente(`seguir-pedido:${pedido.id}`, () => {
+    if (!motivo && !segue) alternarSeguir(pedido.id);
+  });
+
+  // Visitante vai para "Entrar" (e a ação fica guardada); quem tem conta liga ou desliga
+  function aoClicar(acao, depois) {
+    if (!usuario) depois();
     else acao(pedido.id);
   }
 
@@ -65,7 +70,7 @@ export default function AcoesPedido({ pedido }) {
         contagem={pedido.apoios}
         desabilitado={Boolean(motivo)}
         aria-label={motivo ? `Apoiar. ${MOTIVOS[motivo].apoiar}` : undefined}
-        onClick={() => aoClicar(alternarApoio)}
+        onClick={() => aoClicar(alternarApoio, apoiarDepois)}
       >
         {apoia ? 'Apoiado' : 'Apoiar'}
       </Botao>
@@ -75,7 +80,7 @@ export default function AcoesPedido({ pedido }) {
         pressionado={motivo ? undefined : segue}
         desabilitado={Boolean(motivo)}
         aria-label={motivo ? `Seguir. ${MOTIVOS[motivo].seguir}` : undefined}
-        onClick={() => aoClicar(alternarSeguir)}
+        onClick={() => aoClicar(alternarSeguir, seguirDepois)}
       >
         {segue ? 'Seguindo' : 'Seguir'}
       </Botao>

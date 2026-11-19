@@ -74,6 +74,7 @@ export default function CartaoObraLista({ obra, para, seguindo, aoAlternarSeguir
         {!concluida && (
           <div className={classes.acao}>
             <BotaoSeguir
+              chave={`obra:${obra.id}`}
               compacto
               seguindo={seguindo}
               aoAlternar={aoAlternarSeguir}
