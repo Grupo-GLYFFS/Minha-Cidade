@@ -13,13 +13,27 @@ export default function CardPitch() {
   return (
     <SecaoCard titulo="Pitch">
       <div className={classes.pitch}>
-        <div className={classes.video} aria-hidden="true">
-          <Icone nome="smart_display" tamanho={32} />
-        </div>
+        {temVideo ? (
+          <a
+            className={classes.thumb}
+            href={LINKS_PITCH.video}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Assistir ao pitch no Vimeo (abre em nova aba)"
+          >
+            <img src="img/thumb-pitch.jpg" alt="Minha Prefeitura, Global Solution 2, pitch vídeo" />
+            <span className={classes.play} aria-hidden="true">
+              <Icone nome="play_arrow" tamanho={32} />
+            </span>
+          </a>
+        ) : (
+          <div className={classes.video} aria-hidden="true">
+            <Icone nome="smart_display" tamanho={32} />
+          </div>
+        )}
         <div>
           <p className={classes.texto}>
-            Vídeo de até 3 minutos mostrando o site. O link entra aqui quando o vídeo estiver
-            pronto.
+            Vídeo de 2 minutos mostrando o app funcionando, do problema ao impacto.
           </p>
           <div className={classes.botoes}>
             <Botao variante="secundario" href={LINKS_PITCH.repositorio}>
