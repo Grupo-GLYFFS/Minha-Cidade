@@ -116,17 +116,14 @@
   white-space: nowrap;
 }
 
-/* Barra presa embaixo: fundo branco, linha fina em cima, sem sombra */
+/* Barra no fim do formulário: estática no computador, logo abaixo dos campos */
 .barra {
-  position: sticky;
-  bottom: 0;
-  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: rem(16px);
   margin-top: rem(24px);
-  padding: rem(16px) 0;
+  padding: rem(20px) 0 0;
   border-top: var(--espessura-borda) solid var(--cor-borda);
   background: var(--cor-superficie);
 }

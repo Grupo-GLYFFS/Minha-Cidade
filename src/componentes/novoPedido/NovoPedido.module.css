@@ -508,25 +508,19 @@
   background: var(--cor-texto);
 }
 
-/* ---------- Barra presa no pé ---------- */
+/* ---------- Barra no fim do formulário ---------- */
 
-/* Fundo branco e a linha de cima vão até as bordas da janela sem criar rolagem lateral */
+/* Estática no computador, logo abaixo dos campos; no celular vale a BarraPe */
 .barra {
-  position: sticky;
-  bottom: 0;
-  z-index: 5;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: rem(12px) rem(16px);
-  margin-top: rem(40px);
-  padding: rem(16px) 0;
+  margin-top: rem(32px);
+  padding: rem(20px) 0 0;
+  border-top: var(--espessura-borda) solid var(--cor-borda);
   background: var(--cor-superficie);
-  box-shadow:
-    0 0 0 100vmax var(--cor-superficie),
-    0 -1px 0 100vmax var(--cor-borda);
-  clip-path: inset(-1px -100vmax 0);
 }
 
 .barraTexto {

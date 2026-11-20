@@ -2,11 +2,9 @@ import Botao from '../Botao';
 import BarraPe from '../celular/BarraPe';
 import classes from './NovoPedido.module.css';
 
-// Barra presa no pé da tela durante o Abrir pedido (regra das barras presas: sem sombra,
-// fundo branco e linha fina em cima). Mostra a etapa, "Passo n de 4", Voltar e o botão
-// que avança (Continuar, Revisar ou Enviar pedido). O botão de avançar é o submit do formulário.
-// No celular esta barra some e vale a BarraPe: etapa e passo à esquerda e só o botão de avançar
-// (o Voltar fica na barra do topo).
+// Barra no fim do formulário do Abrir pedido: mostra a etapa, "Passo n de 4", Voltar e o botão
+// que avança (Continuar, Revisar ou Enviar pedido). No computador fica estática logo abaixo dos
+// campos; no celular ela some e vale a BarraPe fixa acima das abas (o Voltar fica na barra do topo).
 // Recebe o nome da etapa, a etapa atual, o total, aoVoltar() e enviando (mostra "Enviando…").
 export default function BarraEtapas({ nome, etapa, total, aoVoltar, enviando }) {
   let avancar = 'Continuar';
@@ -25,7 +23,7 @@ export default function BarraEtapas({ nome, etapa, total, aoVoltar, enviando }) 
 
   return (
     <>
-      <div className={classes.barra} data-pe-preso="">
+      <div className={classes.barra}>
         <div className={classes.barraTexto}>
           <strong>{nome}</strong>
           <small>
