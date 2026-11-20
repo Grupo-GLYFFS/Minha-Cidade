@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice"><rect width="320" height="200" fill="#FFF4E5"/>
-<g fill="#FEDF89"><rect x="0" y="40" width="60" height="80"/><rect x="250" y="28" width="70" height="92"/></g>
-<rect x="0" y="116" width="320" height="84" fill="#667085"/>
-<g fill="#FFFFFF"><rect x="10" y="160" width="34" height="4" rx="2"/><rect x="84" y="160" width="34" height="4" rx="2"/></g>
-<rect x="160" y="116" width="160" height="84" fill="#475467"/>
-<g><rect x="150" y="104" width="120" height="22" rx="4" fill="#FFFFFF"/><g fill="#F79009"><path d="M156 104h16l-12 22h-16z"/><path d="M188 104h16l-12 22h-16z"/><path d="M220 104h16l-12 22h-16z"/><path d="M252 104h16l-12 22h-16z"/></g><rect x="160" y="126" width="6" height="26" fill="#344054"/><rect x="254" y="126" width="6" height="26" fill="#344054"/></g>
-<g><path d="M110 170l12-48 12 48z" fill="#F79009"/><rect x="104" y="168" width="36" height="7" rx="2" fill="#B54708"/><path d="M116 150h12l2 8h-16zM119 136h6l1 6h-8z" fill="#FFFFFF"/></g>
-<g><rect x="60" y="56" width="5" height="64" fill="#344054"/><path d="M62 30l28 28-28 28-28-28z" fill="#F79009"/><path d="M62 38l20 20-20 20-20-20z" fill="#FEC84B"/><rect x="58" y="48" width="8" height="14" rx="2" fill="#0F172A"/><circle cx="62" cy="68" r="3" fill="#0F172A"/></g></svg>

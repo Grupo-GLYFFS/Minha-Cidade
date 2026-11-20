@@ -13,7 +13,8 @@ export default function ResultadosServicos({ texto, aoLimpar }) {
 
   return (
     <section aria-labelledby="resultados-titulo">
-      <h2 className={classes.titulo} id="resultados-titulo">
+      {/* tabIndex -1: o Enter da busca traz o foco para cá */}
+      <h2 className={classes.titulo} id="resultados-titulo" tabIndex={-1}>
         Resultados para “{texto.trim()}”
         <span className={classes.contagem}>{encontrados.length}</span>
       </h2>

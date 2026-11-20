@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import Icone from '../Icone';
 import Botao from '../Botao';
 import CardPedido from '../CardPedido';
-import IlustracaoPedido from '../pedidos/IlustracaoPedido';
 import classes from './NovoPedido.module.css';
 
 // Aviso de pedido repetido, na etapa "Onde fica", assim que categoria, bairro e rua batem
@@ -42,7 +41,6 @@ export default function AvisoRepetido({ pedido, ehSeu, aoEditar }) {
         <CardPedido
           pedido={pedido}
           nivelTitulo={4}
-          midia={pedido.ilustracao && <IlustracaoPedido nome={pedido.ilustracao} />}
         />
       </div>
       <div className={classes.repetidoBotoes}>

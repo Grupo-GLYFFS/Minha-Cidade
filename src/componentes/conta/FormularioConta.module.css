@@ -1,8 +1,15 @@
-/* Layout comum dos formulários de conta: 32 depois do texto do título, 24 entre os campos. */
+/* Layout comum dos formulários de conta: mais compacto no computador para caber sem rolagem. */
 .formulario {
   display: grid;
-  gap: rem(24px);
-  margin-top: rem(32px);
+  gap: rem(16px);
+  margin-top: rem(24px);
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .formulario {
+    gap: rem(24px);
+    margin-top: rem(32px);
+  }
 }
 
 /* Aviso de que deu certo (link enviado) */

@@ -15,6 +15,26 @@ export function buscarCategoria(idCategoria) {
   return CATEGORIAS_PEDIDO.find((categoria) => categoria.id === idCategoria);
 }
 
+// Foto de cada categoria (em public/img/pedidos) e o que ela mostra, para o texto alternativo
+const FOTOS_CATEGORIA = {
+  pavimentacao: 'Buraco com água no asfalto de uma rua',
+  calcada: 'Calçada de pedras soltas, levantada pela raiz de uma árvore',
+  entulho: 'Entulho e um sofá velho largados na esquina',
+  iluminacao: 'Poste com a lâmpada apagada numa rua escura',
+  'boca-de-lobo': 'Boca de lobo entupida de folhas e lixo',
+  poda: 'Galhos de árvore tomando o poste e os fios',
+  sinalizacao: 'Faixa de pedestres apagada num cruzamento',
+};
+
+// Escolhe a imagem do pedido: a foto que a pessoa enviou (pedido.foto) ou a foto da categoria.
+// Recebe o pedido; devolve { src, alt } ou null quando a categoria não tem foto.
+export function imagemDoPedido(pedido) {
+  if (pedido.foto) return { src: pedido.foto, alt: `Foto enviada: ${pedido.titulo}` };
+  const alt = FOTOS_CATEGORIA[pedido.categoria];
+  if (!alt) return null;
+  return { src: `img/pedidos/${pedido.categoria}.jpg`, alt };
+}
+
 // Diz se o pedido ainda está em andamento. Recebe o pedido; devolve true ou false.
 export function estaAberto(pedido) {
   return buscarStatus(pedido.status)?.aberto ?? false;

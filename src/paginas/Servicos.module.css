@@ -1,8 +1,4 @@
-/* Serviços: título de seção 24/700 e respiro para o Enter da busca não esconder o título. */
-
-.ancora {
-  scroll-margin-top: rem(16px);
-}
+/* Serviços: título de seção 24/700. */
 
 .titulo {
   margin: 0 0 rem(24px);

@@ -18,6 +18,19 @@
   grid-column: 2 / span 2;
 }
 
+/* Logo do grupo no lugar do subtítulo: 30 de altura, centralizado como o texto.
+   No alto contraste fica preto. */
+.logo {
+  display: block;
+  height: rem(30px);
+  width: auto;
+  margin: 0 auto;
+}
+
+:global(html[data-contraste='alto']) .logo {
+  filter: brightness(0);
+}
+
 .oculto {
   position: absolute;
   width: 1px;

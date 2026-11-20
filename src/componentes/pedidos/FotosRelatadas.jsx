@@ -3,6 +3,7 @@ import Icone from '../Icone';
 import Popup from '../Popup';
 import Botao from '../Botao';
 import IlustracaoPedido from './IlustracaoPedido';
+import { imagemDoPedido } from '../../logica/pedidos';
 import classes from './DetalhePedido.module.css';
 
 // Fotos de quem relatou o pedido, em miniaturas de 120.
@@ -14,6 +15,9 @@ export default function FotosRelatadas({ pedido }) {
   const fotos = pedido.fotos ?? [];
   if (fotos.length === 0) return null;
   const total = fotos.length;
+  // Nos exemplos, a foto da categoria entra no lugar do desenho (que fica de reserva)
+  const imagem = imagemDoPedido(pedido);
+  const altGrande = `Foto enviada por quem relatou: ${pedido.titulo}`;
 
   return (
     <>
@@ -27,7 +31,11 @@ export default function FotosRelatadas({ pedido }) {
                 aria-label={`Ver foto ${indice + 1} de ${total}`}
                 onClick={() => setAberta(indice)}
               >
-                <IlustracaoPedido nome={pedido.ilustracao} />
+                {imagem ? (
+                  <img src={imagem.src} alt="" />
+                ) : (
+                  <IlustracaoPedido nome={pedido.ilustracao} />
+                )}
               </button>
             ) : (
               <span className={classes.foto}>
@@ -49,10 +57,11 @@ export default function FotosRelatadas({ pedido }) {
         }
       >
         <div className={classes.fotoGrande}>
-          <IlustracaoPedido
-            nome={pedido.ilustracao}
-            alt={`Foto enviada por quem relatou: ${pedido.titulo}`}
-          />
+          {imagem ? (
+            <img src={imagem.src} alt={altGrande} />
+          ) : (
+            <IlustracaoPedido nome={pedido.ilustracao} alt={altGrande} />
+          )}
         </div>
       </Popup>
     </>

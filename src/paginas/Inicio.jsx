@@ -11,7 +11,6 @@ import CardObraSeguida from '../componentes/inicio/CardObraSeguida';
 import CardAviso from '../componentes/avisos/CardAviso';
 import CardPedido from '../componentes/CardPedido';
 import CartaoVotacaoLista from '../componentes/votacoes/CartaoVotacaoLista';
-import IlustracaoPedido from '../componentes/pedidos/IlustracaoPedido';
 import SeloTipo from '../componentes/seguindo/SeloTipo';
 import { AVISOS } from '../dados/avisos';
 import { PROJETOS } from '../dados/projetos';
@@ -162,7 +161,6 @@ export default function Inicio() {
                 <CardPedido
                   pedido={pedido}
                   selo={<SeloTipo tipo="pedido" />}
-                  midia={pedido.ilustracao && <IlustracaoPedido nome={pedido.ilustracao} />}
                 />
               </li>
             ))}

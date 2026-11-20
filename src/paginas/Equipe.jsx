@@ -12,7 +12,14 @@ import classesEquipe from './Equipe.module.css';
 // Nomes, RMs e links ficam em dados/equipe.js.
 export default function Equipe() {
   return (
-    <Pagina cabecalho={<CabecalhoGs atual="equipe" subtitulo="Grupo GLYFFS" />}>
+    <Pagina
+      cabecalho={
+        <CabecalhoGs
+          atual="equipe"
+          subtitulo={<img className={classesEquipe.logo} src="img/equipe/glyffs-escuro.svg" alt="GLYFFS" />}
+        />
+      }
+    >
       <div className={classes.pilha}>
         <section aria-labelledby="equipe-integrantes">
           <h2 className={classesEquipe.oculto} id="equipe-integrantes">

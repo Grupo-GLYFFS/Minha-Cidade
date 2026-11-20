@@ -2,7 +2,6 @@ import { useState } from 'react';
 import TituloGrupo from '../TituloGrupo';
 import CardPedido from '../CardPedido';
 import Botao from '../Botao';
-import IlustracaoPedido from './IlustracaoPedido';
 import { PEDIDOS_POR_GRUPO, textoMostrarMais } from '../../logica/gruposPedidos';
 import classes from './ListaPedidos.module.css';
 
@@ -33,7 +32,6 @@ export default function GrupoPedidos({ grupo, prefixo, limite = PEDIDOS_POR_GRUP
               pedido={pedido}
               selo={selo}
               base={base}
-              midia={pedido.ilustracao && <IlustracaoPedido nome={pedido.ilustracao} />}
             />
           </li>
         ))}

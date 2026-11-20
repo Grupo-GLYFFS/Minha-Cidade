@@ -11,9 +11,10 @@
 
 .lado {
   grid-area: form;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: rem(40px) rem(40px) rem(56px);
+  padding: rem(28px) rem(40px);
 }
 
 /* Barra com o logo: no computador o logo já está no painel azul à esquerda */
@@ -31,7 +32,7 @@
 
 .titulo {
   margin: 0;
-  font-size: rem(40px);
+  font-size: rem(36px);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -39,7 +40,7 @@
 }
 
 .texto {
-  margin: rem(8px) 0 0;
+  margin: rem(6px) 0 0;
   font-size: rem(16px);
   line-height: 1.5;
   color: var(--cor-texto-2);

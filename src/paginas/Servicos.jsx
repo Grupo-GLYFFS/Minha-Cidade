@@ -30,9 +30,10 @@ export default function Servicos() {
     setParametros(proximos, { replace: true });
   }
 
-  // Enter ou "Buscar": leva a pessoa até os resultados
+  // Enter ou "Buscar": leva o foco para a lista de resultados, sem rolar a página
+  // (sem texto, a lista não existe e nada acontece)
   function enviar() {
-    document.getElementById('servicos-titulo')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('resultados-titulo')?.focus({ preventScroll: true });
   }
 
   const buscando = texto.trim().length > 0;
@@ -49,7 +50,7 @@ export default function Servicos() {
         </CabecalhoPagina>
       }
     >
-      <div id="servicos-titulo" className={classes.ancora}>
+      <div>
         {buscando ? (
           <ResultadosServicos texto={texto} aoLimpar={() => mudarTexto('')} />
         ) : (

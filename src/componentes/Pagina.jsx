@@ -21,7 +21,7 @@ import classes from './Pagina.module.css';
 // - children: o conteúdo, que fica na coluna de 880 com 48 px de respiro em cima;
 // - semFaixaAlerta: esconde a faixa amarela (ela já some sozinha nas páginas de alertas
 //   e quando "Faixas de alerta" está desligado em Configurações, que é o padrão);
-// - larga: coluna de 1088 em vez de 880 (só para as telas antigas, até serem refeitas);
+// - larga: coluna de 1200 (a do topo e do rodapé) em vez de 880 (só a Apresentação usa);
 // - voltar (celular): { rotulo, para } no lugar do que vem da trilha, ou false para tirar a barra
 //   "‹ Voltar". Sem ele, o "‹ Voltar" é o penúltimo item da trilha do cabeçalho;
 // - tituloTopo (celular): nome curto no meio da barra "‹ Voltar" (só quando é diferente do h1);

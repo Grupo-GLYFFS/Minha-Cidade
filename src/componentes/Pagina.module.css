@@ -20,10 +20,10 @@
   padding: rem(48px) 0 rem(96px);
 }
 
-/* Coluna larga das telas antigas */
+/* Coluna larga (Apresentação): a largura do topo e do rodapé */
 .colunaLarga {
   composes: coluna;
-  width: min(var(--largura-larga), calc(100% - rem(64px)));
+  width: min(var(--largura-topo), calc(100% - rem(64px)));
 }
 
 @media (max-width: $mantine-breakpoint-sm) {

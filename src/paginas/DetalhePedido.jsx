@@ -30,6 +30,7 @@ import {
   buscarCategoria,
   buscarPedido,
   buscarStatus,
+  imagemDoPedido,
   mostraAvaliacao,
   podeCancelar,
 } from '../logica/pedidos';
@@ -79,6 +80,7 @@ export default function DetalhePedido({ escopo = 'cidade' }) {
   const categoria = buscarCategoria(pedido.categoria);
   const status = buscarStatus(pedido.status);
   const prioridade = nivelPrioridade(pedido);
+  const imagem = imagemDoPedido(pedido);
   const ehSeu = usuario && pedido.autorId === usuario.id;
 
   const cabecalho = (
@@ -91,12 +93,16 @@ export default function DetalhePedido({ escopo = 'cidade' }) {
         { rotulo: `Pedido ${pedido.protocolo}` },
       ]}
       midia={
-        pedido.ilustracao && (
-          <IlustracaoPedido
-            nome={pedido.ilustracao}
-            alt={`Foto do local: ${pedido.titulo}`}
-            embaixo
-          />
+        imagem ? (
+          <img src={imagem.src} alt={imagem.alt} />
+        ) : (
+          pedido.ilustracao && (
+            <IlustracaoPedido
+              nome={pedido.ilustracao}
+              alt={`Foto do local: ${pedido.titulo}`}
+              embaixo
+            />
+          )
         )
       }
       icone={categoria?.icone}

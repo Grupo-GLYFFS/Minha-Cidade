@@ -62,12 +62,7 @@ export default function PainelConta({ tipo = 'entrar', bairro }) {
             )}
           </dl>
           <p className={classes.texto}>
-            <span className={classes.linha}>
-              Pedidos podem ser abertos para qualquer lugar da cidade.
-            </span>
-            <span className={classes.linha}>
-              Você troca o endereço quando quiser, no Meu perfil.
-            </span>
+            Você pode abrir pedidos em qualquer lugar da cidade e trocar o endereço no Meu perfil.
           </p>
         </div>
       )}

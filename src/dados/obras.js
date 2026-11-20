@@ -5,7 +5,7 @@
 // - id, titulo, tipo (ex.: "UBS") e icone (Material Symbols)
 // - bairro, subprefeitura (nome sem a palavra "Subprefeitura"), endereco: onde a obra acontece
 // - regiao: usada só pelas telas antigas (TODO: tirar quando o Início e o Meu bairro forem refeitos)
-// - imagem (opcional): ilustração de public/img/obras, usada no cabeçalho do detalhe;
+// - imagem (opcional): foto de public/img/obras, usada no cabeçalho do detalhe;
 //   miniatura: true quando a ilustração também aparece no card da lista
 // - valorTotal, valorPago: em reais; percentual: quanto da obra já foi feito (0 a 100)
 // - inicio, previsaoFim: datas ISO (na obra concluída, previsaoFim é o dia da entrega)
@@ -26,7 +26,7 @@ export const OBRAS = [
     subprefeitura: 'Vila Mariana',
     regiao: 'Zona Sul',
     endereco: 'Rua Domingos de Morais, do nº 100 ao 2.400',
-    imagem: 'img/obras/recapeamento-domingos-de-morais.svg',
+    imagem: 'img/obras/recapeamento-domingos-de-morais.jpg',
     miniatura: true,
     valorTotal: 3200000,
     valorPago: 1100000,
@@ -153,7 +153,7 @@ export const OBRAS = [
     subprefeitura: 'Santana/Tucuruvi',
     regiao: 'Zona Norte',
     endereco: 'Avenida Cruzeiro do Sul, entre os metrôs Santana e Carandiru',
-    imagem: 'img/obras/ciclovia-cruzeiro-do-sul.svg',
+    imagem: 'img/obras/ciclovia-cruzeiro-do-sul.jpg',
     valorTotal: 5600000,
     valorPago: 2000000,
     percentual: 40,
@@ -186,7 +186,7 @@ export const OBRAS = [
     subprefeitura: 'Vila Mariana',
     regiao: 'Zona Sul',
     endereco: 'Avenida Ibirapuera, faixa de ônibus',
-    imagem: 'img/obras/asfalto-avenida-ibirapuera.svg',
+    imagem: 'img/obras/asfalto-avenida-ibirapuera.jpg',
     miniatura: true,
     valorTotal: 2400000,
     valorPago: 1700000,
@@ -277,7 +277,7 @@ export const OBRAS = [
     subprefeitura: 'Vila Mariana',
     regiao: 'Zona Sul',
     endereco: 'Rua Joaquim Távora, 800',
-    imagem: 'img/obras/ubs-vila-mariana.svg',
+    imagem: 'img/obras/ubs-vila-mariana.jpg',
     miniatura: true,
     valorTotal: 6800000,
     valorPago: 4100000,
@@ -326,7 +326,7 @@ export const OBRAS = [
     subprefeitura: 'Itaquera',
     regiao: 'Zona Leste',
     endereco: 'Praça embaixo do viaduto da Avenida Aricanduva',
-    imagem: 'img/obras/piscinao-aricanduva.svg',
+    imagem: 'img/obras/piscinao-aricanduva.jpg',
     miniatura: true,
     valorTotal: 320000000,
     valorPago: 9600000,
@@ -350,7 +350,7 @@ export const OBRAS = [
     subprefeitura: 'Lapa',
     regiao: 'Zona Oeste',
     endereco: 'Rua Clélia, 1.200',
-    imagem: 'img/obras/parque-da-lapa.svg',
+    imagem: 'img/obras/parque-da-lapa.jpg',
     valorTotal: 4300000,
     valorPago: 4300000,
     percentual: 100,

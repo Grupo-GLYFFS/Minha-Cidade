@@ -7,7 +7,7 @@
 // - escopo: "cidade" (a cidade toda vota) ou "subprefeitura" (os moradores da subprefeitura votam)
 // - bairro (opcional): onde a obra acontece; subprefeitura: nome sem a palavra "Subprefeitura"
 // - bairros: bairros afetados (a votação da cidade aparece nas Votações desses bairros)
-// - icone (Material Symbols); imagem (opcional): ilustração de public/img/votacoes
+// - icone (Material Symbols); imagem (opcional): foto de public/img/votacoes
 // - valor: custo ou dinheiro movido, em reais; prazoObra (opcional): quanto tempo a obra leva
 // - inicioVotacao, fimVotacao: primeiro e último dia da votação (ISO)
 // - status: "votacao-aberta" ou "encerrada"
@@ -47,7 +47,7 @@ export const PROJETOS = [
     bairros: ['Jabaquara', 'Saúde', 'Vila Mariana'],
     regiao: 'Zona Sul',
     icone: 'directions_bus',
-    imagem: 'img/votacoes/corredor-jabaquara.svg',
+    imagem: 'img/votacoes/corredor-jabaquara.jpg',
     valor: 180000000,
     prazoObra: '24 meses',
     inicioVotacao: '2026-10-19',
@@ -85,7 +85,7 @@ export const PROJETOS = [
     bairros: ['Penha', 'Cangaíba'],
     regiao: 'Zona Leste',
     icone: 'park',
-    imagem: 'img/votacoes/parque-linear-tiquatira.svg',
+    imagem: 'img/votacoes/parque-linear-tiquatira.jpg',
     valor: 96000000,
     prazoObra: '18 meses',
     inicioVotacao: '2026-10-26',
@@ -122,7 +122,7 @@ export const PROJETOS = [
     bairros: ['Santana', 'Tucuruvi', 'Mandaqui'],
     regiao: 'Zona Norte',
     icone: 'local_hospital',
-    imagem: 'img/votacoes/hospital-dia-santana.svg',
+    imagem: 'img/votacoes/hospital-dia-santana.jpg',
     valor: 140000000,
     prazoObra: '30 meses',
     inicioVotacao: '2026-11-02',
@@ -158,7 +158,7 @@ export const PROJETOS = [
     bairros: ['República', 'Sé', 'Santa Cecília'],
     regiao: 'Centro',
     icone: 'apartment',
-    imagem: 'img/votacoes/moradia-centro.svg',
+    imagem: 'img/votacoes/moradia-centro.jpg',
     valor: 260000000,
     prazoObra: '36 meses',
     inicioVotacao: '2026-09-20',
@@ -197,7 +197,7 @@ export const PROJETOS = [
     bairros: ['Butantã', 'Rio Pequeno'],
     regiao: 'Zona Oeste',
     icone: 'school',
-    imagem: 'img/votacoes/ceu-butanta.svg',
+    imagem: 'img/votacoes/ceu-butanta.jpg',
     valor: 210000000,
     prazoObra: '26 meses',
     inicioVotacao: '2026-09-15',
@@ -235,7 +235,7 @@ export const PROJETOS = [
     bairros: ['Itaquera', 'São Mateus'],
     regiao: 'Zona Leste',
     icone: 'flood',
-    imagem: 'img/votacoes/piscinao-aricanduva.svg',
+    imagem: 'img/votacoes/piscinao-aricanduva.jpg',
     valor: 320000000,
     prazoObra: '32 meses',
     inicioVotacao: '2026-09-01',
@@ -274,7 +274,7 @@ export const PROJETOS = [
     bairros: ['Vila Mariana'],
     regiao: 'Zona Sul',
     icone: 'lightbulb',
-    imagem: 'img/votacoes/led-santa-cruz.svg',
+    imagem: 'img/votacoes/led-santa-cruz.jpg',
     valor: 900000,
     prazoObra: '4 meses',
     inicioVotacao: '2026-10-28',
@@ -305,7 +305,7 @@ export const PROJETOS = [
     bairros: ['Vila Mariana', 'Moema', 'Saúde'],
     regiao: 'Zona Sul',
     icone: 'accessible',
-    imagem: 'img/votacoes/calcadas-acessiveis.svg',
+    imagem: 'img/votacoes/calcadas-acessiveis.jpg',
     valor: 400000,
     inicioVotacao: '2026-11-10',
     fimVotacao: '2026-12-04',
@@ -345,7 +345,7 @@ export const PROJETOS = [
     bairros: ['Moema'],
     regiao: 'Zona Sul',
     icone: 'directions_bike',
-    imagem: 'img/votacoes/rua-de-lazer.svg',
+    imagem: 'img/votacoes/rua-de-lazer.jpg',
     valor: 120000,
     inicioVotacao: '2026-09-01',
     fimVotacao: '2026-09-30',

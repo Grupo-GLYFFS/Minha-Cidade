@@ -1,5 +1,9 @@
 # Minha Prefeitura
 
+<img src="public/img/equipe/glyffs-escuro.svg" alt="GLYFFS" height="40">
+
+Grupo GLYFFS
+
 Os serviços da prefeitura e as melhorias da cidade num app só, onde o morador pede, acompanha, vota e avalia o que a prefeitura faz.
 
 Global Solution 2026/2 — CitizenTech. FIAP, 1º ano de Engenharia de Software.

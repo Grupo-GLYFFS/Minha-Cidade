@@ -22,9 +22,16 @@ import classes from './PopupBusca.module.css';
 // "Buscar" (ou Enter) leva à página de Serviços com o texto. Escolher um item fecha o popup.
 // No celular, vira tela cheia branca até em cima da barra de abas: "Buscar" + X e o campo
 // ficam presos no alto e só o conteúdo rola.
-// Recebe aberto e aoFechar().
-export default function PopupBusca({ aberto, aoFechar }) {
+// Recebe aberto, aoFechar() e textoInicial (opcional: o texto com que o campo abre).
+export default function PopupBusca({ aberto, aoFechar, textoInicial = '' }) {
   const [texto, setTexto] = useState('');
+  const [abertoAntes, setAbertoAntes] = useState(aberto);
+
+  // Ao abrir, o campo começa com o texto que veio de quem abriu (o campo do Início)
+  if (aberto !== abertoAntes) {
+    setAbertoAntes(aberto);
+    if (aberto) setTexto(textoInicial);
+  }
   const navegar = useNavigate();
   const celular = useMediaQuery(CONSULTA_CELULAR);
   const { usuario } = useSessao();

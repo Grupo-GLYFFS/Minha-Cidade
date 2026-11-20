@@ -1,18 +1,13 @@
-/* Painel azul das páginas de conta: 40/56/40/64 de padding, 48 entre logo, mensagem e rodapé.
-   No computador fica preso na altura da tela enquanto o formulário rola. */
+/* Painel azul das páginas de conta: estica junto com a grade para a página inteira rolar
+   uma vez só em janelas baixas, sem barra interna na coluna. */
 
 .painel {
   grid-area: painel;
-  position: sticky;
-  top: 0;
-  align-self: start;
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: rem(48px);
-  padding: rem(40px) rem(56px) rem(40px) rem(64px);
+  gap: rem(28px);
+  padding: rem(28px) rem(48px) rem(28px) rem(56px);
   background: var(--cor-azul);
   color: var(--cor-sobre-primaria);
 }
@@ -28,7 +23,7 @@
 
 .titulo {
   margin: 0;
-  font-size: rem(36px);
+  font-size: rem(30px);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -36,19 +31,15 @@
 }
 
 .texto {
-  margin: rem(12px) 0 0;
-  font-size: rem(17px);
-  line-height: 1.5;
+  margin: rem(10px) 0 0;
+  font-size: rem(16px);
+  line-height: 1.45;
   color: var(--cor-azul-borda);
-}
-
-.linha {
-  display: block;
 }
 
 /* Lista do que a conta permite: linhas finas brancas entre os itens */
 .lista {
-  margin: rem(32px) 0 0;
+  margin: rem(20px) 0 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid color-mix(in srgb, var(--cor-sobre-primaria) 28%, transparent);
@@ -57,17 +48,17 @@
 .lista li {
   display: flex;
   align-items: center;
-  gap: rem(16px);
-  padding: rem(16px) 0;
+  gap: rem(14px);
+  padding: rem(12px) 0;
   border-bottom: 1px solid color-mix(in srgb, var(--cor-sobre-primaria) 28%, transparent);
-  font-size: rem(16px);
+  font-size: rem(15px);
   font-weight: 600;
   line-height: 1.4;
 }
 
 /* Card branco com o bairro e quem cuida dele */
 .bairro {
-  margin: rem(32px) 0 0;
+  margin: rem(20px) 0 0;
   border-radius: var(--raio-card);
   background: var(--cor-superficie);
   color: var(--cor-texto);
@@ -78,7 +69,7 @@
   display: flex;
   align-items: center;
   gap: rem(14px);
-  padding: rem(16px) rem(24px);
+  padding: rem(14px) rem(20px);
 }
 
 .bairroLinha + .bairroLinha {
@@ -123,9 +114,6 @@
 
 @media (max-width: $mantine-breakpoint-md) {
   .painel {
-    position: static;
-    min-height: 0;
-    max-height: none;
     gap: rem(32px);
     padding: rem(32px) rem(16px);
   }
