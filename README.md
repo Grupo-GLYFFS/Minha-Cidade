@@ -2,7 +2,7 @@
 
 **Acesse o app:** https://grupo-glyffs.github.io/Minha-Cidade/
 
-**Vídeo do pitch:** [LINK DO PITCH]
+**Vídeo do pitch:** https://vimeo.com/1248553385
 
 ## O problema
 
@@ -93,7 +93,7 @@ src/
 ## Links
 
 - App: https://grupo-glyffs.github.io/Minha-Cidade/
-- Vídeo do pitch: [LINK DO PITCH]
+- Vídeo do pitch: https://vimeo.com/1248553385
 - Repositório: https://github.com/Grupo-GLYFFS/Minha-Cidade
 
 ## Integrantes
