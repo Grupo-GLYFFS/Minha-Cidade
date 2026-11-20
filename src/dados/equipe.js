@@ -3,18 +3,6 @@
 // (public/img/equipe/<primeiro-nome>.jpg; sem o arquivo, o card mostra o ícone).
 export const INTEGRANTES = [
   {
-    nome: 'Felipe Santos',
-    rm: '574050',
-    papel: 'Páginas e menu',
-    foto: 'img/equipe/felipe.jpg',
-  },
-  {
-    nome: 'Samuel Almeida Santos',
-    rm: '572554',
-    papel: 'Pesquisa, README e pitch',
-    foto: 'img/equipe/samuel.jpg',
-  },
-  {
     nome: 'Gabriel de Lucca Chiapetta Santana',
     rm: '573610',
     papel: 'Simulação dos pedidos',
@@ -32,13 +20,24 @@ export const INTEGRANTES = [
     papel: 'Design e protótipo',
     foto: 'img/equipe/fabricio.jpg',
   },
+  {
+    nome: 'Felipe Santos',
+    rm: '574050',
+    papel: 'Páginas e menu',
+    foto: 'img/equipe/felipe.jpg',
+  },
+  {
+    nome: 'Samuel Almeida Santos',
+    rm: '572554',
+    papel: 'Pesquisa, README e pitch',
+    foto: 'img/equipe/samuel.jpg',
+  },
 ];
 
 // Links do card "Pitch".
 // - repositorio: endereço do código no GitHub;
-// - video: link do vídeo do pitch. Enquanto for null, "Assistir ao pitch" fica desabilitado.
-// TODO: colocar o link do vídeo quando estiver pronto.
+// - video: link do vídeo do pitch.
 export const LINKS_PITCH = {
   repositorio: 'https://github.com/Grupo-GLYFFS/Minha-Cidade',
-  video: null,
+  video: 'https://vimeo.com/1248553385',
 };
