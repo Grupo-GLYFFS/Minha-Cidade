@@ -1,11 +1,11 @@
 import classes from './FormularioSolicitacao.module.css';
 
-// Barra presa no fim da tela do formulário: o nome e o número da etapa à esquerda,
-// os botões (Voltar · Continuar/Enviar) à direita. Sem sombra, fundo branco e linha fina em cima.
+// Barra no fim do formulário: o nome e o número da etapa à esquerda, os botões
+// (Voltar · Continuar/Enviar) à direita. Estática no computador; no celular dá lugar à BarraPe.
 // Recebe o nome da etapa, o número, o total e os botões (children).
 export default function BarraEtapa({ nome, numero, total, children }) {
   return (
-    <div className={classes.barra} data-pe-preso="">
+    <div className={classes.barra}>
       <p className={classes.barraTexto}>
         <strong>{nome}</strong>
         <small>

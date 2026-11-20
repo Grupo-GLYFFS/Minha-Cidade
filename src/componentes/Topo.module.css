@@ -7,6 +7,41 @@
   border-bottom: var(--espessura-borda) solid var(--cor-borda);
 }
 
+/* Computador (≥ 1024 px): barra de acessibilidade sempre sticky no topo; barra de navegação
+   logo abaixo dela, some ao rolar para baixo e volta ao rolar para cima. */
+@media (min-width: 1024px) {
+  .cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  .acessibilidade {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  .topo {
+    z-index: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition: transform 0.2s ease;
+  }
+
+  .escondido {
+    transform: translateY(calc(-100% - 2px));
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topo {
+    transition: none;
+  }
+}
+
 .miolo {
   box-sizing: border-box;
   display: flex;

@@ -453,9 +453,9 @@ html[data-contraste='alto'] .mantine-Button-root[data-variant='outline'] {
   border-width: 2px;
 }
 
-/* Trilho da chave liga/desliga com borda preta, ligada ou desligada */
+/* Trilho da chave liga/desliga com contorno preto sem encolher o trilho */
 html[data-contraste='alto'] .mantine-Switch-track {
-  border: 2px solid #000;
+  outline: 2px solid #000;
 }
 
 /* Caixas que flutuam ou avisam: borda preta no lugar da sombra */

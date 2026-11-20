@@ -1,7 +1,9 @@
 .grupo {
+  box-sizing: border-box;
   display: inline-flex;
   flex-wrap: wrap;
   gap: rem(6px);
+  max-width: 100%;
   padding: rem(4px);
   border: var(--espessura-borda) solid var(--cor-borda);
   border-radius: rem(16px);
@@ -9,19 +11,20 @@
 }
 
 .opcao {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: rem(8px);
-  height: rem(44px);
-  padding: 0 rem(12px);
+  min-height: rem(44px);
+  padding: rem(8px) rem(12px);
   border: var(--espessura-borda) solid transparent;
   border-radius: var(--raio-controle);
   background: none;
   font-family: var(--fonte);
   font-size: rem(16px);
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.2;
   color: var(--cor-texto-2);
   white-space: nowrap;
   cursor: pointer;
@@ -43,6 +46,7 @@
 }
 
 .letra {
+  flex: none;
   font-weight: 800;
   line-height: 1;
 }
@@ -73,7 +77,10 @@
 
   .opcao {
     justify-content: flex-start;
+    gap: rem(6px);
     min-width: 0;
-    padding-inline: rem(12px);
+    padding: rem(8px) rem(10px);
+    text-align: left;
+    white-space: normal;
   }
 }

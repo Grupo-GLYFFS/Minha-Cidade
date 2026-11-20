@@ -4,11 +4,11 @@ import BotaoCompartilhar from '../avisos/BotaoCompartilhar';
 import { buscarNivel, temLigar199 } from '../../logica/alertas';
 import classes from './Alertas.module.css';
 
-// Barra presa no pé do detalhe do alerta: selo do nível (ou "Encerrado") com o fim,
+// Barra no fim do detalhe do alerta: selo do nível (ou "Encerrado") com o fim,
 // Compartilhar e, nos alertas ativos da Defesa Civil, "Ligar 199 · Defesa Civil".
-// No celular, fica só o "Ligar 199", fixo acima da barra de abas (o compartilhar vai para a
-// barra "‹ Voltar"); sem ele, a barra some. O espaço dela no fim da página fica no
-// DetalheAlerta.
+// No computador fica estática no fluxo normal da página; no celular fica só o "Ligar 199",
+// fixo acima da barra de abas (o compartilhar vai para a barra "‹ Voltar"); sem ele, a barra some.
+// O espaço dela no fim da página fica no DetalheAlerta.
 // Recebe o alerta e o caminho do detalhe (para compartilhar).
 export default function BarraAlerta({ alerta, caminho }) {
   const nivel = buscarNivel(alerta.nivel);

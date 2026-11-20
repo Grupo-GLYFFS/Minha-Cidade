@@ -82,8 +82,17 @@
   color: var(--cor-texto-placeholder);
 }
 
+.empilhar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: rem(12px);
+}
+
 @media (max-width: $mantine-breakpoint-sm) {
   .empilhar {
+    display: grid;
     grid-template-columns: minmax(0, 1fr);
     row-gap: rem(12px);
     padding-block: rem(16px);

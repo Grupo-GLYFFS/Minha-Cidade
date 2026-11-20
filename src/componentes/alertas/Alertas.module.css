@@ -380,11 +380,8 @@
   font-weight: 500;
 }
 
-/* Barra presa no pé da tela (sem sombra, linha fina em cima) */
+/* Barra no fim do detalhe do alerta: estática no computador; no celular fica fixa acima das abas */
 .barra {
-  position: sticky;
-  z-index: 3;
-  bottom: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
