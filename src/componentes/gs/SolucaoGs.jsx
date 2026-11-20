@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
 import { AREAS_SOLUCAO } from '../../dados/areasSolucao';
+import TelaSolucao from './TelaSolucao';
 import classes from './SolucaoGs.module.css';
 
 // Seção "A solução" da Apresentação: título, uma frase e as 4 áreas do app lado a lado,
-// soltas no fundo da seção. Cada área é um link com o celular da tela e o nome embaixo.
+// soltas no fundo da seção. Cada área é o celular desenhado da tela e o nome embaixo, sem link.
 // Recebe children: o que vem depois dos celulares (a faixa "Conheça o projeto").
 export default function SolucaoGs({ children }) {
   return (
@@ -16,18 +16,11 @@ export default function SolucaoGs({ children }) {
       </p>
       <ul className={classes.areas}>
         {AREAS_SOLUCAO.map((area) => (
-          <li key={area.para} className={classes.item}>
-            <Link to={area.para} className={classes.area}>
-              <img
-                className={classes.celular}
-                src={area.imagem}
-                alt={area.alt}
-                width="276"
-                height="416"
-                loading="lazy"
-              />
+          <li key={area.tela} className={classes.item}>
+            <div className={classes.area}>
+              <TelaSolucao tela={area.tela} alt={area.alt} />
               <h3 className={classes.nome}>{area.titulo}</h3>
-            </Link>
+            </div>
           </li>
         ))}
       </ul>

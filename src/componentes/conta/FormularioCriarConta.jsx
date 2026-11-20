@@ -1,16 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useForm, useWatch } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { NativeSelect } from '@mantine/core';
 import Botao from '../Botao';
 import CampoTexto from '../CampoTexto';
-import Icone from '../Icone';
 import ResumoErros from '../ResumoErros';
+import CampoEndereco from './CampoEndereco';
 import CampoSenha from './CampoSenha';
 import { useSessao } from '../../contexto/useSessao';
 import { useCaminhoConta } from '../../contexto/useCaminhoConta';
-import { ENDERECOS_CADASTRO, buscarEnderecoCadastro } from '../../dados/enderecosCadastro';
 import { ERRO_EMAIL_EM_USO } from '../../logica/contas';
 import {
   CAMPOS_CRIAR_CONTA,
@@ -19,16 +17,9 @@ import {
   esquemaCriarConta,
 } from '../../logica/esquemaCriarConta';
 import { manterErrosAtuais } from '../../logica/resumoErros';
-import campoClasses from '../CampoTexto.module.css';
 import classes from './FormularioConta.module.css';
 
 const VALIDADOR = yupResolver(esquemaCriarConta);
-
-// Opções do dropdown "Endereço"
-const OPCOES_ENDERECO = [
-  { value: '', label: 'Escolha um endereço' },
-  ...ENDERECOS_CADASTRO.map((item) => ({ value: item.id, label: item.rotulo })),
-];
 
 // Título do resumo de erros. Recebe quantos campos têm erro.
 function tituloResumo(quantos) {
@@ -38,9 +29,9 @@ function tituloResumo(quantos) {
 }
 
 // Formulário "Criar conta" numa página só: nome completo, e-mail, senha com requisitos e endereço.
-// O bairro do endereço escolhido aparece no painel azul ao lado e vira o bairro da pessoa.
+// O bairro do endereço escolhido vira o bairro da pessoa.
 // Tudo certo: chama aoCriar(valores), que cria a conta e já entra nela.
-export default function FormularioCriarConta({ aoCriar, aoMudarBairro }) {
+export default function FormularioCriarConta({ aoCriar }) {
   const { emailEmUso } = useSessao();
   // "Entrar com ela" leva junto o destino (?voltar=)
   const { entrar } = useCaminhoConta();
@@ -61,15 +52,8 @@ export default function FormularioCriarConta({ aoCriar, aoMudarBairro }) {
   });
 
   const senha = useWatch({ control, name: 'senha' });
-  const enderecoId = useWatch({ control, name: 'endereco' });
   // O resumo acompanha as correções: campo corrigido sai da lista
   const resumoAtual = manterErrosAtuais(errosResumo, errors);
-
-  // Avisa o painel azul quando a pessoa escolhe um endereço
-  useEffect(() => {
-    const escolhido = buscarEnderecoCadastro(enderecoId);
-    aoMudarBairro?.(escolhido?.bairro ?? null);
-  }, [enderecoId, aoMudarBairro]);
 
   // Monta o resumo na ordem da tela. Recebe os erros { campo: { message } }.
   function mostrarResumo(erros) {
@@ -143,24 +127,18 @@ export default function FormularioCriarConta({ aoCriar, aoMudarBairro }) {
         {...register('senha')}
       />
 
-      <NativeSelect
-        id="endereco"
-        label="Endereço"
-        data={OPCOES_ENDERECO}
-        error={
-          errors.endereco?.message && (
-            <>
-              <Icone nome="error" tamanho={20} />
-              {errors.endereco.message}
-            </>
-          )
-        }
-        classNames={{
-          label: campoClasses.rotulo,
-          input: campoClasses.campo,
-          error: campoClasses.erro,
-        }}
-        {...register('endereco')}
+      <Controller
+        name="endereco"
+        control={control}
+        render={({ field }) => (
+          <CampoEndereco
+            ref={field.ref}
+            value={field.value}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            erro={errors.endereco?.message}
+          />
+        )}
       />
 
       <Botao variante="principal" type="submit" largo carregando={isSubmitting}>

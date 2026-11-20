@@ -16,7 +16,6 @@ export default function EsqueciSenha() {
 
   return (
     <MolduraConta
-      painel="entrar"
       titulo="Esqueci minha senha"
       texto="Enviamos um link para criar uma senha nova."
     >

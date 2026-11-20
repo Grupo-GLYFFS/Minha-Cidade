@@ -54,7 +54,7 @@ A parte que mais diferencia o app é o morador participando do começo ao fim:
 
 ### Site publicado
 
-[LINK DO SITE]
+https://grupo-glyffs.github.io/Minha-Cidade/
 
 ### Direto da pasta, sem instalar nada
 
@@ -189,4 +189,4 @@ Usamos o Claude (Anthropic) como assistente no desenho das telas e na escrita do
 
 - **Pitch (vídeo):** [LINK DO PITCH]
 - **Repositório:** https://github.com/Grupo-GLYFFS/Minha-Cidade
-- **Site publicado:** [LINK DO SITE]
+- **Site publicado:** https://grupo-glyffs.github.io/Minha-Cidade/

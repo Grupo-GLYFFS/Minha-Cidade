@@ -3,16 +3,18 @@ import Logo from '../Logo';
 import PainelConta from './PainelConta';
 import classes from './MolduraConta.module.css';
 
-// Moldura das páginas Entrar, Criar conta e Esqueci minha senha (prancha AC2):
-// painel azul à esquerda e o formulário à direita, sem Topo e sem Rodapé.
-// No celular, o formulário vem primeiro (com o logo no topo para voltar ao Início)
-// e o painel azul fica embaixo.
+// Frase do painel azul quando a página não passa outra
+const FRASE_PADRAO = 'Peça, acompanhe e vote sem sair de casa.';
+
+// Moldura das páginas Entrar, Criar conta, Esqueci minha senha e Nova senha (prancha AC3-V3):
+// painel azul estreito à esquerda e o formulário numa coluna de 400 no meio da área branca,
+// sem Topo e sem Rodapé. No celular e no tablet, sem o painel: só o logo centralizado no alto
+// (para voltar ao Início) e o formulário logo abaixo.
 // Recebe:
-// - painel: "entrar" (o que a conta permite) ou "endereco" (o endereço define o bairro);
-// - bairro: bairro mostrado no painel "endereco" (o do endereço escolhido);
-// - titulo (h1) e texto (linha embaixo do título, pode ter link);
+// - frase: frase no pé do painel azul;
+// - titulo (h1) e texto (linha embaixo do título, opcional);
 // - children: o formulário e o que vem depois dele.
-export default function MolduraConta({ painel = 'entrar', bairro, titulo, texto, children }) {
+export default function MolduraConta({ frase = FRASE_PADRAO, titulo, texto, children }) {
   // Título da aba do navegador: "<h1> · Minha Prefeitura"
   useEffect(() => {
     document.title = `${titulo} · Minha Prefeitura`;
@@ -32,7 +34,7 @@ export default function MolduraConta({ painel = 'entrar', bairro, titulo, texto,
         </div>
       </main>
 
-      <PainelConta tipo={painel} bairro={bairro} />
+      <PainelConta frase={frase} />
     </div>
   );
 }

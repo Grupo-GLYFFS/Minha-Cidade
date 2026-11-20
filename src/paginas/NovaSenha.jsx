@@ -19,7 +19,6 @@ export default function NovaSenha() {
 
   return (
     <MolduraConta
-      painel="entrar"
       titulo="Nova senha"
       texto="Crie a senha que você vai usar para entrar."
     >

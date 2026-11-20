@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import MolduraConta from '../componentes/conta/MolduraConta';
 import FormularioCriarConta from '../componentes/conta/FormularioCriarConta';
+import PeConta from '../componentes/conta/PeConta';
 import { useSessao } from '../contexto/useSessao';
 import { useCaminhoConta } from '../contexto/useCaminhoConta';
 import { buscarEnderecoCadastro } from '../dados/enderecosCadastro';
@@ -9,6 +10,7 @@ import { regiaoDe } from '../logica/bairros';
 import { destinoSeguro } from '../logica/sessao';
 
 // Página "Criar conta" (/criar-conta): nome, e-mail, senha e endereço escolhido da lista.
+// O bairro da pessoa sai do endereço escolhido.
 // Ao enviar, a conta é criada, a pessoa já entra nela e vai para o destino do ?voltar= (ou Início).
 export default function CriarConta() {
   const { logado, criarConta } = useSessao();
@@ -18,7 +20,6 @@ export default function CriarConta() {
   const navigate = useNavigate();
   // Quem já chega logado vai direto ao destino; quem acabou de criar a conta vai pelo navigate
   const [jaEstavaLogado] = useState(logado);
-  const [bairro, setBairro] = useState(null);
 
   // Cria a conta direto com o endereço escolhido e leva para o destino
   async function aoCriar(valores) {
@@ -43,17 +44,9 @@ export default function CriarConta() {
   if (jaEstavaLogado) return <Navigate to={destino} replace />;
 
   return (
-    <MolduraConta
-      painel="endereco"
-      bairro={bairro}
-      titulo="Criar conta"
-      texto={
-        <>
-          Já tem conta? <Link to={entrar}>Entrar</Link>
-        </>
-      }
-    >
-      <FormularioCriarConta aoCriar={aoCriar} aoMudarBairro={setBairro} />
+    <MolduraConta frase="Diga onde mora e veja o que muda perto de você." titulo="Criar conta">
+      <FormularioCriarConta aoCriar={aoCriar} />
+      <PeConta pergunta="Já tem conta?" acao="Entrar" para={entrar} />
     </MolduraConta>
   );
 }

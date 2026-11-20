@@ -19,14 +19,10 @@ export default function Entrar() {
   if (logado) return <Navigate to={destino} replace />;
 
   return (
-    <MolduraConta
-      painel="entrar"
-      titulo="Entrar"
-      texto="Para abrir pedidos, votar e acompanhar suas solicitações."
-    >
+    <MolduraConta frase="Peça, acompanhe e vote sem sair de casa." titulo="Entrar">
       <AvisoDaConta />
       <FormularioEntrar destino={destino} />
-      <PeConta pergunta="Ainda não tem conta?" acao="Criar conta" para={criarConta} />
+      <PeConta pergunta="Não tem conta?" acao="Criar conta" para={criarConta} />
     </MolduraConta>
   );
 }

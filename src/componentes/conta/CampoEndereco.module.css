@@ -1,0 +1,48 @@
+/* Campo "Endereço": o campo segue o CampoTexto; aqui só a seta e a lista suspensa. */
+
+.campo {
+  padding-right: rem(44px);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.seta {
+  width: rem(44px);
+  color: var(--cor-texto-2);
+}
+
+/* Lista suspensa: card branco com a borda do app, raio 12 e itens de 44 */
+.lista {
+  padding: rem(6px);
+  border: var(--espessura-borda) solid var(--cor-borda);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-aviso);
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  min-height: rem(44px);
+  padding: rem(8px) rem(12px);
+  border-radius: rem(8px);
+  font-family: var(--fonte);
+  font-size: rem(16px);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--cor-texto);
+}
+
+/* Passando o mouse ou andando pelas setas */
+.opcao[data-combobox-selected],
+.opcao:hover {
+  background: var(--cor-fundo);
+}
+
+/* Endereço escolhido: azul-claro */
+.opcao[data-checked] {
+  background: var(--cor-faixa);
+  font-weight: 700;
+  color: var(--cor-azul-tinta);
+}

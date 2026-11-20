@@ -1,11 +1,14 @@
-/* Moldura de Entrar e Criar conta (AC2): painel azul de 520 à esquerda, formulário à direita.
-   O formulário vem primeiro no código (leitor de tela e celular); a grade põe o painel à esquerda. */
+/* Moldura das páginas de conta (AC3-V3): painel azul de 400 com 16 em volta à esquerda,
+   formulário numa coluna de 400 no meio da área branca. O formulário vem primeiro no código
+   (leitor de tela e celular); a grade põe o painel à esquerda. */
 
 .tela {
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: rem(520px) minmax(0, 1fr);
+  grid-template-columns: rem(400px) minmax(0, 1fr);
   grid-template-areas: 'painel form';
   min-height: 100vh;
+  padding: rem(16px);
   background: var(--cor-superficie);
 }
 
@@ -14,35 +17,39 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: rem(28px) rem(40px);
+  padding: rem(16px) rem(40px);
 }
 
-/* Barra com o logo: no computador o logo já está no painel azul à esquerda */
+/* Barra com o logo: no computador o logo já está no painel azul */
 .barra {
   display: none;
   align-items: center;
+  justify-content: center;
 }
 
-/* Coluna de 440 no meio do espaço que sobra */
+/* Coluna de 400 no meio do espaço que sobra */
 .coluna {
   width: 100%;
-  max-width: rem(440px);
+  max-width: rem(400px);
   margin: auto;
 }
 
+/* Título e linha de baixo no centro; os rótulos dos campos seguem à esquerda */
 .titulo {
   margin: 0;
-  font-size: rem(36px);
+  font-size: rem(40px);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.15;
+  text-align: center;
   color: var(--cor-texto);
 }
 
 .texto {
-  margin: rem(6px) 0 0;
+  margin: rem(8px) 0 0;
   font-size: rem(16px);
   line-height: 1.5;
+  text-align: center;
   color: var(--cor-texto-2);
 }
 
@@ -58,47 +65,27 @@
   text-underline-offset: 3px;
 }
 
+/* Tablet e celular: sem o painel, só o logo centralizado no alto e o formulário embaixo */
 @media (max-width: $mantine-breakpoint-md) {
   .tela {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      'form'
-      'painel';
+    grid-template-areas: 'form';
+    padding: 0;
   }
 
   .lado {
-    padding: rem(16px) rem(16px) rem(48px);
+    padding: 0 rem(16px) rem(40px);
   }
 
   .barra {
     display: flex;
-    margin-bottom: rem(24px);
+    min-height: rem(72px);
+    padding-top: rem(8px);
   }
 
   .coluna {
     margin: 0 auto;
-  }
-
-  .titulo {
-    font-size: rem(32px);
-  }
-}
-
-/* Celular: barra de 64 no alto com o logo para voltar ao Início, e o formulário com 24 em cima */
-@media (max-width: $mantine-breakpoint-sm) {
-  .lado {
-    padding: 0 0 rem(40px);
-  }
-
-  .barra {
-    min-height: rem(64px);
-    margin-bottom: 0;
-    padding: 0 rem(16px);
-    border-bottom: var(--espessura-borda) solid var(--cor-borda);
-  }
-
-  .coluna {
-    padding: rem(24px) rem(16px) 0;
+    padding-top: rem(16px);
   }
 
   .titulo {

@@ -26,12 +26,33 @@ const FOTOS_CATEGORIA = {
   sinalizacao: 'Faixa de pedestres apagada num cruzamento',
 };
 
-// Escolhe a imagem do pedido: a foto que a pessoa enviou (pedido.foto) ou a foto da categoria.
+// Segunda foto de cada categoria (arquivo <categoria>-2.jpg) e o que ela mostra
+const FOTOS_CATEGORIA_2 = {
+  pavimentacao: 'Rua com vários buracos e poças no asfalto',
+  calcada: 'Calçada rachada e afundada em frente a uma escola municipal',
+  entulho: 'Sacos de lixo e restos de obra junto à grade de um terreno',
+  iluminacao: 'Poste apagado numa praça escura à noite',
+  'boca-de-lobo': 'Boca de lobo transbordando com a chuva',
+  poda: 'Galho quebrado pendendo sobre a calçada',
+  sinalizacao: 'Placa de trânsito caída na calçada de um cruzamento',
+};
+
+// Escolhe a imagem do pedido: a foto que a pessoa enviou (pedido.foto) ou uma das fotos da categoria.
+// Quando a categoria tem a 2ª foto, a soma dos números do id decide: ímpar usa a 1ª, par usa a 2ª,
+// para que pedidos seguidos da mesma categoria tendam a mostrar fotos diferentes.
 // Recebe o pedido; devolve { src, alt } ou null quando a categoria não tem foto.
 export function imagemDoPedido(pedido) {
   if (pedido.foto) return { src: pedido.foto, alt: `Foto enviada: ${pedido.titulo}` };
   const alt = FOTOS_CATEGORIA[pedido.categoria];
   if (!alt) return null;
+  const alt2 = FOTOS_CATEGORIA_2[pedido.categoria];
+  const somaDigitos = String(pedido.id ?? '')
+    .replace(/\D/g, '')
+    .split('')
+    .reduce((soma, digito) => soma + Number(digito), 0);
+  if (alt2 && somaDigitos % 2 === 0) {
+    return { src: `img/pedidos/${pedido.categoria}-2.jpg`, alt: alt2 };
+  }
   return { src: `img/pedidos/${pedido.categoria}.jpg`, alt };
 }
 

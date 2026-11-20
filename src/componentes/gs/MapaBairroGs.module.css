@@ -1,0 +1,62 @@
+/* Mapa ilustrado do bairro: cores fixas do desenho (as do pedido de ajuste),
+   com o azul e os tons de alerta e obra dos tokens. */
+
+.mapa {
+  display: block;
+  flex: none;
+  width: 100%;
+  height: auto;
+}
+
+.fundo {
+  fill: #f4f7fd;
+}
+
+.quarteirao {
+  fill: #e6ecf8;
+}
+
+.praca {
+  fill: #d9f0e3;
+}
+
+.arvore {
+  fill: #bfe5cf;
+}
+
+.caminho {
+  fill: none;
+  stroke: #f4f7fd;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.rua {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 9;
+}
+
+.bairro {
+  fill: color-mix(in srgb, var(--cor-azul) 8%, transparent);
+  stroke: var(--cor-azul);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+  stroke-linejoin: round;
+}
+
+.pinoPedido {
+  fill: var(--cor-azul);
+}
+
+.pinoAlerta {
+  fill: var(--cor-barra-ambar);
+}
+
+.pinoObra {
+  fill: var(--cor-barra-verde);
+}
+
+.miolo {
+  fill: #fff;
+}

@@ -1,13 +1,13 @@
-/* Painel azul das páginas de conta: estica junto com a grade para a página inteira rolar
-   uma vez só em janelas baixas, sem barra interna na coluna. */
+/* Painel azul das páginas de conta (AC3-V3): 400 de largura, cantos de 20, a altura da tela
+   menos a margem de 16. Logo no alto e a frase no pé. Some no celular e no tablet. */
 
 .painel {
   grid-area: painel;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: rem(28px);
-  padding: rem(28px) rem(48px) rem(28px) rem(56px);
+  padding: rem(32px) rem(36px);
+  border-radius: var(--raio-card);
   background: var(--cor-azul);
   color: var(--cor-sobre-primaria);
 }
@@ -16,96 +16,13 @@
   align-self: flex-start;
 }
 
-/* Mensagem no meio da altura do painel */
-.mensagem {
-  margin-block: auto;
-}
-
-.titulo {
-  margin: 0;
-  font-size: rem(30px);
+.frase {
+  margin: auto 0 0;
+  font-size: rem(32px);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.15;
   color: var(--cor-sobre-primaria);
-}
-
-.texto {
-  margin: rem(10px) 0 0;
-  font-size: rem(16px);
-  line-height: 1.45;
-  color: var(--cor-azul-borda);
-}
-
-/* Lista do que a conta permite: linhas finas brancas entre os itens */
-.lista {
-  margin: rem(20px) 0 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid color-mix(in srgb, var(--cor-sobre-primaria) 28%, transparent);
-}
-
-.lista li {
-  display: flex;
-  align-items: center;
-  gap: rem(14px);
-  padding: rem(12px) 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--cor-sobre-primaria) 28%, transparent);
-  font-size: rem(15px);
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-/* Card branco com o bairro e quem cuida dele */
-.bairro {
-  margin: rem(20px) 0 0;
-  border-radius: var(--raio-card);
-  background: var(--cor-superficie);
-  color: var(--cor-texto);
-  overflow: hidden;
-}
-
-.bairroLinha {
-  display: flex;
-  align-items: center;
-  gap: rem(14px);
-  padding: rem(14px) rem(20px);
-}
-
-.bairroLinha + .bairroLinha {
-  border-top: var(--espessura-borda) solid var(--cor-borda);
-}
-
-.bairroLinha :global(.icone) {
-  color: var(--cor-azul);
-}
-
-.bairro dt {
-  font-size: rem(14px);
-  font-weight: 600;
-  color: var(--cor-texto-2);
-}
-
-.bairro dd {
-  margin: 0;
-  font-size: rem(16px);
-  font-weight: 700;
-}
-
-.pe {
-  margin: 0;
-  font-size: rem(14px);
-  color: var(--cor-azul-borda);
-}
-
-.pe a {
-  display: inline-flex;
-  align-items: center;
-  min-height: rem(44px);
-  font-weight: 700;
-  color: var(--cor-sobre-primaria);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .painel :focus-visible {
@@ -114,68 +31,6 @@
 
 @media (max-width: $mantine-breakpoint-md) {
   .painel {
-    gap: rem(32px);
-    padding: rem(32px) rem(16px);
-  }
-
-  /* No celular o logo já aparece em cima do formulário */
-  .marca {
-    display: none;
-  }
-
-  .titulo {
-    font-size: rem(28px);
-  }
-}
-
-/* Celular: o painel vem embaixo do formulário, sem o logo repetido e sem a linha do © */
-@media (max-width: $mantine-breakpoint-sm) {
-  .painel {
-    gap: rem(24px);
-    padding: rem(32px) rem(16px) rem(40px);
-  }
-
-  .titulo {
-    font-size: rem(26px);
-  }
-
-  .texto {
-    font-size: rem(16px);
-  }
-
-  .lista {
-    margin-top: rem(20px);
-  }
-
-  .lista li {
-    gap: rem(14px);
-    padding: rem(14px) 0;
-    font-size: rem(15px);
-  }
-
-  .lista li > :first-child {
-    flex: none;
-  }
-
-  .bairro {
-    margin-top: rem(20px);
-  }
-
-  .bairroLinha {
-    padding: rem(14px) rem(16px);
-  }
-
-  .bairroLinha > div {
-    min-width: 0;
-  }
-
-  .bairro dd {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  .pe {
     display: none;
   }
 }
