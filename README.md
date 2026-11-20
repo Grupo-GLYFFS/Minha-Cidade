@@ -4,14 +4,6 @@
 
 **Vídeo do pitch:** [LINK DO PITCH]
 
-<img src="public/img/equipe/glyffs-escuro.svg" alt="GLYFFS" height="40">
-
-Os serviços da prefeitura e as melhorias da cidade num app só. O morador pede, acompanha, vota e avalia o que a prefeitura faz.
-
-Global Solution 2026/2 (CitizenTech), FIAP, 1º ano de Engenharia de Software. Grupo GLYFFS.
-
-> É um protótipo com dados de exemplo. A demonstração usa a cidade de São Paulo, mas não é um serviço oficial da prefeitura.
-
 ## O problema
 
 Quem precisa da prefeitura liga, espera e quase nunca sabe o que aconteceu depois. Não sabe a qual secretaria recorrer e não consegue acompanhar o pedido. Muita reclamação fica em grupo de WhatsApp e nunca chega à prefeitura. E quase nenhuma prefeitura deixa o morador participar pela internet.
@@ -103,3 +95,15 @@ src/
 - App: https://grupo-glyffs.github.io/Minha-Cidade/
 - Vídeo do pitch: [LINK DO PITCH]
 - Repositório: https://github.com/Grupo-GLYFFS/Minha-Cidade
+
+## Integrantes
+
+- Gabriel de Lucca Chiapetta Santana, RM573610
+- Leonardo de Lima Dias, RM569286
+- Fabricio Cardoso Nicoli, RM571627
+- Felipe Santos, RM574050
+- Samuel Almeida Santos, RM572554
+
+## Uso de IA
+
+Usamos IA generativa para gerar textos, imagens e vozes do projeto: Claude (textos), ChatGPT (imagens) e ElevenLabs (vozes do vídeo). Todo o resultado foi revisado pelo grupo.
