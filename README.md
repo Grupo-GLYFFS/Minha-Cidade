@@ -4,6 +4,8 @@
 
 **Vídeo do pitch:** https://vimeo.com/1248553385
 
+[![Assistir ao pitch do Minha Prefeitura](public/img/thumb-pitch.jpg)](https://vimeo.com/1248553385)
+
 ## O problema
 
 Quem precisa da prefeitura liga, espera e quase nunca sabe o que aconteceu depois. Não sabe a qual secretaria recorrer e não consegue acompanhar o pedido. Muita reclamação fica em grupo de WhatsApp e nunca chega à prefeitura. E quase nenhuma prefeitura deixa o morador participar pela internet.
