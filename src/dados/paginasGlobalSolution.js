@@ -18,7 +18,7 @@ export const PAGINAS_GLOBAL_SOLUTION = [
     rotulo: 'Impacto',
     caminho: '/impacto',
     icone: 'insights',
-    fim: { titulo: 'Próxima: Equipe', linha: 'Grupo GLFFYS: quem fez o projeto e o pitch.' },
+    fim: { titulo: 'Próxima: Equipe', linha: 'Grupo GLYFFS: quem fez o projeto e o pitch.' },
   },
   {
     id: 'equipe',

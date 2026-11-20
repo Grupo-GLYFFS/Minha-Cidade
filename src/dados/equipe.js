@@ -1,17 +1,17 @@
-// Integrantes do grupo GLFFYS, na página Equipe (/equipe).
+// Integrantes do grupo GLYFFS, na página Equipe (/equipe).
 // Campos: nome, rm (só os números), papel (o que a pessoa fez no projeto) e foto
 // (public/img/equipe/<primeiro-nome>.jpg; sem o arquivo, o card mostra o ícone).
 export const INTEGRANTES = [
   {
     nome: 'Felipe Santos',
     rm: '574050',
-    papel: 'Design e protótipo',
+    papel: 'Páginas e menu',
     foto: 'img/equipe/felipe.jpg',
   },
   {
     nome: 'Samuel Almeida Santos',
     rm: '572554',
-    papel: 'Páginas e menu',
+    papel: 'Pesquisa, README e pitch',
     foto: 'img/equipe/samuel.jpg',
   },
   {
@@ -29,7 +29,7 @@ export const INTEGRANTES = [
   {
     nome: 'Fabricio Cardoso Nicoli',
     rm: '571627',
-    papel: 'Pesquisa, README e pitch',
+    papel: 'Design e protótipo',
     foto: 'img/equipe/fabricio.jpg',
   },
 ];
